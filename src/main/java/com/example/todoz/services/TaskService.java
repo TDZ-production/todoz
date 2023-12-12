@@ -19,7 +19,7 @@ public class TaskService {
         this.taskRepo = taskRepo;
     }
 
-    public List<Task> findByRating(Integer priority) {
+    public List<Task> findByPriority(Integer priority) {
         if (priority == 0 || priority > 4) {
             throw new RuntimeException("Input Integer must have value between 1 and 4.");
         } else {
@@ -29,7 +29,7 @@ public class TaskService {
         }
     }
 
-    public List<Task> findByRatingWithDates(Integer priority) {
+    public List<Task> findByPriorityWithDates(Integer priority) {
         if (priority == 0 || priority > 4) {
             throw new RuntimeException("Input Integer must have value between 1 and 4.");
         } else {
