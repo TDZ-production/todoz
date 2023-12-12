@@ -14,6 +14,8 @@ import java.util.List;
 public class Todo {
 
     @Id
+    @GeneratedValue
+    private Long id;
     @OneToOne
     private User user;
     @OneToMany(mappedBy = "todo")
