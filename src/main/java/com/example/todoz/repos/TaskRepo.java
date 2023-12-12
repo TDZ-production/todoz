@@ -8,5 +8,5 @@ import java.time.LocalDateTime;
 import java.util.List;
 @Repository
 public interface TaskRepo extends ListCrudRepository<Task, Long> {
-    List<Task> findAllByPriority(Integer priorityNumber);
+    List<Task> findAllByPriority(Integer priority);
 }
