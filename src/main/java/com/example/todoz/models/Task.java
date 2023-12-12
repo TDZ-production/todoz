@@ -5,7 +5,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -13,7 +12,6 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 public class Task {
 
     @Id
@@ -25,5 +23,9 @@ public class Task {
     private LocalDateTime dueDate;
     private boolean checked;
     @ManyToOne
-    private Todo todo;
+    private TodoWeek todoWeek;
+
+    public Task(){
+        this.createdAt = LocalDateTime.now();
+    }
 }
