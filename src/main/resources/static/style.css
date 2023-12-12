@@ -103,10 +103,12 @@ header {
     border-radius: 1rem;
     align-content: flex-end;
     display: flex;
+    flex-direction: row-reverse;
     /*justify-content: center;*/
     align-items: center;
     margin-bottom: 0.2rem;
     justify-content: space-around;
+
 }
 
 button{

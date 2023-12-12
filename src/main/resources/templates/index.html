@@ -32,13 +32,14 @@
 
     <form method="post" th:action="@{/add}">
         <div class="stars">
-            <button type="submit" name="priority" value="1"><img src='/img/star1.png' width="25rem"/></button>
-            <button type="submit" name="priority" value="2"><img src='/img/star1.png' width="30rem"/></button>
-            <button type="submit" name="priority" value="3"><img src='/img/star1.png' width="35rem"/></button>
             <button type="submit" name="priority" value="4"><img src='/img/star1.png' width="40rem"/></button>
+            <button type="submit" name="priority" value="3"><img src='/img/star1.png' width="35rem"/></button>
+            <button type="submit" name="priority" value="2"><img src='/img/star1.png' width="30rem"/></button>
+            <button type="submit" name="priority" value="1"><img src='/img/star1.png' width="25rem"/></button>
         </div>
 
     <div class="addTask">
+        <input type="hidden" name="priority" value="4">
         <input type="text" placeholder="new task" name="description" id="add" >
     </div>
     </form>
