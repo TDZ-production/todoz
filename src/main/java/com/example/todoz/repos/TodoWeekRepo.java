@@ -1,10 +1,9 @@
 package com.example.todoz.repos;
 
-import com.example.todoz.models.Todo;
-import com.example.todoz.models.AppUser;
+import com.example.todoz.models.TodoWeek;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TodoRepo extends ListCrudRepository<Todo, AppUser> {
+public interface TodoWeekRepo extends ListCrudRepository<TodoWeek, Long> {
 }

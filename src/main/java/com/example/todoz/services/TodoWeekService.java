@@ -1,4 +1,4 @@
 package com.example.todoz.services;
 
-public class TodoService {
+public class TodoWeekService {
 }

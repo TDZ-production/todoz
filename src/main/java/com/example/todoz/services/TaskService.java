@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
@@ -39,14 +38,14 @@ public class TaskService {
         }
     }
 
-    public List<Task> getAllAndSortByPriority(){
+    public List<Task> getAllAndSortByPriority() {
         return taskRepo.findAll()
                 .stream()
                 .sorted(Comparator.comparing(Task::getPriority))
                 .toList();
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
         taskRepo.deleteById(id);
     }
 }

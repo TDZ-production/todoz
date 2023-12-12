@@ -1,9 +1,6 @@
 package com.example.todoz.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +17,7 @@ public class AppUser {
     private String userName;
     private String password;
     private Integer pussyMeter;
-    private Role role;
-    @OneToOne (mappedBy = "user")
-    private Todo todo;
+    private Role role = Role.USER;
+    @OneToOne (cascade = CascadeType.ALL, mappedBy = "appUser")
+    private TodoWeek todoWeek;
 }
