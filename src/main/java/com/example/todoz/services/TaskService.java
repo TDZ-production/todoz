@@ -5,6 +5,8 @@ import com.example.todoz.repos.TaskRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 
@@ -56,6 +58,16 @@ public class TaskService {
     public List<Task> findAll() {
         return taskRepo.findAll();
     }
+
+    public long getLastingDays(Task task) {
+        if (task.getDueDate() == null) {
+            throw new RuntimeException("Inputted Task must have and DueDate assigned.");
+        } else {
+            Duration duration = Duration.between(task.getCreatedAt(),task.getDueDate());
+            return duration.toDays();
+        }
+    }
+
 }
 
 
