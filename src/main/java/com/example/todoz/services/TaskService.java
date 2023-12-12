@@ -22,11 +22,7 @@ public class TaskService {
         if(ratingNumber == 0 || ratingNumber > 4){
             throw new RuntimeException("Input Integer must have value between 1 and 4.");
         } else {
-            List<Task> allTasks = taskRepo.findAll();
-            List<Task> filteredTasks = allTasks.stream()
-                    .filter(t -> t.getPriority().equals(ratingNumber))
-                    .toList();
-            return filteredTasks;
+            return taskRepo.findAllByPriority(ratingNumber);
         }
     }
 }
