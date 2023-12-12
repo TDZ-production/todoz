@@ -1,0 +1,124 @@
+/* Definice stylu pro obdélník telefonní obrazovky */
+body, html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.phone-screen {
+    position: relative;
+    min-width: 27rem; /* Šířka obrazovky */
+    height: 95%; /* Výška obrazovky */
+    border: 3px solid black; /* Černý border se 5 pixely */
+    border-radius: 20px; /* Zaoblené rohy */
+    overflow: auto;
+    max-width: 30%;
+}
+
+/*zarovnání úkolů */
+.tasks {
+    /*display:block;*/
+    border-bottom: 1px solid black;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.taskText {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+
+p {
+    width: max-content;
+}
+
+/*definice stylu pro checkbox*/
+input {
+    width: 1rem;
+    height: 1rem;
+}
+
+span {
+    width: 5rem;
+}
+
+
+header {
+    border-bottom: 1px solid black;
+    height: 5rem;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.link {
+    padding-left: 1rem;
+}
+
+.week {
+    text-align: center;
+}
+
+.addTask {
+    position: absolute;
+    bottom: 0;
+    border: 1px solid black;
+    width: 100%;
+    height: 9%;
+    background-color: lightgrey;
+    border-radius: 1rem;
+    align-content: flex-end;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#add {
+    width: 90%;
+    border-radius: 0.5rem;
+    padding: 0.7rem;
+    border: 2px solid black;
+    text-align: center;
+}
+
+.stars {
+    position: absolute;
+    bottom: 9%;
+    border: 1px solid black;
+    width: 100%;
+    height: 9%;
+    background-color: lightgrey;
+    border-radius: 1rem;
+    align-content: flex-end;
+    display: flex;
+    /*justify-content: center;*/
+    align-items: center;
+    margin-bottom: 0.2rem;
+    justify-content: space-around;
+}
+
+button{
+    border: none;
+    margin: 0;
+    padding: 0;
+    /*background: transparent;*/
+    background-color: lightgrey;
+}
+
+a {
+    text-decoration: none;
+    color:black;
+}
+

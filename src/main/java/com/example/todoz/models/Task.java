@@ -18,7 +18,7 @@ public class Task {
     @GeneratedValue
     private Long id;
     private String description;
-    private Integer priority;
+    private Integer priority = 4;
     private LocalDateTime createdAt;
     private LocalDateTime dueDate;
     private boolean checked;

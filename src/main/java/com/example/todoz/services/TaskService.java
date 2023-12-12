@@ -48,4 +48,14 @@ public class TaskService {
     public void deleteById(Long id) {
         taskRepo.deleteById(id);
     }
+
+    public void save(Task task) {
+         taskRepo.save(task);
+    }
+
+    public List<Task> findAll() {
+        return taskRepo.findAll();
+    }
 }
+
+
