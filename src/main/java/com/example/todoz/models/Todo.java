@@ -14,8 +14,10 @@ import java.util.List;
 public class Todo {
 
     @Id
+    @GeneratedValue
+    private Long id;
     @OneToOne
-    private User user;
+    private AppUser appUser;
     @OneToMany(mappedBy = "todo")
     private List<Task> tasks;
 }
