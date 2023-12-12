@@ -17,7 +17,7 @@ public class Todo {
     @GeneratedValue
     private Long id;
     @OneToOne
-    private User user;
+    private AppUser appUser;
     @OneToMany(mappedBy = "todo")
     private List<Task> tasks;
 }
