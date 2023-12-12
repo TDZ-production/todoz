@@ -45,4 +45,8 @@ public class TaskService {
                 .sorted(Comparator.comparing(Task::getPriority))
                 .toList();
     }
+
+    public void deleteById(Long id){
+        taskRepo.deleteById(id);
+    }
 }
