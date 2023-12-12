@@ -18,11 +18,23 @@ public class TaskService {
         this.taskRepo = taskRepo;
     }
 
-    public List<Task> filterByRating(Integer ratingNumber){
-        if(ratingNumber == 0 || ratingNumber > 4){
+    public List<Task> filterByRating(Integer ratingNumber) {
+        if (ratingNumber == 0 || ratingNumber > 4) {
             throw new RuntimeException("Input Integer must have value between 1 and 4.");
         } else {
-            return taskRepo.findAllByPriority(ratingNumber);
+            return taskRepo.findAllByPriority(ratingNumber).stream()
+                    .filter(t -> t.getDueDate() == null)
+                    .toList();
+        }
+    }
+
+    public List<Task> findByRatingWithDates(Integer ratingNumber) {
+        if (ratingNumber == 0 || ratingNumber > 4) {
+            throw new RuntimeException("Input Integer must have value between 1 and 4.");
+        } else {
+            return taskRepo.findAllByPriority(ratingNumber).stream()
+                    .filter(t -> t.getDueDate() != null)
+                    .toList();
         }
     }
 }
