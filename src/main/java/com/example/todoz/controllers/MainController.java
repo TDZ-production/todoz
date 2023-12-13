@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
+import java.time.temporal.WeekFields;
 
 @Controller
 public class MainController {
@@ -29,14 +30,18 @@ public class MainController {
     }
 
     @PostMapping("/add")
-    public String add(Task task, LocalDate localDate) {
+    public String add(Task task, LocalDate maybeDueDate) {
         int currentWeek = weekService.findCurrentWeek().getWeekNumber();
 
-        if(task.getDueDate() == null || task.getDueDateWeek() == currentWeek){
+        if(maybeDueDate == null){
             task.setWeek(weekService.findCurrentWeek());
+        } else if (maybeDueDate.get(WeekFields.ISO.weekOfWeekBasedYear()) == currentWeek) {
+            task.setWeek(weekService.findCurrentWeek());
+            task.setDueDate(maybeDueDate.atTime(23, 59, 59));
+        } else {
+            task.setDueDate(maybeDueDate.atTime(23, 59, 59));
         }
 
-        task.setDueDate(localDate.atTime(23, 59, 59));
         taskService.save(task);
 
         return "redirect:/";
