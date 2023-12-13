@@ -1,6 +1,7 @@
 package com.example.todoz.controllers;
 
 import com.example.todoz.models.Task;
+import com.example.todoz.models.Week;
 import com.example.todoz.services.TaskService;
 import com.example.todoz.services.WeekService;
 import org.springframework.stereotype.Controller;
@@ -31,11 +32,10 @@ public class MainController {
 
     @PostMapping("/add")
     public String add(Task task, LocalDate maybeDueDate) {
-        int currentWeek = weekService.findCurrentWeek().getWeekNumber();
 
         if(maybeDueDate == null){
             task.setWeek(weekService.findCurrentWeek());
-        } else if (maybeDueDate.get(WeekFields.ISO.weekOfWeekBasedYear()) == currentWeek) {
+        } else if (maybeDueDate.get(WeekFields.ISO.weekOfWeekBasedYear()) == Week.getCurrentWeekNumber()) {
             task.setWeek(weekService.findCurrentWeek());
             task.setDueDate(maybeDueDate.atTime(23, 59, 59));
         } else {
