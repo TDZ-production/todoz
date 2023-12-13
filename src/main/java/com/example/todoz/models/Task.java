@@ -8,12 +8,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 public class Task {
 
     @Id
@@ -21,10 +21,15 @@ public class Task {
     private Long id;
     private String description;
     private Integer priority;
-    private LocalDateTime createdAt;
-    private LocalDateTime dueDate;
-    private boolean checked;
+    private LocalDate createdAt;
+    private LocalDate dueDate;
+    private boolean done;
     @ManyToOne
     private Week week;
+    @ManyToOne
+    private User user;
 
+    public Task() {
+        this.createdAt = LocalDate.now();
+    }
 }
