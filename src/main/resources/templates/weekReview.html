@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"><head>
+    <meta charset="UTF-8">
+    <title>Week review</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main class="phone-screen">
+    <!-- Sem můžeš vložit obsah své aplikace -->
+    <header>
+        <div class="link">
+            <a th:href="@{/}"> < </a>
+        </div>
+
+        <div class="week">
+            <h3 th:text="|Week ${currentWeek.getWeekNumber()}|"></h3>
+        </div>
+
+        <div class="link2">
+            <a th:href="@{/leftBehind}"> Left behind </a>
+        </div>
+
+    </header>
+
+    <div class="weekSummary">
+        <h1 th:text="|${done} %|"></h1>
+        <span>Tasks are finished</span>
+    </div>
+
+    <div class="tasks" th:each="task : ${currentWeek.getTasks()}" >
+        <p class="taskText" th:text="${task.getDescription()}"></p>
+        <span th:text="${task.isChecked()}"></span>
+    </div>
+
+</main>
+</body>
+</html>

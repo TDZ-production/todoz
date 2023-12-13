@@ -4,19 +4,23 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class TodoWeek {
+@Table(name = "users")
+public class User {
 
     @Id
     @GeneratedValue
     private Long id;
-    @OneToOne
-    private AppUser appUser;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "todoWeek")
-    private List<Task> tasks;
+    private String userName;
+    private String password;
+    private Integer pussyMeter;
+    private Role role = Role.USER;
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Week> week;
 }
