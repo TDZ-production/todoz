@@ -23,14 +23,18 @@
     </header>
 
     <div class="weekSummary">
-        <h1 th:text="|${done} %|"></h1>
+        <h1 th:text="|${donePercentage} %|"></h1>
         <span>Tasks are finished</span>
     </div>
 
     <div class="tasks" th:each="task : ${currentWeek.getTasks()}" >
         <p class="taskText" th:text="${task.getDescription()}"></p>
-        <span th:text="${task.isChecked()}"></span>
+        <span th:text="${task.isDone()}"></span>
     </div>
+
+    <form action="/createNewWeek" method="post">
+        <button type="submit" th:text=""></button>
+    </form>
 
 </main>
 </body>

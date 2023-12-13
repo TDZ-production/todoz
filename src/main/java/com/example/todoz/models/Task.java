@@ -23,8 +23,10 @@ public class Task {
     private Integer priority;
     private LocalDateTime createdAt;
     private LocalDateTime dueDate;
-    private boolean checked;
+    private boolean done;
     @ManyToOne
     private Week week;
+    @ManyToOne
+    private User user;
 
 }

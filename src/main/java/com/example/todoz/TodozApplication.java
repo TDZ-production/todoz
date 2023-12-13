@@ -39,7 +39,7 @@ public class    TodozApplication implements CommandLineRunner {
 
         Task task = new Task();
         task.setWeek(week);
-        task.setChecked(true);
+        task.setDone(true);
         taskRepo.save(task);
 
         Task task2 = new Task();
@@ -48,7 +48,7 @@ public class    TodozApplication implements CommandLineRunner {
 
         Task task3 = new Task();
         task3.setWeek(week);
-        task3.setChecked(true);
+        task3.setDone(true);
         taskRepo.save(task3);
     }
 }
