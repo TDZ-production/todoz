@@ -23,6 +23,7 @@ public class MainController {
     @GetMapping({"", "/"})
     public String index(Model model) {
         model.addAttribute("tasks", taskService.findAll());
+        model.addAttribute("currentWeek", weekService.findCurrentWeek());
         return "index";
     }
 
