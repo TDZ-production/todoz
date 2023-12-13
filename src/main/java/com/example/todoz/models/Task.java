@@ -36,7 +36,12 @@ public class Task {
     }
 
     public Integer getDueDateWeek(){
-        return this.dueDate.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
+        if(dueDate != null){
+            return this.dueDate.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
+        }
+        else {
+            return null;
+        }
     }
 
     public Object getLastingDays() {

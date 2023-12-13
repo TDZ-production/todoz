@@ -51,6 +51,7 @@ public class MainController {
     public String showWeekReview(Model model){
         model.addAttribute("currentWeek", weekService.findCurrentWeek());
         model.addAttribute("donePercentage", weekService.findCurrentWeek().getDonePercentage());
+        model.addAttribute("nextTasks", taskService.findTasksForNextWeek());
         return "weekReview";
     }
 }

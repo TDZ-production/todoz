@@ -1,14 +1,15 @@
 package com.example.todoz.services;
 
 import com.example.todoz.models.Task;
+import com.example.todoz.models.Week;
 import com.example.todoz.repos.TaskRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
@@ -68,6 +69,12 @@ public class TaskService {
         }
     }
 
+    public List<Task> findTasksForNextWeek(){
+        return taskRepo.findAll()
+                .stream()
+                .filter(t -> t.getDueDateWeek() != null && t.getDueDateWeek() == Week.getCurrentWeekNumber() + 1)
+                .collect(Collectors.toList());
+    }
 }
 
 

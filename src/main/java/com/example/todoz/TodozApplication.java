@@ -30,11 +30,7 @@ public class TodozApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        User user = new User();
-        userRepo.save(user);
-
         Week week = new Week();
-        week.setUser(user);
         weekRepo.save(week);
 
         Task task = new Task();

@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
-import java.util.Calendar;
 import java.util.List;
 
 @Entity
