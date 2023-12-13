@@ -2,28 +2,29 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en"><head>
     <meta charset="UTF-8">
     <title>Week review</title>
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/styleWeekReview.css">
 </head>
 <body>
 <main class="phone-screen">
-    <!-- Sem můžeš vložit obsah své aplikace -->
     <header>
         <div class="link">
             <a th:href="@{/}"> < </a>
         </div>
 
-        <div class="week">
-            <h3 th:text="|Week ${currentWeek.getWeekNumber()}|"></h3>
+        <div class="weekReviewTitle">
+            <p> Week review</p>
         </div>
 
-        <div class="link2">
-            <a th:href="@{/leftBehind}"> Left behind </a>
-        </div>
+<!--        Uvidime v budoucnu, zatím není potřeba-->
+<!--        <div class="link2">-->
+<!--            <a th:href="@{/leftBehind}"> Left behind </a>-->
+<!--        </div>-->
 
     </header>
 
     <div class="weekSummary">
-        <h1 th:text="|${donePercentage} %|"></h1>
+        <span th:text="|Week ${currentWeek.getWeekNumber()}|"></span>
+        <h1 class="percentage" th:text="|${donePercentage} %|"></h1>
         <span>Tasks are finished</span>
     </div>
 
@@ -33,7 +34,7 @@
     </div>
 
     <form action="/createNewWeek" method="post">
-        <button type="submit"></button>
+      <button type="submit" name="startNewWeek" ><img src='/img/Box_4.png' width="55rem" alt=""/></button>
     </form>
 
 </main>
