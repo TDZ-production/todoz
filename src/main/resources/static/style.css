@@ -97,7 +97,6 @@ header {
     align-items: center;
 }
 
-
 #add {
     width: 90%;
     border-radius: 1.5rem;
@@ -107,7 +106,6 @@ header {
     font-family: virgil;
     font-size: 1.2rem;
 }
-
 
 .stars {
     position: absolute;
@@ -124,7 +122,6 @@ header {
     align-items: center;
     /*margin-bottom: 0.2rem;*/
     justify-content: space-around;
-
 }
 
 button{
@@ -148,4 +145,3 @@ a {
     font-family: virgil;
     src: url("Virgil.woff2");
 }
-
