@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Entity
@@ -28,5 +29,14 @@ public class Task {
     private Week week;
     @ManyToOne
     private User user;
+
+    public Object getLastingDays() {
+        if (this.getDueDate() == null) {
+            return null;
+        } else {
+            Duration duration = Duration.between(this.getCreatedAt(),this.getDueDate());
+            return duration.toDays();
+        }
+    }
 
 }
