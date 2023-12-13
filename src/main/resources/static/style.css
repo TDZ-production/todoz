@@ -2,28 +2,38 @@
 body, html {
     height: 100%;
     width: 100%;
-    margin: 0;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-style: normal;
     font-family: virgil;
+}
+
+@media(max-width: 768px) and (max-height: 1024px) {
+    body, html {
+        height: 100%;
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: virgil;
+    }
 }
 
 
 .phone-screen {
     position: relative;
-    min-width: 25rem; /* Šířka obrazovky */
+    min-width: 23rem; /* Šířka obrazovky */
     height: 95%; /* Výška obrazovky */
     border: 3px solid black; /* Černý border se 5 pixely */
     border-radius: 2rem; /* Zaoblené rohy */
     overflow: auto;
-    max-width: 25%;
+    max-width: 100%;
 }
 
 /*zarovnání úkolů */
 .tasks {
-    /*display:block;*/
     border-bottom: 1px solid black;
     padding: 0;
     padding-left: 1rem;
@@ -52,19 +62,14 @@ p{
     margin-left: 0.2rem;
 }
 
-
-/*definice stylu pro checkbox*/
-input {
+#taskCheck {
     width: 3rem;
     height: 3rem;
-    /*margin-right: 0.3rem;*/
-    /*margin-left: 0.1rem;*/
 }
 
 span {
-    width: 5.5rem;
+    width: 6rem;
 }
-
 
 header {
     border-bottom: 1px solid black;
@@ -86,11 +91,9 @@ header {
 .addTask {
     position: absolute;
     bottom: 0;
-    /*border: 1px solid black;*/
     width: 100%;
     height: 12%;
     background-color: lightgrey;
-    /*border-radius: 1rem;*/
     align-content: flex-end;
     display: flex;
     justify-content: center;
@@ -100,27 +103,25 @@ header {
 #add {
     width: 90%;
     border-radius: 1.5rem;
-    padding: 0.5rem;
+    padding: 0.8rem;
     border: 2px solid black;
     text-align: center;
     font-family: virgil;
     font-size: 1.2rem;
+    margin-left: 0.6rem;
+    margin-right: 0.6rem;
 }
 
 .stars {
     position: absolute;
-    bottom: 12%;
-    /*border: 1px solid black;*/
+    bottom: 24%;
     width: 100%;
     height: 12%;
     background-color: #e5e3e3;
-    /*border-radius: 1rem;*/
     align-content: flex-end;
     display: flex;
     flex-direction: row-reverse;
-    /*justify-content: center;*/
     align-items: center;
-    /*margin-bottom: 0.2rem;*/
     justify-content: space-around;
 }
 
@@ -130,9 +131,36 @@ button{
     border: none;
     margin: 0;
     padding: 0;
-    /*background: transparent;*/
-    /*background-color: #e5e3e3;*/
-    color: white;
+}
+
+.dateTime {
+    position: absolute;
+    bottom: 12%;
+    width: 100%;
+    height: 12%;
+    background-color: rgba(236, 198, 41, 0.65);
+    align-content: flex-end;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+
+}
+#date {
+    width: 70%;
+    margin-right: 0.95rem;
+    border-radius: 1.5rem;
+    border: 2px solid black;
+    padding: 0.7rem;
+    text-align: center;
+    font-size: 1.2rem;
+    font-family: virgil;
+}
+
+#dateCheck {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
 }
 
 
