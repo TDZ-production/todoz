@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -32,4 +33,13 @@ public class Task {
     public Task() {
         this.createdAt = LocalDate.now();
     }
+    public Object getLastingDays() {
+        if (this.getDueDate() == null) {
+            return null;
+        } else {
+            Duration duration = Duration.between(this.getCreatedAt(),this.getDueDate());
+            return duration.toDays();
+        }
+    }
+
 }
