@@ -51,6 +51,14 @@ public class TaskService {
         taskRepo.deleteById(id);
     }
 
+    public void save(Task task) {
+         taskRepo.save(task);
+    }
+
+    public List<Task> findAll() {
+        return taskRepo.findAll();
+    }
+
     public long getLastingDays(Task task) {
         if (task.getDueDate() == null) {
             throw new RuntimeException("Inputted Task must have and DueDate assigned.");
@@ -61,3 +69,5 @@ public class TaskService {
     }
 
 }
+
+
