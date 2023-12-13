@@ -23,4 +23,6 @@ public class User {
     private Role role = Role.USER;
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "user")
     private List<Week> week;
+    @OneToMany (mappedBy = "user")
+    List<Task> tasks;
 }

@@ -26,4 +26,9 @@ public class Week {
         Calendar calendar = Calendar.getInstance();
         this.weekNumber = calendar.get(Calendar.WEEK_OF_YEAR);
     }
+
+    public Long getDonePercentage() {
+        long count = this.getTasks().stream().filter(Task::isDone).count();
+        return Math.round((double) count / this.getTasks().size() * 100);
+    }
 }
