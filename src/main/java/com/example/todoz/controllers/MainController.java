@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.LocalDate;
+
 @Controller
 public class MainController {
 
@@ -21,15 +23,22 @@ public class MainController {
     }
 
     @GetMapping({"", "/"})
-    public String index(Model model) {
-        model.addAttribute("tasks", taskService.findAll());
+    public String showIndex(Model model) {
         model.addAttribute("currentWeek", weekService.findCurrentWeek());
         return "index";
     }
 
     @PostMapping("/add")
-    public String add(Task task) {
+    public String add(Task task, LocalDate localDate) {
+        int currentWeek = weekService.findCurrentWeek().getWeekNumber();
+
+        if(task.getDueDate() == null || task.getDueDateWeek() == currentWeek){
+            task.setWeek(weekService.findCurrentWeek());
+        }
+
+        task.setDueDate(localDate.atTime(23, 59, 59));
         taskService.save(task);
+
         return "redirect:/";
     }
 
