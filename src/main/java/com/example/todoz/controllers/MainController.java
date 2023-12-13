@@ -54,4 +54,10 @@ public class MainController {
         model.addAttribute("nextTasks", taskService.findTasksForNextWeek());
         return "weekReview";
     }
+
+    @GetMapping("longTerm")
+    public String showLongTerm(Model model){
+        model.addAttribute("longTerm", taskService.findLongTerm());
+        return "longTerm";
+    }
 }

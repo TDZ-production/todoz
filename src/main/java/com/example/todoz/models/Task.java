@@ -10,6 +10,7 @@ import lombok.Setter;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 
@@ -38,6 +39,16 @@ public class Task {
     public Integer getDueDateWeek(){
         if(dueDate != null){
             return this.dueDate.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
+        }
+        else {
+            return null;
+        }
+    }
+
+    public String getDueDateFormat(){
+        if(dueDate != null){
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            return dueDate.format(formatter);
         }
         else {
             return null;

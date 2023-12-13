@@ -27,6 +27,7 @@
         <h1 class="percentage" th:text="|${donePercentage} %|"></h1>
         <span>Tasks are finished</span>
     </div>
+
     <span>Tasks for next week:</span>
     <div class="tasks" th:each="task : ${nextTasks}" >
         <p class="taskText" th:text="${task.getDescription()}"></p>
