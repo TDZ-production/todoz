@@ -43,13 +43,13 @@ p{
     height: 100%;
     display: flex;
     align-items: center;
-    margin-right: 0.1rem;
+    margin-right: 1rem;
 }
 
 .dueDate {
     font-size: 1rem;
-    margin-right: 1.2rem;
-    margin-left: 0.5rem;
+    margin-right: 0.2rem;
+    margin-left: 0.2rem;
 }
 
 
@@ -100,10 +100,12 @@ header {
 
 #add {
     width: 90%;
-    border-radius: 0.5rem;
+    border-radius: 1.5rem;
     padding: 0.5rem;
     border: 2px solid black;
     text-align: center;
+    font-family: virgil;
+    font-size: 1.2rem;
 }
 
 
