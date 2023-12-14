@@ -2,46 +2,42 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en"><head>
     <meta charset="UTF-8">
     <title>Week review</title>
-<!--    <link rel="stylesheet" href="/styleWeekReview.css">-->
+    <link rel="stylesheet" href="/styleWeekReview.css">
 </head>
 <body>
+
 <main class="phone-screen">
+
     <header>
-        <div class="link">
-            <a th:href="@{/}"> < </a>
-        </div>
-
-        <div class="weekReviewTitle">
-            <p> Week review</p>
-        </div>
-
-<!--        Uvidime v budoucnu, zatím není potřeba-->
-<!--        <div class="link2">-->
-<!--            <a th:href="@{/leftBehind}"> Left behind </a>-->
-<!--        </div>-->
-
+        <a th:href="@{/}"> < </a>
+        <p> Week review</p>
     </header>
 
     <div class="weekSummary">
-        <span th:text="|Week ${currentWeek.getWeekNumber()}|"></span>
-        <h1 class="percentage" th:text="|${currentWeek.getDonePercentage()} %|"></h1>
-        <span>Tasks are finished</span>
+        <p th:text="|Week ${currentWeek.getWeekNumber()}|"></p>
+        <h1 class="percentage" th:text="|${currentWeek.getDonePercentage()}%|"></h1>
+        <p>Tasks are finished</p>
+        <button>Add tasks to new week!</button>
     </div>
 
-    <span>Tasks for next week:</span>
-    <div class="tasks" th:each="task : ${upcomingTasks}" >
-        <p class="taskText" th:text="${task.getDescription()}"></p>
-    </div>
+    <section class="taskContainer">
+        <div class="task" th:each="task : ${upcomingTasks}" >
+            <p class="taskText" th:text="${task.getDescription()}"></p>
+        </div>
 
-    <div class="tasks" th:each="task : ${currentWeek.getTasks()}" >
-        <p class="taskText" th:text="${task.getDescription()}"></p>
-        <span th:text="${task.isDone()}"></span>
-    </div>
+        <div class="task" th:each="task : ${currentWeek.getTasks()}" >
+            <p class="taskText" th:text="${task.getDescription()}"></p>
+            <span th:if="${task.isDone()}">Done</span>
+        </div>
 
-    <form action="/createNewWeek" method="post">
-      <button type="submit">tvoje mama</button>
-    </form>
+        <form action="/createNewWeek" method="post">
+            <button type="submit" th:text="|Start new week with ${howManyTasks} tasks|"></button>
+        </form>
+
+        <p id="motivation">You are crushing it!</p>
+    </section>
 
 </main>
+
 </body>
 </html>

@@ -1,29 +1,69 @@
-/* Definice stylu pro obdélník telefonní obrazovky */
-body, html {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-style: normal;
+@font-face {
     font-family: virgil;
+    src: url("Virgil.woff2");
 }
 
+body {
+    margin: 0;
+    padding: 0;
+    font-family: virgil, sans-serif;
+    background-color: #ffc9c9;
+}
 
 .phone-screen {
-    position: relative;
-    min-width: 25rem; /* Šířka obrazovky */
-    height: 95%; /* Výška obrazovky */
-    border: 3px solid black; /* Černý border se 5 pixely */
-    border-radius: 2rem; /* Zaoblené rohy */
-    overflow: auto;
-    max-width: 25%;
+    margin: 0 auto;
+    min-width: 23rem;
+    min-height: 30rem;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: white;
 }
 
-/*zarovnání úkolů */
-.tasks {
-    /*display:block;*/
+@media(min-width: 400px) {
+    .phone-screen {
+        margin: 1rem auto;
+        box-shadow: 0 0 0 3px black;
+        border-radius: 2rem;
+        max-width: 394px;
+        height: calc(100svh - 2rem);
+    }
+}
+
+.weekSummary {
+    border-bottom: 2px solid black;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.weekSummary p {
+    margin: 0;
+}
+
+.weekSummary button {
+    background-image: url("img/Box_2_CutToEdge.png");
+    background-size: cover;
+    width: 22rem;
+    height: 3.4rem;
+    padding: 1rem;
+    border: none;
+    border-radius: 1rem;
+    font-family: inherit;
+    font-size: 1.2rem;
+    margin-top: 2rem;
+}
+
+.percentage {
+    font-size: 5rem;
+    color: green;
+    margin: 1rem;
+    margin-bottom: 0;
+}
+
+.task {
     border-bottom: 1px solid black;
     padding: 0;
     padding-left: 1rem;
@@ -33,9 +73,14 @@ body, html {
     justify-content: flex-end;
 }
 
+.taskContainer {
+    overflow: auto;
+    flex-grow: 1;
+    padding-bottom: 4rem;
+}
+
 p{
     font-size: 1.2rem;
-    width: max-content;
 }
 
 .taskText {
@@ -43,121 +88,61 @@ p{
     height: 100%;
     display: flex;
     align-items: center;
-    margin-right: 1rem;
-}
-
-.dueDate {
-    font-size: 1rem;
-    margin-right: 0.2rem;
-    margin-left: 0.2rem;
-}
-
-
-/*definice stylu pro checkbox*/
-input {
-    width: 3rem;
-    height: 3rem;
-    /*margin-right: 0.3rem;*/
-    /*margin-left: 0.1rem;*/
+    margin: 1rem;
+    margin-left: 0;
 }
 
 span {
-    width: 5.5rem;
+    width: 6rem;
 }
-
 
 header {
-    border-bottom: 1px solid black;
-    height: 5rem;
+    border-bottom: 2px solid black;
+    padding: 1.5rem 1rem;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+header a {
     padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    z-index: 1;
 }
 
-.link {
-    padding-left: 1rem;
-}
-
-.week {
-    text-align: center;
-}
-
-.weekSummary {
-    text-align: center;
-    border-bottom: 1px solid black;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-}
-
-.weekReviewTitle {
-
-}
-
-.percentage {
-    color: green;
-    font-size: 60px;
-}
-
-.addTask {
+header p {
+    align-self: center;
     position: absolute;
-    bottom: 0;
-    /*border: 1px solid black;*/
-    width: 100%;
-    height: 12%;
-    background-color: lightgrey;
-    /*border-radius: 1rem;*/
-    align-content: flex-end;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    left: 0;
+    right: 0;
+    text-align: center;
 }
 
-#add {
-    width: 90%;
-    border-radius: 1.5rem;
-    padding: 0.5rem;
-    border: 2px solid black;
-    text-align: center;
-    font-family: virgil;
+.taskContainer form {
+    margin-top: 3.33rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.taskContainer form button {
+    background-image: url("img/Box_4_CutToEdge.png");
+    background-size: cover;
+    width: 20rem;
+    height: 4.1rem;
+    padding: 1rem;
+    border: none;
+    border-radius: 1rem;
+    font-family: inherit;
     font-size: 1.2rem;
 }
 
-.stars {
-    position: absolute;
-    bottom: 12%;
-    /*border: 1px solid black;*/
-    width: 100%;
-    height: 12%;
-    background-color: #e5e3e3;
-    /*border-radius: 1rem;*/
-    align-content: flex-end;
-    display: flex;
-    flex-direction: row-reverse;
-    /*justify-content: center;*/
-    align-items: center;
-    /*margin-bottom: 0.2rem;*/
-    justify-content: space-around;
+#motivation {
+    margin-top: 2.5rem;
+    text-align: center;
+    color: grey;
 }
-
-button{
-    background: url('img/Star 7-2.png') no-repeat;
-    filter: brightness(0) invert(1);
-    border: none;
-    margin: 0;
-    padding: 0;
-    /*background: transparent;*/
-    /*background-color: #e5e3e3;*/
-    color: white;
-}
-
 
 a {
     text-decoration: none;
     color:black;
-}
-
-@font-face {
-    font-family: virgil;
-    src: url("Virgil.woff2");
 }
