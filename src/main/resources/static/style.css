@@ -7,6 +7,8 @@ body {
     margin: 0;
     padding: 0;
     font-family: virgil, sans-serif;
+    /*background-color: #c9c9b5;*/
+    background-color: #ffc9c9;
 }
 
 .phone-screen {
@@ -17,6 +19,7 @@ body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    background-color: white;
 }
 
 .task {
@@ -78,8 +81,12 @@ header {
     text-align: center;
 }
 
+.addTask, .dateTime, .stars{
+    border-top: 2px solid black;
+    background-color: white;
+}
+
 .addTask, .dateTime {
-    background-color: lightgrey;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -97,7 +104,7 @@ header {
 }
 
 .stars {
-    background-color: #e5e3e3;
+    /*background-color: #e5e3e3;*/
     display: flex;
     flex-direction: row-reverse;
 }
@@ -106,6 +113,7 @@ button {
     border: none;
     padding: .5rem;
     flex-grow: 1;
+    background-color: white;
 }
 
 button:nth-child(n+2) {
@@ -117,8 +125,12 @@ button:nth-child(3) img { height: 1.66rem; }
 button:nth-child(2) img { height: 2.33rem; }
 button:nth-child(1) img { height: 3rem; }
 
+button:hover {
+    background-color: #b2f2bb;
+}
+
 .dateTime {
-    background-color: #FFF168;
+    background-color: #fff4c2;
 }
 
 #dateCheck {
