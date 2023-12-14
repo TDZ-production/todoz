@@ -10,6 +10,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.time.format.TextStyle;
+import java.util.Locale;
+
 @SpringBootApplication
 public class TodozApplication implements CommandLineRunner {
 
@@ -39,15 +42,15 @@ public class TodozApplication implements CommandLineRunner {
         task.setDone(true);
         taskRepo.save(task);
 
-        Task task2 = new Task();
-        task2.setDescription("Task b");
-        task2.setWeek(week);
-        taskRepo.save(task2);
-
-        Task task3 = new Task();
-        task3.setDescription("Task c");
-        task3.setWeek(week);
-        task3.setDone(true);
-        taskRepo.save(task3);
+//        Task task2 = new Task();
+//        task2.setDescription("Task b");
+//        task2.setWeek(week);
+//        taskRepo.save(task2);
+//
+//        Task task3 = new Task();
+//        task3.setDescription("Task c");
+//        task3.setWeek(week);
+//        task3.setDone(true);
+//        taskRepo.save(task3);
     }
 }
