@@ -16,9 +16,9 @@
         </div>
     </header>
 
-    <div class="tasks" th:each="task : ${longTerm}" >
-        <p class="taskText" th:text="${task.getDescription()}"></p>
-        <p class="taskText" th:text="${task.getDueDateFormat()}"></p>
+    <div class="tasks" th:each="task : ${longTerm}" th:object="${task}">
+        <p class="taskText" th:text="*{getDescription()}"></p>
+        <p class="taskText" th:text="|*{getDueDateDayOfWeek()} *{getDueDateFormat()}|"></p>
     </div>
 
 </main>

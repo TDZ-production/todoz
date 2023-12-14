@@ -33,9 +33,9 @@ public class MainController {
     @PostMapping("/add")
     public String add(Task task, LocalDate maybeDueDate) {
 
-        if(maybeDueDate == null){
+        if (maybeDueDate == null) {
             task.setWeek(weekService.findCurrentWeek());
-        } else if (maybeDueDate.get(WeekFields.ISO.weekOfWeekBasedYear()) == Week.getCurrentWeekNumber()) {
+        } else if (maybeDueDate.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear()) == Week.getCurrentWeekNumber()) {
             task.setWeek(weekService.findCurrentWeek());
             task.setDueDate(maybeDueDate.atTime(23, 59, 59));
         } else {
@@ -48,7 +48,7 @@ public class MainController {
     }
 
     @GetMapping("/weekReview")
-    public String showWeekReview(Model model){
+    public String showWeekReview(Model model) {
         model.addAttribute("currentWeek", weekService.findCurrentWeek());
         model.addAttribute("donePercentage", weekService.findCurrentWeek().getDonePercentage());
         model.addAttribute("nextTasks", taskService.findTasksForNextWeek());
@@ -56,7 +56,7 @@ public class MainController {
     }
 
     @GetMapping("longTerm")
-    public String showLongTerm(Model model){
+    public String showLongTerm(Model model) {
         model.addAttribute("longTerm", taskService.findLongTerm());
         return "longTerm";
     }

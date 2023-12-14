@@ -10,6 +10,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.time.format.TextStyle;
+import java.util.Locale;
+
 @SpringBootApplication
 public class TodozApplication implements CommandLineRunner {
 
@@ -49,5 +52,7 @@ public class TodozApplication implements CommandLineRunner {
         task3.setWeek(week);
         task3.setDone(true);
         taskRepo.save(task3);
+
+        System.out.println(task3.getCreatedAt().getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()));
     }
 }
