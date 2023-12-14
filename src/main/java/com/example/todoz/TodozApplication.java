@@ -47,7 +47,7 @@ public class TodozApplication implements CommandLineRunner {
         Task task = new Task();
         task.setDescription("Task a");
         task.setWeek(week);
-        task.setDone(true);
+        task.setDone(false);
         task.setPriority(1);
         task.setDueDate(LocalDateTime.of(2023, 12, 16, 23, 59, 59));
         taskRepo.save(task);
@@ -55,6 +55,7 @@ public class TodozApplication implements CommandLineRunner {
         Task task2 = new Task();
         task2.setDescription("Task b");
         task2.setWeek(week);
+        task2.setDone(false);
         task2.setPriority(1);
         task2.setDueDate(LocalDateTime.of(2023, 12, 15, 23, 59, 59));
         taskRepo.save(task2);
@@ -62,7 +63,7 @@ public class TodozApplication implements CommandLineRunner {
         Task task3 = new Task();
         task3.setDescription("Task c");
         task3.setWeek(week);
-        task3.setDone(true);
+        task3.setDone(false);
         task3.setPriority(1);
         task3.setDueDate(LocalDateTime.of(2023, 12, 14, 23, 59, 59));
         taskRepo.save(task3);

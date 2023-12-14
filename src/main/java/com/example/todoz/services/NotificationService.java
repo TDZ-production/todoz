@@ -28,22 +28,19 @@ public class NotificationService {
     public void save(Notification n){
         notificationRepo.save(n);
     }
-    public Notification getNotificationWithSameDay(Task task){
+    public List<Notification> getNotificationWithSameDay(Task task){
         Random r = new Random();
         if(task == null){
             throw new RuntimeException("Inputted Task must not be null.");
         } else if (task.getDueDate() == null){
             throw new RuntimeException("Inputted Task must have and DueDate assigned.");
-        } else if (task.isDone()) {
-            return null;
         } else{
             Long taskDay = taskService.getLastingDays(task);
-            Optional<Notification> notification = Optional.ofNullable(notificationRepo.findAllByLastingDays(taskDay).stream()
+            return  notificationRepo.findAllByLastingDays(taskDay).stream()
                     .peek(n -> n.setDescription(task.getDescription()))
-                    .toList()
-                    .get(r.nextInt(notificationRepo.findAllByLastingDays(taskDay).size())));
+                    .toList();
+//                    .get(r.nextInt(notificationRepo.findAllByLastingDays(taskDay).size())));
 
-            return notification.orElse(null);
         }
     }
 

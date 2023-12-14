@@ -9,6 +9,7 @@
 <script th:inline="javascript">
 
     var messages = [[${messages}]];
+
     function rotateArray(arr){
         var nextItem = arr.shift();
         arr.push(nextItem);
@@ -18,8 +19,8 @@
     function showNotification() {
 
         if (Notification.permission === 'granted') {
-            // var currentMessage = rotateArray(messages);
-            var notification = new Notification(messages.title,  { body: messages.description });
+            var nextMessage = rotateArray(messages);
+            var notification = new Notification(nextMessage.title,  { body: nextMessage.description });
         } else if (Notification.permission !== 'denied') {
             Notification.requestPermission().then(function (permission) {
                 if (permission === 'granted') {
@@ -28,8 +29,7 @@
             });
         }
     }
-
-    // setInterval(showNotification,  10000 );
+    setInterval(showNotification,  10000 );
 
 </script>
 <body>
