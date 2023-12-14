@@ -5,12 +5,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.WeekFields;
+import java.util.Locale;
 
 @Entity
 @Getter
@@ -22,8 +24,8 @@ public class Task {
     private Long id;
     private String description;
     private Integer priority;
-    private LocalDate createdAt;
-    private LocalDate dueDate;
+    private LocalDateTime createdAt;
+    private LocalDateTime dueDate;
     private boolean done;
     @ManyToOne
     private Week week;
@@ -31,8 +33,28 @@ public class Task {
     private User user;
 
     public Task() {
-        this.createdAt = LocalDate.now();
+        this.createdAt = LocalDateTime.now();
     }
+
+    public Integer getDueDateWeek(){
+        if(dueDate != null){
+            return this.dueDate.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
+        }
+        else {
+            return null;
+        }
+    }
+
+    public String getDueDateFormat(){
+        if(dueDate != null){
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            return dueDate.format(formatter);
+        }
+        else {
+            return null;
+        }
+    }
+
     public Object getLastingDays() {
         if (this.getDueDate() == null) {
             return null;

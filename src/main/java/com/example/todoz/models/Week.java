@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.temporal.WeekFields;
 import java.util.List;
 
 @Entity
@@ -23,8 +24,11 @@ public class Week {
     private List<Task> tasks;
 
     public Week() {
-        Calendar calendar = Calendar.getInstance();
-        this.weekNumber = calendar.get(Calendar.WEEK_OF_YEAR);
+        this.weekNumber = LocalDate.now().get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());;
+    }
+
+    public static Integer getCurrentWeekNumber(){
+        return LocalDate.now().get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
     }
 
     public Long getDonePercentage() {

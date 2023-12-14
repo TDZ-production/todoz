@@ -1,6 +1,5 @@
 package com.example.todoz.services;
 
-import com.example.todoz.models.Task;
 import com.example.todoz.models.Week;
 import com.example.todoz.repos.WeekRepo;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,7 @@ public class WeekService {
     }
 
     public Week findCurrentWeek(){
-        return weekRepo.findWeekWithHighestId();
+        return weekRepo.findByWeekNumber(Week.getCurrentWeekNumber());
     }
 
 //    public Long getDonePercentage() {

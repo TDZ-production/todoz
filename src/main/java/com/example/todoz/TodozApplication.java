@@ -11,11 +11,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class    TodozApplication implements CommandLineRunner {
+public class TodozApplication implements CommandLineRunner {
 
-    private TaskRepo taskRepo;
-    private UserRepo userRepo;
-    private WeekRepo weekRepo;
+    private final TaskRepo taskRepo;
+    private final UserRepo userRepo;
+    private final WeekRepo weekRepo;
 
 
     public TodozApplication(TaskRepo taskRepo, UserRepo userRepo, WeekRepo weekRepo) {
@@ -30,23 +30,22 @@ public class    TodozApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        User user = new User();
-        userRepo.save(user);
-
         Week week = new Week();
-        week.setUser(user);
         weekRepo.save(week);
 
         Task task = new Task();
+        task.setDescription("Task a");
         task.setWeek(week);
         task.setDone(true);
         taskRepo.save(task);
 
         Task task2 = new Task();
+        task2.setDescription("Task b");
         task2.setWeek(week);
         taskRepo.save(task2);
 
         Task task3 = new Task();
+        task3.setDescription("Task c");
         task3.setWeek(week);
         task3.setDone(true);
         taskRepo.save(task3);

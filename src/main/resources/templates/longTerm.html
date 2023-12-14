@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"><head>
+    <meta charset="UTF-8">
+    <title>Long term</title>
+    <link rel="stylesheet" href="/styleWeekReview.css">
+</head>
+<body>
+<main class="phone-screen">
+    <header>
+        <div class="link">
+            <a th:href="@{/}"> > </a>
+        </div>
+
+        <div class="weekReviewTitle">
+            <p>Long term tasks</p>
+        </div>
+    </header>
+
+    <div class="tasks" th:each="task : ${longTerm}" >
+        <p class="taskText" th:text="${task.getDescription()}"></p>
+        <p class="taskText" th:text="${task.getDueDateFormat()}"></p>
+    </div>
+
+</main>
+</body>
+</html>
