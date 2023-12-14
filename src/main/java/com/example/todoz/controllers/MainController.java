@@ -30,6 +30,7 @@ public class MainController {
 
     @GetMapping({"", "/"})
     public String showIndex(Model model) {
+        model.addAttribute("messages", notificationService.getAll());
 
         model.addAttribute("currentWeek", weekService.findCurrentWeek());
         return "index";

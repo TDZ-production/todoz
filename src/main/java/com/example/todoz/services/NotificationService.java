@@ -42,6 +42,11 @@ public class NotificationService {
             return notification.orElse(null);
         }
     }
+
+
+    public Notification getNotificationById(Long id){
+        return notificationRepo.findById(id).orElseThrow(RuntimeException::new);
+    }
 }
 
 

@@ -1,12 +1,41 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en"><head>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>TodoZ</title>
     <link rel="stylesheet" href="/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
+<script th:inline="javascript">
+    document.addEventListener('authenticationSuccess', function(event) {
+        // Show a success notification
+        showNotification('Login Successful');
+    });
+    var messages = [[${messages}]];
+    function rotateArray(arr){
+        var nextItem = arr.shift();
+        arr.push(nextItem);
+        return nextItem
+    }
 
+    function showNotification(notification2) {
+
+        if (Notification.permission === 'granted') {
+            var currentMessage = rotateArray(messages);
+            var notification = new Notification(notification2,  { body: notification2 });
+            // var notification = new Notification(currentMessage.title,  { body: currentMessage.description });
+        } else if (Notification.permission !== 'denied') {
+            Notification.requestPermission().then(function (permission) {
+                if (permission === 'granted') {
+                    showNotification();
+                }
+            });
+        }
+    }
+
+    setInterval(showNotification,  1000 );
+
+</script>
 <body>
 <main class="phone-screen">
     <header>
