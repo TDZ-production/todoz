@@ -83,4 +83,9 @@ public class MainController {
         model.addAttribute("longTerm", taskService.findLongTerm());
         return "longTerm";
     }
+
+    @GetMapping("/login")
+    public String showLogin() {
+        return "loginPage";
+    }
 }

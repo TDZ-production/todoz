@@ -65,7 +65,7 @@ span {
 }
 
 header {
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid black;
     padding: 1rem;
     display: flex;
     justify-content: space-between;
@@ -100,10 +100,10 @@ header {
     display: block;
     width: 100%;
     margin: 0.8rem;
+    outline: none;
 }
 
 .stars {
-    /*background-color: #e5e3e3;*/
     display: flex;
     flex-direction: row-reverse;
 }
@@ -119,10 +119,10 @@ button:nth-child(n+2) {
     border-right: 1px solid black;
 }
 
-button:nth-child(4) img { height: 1rem; }
-button:nth-child(3) img { height: 1.66rem; }
-button:nth-child(2) img { height: 2.33rem; }
-button:nth-child(1) img { height: 3rem; }
+button:nth-child(4) img { height: 1.35rem; }
+button:nth-child(3) img { height: 1.88rem; }
+button:nth-child(2) img { height: 2.44rem; }
+button:nth-child(1) img { height: 3.1rem; }
 
 button:hover {
     background-color: #b2f2bb;
