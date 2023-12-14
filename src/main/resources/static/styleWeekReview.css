@@ -117,15 +117,14 @@ header p {
     text-align: center;
 }
 
-.bottom {
-    border-top: 2px solid black;
-    padding: 3.3rem;
+.taskContainer form {
+    margin-top: 3.33rem;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.bottom button {
+.taskContainer form button {
     background-image: url("img/Box_4_CutToEdge.png");
     background-size: cover;
     width: 20rem;
@@ -135,6 +134,12 @@ header p {
     border-radius: 1rem;
     font-family: inherit;
     font-size: 1.2rem;
+}
+
+#motivation {
+    margin-top: 2.5rem;
+    text-align: center;
+    color: grey;
 }
 
 a {

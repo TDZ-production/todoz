@@ -27,15 +27,16 @@
 
         <div class="task" th:each="task : ${currentWeek.getTasks()}" >
             <p class="taskText" th:text="${task.getDescription()}"></p>
-            <!--        <span th:text="${task.isDone()}" ></span>-->
+            <span th:if="${task.isDone()}">Done</span>
         </div>
-    </section>
 
-    <section class="bottom">
         <form action="/createNewWeek" method="post">
             <button type="submit" th:text="|Start new week with ${howManyTasks} tasks|"></button>
         </form>
+
+        <p id="motivation">You are crushing it!</p>
     </section>
+
 </main>
 
 </body>
