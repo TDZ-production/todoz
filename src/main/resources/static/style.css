@@ -1,7 +1,5 @@
 /* Definice stylu pro obdélník telefonní obrazovky */
 body, html {
-    /*background-image: url("img/wood5.jpeg");*/
-    /*background-size: cover;*/
     height: 100%;
     width: 100%;
     margin: 0;
@@ -31,17 +29,20 @@ body, html {
     height: 95%; /* Výška obrazovky */
     border: 3px solid black; /* Černý border se 5 pixely */
     border-radius: 2rem; /* Zaoblené rohy */
-    /*overflow: auto;*/
+    overflow: auto;
     max-width: 25%;
     background-color: white; /* Průhledné bílé pozadí */
     overflow-anchor: auto;
-    overflow: scroll;
 }
-#footer {
-    /*position: absolute;*/
-    /*position: fixed;*/
-    /*bottom: 0;*/
-    /*right: 0;*/
+/*#footer {*/
+/*    height: 100%;*/
+/*}*/
+.form-section {
+    /*height: 32%;*/
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 }
 
 /*zarovnání úkolů */
