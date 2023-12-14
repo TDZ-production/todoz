@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en"><head>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>TodoZ</title>
-    <link rel="stylesheet" href="/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>TodoZ</title>
+        <link rel="stylesheet" href="/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    </head>
 
 <body>
 <main class="phone-screen">
@@ -24,22 +25,24 @@
 
     </header>
 
-    <div class="tasks" th:each="task : ${currentWeek.getTasks()}" th:if="${task.getDescription()}">
-        <p class="taskText" th:text="${task.getDescription()}"></p>
-        <span class="dueDate"> 7 hours </span>
-        <input type="checkbox" name="done" id="taskCheck">
-    </div>
+    <section class="taskContainer">
+        <div class="task" th:each="task : ${currentWeek.getTasks()}" th:if="${task.getDescription()}">
+            <p class="taskText" th:text="${task.getDescription()}"></p>
+            <span class="dueDate"> 7 hours </span>
+            <input type="checkbox" name="done" id="taskCheck">
+        </div>
+    </section>
 
+    <section class="form-section">
     <form method="post" th:action="@{/add}">
         <div class="stars">
-            <button type="submit" name="priority" value="4"><img src='/img/Star%207.svg' width="55rem"/></button>
-            <button type="submit" name="priority" value="3"><img src='/img/Star%207.svg' width="50rem"/></button>
-            <button type="submit" name="priority" value="2"><img src='/img/Star%207.svg' width="45rem"/></button>
-            <button type="submit" name="priority" value="1"><img src='/img/Star%207.svg' width="40rem"/></button>
+            <button type="submit" name="priority" value="4"><img src='/img/Star%207.svg'/></button>
+            <button type="submit" name="priority" value="3"><img src='/img/Star%207.svg'/></button>
+            <button type="submit" name="priority" value="2"><img src='/img/Star%207.svg'/></button>
+            <button type="submit" name="priority" value="1"><img src='/img/Star%207.svg'/></button>
         </div>
 
         <div class="dateTime">
-            <input type="checkbox" name="checked" id="dateCheck">
             <input type="date" name="maybeDueDate" id="date">
         </div>
 
@@ -47,7 +50,7 @@
             <input type="text" placeholder="new task" name="description" id="add" required>
         </div>
     </form>
-
+    </section>
 
 </main>
 </body>
