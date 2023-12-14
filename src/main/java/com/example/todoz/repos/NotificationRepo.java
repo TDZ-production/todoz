@@ -4,6 +4,9 @@ import com.example.todoz.models.Notification;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface NotificationRepo extends ListCrudRepository<Notification,Long> {
+    List<Notification> findAllByLastingDays(Long lastingDays);
 }
