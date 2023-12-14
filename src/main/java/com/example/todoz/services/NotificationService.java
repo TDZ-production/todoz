@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 public class NotificationService {
@@ -33,8 +34,10 @@ public class NotificationService {
             throw new RuntimeException("Inputted Task must have and DueDate assigned.");
         }else{
             Long taskDay = taskService.getLastingDays(task);
-            Optional<Notification> notification = Optional.ofNullable(notificationRepo.findAllByLastingDays(taskDay).
-                    get(r.nextInt(notificationRepo.findAll().size())));
+            Optional<Notification> notification = Optional.ofNullable(notificationRepo.findAllByLastingDays(taskDay).stream()
+                    .peek(n -> n.setTitle(task.getDescription()))
+                    .toList()
+                    .get(r.nextInt(notificationRepo.findAll().size())));
 
             return notification.orElse(null);
         }

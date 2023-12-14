@@ -32,6 +32,14 @@ public class Task {
     @ManyToOne
     private User user;
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Task() {
         this.createdAt = LocalDateTime.now();
     }
