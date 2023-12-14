@@ -60,7 +60,7 @@ public class TaskService {
         return taskRepo.findAll();
     }
 
-    public long getLastingDays(Task task) {
+    public Long getLastingDays(Task task) {
         if (task.getDueDate() == null) {
             throw new RuntimeException("Inputted Task must have and DueDate assigned.");
         } else {

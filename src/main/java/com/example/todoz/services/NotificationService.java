@@ -34,12 +34,14 @@ public class NotificationService {
             throw new RuntimeException("Inputted Task must not be null.");
         } else if (task.getDueDate() == null){
             throw new RuntimeException("Inputted Task must have and DueDate assigned.");
-        }else{
+        } else if (task.isDone()) {
+            return null;
+        } else{
             Long taskDay = taskService.getLastingDays(task);
             Optional<Notification> notification = Optional.ofNullable(notificationRepo.findAllByLastingDays(taskDay).stream()
-                    .peek(n -> n.setTitle(task.getDescription()))
+                    .peek(n -> n.setDescription(task.getDescription()))
                     .toList()
-                    .get(r.nextInt(notificationRepo.findAll().size())));
+                    .get(r.nextInt(notificationRepo.findAllByLastingDays(taskDay).size())));
 
             return notification.orElse(null);
         }
@@ -49,6 +51,8 @@ public class NotificationService {
     public Notification getNotificationById(Long id){
         return notificationRepo.findById(id).orElseThrow(RuntimeException::new);
     }
+
+
 }
 
 

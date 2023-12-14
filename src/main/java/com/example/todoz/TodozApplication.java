@@ -3,6 +3,7 @@ package com.example.todoz;
 import com.example.todoz.models.Notification;
 import com.example.todoz.models.Task;
 import com.example.todoz.models.Week;
+import com.example.todoz.repos.NotificationRepo;
 import com.example.todoz.repos.UserRepo;
 import com.example.todoz.repos.TaskRepo;
 import com.example.todoz.repos.WeekRepo;
@@ -22,14 +23,16 @@ public class TodozApplication implements CommandLineRunner {
     private final UserRepo userRepo;
     private final WeekRepo weekRepo;
     private final NotificationService notificationService;
+    private final NotificationRepo notificationRepo;
 
 
-    public TodozApplication(TaskRepo taskRepo, TaskService taskService, UserRepo userRepo, WeekRepo weekRepo, NotificationService notificationService) {
+    public TodozApplication(TaskRepo taskRepo, TaskService taskService, UserRepo userRepo, WeekRepo weekRepo, NotificationService notificationService, NotificationRepo notificationRepo) {
         this.taskRepo = taskRepo;
         this.taskService = taskService;
         this.userRepo = userRepo;
         this.weekRepo = weekRepo;
         this.notificationService = notificationService;
+        this.notificationRepo = notificationRepo;
     }
 
     public static void main(String[] args) {
@@ -70,10 +73,12 @@ public class TodozApplication implements CommandLineRunner {
         notificationService.save(new Notification(1L, "Can you already do it shithead!", null));
         notificationService.save(new Notification(1L, "Procrastinating huh...", null));
         notificationService.save(new Notification(1L, "Can you be less useless?", null));
-        notificationService.save(new Notification(0L, "Lasting is the same as you... ZERO!", null));
+        notificationService.save(new Notification(0L, "The number of lasting days is same as the number of bitches you have... ZERO!", null));
         notificationService.save(new Notification(0L, "Today is the day bitch!", null));
         notificationService.save(new Notification(0L, "Can you like... DO IT?!", null));
 
+        System.out.println(notificationService.getNotificationWithSameDay(taskService.getAllAndSortByPriority().stream().findFirst().orElse(null)));
+//        notificationRepo.findAllByLastingDays(1L).forEach(n -> System.out.println(n.getTitle()));
 //        taskService.getAllAndSortByPriority().forEach(t-> System.out.println(t.getPriority()));
     }
 }

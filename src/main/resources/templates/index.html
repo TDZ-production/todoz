@@ -18,8 +18,8 @@
     function showNotification() {
 
         if (Notification.permission === 'granted') {
-            var currentMessage = rotateArray(messages);
-            var notification = new Notification(currentMessage.title,  { body: currentMessage.description });
+            // var currentMessage = rotateArray(messages);
+            var notification = new Notification(messages.title,  { body: messages.description });
         } else if (Notification.permission !== 'denied') {
             Notification.requestPermission().then(function (permission) {
                 if (permission === 'granted') {
@@ -29,7 +29,7 @@
         }
     }
 
-    setInterval(showNotification,  30000 );
+    // setInterval(showNotification,  10000 );
 
 </script>
 <body>
