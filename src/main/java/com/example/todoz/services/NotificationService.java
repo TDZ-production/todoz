@@ -35,8 +35,8 @@ public class NotificationService {
         } else if (task.getDueDate() == null){
             throw new RuntimeException("Inputted Task must have and DueDate assigned.");
         } else{
-            Long taskDay = taskService.getLastingDays(task);
-            return  notificationRepo.findAllByLastingDays(taskDay).stream()
+            Long taskDay = taskService.geRemainingDays(task);
+            return  notificationRepo.findAllByRemainingDays(taskDay).stream()
                     .peek(n -> n.setDescription(task.getDescription()))
                     .toList();
 //                    .get(r.nextInt(notificationRepo.findAllByLastingDays(taskDay).size())));

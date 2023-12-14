@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface NotificationRepo extends ListCrudRepository<Notification,Long> {
-    List<Notification> findAllByLastingDays(Long lastingDays);
+    List<Notification> findAllByRemainingDays(Long remainingDays);
 }

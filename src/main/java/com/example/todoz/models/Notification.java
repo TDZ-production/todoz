@@ -16,10 +16,10 @@ public class Notification {
 
     String title;
     String description;
-    Long lastingDays;
+    Long remainingDays;
 
-    public Notification(Long lastingDays, String title, String description) {
-        this.lastingDays = lastingDays;
+    public Notification(Long remainingDays, String title, String description) {
+        this.remainingDays = remainingDays;
         this.title = title;
         this.description = description;
     }
