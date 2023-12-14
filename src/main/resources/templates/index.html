@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"><head>
 <head>
     <meta charset="UTF-8">
     <title>TodoZ</title>
@@ -15,7 +15,7 @@
         </div>
 
         <div class="week">
-            <p> Week 1</p>
+            <p th:text="|Week ${currentWeek.getWeekNumber()}|"></p>
         </div>
 
         <div class="link2">
@@ -24,10 +24,10 @@
 
     </header>
 
-    <div class="tasks" th:if="${task.getDescription()}" th:each="task : ${tasks}">
+    <div class="tasks" th:each="task : ${currentWeek.getTasks()}" th:if="${task.getDescription()}">
         <p class="taskText" th:text="${task.getDescription()}"></p>
         <span class="dueDate"> 7 hours </span>
-        <input type="checkbox" name="checked" id="taskCheck">
+        <input type="checkbox" name="done" id="taskCheck">
     </div>
 
     <form method="post" th:action="@{/add}">
@@ -40,7 +40,7 @@
 
         <div class="dateTime">
             <input type="checkbox" name="checked" id="dateCheck">
-            <input type="date" name="dueDate" id="date">
+            <input type="date" name="maybeDueDate" id="date">
         </div>
 
         <div class="addTask">
