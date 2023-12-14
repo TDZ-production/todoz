@@ -9,14 +9,8 @@
 <main class="phone-screen">
 
     <header>
-        <div class="link">
-            <a th:href="@{/}"> < </a>
-        </div>
-
-        <div class="weekReviewTitle">
-            <p> Week review</p>
-        </div>
-
+        <a th:href="@{/}"> < </a>
+        <p> Week review</p>
     </header>
 
     <div class="weekSummary">
@@ -39,7 +33,7 @@
 
     <section class="bottom">
         <form action="/createNewWeek" method="post">
-            <button type="submit">Start new week</button>
+            <button type="submit" th:text="|Start new week with ${howManyTasks} tasks|"></button>
         </form>
     </section>
 </main>

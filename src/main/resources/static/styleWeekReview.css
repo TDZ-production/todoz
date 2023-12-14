@@ -98,29 +98,43 @@ span {
 
 header {
     border-bottom: 2px solid black;
-    padding: 1rem;
+    padding: 1.5rem 1rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: left;
     align-items: center;
 }
 
 header a {
     padding: 1rem;
+    z-index: 1;
+}
+
+header p {
+    align-self: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
 }
 
 .bottom {
     border-top: 2px solid black;
-    padding: 1rem;
+    padding: 3.3rem;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
 }
 
 .bottom button {
+    background-image: url("img/Box_4_CutToEdge.png");
+    background-size: cover;
+    width: 20rem;
+    height: 4.1rem;
+    padding: 1rem;
     border: none;
-    padding: .5rem;
-    flex-grow: 1;
-    background-color: white;
+    border-radius: 1rem;
+    font-family: inherit;
+    font-size: 1.2rem;
 }
 
 a {
