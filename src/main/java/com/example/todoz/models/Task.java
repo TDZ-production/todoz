@@ -33,6 +33,10 @@ public class Task {
     @ManyToOne
     private User user;
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Task() {
         this.createdAt = LocalDateTime.now();
     }

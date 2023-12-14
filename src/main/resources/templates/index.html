@@ -1,13 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
     <head>
         <meta charset="UTF-8">
         <title>TodoZ-main</title>
         <link rel="stylesheet" href="/style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     </head>
+<script th:inline="javascript">
 
+    var messages = [[${messages}]];
+
+    function rotateArray(arr){
+        var nextItem = arr.shift();
+        arr.push(nextItem);
+        return nextItem
+    }
+
+    function showNotification() {
+
+        if (Notification.permission === 'granted') {
+            var nextMessage = rotateArray(messages);
+            var notification = new Notification(nextMessage.title,  { body: nextMessage.description });
+        } else if (Notification.permission !== 'denied') {
+            Notification.requestPermission().then(function (permission) {
+                if (permission === 'granted') {
+                    showNotification();
+                }
+            });
+        }
+    }
+    setInterval(showNotification,  10000 );
+
+</script>
 <body>
 <main class="phone-screen">
     <header>
