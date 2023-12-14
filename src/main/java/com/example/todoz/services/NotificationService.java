@@ -35,13 +35,9 @@ public class NotificationService {
             Long taskDay = taskService.getLastingDays(task);
             Optional<Notification> notification = Optional.ofNullable(notificationRepo.findAllByLastingDays(taskDay).
                     get(r.nextInt(notificationRepo.findAll().size())));
-            
-            if(notification.isPresent()){
-                return notification.get();
-            }
+
+            return notification.orElse(null);
         }
-
-
     }
 }
 
