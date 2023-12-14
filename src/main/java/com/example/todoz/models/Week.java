@@ -7,6 +7,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -24,15 +25,34 @@ public class Week {
     private List<Task> tasks;
 
     public Week() {
-        this.weekNumber = LocalDate.now().get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());;
+        this.weekNumber = LocalDate.now()
+                .get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());;
     }
 
     public static Integer getCurrentWeekNumber(){
-        return LocalDate.now().get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
+        return LocalDate.now()
+                .get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
     }
 
     public Long getDonePercentage() {
-        long count = this.getTasks().stream().filter(Task::isDone).count();
+        long count = this.getTasks()
+                .stream()
+                .filter(Task::isDone)
+                .count();
         return Math.round((double) count / this.getTasks().size() * 100);
+    }
+
+    public Long getNumberOfNotDone(){
+        return this.tasks
+                .stream()
+                .filter(t -> !t.isDone())
+                .count();
+    }
+
+    public List<Task> getNotDoneTasks(){
+        return this.tasks
+                .stream()
+                .filter(t -> !t.isDone())
+                .collect(Collectors.toList());
     }
 }

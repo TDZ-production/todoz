@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 public class MainController {
@@ -49,10 +52,30 @@ public class MainController {
 
     @GetMapping("/weekReview")
     public String showWeekReview(Model model) {
-        model.addAttribute("currentWeek", weekService.findCurrentWeek());
-        model.addAttribute("donePercentage", weekService.findCurrentWeek().getDonePercentage());
-        model.addAttribute("nextTasks", taskService.findTasksForNextWeek());
+        Week currentWeek = weekService.findCurrentWeek();
+        List<Task> upcomingTasks = taskService.findTasksForNextWeek();
+
+        model.addAttribute("currentWeek", currentWeek);
+        model.addAttribute("upcomingTasks", upcomingTasks);
+        model.addAttribute("howManyTasks", currentWeek.getNumberOfNotDone() + upcomingTasks.size());
         return "weekReview";
+    }
+
+    @PostMapping("/createNewWeek")
+    public String startNewWeek(){
+        Week newWeek = new Week();
+        newWeek.setWeekNumber(Week.getCurrentWeekNumber() + 1);
+
+        List<Task> tasks = Stream.concat(
+                        weekService.findCurrentWeek().getNotDoneTasks().stream(),
+                        taskService.findTasksForNextWeek().stream())
+                .peek(t -> t.setWeek(newWeek))
+                .collect(Collectors.toList());
+
+        newWeek.setTasks(tasks);
+        weekService.save(newWeek);
+
+        return "redirect:/";
     }
 
     @GetMapping("longTerm")
