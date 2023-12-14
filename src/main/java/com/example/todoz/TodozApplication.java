@@ -15,24 +15,19 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.LocalDateTime;
 
+
 @SpringBootApplication
 public class TodozApplication implements CommandLineRunner {
 
     private final TaskRepo taskRepo;
-    private final TaskService taskService;
-    private final UserRepo userRepo;
     private final WeekRepo weekRepo;
     private final NotificationService notificationService;
-    private final NotificationRepo notificationRepo;
 
 
-    public TodozApplication(TaskRepo taskRepo, TaskService taskService, UserRepo userRepo, WeekRepo weekRepo, NotificationService notificationService, NotificationRepo notificationRepo) {
+    public TodozApplication(TaskRepo taskRepo, WeekRepo weekRepo, NotificationService notificationService) {
         this.taskRepo = taskRepo;
-        this.taskService = taskService;
-        this.userRepo = userRepo;
         this.weekRepo = weekRepo;
         this.notificationService = notificationService;
-        this.notificationRepo = notificationRepo;
     }
 
     public static void main(String[] args) {
@@ -78,8 +73,5 @@ public class TodozApplication implements CommandLineRunner {
         notificationService.save(new Notification(0L, "Today is the day bitch!", null));
         notificationService.save(new Notification(0L, "Can you like... DO IT?!", null));
 
-        System.out.println(notificationService.getNotificationWithSameDay(taskService.getAllAndSortByPriority().stream().findFirst().orElse(null)));
-//        notificationRepo.findAllByLastingDays(1L).forEach(n -> System.out.println(n.getTitle()));
-//        taskService.getAllAndSortByPriority().forEach(t-> System.out.println(t.getPriority()));
     }
 }

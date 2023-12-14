@@ -11,6 +11,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 
@@ -57,6 +58,10 @@ public class Task {
         else {
             return null;
         }
+    }
+
+    public String getDueDateDayOfWeek(){
+        return this.dueDate.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault());
     }
 
     public Object getLastingDays() {

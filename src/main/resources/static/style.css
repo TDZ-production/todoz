@@ -1,39 +1,27 @@
-/* Definice stylu pro obdélník telefonní obrazovky */
-body, html {
-    height: 100%;
-    width: 100%;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+@font-face {
     font-family: virgil;
+    src: url("Virgil.woff2");
 }
 
-@media(max-width: 768px) and (max-height: 1024px) {
-    body, html {
-        height: 100%;
-        width: 100%;
-        margin: 0 auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: virgil;
-    }
+body {
+    margin: 0;
+    padding: 0;
+    font-family: virgil, sans-serif;
+    background-color: #ffc9c9;
 }
-
 
 .phone-screen {
-    position: relative;
-    min-width: 23rem; /* Šířka obrazovky */
-    height: 95%; /* Výška obrazovky */
-    border: 3px solid black; /* Černý border se 5 pixely */
-    border-radius: 2rem; /* Zaoblené rohy */
-    overflow: auto;
-    max-width: 100%;
+    margin: 0 auto;
+    min-width: 23rem;
+    min-height: 30rem;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: white;
 }
 
-/*zarovnání úkolů */
-.tasks {
+.task {
     border-bottom: 1px solid black;
     padding: 0;
     padding-left: 1rem;
@@ -43,9 +31,14 @@ body, html {
     justify-content: flex-end;
 }
 
+.taskContainer {
+    overflow: auto;
+    flex-grow: 1;
+    padding-bottom: 4rem;
+}
+
 p{
     font-size: 1.2rem;
-    width: max-content;
 }
 
 .taskText {
@@ -72,8 +65,7 @@ span {
 }
 
 header {
-    border-bottom: 1px solid black;
-    height: 5rem;
+    border-bottom: 2px solid black;
     padding: 1rem;
     display: flex;
     justify-content: space-between;
@@ -88,72 +80,56 @@ header {
     text-align: center;
 }
 
-.addTask {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 12%;
-    background-color: lightgrey;
-    align-content: flex-end;
+.addTask, .dateTime, .stars{
+    border-top: 2px solid black;
+    background-color: white;
+}
+
+.addTask, .dateTime {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#add {
-    width: 90%;
+#add, #date {
     border-radius: 1.5rem;
     padding: 0.8rem;
     border: 2px solid black;
-    text-align: center;
-    font-family: virgil;
+    font-family: inherit;
     font-size: 1.2rem;
-    margin-left: 0.6rem;
-    margin-right: 0.6rem;
+    display: block;
+    width: 100%;
+    margin: 0.8rem;
+    outline: none;
 }
 
 .stars {
-    position: absolute;
-    bottom: 24%;
-    width: 100%;
-    height: 12%;
-    background-color: #e5e3e3;
-    align-content: flex-end;
     display: flex;
     flex-direction: row-reverse;
-    align-items: center;
-    justify-content: space-around;
 }
 
-button{
-    background: url('img/Star 7-2.png') no-repeat;
-    filter: brightness(0) invert(1);
+button {
     border: none;
-    margin: 0;
-    padding: 0;
+    padding: .5rem;
+    flex-grow: 1;
+    background-color: white;
+}
+
+button:nth-child(n+2) {
+    border-right: 1px solid black;
+}
+
+button:nth-child(4) img { height: 1.35rem; }
+button:nth-child(3) img { height: 1.88rem; }
+button:nth-child(2) img { height: 2.44rem; }
+button:nth-child(1) img { height: 3.1rem; }
+
+button:hover {
+    background-color: #b2f2bb;
 }
 
 .dateTime {
-    position: absolute;
-    bottom: 12%;
-    width: 100%;
-    height: 12%;
-    background-color: rgba(236, 198, 41, 0.65);
-    align-content: flex-end;
-    display: flex;
-    justify-content: right;
-    align-items: center;
-
-}
-#date {
-    width: 70%;
-    margin-right: 0.95rem;
-    border-radius: 1.5rem;
-    border: 2px solid black;
-    padding: 0.7rem;
-    text-align: center;
-    font-size: 1.2rem;
-    font-family: virgil;
+    background-color: #fff4c2;
 }
 
 #dateCheck {
@@ -169,7 +145,12 @@ a {
     color:black;
 }
 
-@font-face {
-    font-family: virgil;
-    src: url("Virgil.woff2");
+@media(min-width: 400px) {
+    .phone-screen {
+        margin: 1rem auto;
+        box-shadow: 0 0 0 3px black;
+        border-radius: 2rem;
+        max-width: 394px;
+        height: calc(100svh - 2rem);
+    }
 }
