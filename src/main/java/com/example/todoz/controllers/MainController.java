@@ -16,15 +16,16 @@ import java.time.temporal.WeekFields;
 @Controller
 public class MainController {
 
-    TaskService taskService;
+   private final TaskService taskService;
 
-    WeekService weekService;
+    private final WeekService weekService;
 
-    NotificationService notificationService;
+    private final NotificationService notificationService;
 
-    public MainController(TaskService taskService, WeekService weekService) {
+    public MainController(TaskService taskService, WeekService weekService, NotificationService notificationService) {
         this.taskService = taskService;
         this.weekService = weekService;
+        this.notificationService = notificationService;
     }
 
     @GetMapping({"", "/"})
