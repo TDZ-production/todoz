@@ -30,7 +30,9 @@ public class NotificationService {
     }
     public Notification getNotificationWithSameDay(Task task){
         Random r = new Random();
-        if(task.getDueDate() == null){
+        if(task == null){
+            throw new RuntimeException("Inputted Task must not be null.");
+        } else if (task.getDueDate() == null){
             throw new RuntimeException("Inputted Task must have and DueDate assigned.");
         }else{
             Long taskDay = taskService.getLastingDays(task);

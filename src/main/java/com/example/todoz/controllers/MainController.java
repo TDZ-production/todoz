@@ -30,7 +30,7 @@ public class MainController {
 
     @GetMapping({"", "/"})
     public String showIndex(Model model) {
-        model.addAttribute("messages", notificationService.getAll());
+        model.addAttribute("messages", notificationService.getNotificationWithSameDay(taskService.getAllAndSortByPriority().stream().findFirst().orElse(null)));
 
         model.addAttribute("currentWeek", weekService.findCurrentWeek());
         return "index";

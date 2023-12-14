@@ -18,12 +18,11 @@
         return nextItem
     }
 
-    function showNotification(notification2) {
+    function showNotification() {
 
         if (Notification.permission === 'granted') {
             var currentMessage = rotateArray(messages);
-            var notification = new Notification(notification2,  { body: notification2 });
-            // var notification = new Notification(currentMessage.title,  { body: currentMessage.description });
+            var notification = new Notification(currentMessage.title,  { body: currentMessage.description });
         } else if (Notification.permission !== 'denied') {
             Notification.requestPermission().then(function (permission) {
                 if (permission === 'granted') {
@@ -33,7 +32,7 @@
         }
     }
 
-    setInterval(showNotification,  1000 );
+    setInterval(showNotification,  30000 );
 
 </script>
 <body>

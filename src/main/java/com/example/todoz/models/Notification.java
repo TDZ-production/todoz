@@ -18,7 +18,8 @@ public class Notification {
     String description;
     Long lastingDays;
 
-    public Notification(String title, String description) {
+    public Notification(Long lastingDays, String title, String description) {
+        this.lastingDays = lastingDays;
         this.title = title;
         this.description = description;
     }

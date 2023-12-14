@@ -1,11 +1,12 @@
 package com.example.todoz;
 
+import com.example.todoz.models.Notification;
 import com.example.todoz.models.Task;
-import com.example.todoz.models.User;
 import com.example.todoz.models.Week;
 import com.example.todoz.repos.UserRepo;
 import com.example.todoz.repos.TaskRepo;
 import com.example.todoz.repos.WeekRepo;
+import com.example.todoz.services.NotificationService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,12 +17,14 @@ public class TodozApplication implements CommandLineRunner {
     private final TaskRepo taskRepo;
     private final UserRepo userRepo;
     private final WeekRepo weekRepo;
+    private final NotificationService notificationService;
 
 
-    public TodozApplication(TaskRepo taskRepo, UserRepo userRepo, WeekRepo weekRepo) {
+    public TodozApplication(TaskRepo taskRepo, UserRepo userRepo, WeekRepo weekRepo, NotificationService notificationService) {
         this.taskRepo = taskRepo;
         this.userRepo = userRepo;
         this.weekRepo = weekRepo;
+        this.notificationService = notificationService;
     }
 
     public static void main(String[] args) {
@@ -49,5 +52,16 @@ public class TodozApplication implements CommandLineRunner {
         task3.setWeek(week);
         task3.setDone(true);
         taskRepo.save(task3);
+
+        notificationService.save(new Notification(2L, "I think you need to do this task mate...", null));
+        notificationService.save(new Notification(2L, "Come on... you have only two days for this...", null));
+        notificationService.save(new Notification(2L, "I dont want to call you lazy but ...", null));
+        notificationService.save(new Notification(1L, "Can you already do it shithead!", null));
+        notificationService.save(new Notification(1L, "Procrastinating huh...", null));
+        notificationService.save(new Notification(1L, "Can you be less useless?", null));
+        notificationService.save(new Notification(0L, "Lasting is the same as you... ZERO!", null));
+        notificationService.save(new Notification(0L, "Today is the day bitch!", null));
+        notificationService.save(new Notification(0L, "Can you like... DO IT?!", null));
+
     }
 }
