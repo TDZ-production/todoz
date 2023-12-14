@@ -134,12 +134,12 @@ a {
     color:black;
 }
 
-@media(min-width: 500px) {
+@media(min-width: 400px) {
     .phone-screen {
         margin: 1rem auto;
         box-shadow: 0 0 0 3px black;
         border-radius: 2rem;
-        max-width: 494px;
+        max-width: 394px;
         height: calc(100svh - 2rem);
     }
 }
