@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en"><head>
     <meta charset="UTF-8">
     <title>Week review</title>
-    <link rel="stylesheet" href="/styleWeekReview.css">
+<!--    <link rel="stylesheet" href="/styleWeekReview.css">-->
 </head>
 <body>
 <main class="phone-screen">
@@ -24,12 +24,12 @@
 
     <div class="weekSummary">
         <span th:text="|Week ${currentWeek.getWeekNumber()}|"></span>
-        <h1 class="percentage" th:text="|${donePercentage} %|"></h1>
+        <h1 class="percentage" th:text="|${currentWeek.getDonePercentage()} %|"></h1>
         <span>Tasks are finished</span>
     </div>
 
     <span>Tasks for next week:</span>
-    <div class="tasks" th:each="task : ${nextTasks}" >
+    <div class="tasks" th:each="task : ${upcomingTasks}" >
         <p class="taskText" th:text="${task.getDescription()}"></p>
     </div>
 
@@ -39,7 +39,7 @@
     </div>
 
     <form action="/createNewWeek" method="post">
-      <button type="submit" name="startNewWeek" ><img src='/img/Box_4.png' width="55rem" alt=""/></button>
+      <button type="submit">tvoje mama</button>
     </form>
 
 </main>
