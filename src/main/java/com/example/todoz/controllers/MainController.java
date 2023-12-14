@@ -2,6 +2,7 @@ package com.example.todoz.controllers;
 
 import com.example.todoz.models.Task;
 import com.example.todoz.models.Week;
+import com.example.todoz.services.NotificationService;
 import com.example.todoz.services.TaskService;
 import com.example.todoz.services.WeekService;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,8 @@ public class MainController {
     TaskService taskService;
 
     WeekService weekService;
+
+    NotificationService notificationService;
 
     public MainController(TaskService taskService, WeekService weekService) {
         this.taskService = taskService;
