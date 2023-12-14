@@ -7,10 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
 <script th:inline="javascript">
-    document.addEventListener('authenticationSuccess', function(event) {
-        // Show a success notification
-        showNotification('Login Successful');
-    });
+
     var messages = [[${messages}]];
     function rotateArray(arr){
         var nextItem = arr.shift();
