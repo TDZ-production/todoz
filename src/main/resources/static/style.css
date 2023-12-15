@@ -116,7 +116,7 @@ button {
 }
 
 button:nth-child(n+2) {
-    border-right: 1px solid black;
+    border-right: 2px solid black;
 }
 
 button:nth-child(4) img { height: 1.35rem; }
