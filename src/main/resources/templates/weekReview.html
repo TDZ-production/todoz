@@ -27,7 +27,7 @@
 
         <div class="task" th:each="task : ${currentWeek.getTasks()}" >
             <p class="taskText" th:text="${task.getDescription()}"></p>
-            <span th:if="${task.isDone()}"><img src="/img/vector_checkmark-10.png"></span>
+            <span th:if="${task.isDone()}"><img src="/img/vector_img_checkmark-09.png"></span>
         </div>
 
         <form action="/createNewWeek" method="post">

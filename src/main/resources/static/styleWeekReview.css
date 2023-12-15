@@ -92,8 +92,8 @@ p{
     margin-left: 0;
 }
 
-span {
-    width: 6rem;
+.taskContainer span {
+    width: 4rem;
 }
 
 header {
