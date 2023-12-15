@@ -8,7 +8,9 @@ import com.example.todoz.services.WeekService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
@@ -19,7 +21,7 @@ import java.util.stream.Stream;
 @Controller
 public class MainController {
 
-   private final TaskService taskService;
+    private final TaskService taskService;
 
     private final WeekService weekService;
 
@@ -70,7 +72,7 @@ public class MainController {
     }
 
     @PostMapping("/createNewWeek")
-    public String startNewWeek(){
+    public String startNewWeek() {
         Week newWeek = new Week();
         newWeek.setWeekNumber(Week.getCurrentWeekNumber() + 1);
 
@@ -96,4 +98,11 @@ public class MainController {
     public String showLogin() {
         return "loginPage";
     }
+
+    @PostMapping("/checked/{id}")
+    public String checkedTask(@PathVariable Long id, @RequestParam boolean done) {
+        taskService.checkedTask(id, done);
+        return "redirect:/";
+    }
+
 }

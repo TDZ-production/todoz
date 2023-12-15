@@ -31,7 +31,7 @@ public class NotificationService {
     public List<Notification> getNotificationWithSameDay(Task task){
         Random r = new Random();
         if(task == null){
-            throw new RuntimeException("Inputted Task must not be null.");
+            return null;
         } else if (task.getDueDate() == null){
             throw new RuntimeException("Inputted Task must have and DueDate assigned.");
         } else{

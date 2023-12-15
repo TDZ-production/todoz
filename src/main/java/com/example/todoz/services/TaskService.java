@@ -84,6 +84,13 @@ public class TaskService {
                 .sorted(Comparator.comparing(Task::getDueDate))
                 .collect(Collectors.toList());
     }
+
+    public void checkedTask(Long id, boolean done) {
+        Task task = taskRepo.findById(id).orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
+        task.setDone(done);
+        taskRepo.save(task);
+    }
+
 }
 
 

@@ -64,12 +64,18 @@ public class Task {
         return this.dueDate.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault());
     }
 
-    public Object getLastingDays() {
+    public Object getRemainingDays() {
         if (this.getDueDate() == null) {
             return null;
         } else {
             Duration duration = Duration.between(this.getCreatedAt(),this.getDueDate());
-            return duration.toDays();
+            if(duration.toDays() == 1){
+                return duration.toDays() + " day";
+            }
+            if(duration.toDays() == 0){
+                return "today";
+            }
+            return duration.toDays() + " days";
         }
     }
 
