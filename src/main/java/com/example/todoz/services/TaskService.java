@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,7 +46,7 @@ public class TaskService {
     public List<Task> getAllAndSortByPriority() {
         return taskRepo.findAll()
                 .stream()
-                .sorted(Comparator.comparing(Task::getPriority))
+                .sorted(Comparator.comparing(Task::getPriority).reversed())
                 .toList();
     }
 
@@ -84,6 +86,13 @@ public class TaskService {
                 .sorted(Comparator.comparing(Task::getDueDate))
                 .collect(Collectors.toList());
     }
+
+    public void checkedTask(Long id, boolean done) {
+        Task task = taskRepo.findById(id).orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
+        task.setDone(done);
+        taskRepo.save(task);
+    }
+
 }
 
 

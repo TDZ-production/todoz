@@ -16,27 +16,29 @@ public class NotificationService {
     private final NotificationRepo notificationRepo;
     private final TaskService taskService;
 
-    public NotificationService(NotificationRepo notificationRepo, TaskService taskService){
+    public NotificationService(NotificationRepo notificationRepo, TaskService taskService) {
         this.notificationRepo = notificationRepo;
         this.taskService = taskService;
     }
 
 
-    public List<Notification> getAll(){
+    public List<Notification> getAll() {
         return notificationRepo.findAll();
     }
-    public void save(Notification n){
+
+    public void save(Notification n) {
         notificationRepo.save(n);
     }
-    public List<Notification> getNotificationWithSameDay(Task task){
+
+    public List<Notification> getNotificationWithSameDay(Task task) {
         Random r = new Random();
-        if(task == null){
+        if (task == null) {
             throw new RuntimeException("Inputted Task must not be null.");
-        } else if (task.getDueDate() == null){
-            throw new RuntimeException("Inputted Task must have and DueDate assigned.");
-        } else{
+        } else if (task.getDueDate() == null) {
+            return null;
+        } else {
             Long taskDay = taskService.geRemainingDays(task);
-            return  notificationRepo.findAllByRemainingDays(taskDay).stream()
+            return notificationRepo.findAllByRemainingDays(taskDay).stream()
                     .peek(n -> n.setDescription(task.getDescription()))
                     .toList();
 //                    .get(r.nextInt(notificationRepo.findAllByLastingDays(taskDay).size())));
@@ -45,7 +47,7 @@ public class NotificationService {
     }
 
 
-    public Notification getNotificationById(Long id){
+    public Notification getNotificationById(Long id) {
         return notificationRepo.findById(id).orElseThrow(RuntimeException::new);
     }
 

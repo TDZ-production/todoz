@@ -108,6 +108,7 @@ header {
     flex-direction: row-reverse;
 }
 
+
 button {
     border: none;
     padding: .5rem;
@@ -138,6 +139,12 @@ button:hover {
     margin-right: 1rem;
     margin-left: 1rem;
 }
+
+.taskContainer button {
+    border:none;
+    background-color: transparent;
+}
+
 
 
 a {
