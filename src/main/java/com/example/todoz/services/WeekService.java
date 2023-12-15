@@ -6,10 +6,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class WeekService {
+    private final TaskService taskService;
+    private final WeekRepo weekRepo;
 
-    WeekRepo weekRepo;
-
-    public WeekService(WeekRepo weekRepo) {
+    public WeekService(TaskService taskService, WeekRepo weekRepo) {
+        this.taskService = taskService;
         this.weekRepo = weekRepo;
     }
 
