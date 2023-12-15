@@ -69,9 +69,10 @@ public class TodozApplication implements CommandLineRunner {
         notificationService.save(new Notification(1L, "Can you already do it shithead!", null));
         notificationService.save(new Notification(1L, "Procrastinating huh...", null));
         notificationService.save(new Notification(1L, "Can you be less useless?", null));
-        notificationService.save(new Notification(0L, "The number of lasting days is same as the number of bitches you have... ZERO!", null));
+        notificationService.save(new Notification(0L, "The number of remaining days is same as the number of bitches you have... ZERO!", null));
         notificationService.save(new Notification(0L, "Today is the day bitch!", null));
         notificationService.save(new Notification(0L, "Can you like... DO IT?!", null));
+        notificationService.save(new Notification(0L, "You should have done it 4 minutes ago you Magore!", null));
         notificationService.save(new Notification(null, "If you dont want to set the Deadline you better do it now!", null));
         notificationService.save(new Notification(null, "I like how you didnt specify the Deadline..so creative..", null));
         notificationService.save(new Notification(null, "No Deadline = NO BITCHES!", null));
