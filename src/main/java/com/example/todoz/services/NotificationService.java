@@ -35,7 +35,10 @@ public class NotificationService {
         if(task == null){
             return null;
         } else if (task.getDueDate() == null){
-            return null;
+            return notificationRepo.findAll().stream()
+                    .filter(n -> n.getRemainingDays() == null)
+                    .peek(n -> n.setDescription(task.getDescription()))
+                    .toList();
         } else{
             Long taskDay = taskService.geRemainingDays(task);
             return  notificationRepo.findAllByRemainingDays(taskDay).stream()
