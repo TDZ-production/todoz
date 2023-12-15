@@ -56,7 +56,7 @@ body {
     margin-top: 2rem;
 }
 
-.percentage {
+.percentage h1 {
     font-size: 5rem;
     color: green;
     margin: 1rem;
@@ -95,6 +95,7 @@ p{
 .taskContainer span {
     width: 4rem;
 }
+
 
 header {
     border-bottom: 2px solid black;
