@@ -50,12 +50,22 @@
     </header>
 
     <section class="taskContainer">
-        <div class="task" th:each="task : ${currentWeek.getTasks()}" th:if="${task.getDescription()}">
+        <div class="task" th:each="task : ${currentWeek.getTasks()}" th:if="${task.isDone() == false}">
             <p class="taskText" th:text="${task.getDescription()}"></p>
             <span class="dueDate" th:text="${task.getRemainingDays()}"></span>
             <form th:action="@{/checked/{id}(id=${task.getId()})}" th:method="POST">
                 <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
-                <button th:type="submit" id="taskCheckButton">
+                <button th:type="submit">
+                    <img th:src="${task.isDone() ? '/img/vector_img_checkedbox.png' : '/img/vector_img_checkbox.png'}" alt="Check Image"/>
+                </button>
+            </form>
+        </div>
+        <div class="task" th:each="task : ${currentWeek.getTasks()}" th:if="${task.isDone() == true}">
+            <p class="taskText" th:text="${task.getDescription()}"></p>
+            <span class="dueDate" th:text="${task.getRemainingDays()}"></span>
+            <form th:action="@{/checked/{id}(id=${task.getId()})}" th:method="POST">
+                <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
+                <button th:type="submit">
                     <img th:src="${task.isDone() ? '/img/vector_img_checkedbox.png' : '/img/vector_img_checkbox.png'}" alt="Check Image"/>
                 </button>
             </form>
