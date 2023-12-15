@@ -30,19 +30,17 @@ public class NotificationService {
         notificationRepo.save(n);
     }
 
-    public List<Notification> getNotificationWithSameDay(Task task) {
+    public List<Notification> getNotificationWithSameDay(Task task){
         Random r = new Random();
-        if (task == null) {
-            throw new RuntimeException("Inputted Task must not be null.");
-        } else if (task.getDueDate() == null) {
+        if(task == null){
             return null;
-        } else {
+        } else if (task.getDueDate() == null){
+            return null;
+        } else{
             Long taskDay = taskService.geRemainingDays(task);
-            return notificationRepo.findAllByRemainingDays(taskDay).stream()
+            return  notificationRepo.findAllByRemainingDays(taskDay).stream()
                     .peek(n -> n.setDescription(task.getDescription()))
                     .toList();
-//                    .get(r.nextInt(notificationRepo.findAllByLastingDays(taskDay).size())));
-
         }
     }
 
