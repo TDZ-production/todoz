@@ -13,14 +13,18 @@
         <p> Week review</p>
     </header>
 
-    <div class="weekSummary">
-        <p th:text="|Week ${currentWeek.getWeekNumber()}|"></p>
-        <h1 class="percentage" th:text="|${currentWeek.getDonePercentage()}%|"></h1>
-        <p>Tasks are finished</p>
-        <button>Add tasks to new week!</button>
-    </div>
-
     <section class="taskContainer">
+        <div class="weekSummary">
+            <p th:text="|Week ${currentWeek.getWeekNumber()}|"></p>
+            <div class="percentage">
+                <h1 th:style="'color: red'" th:text="|${currentWeek.getDonePercentage()}%|" th:if="${currentWeek.getDonePercentage() >= 0 && currentWeek.getDonePercentage() <= 50}"></h1>
+                <h1 th:style="'color: orange'" th:text="|${currentWeek.getDonePercentage()}%|" th:if="${currentWeek.getDonePercentage() > 50 && currentWeek.getDonePercentage() <= 75}"></h1>
+                <h1 th:style="'color: green'" th:text="|${currentWeek.getDonePercentage()}%|" th:if="${currentWeek.getDonePercentage() > 75}"></h1>
+            </div>
+            <p>Tasks are finished</p>
+            <button>Add tasks to new week!</button>
+        </div>
+
         <div class="task" th:each="task : ${upcomingTasks}" >
             <p class="taskText" th:text="${task.getDescription()}"></p>
         </div>
@@ -33,7 +37,6 @@
         <form action="/createNewWeek" method="post">
             <button type="submit" th:text="|Start new week with ${howManyTasks} tasks|"></button>
         </form>
-
         <p id="motivation">You are crushing it!</p>
     </section>
 
