@@ -81,15 +81,23 @@
             <button type="submit" name="priority" value="1"><img src='/img/Star.png'/></button>
         </div>
 
-        <div class="dateTime">
+        <div class="dateTime hidden">
             <input type="date" name="maybeDueDate" id="date">
         </div>
 
         <div class="addTask">
             <input type="text" placeholder="new task" name="description" id="add" required>
+            <img onclick="toggleDueDate()" src="/img/Clock_Yellow.png">
         </div>
     </form>
     </section>
+
+    <script>
+        function toggleDueDate() {
+            document.querySelector(".dateTime").classList.toggle("hidden");
+            document.querySelector("#date").value = "";
+        }
+    </script>
 
 </main>
 </body>

@@ -47,6 +47,7 @@ p{
     display: flex;
     align-items: center;
     margin-right: 1rem;
+    word-break: break-word;
 }
 
 .dueDate {
@@ -114,6 +115,7 @@ button {
     padding: .5rem;
     flex-grow: 1;
     background-color: white;
+    cursor: pointer;
 }
 
 button:nth-child(n+2) {
@@ -150,6 +152,15 @@ button:hover {
 a {
     text-decoration: none;
     color:black;
+}
+
+input + img {
+    height: 3.4rem;
+    margin-right: .7rem;
+}
+
+.hidden {
+    display: none;
 }
 
 @media(min-width: 400px) {
