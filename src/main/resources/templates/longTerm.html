@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en"><head>
     <meta charset="UTF-8">
     <title>Long term</title>
-    <link rel="stylesheet" href="/styleWeekReview.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 <main class="phone-screen">
     <header>
         <div class="link">
-            <a th:href="@{/}"> > </a>
+            <a th:href="@{/}"> < </a>
         </div>
 
         <div class="weekReviewTitle">
@@ -16,10 +16,12 @@
         </div>
     </header>
 
-    <div class="tasks" th:each="task : ${longTerm}" th:object="${task}">
-        <p class="taskText" th:text="*{getDescription()}"></p>
-        <p class="taskText" th:text="|*{getDueDateDayOfWeek()} *{getDueDateFormat()}|"></p>
-    </div>
+    <section class="taskContainer">
+        <div class="task" th:each="task : ${longTerm}" th:object="${task}">
+            <p class="taskText" th:text="*{getDescription()}"></p>
+            <p class="dueDate" th:text="|*{getDueDateDayOfWeek()} *{getDueDateFormat()}|"></p>
+        </div>
+    </section>
 
 </main>
 </body>
