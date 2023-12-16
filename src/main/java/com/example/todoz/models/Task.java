@@ -68,12 +68,17 @@ public class Task {
         } else {
             Duration duration = Duration.between(this.getCreatedAt(), this.getDueDate());
             if (duration.toDays() == 1) {
-                return duration.toDays() + " day";
+                return "Tomorrow";
             }
-            if (duration.toDays() == 0) {
-                return "today";
+            else if (duration.toDays() == 0) {
+                return "Today";
             }
-            return duration.toDays() + " days";
+            else if (duration.toDays() == -1) {
+                return "Yesterday";
+            }
+            else{
+                return duration.toDays() + " days";
+            }
         }
     }
 

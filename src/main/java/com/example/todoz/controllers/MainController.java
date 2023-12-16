@@ -5,7 +5,6 @@ import com.example.todoz.models.Week;
 import com.example.todoz.services.NotificationService;
 import com.example.todoz.services.TaskService;
 import com.example.todoz.services.WeekService;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
