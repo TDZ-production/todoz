@@ -62,7 +62,7 @@ public class Task {
         return this.dueDate.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault());
     }
 
-    public Object getRemainingDays() {
+    public String getRemainingDays() {
         if (this.getDueDate() == null) {
             return null;
         } else {
