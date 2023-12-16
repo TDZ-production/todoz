@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,6 +23,7 @@ public class SecurityConfig {
                         .permitAll()
                         .anyRequest()
                         .authenticated())
+                .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(form -> form.loginPage("/login").permitAll());
 
         return http.build();
@@ -72,7 +74,7 @@ public class SecurityConfig {
 
         UserDetails tom = User.builder()
                 .username("tom")
-                .password(passwordEncoder().encode("tom"))
+                .password(passwordEncoder().encode("TheSecurityGuy"))
                 .roles("USER", "ADMIN")
                 .build();
 
