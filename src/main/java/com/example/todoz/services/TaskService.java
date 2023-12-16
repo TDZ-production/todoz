@@ -7,18 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
-
     private final TaskRepo taskRepo;
 
-    @Autowired
     public TaskService(TaskRepo taskRepo) {
         this.taskRepo = taskRepo;
     }
@@ -75,16 +70,15 @@ public class TaskService {
         return taskRepo.findAll()
                 .stream()
                 .filter(t -> t.getDueDateWeek() != null && t.getDueDateWeek() == Week.getCurrentWeekNumber() + 1)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<Task> findLongTerm() {
         return taskRepo.findAll()
                 .stream()
-                .filter(t -> t.getDueDateWeek() != null
-                        && t.getDueDateWeek() > Week.getCurrentWeekNumber())
+                .filter(t -> t.getDueDateWeek() != null && t.getDueDateWeek() > Week.getCurrentWeekNumber())
                 .sorted(Comparator.comparing(Task::getDueDate))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public void checkedTask(Long id, boolean done) {
@@ -92,7 +86,6 @@ public class TaskService {
         task.setDone(done);
         taskRepo.save(task);
     }
-
 }
 
 

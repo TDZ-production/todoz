@@ -41,26 +41,24 @@ public class Task {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Integer getDueDateWeek(){
-        if(dueDate != null){
+    public Integer getDueDateWeek() {
+        if (dueDate != null) {
             return this.dueDate.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
-        }
-        else {
+        } else {
             return null;
         }
     }
 
-    public String getDueDateFormat(){
-        if(dueDate != null){
+    public String getDueDateFormat() {
+        if (dueDate != null) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             return dueDate.format(formatter);
-        }
-        else {
+        } else {
             return null;
         }
     }
 
-    public String getDueDateDayOfWeek(){
+    public String getDueDateDayOfWeek() {
         return this.dueDate.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault());
     }
 
@@ -68,11 +66,11 @@ public class Task {
         if (this.getDueDate() == null) {
             return null;
         } else {
-            Duration duration = Duration.between(this.getCreatedAt(),this.getDueDate());
-            if(duration.toDays() == 1){
+            Duration duration = Duration.between(this.getCreatedAt(), this.getDueDate());
+            if (duration.toDays() == 1) {
                 return duration.toDays() + " day";
             }
-            if(duration.toDays() == 0){
+            if (duration.toDays() == 0) {
                 return "today";
             }
             return duration.toDays() + " days";

@@ -6,13 +6,10 @@ import com.example.todoz.repos.NotificationRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 @Service
 public class NotificationService {
-
     private final NotificationRepo notificationRepo;
     private final TaskService taskService;
 
@@ -30,29 +27,26 @@ public class NotificationService {
         notificationRepo.save(n);
     }
 
-    public List<Notification> getNotificationWithSameDay(Task task){
+    public List<Notification> getNotificationWithSameDay(Task task) {
         Random r = new Random();
-        if(task == null){
+        if (task == null) {
             return null;
-        } else if (task.getDueDate() == null){
+        } else if (task.getDueDate() == null) {
             return notificationRepo.findAll().stream()
                     .filter(n -> n.getRemainingDays() == null)
                     .peek(n -> n.setDescription(task.getDescription()))
                     .toList();
-        } else{
+        } else {
             Long taskDay = taskService.geRemainingDays(task);
-            return  notificationRepo.findAllByRemainingDays(taskDay).stream()
+            return notificationRepo.findAllByRemainingDays(taskDay).stream()
                     .peek(n -> n.setDescription(task.getDescription()))
                     .toList();
         }
     }
 
-
     public Notification getNotificationById(Long id) {
         return notificationRepo.findById(id).orElseThrow(RuntimeException::new);
     }
-
-
 }
 
 

@@ -26,10 +26,10 @@ public class Week {
 
     public Week() {
         this.weekNumber = LocalDate.now()
-                .get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());;
+                .get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
     }
 
-    public static Integer getCurrentWeekNumber(){
+    public static Integer getCurrentWeekNumber() {
         return LocalDate.now()
                 .get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
     }
@@ -42,14 +42,14 @@ public class Week {
         return Math.round((double) count / this.getTasks().size() * 100);
     }
 
-    public Long getNumberOfNotDone(){
+    public Long getNumberOfNotDoneTasks() {
         return this.tasks
                 .stream()
                 .filter(t -> !t.isDone())
                 .count();
     }
 
-    public List<Task> getNotDoneTasks(){
+    public List<Task> getNotDoneTasks() {
         return this.tasks
                 .stream()
                 .filter(t -> !t.isDone())

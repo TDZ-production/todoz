@@ -67,7 +67,7 @@ public class MainController {
 
         model.addAttribute("currentWeek", currentWeek);
         model.addAttribute("upcomingTasks", upcomingTasks);
-        model.addAttribute("howManyTasks", currentWeek.getNumberOfNotDone() + upcomingTasks.size());
+        model.addAttribute("howManyTasks", currentWeek.getNumberOfNotDoneTasks() + upcomingTasks.size());
         return "weekReview";
     }
 

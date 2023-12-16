@@ -6,11 +6,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class WeekService {
-    private final TaskService taskService;
     private final WeekRepo weekRepo;
 
-    public WeekService(TaskService taskService, WeekRepo weekRepo) {
-        this.taskService = taskService;
+    public WeekService(WeekRepo weekRepo) {
         this.weekRepo = weekRepo;
     }
 
@@ -21,10 +19,4 @@ public class WeekService {
     public void save(Week week) {
         weekRepo.save(week);
     }
-
-//    public Long getDonePercentage() {
-//        Week week = weekRepo.findWeekWithHighestId();
-//        long count = week.getTasks().stream().filter(Task::isDone).count();
-//        return Math.round((double) count / week.getTasks().size() * 100);
-//    }
 }

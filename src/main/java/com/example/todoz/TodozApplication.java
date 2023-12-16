@@ -75,6 +75,5 @@ public class TodozApplication implements CommandLineRunner {
         notificationService.save(new Notification(null, "If you dont want to set the Deadline you better do it now!", null));
         notificationService.save(new Notification(null, "I like how you didnt specify the Deadline..so creative..", null));
         notificationService.save(new Notification(null, "No Deadline = NO BITCHES!", null));
-
     }
 }
