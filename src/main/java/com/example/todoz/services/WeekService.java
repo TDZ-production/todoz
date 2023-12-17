@@ -4,6 +4,8 @@ import com.example.todoz.models.Week;
 import com.example.todoz.repos.WeekRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class WeekService {
     private final WeekRepo weekRepo;
@@ -12,7 +14,7 @@ public class WeekService {
         this.weekRepo = weekRepo;
     }
 
-    public Week findCurrentWeek(){
+    public Optional<Week> findCurrentWeek(){
         return weekRepo.findByWeekNumber(Week.getCurrentWeekNumber());
     }
 
