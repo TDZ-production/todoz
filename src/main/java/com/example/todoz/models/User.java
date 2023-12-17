@@ -21,8 +21,8 @@ public class User {
     private String password;
     private Integer pussyMeter;
     private Role role = Role.USER;
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Week> week;
-    @OneToMany (mappedBy = "user")
+    @OneToMany(mappedBy = "user")
     List<Task> tasks;
 }

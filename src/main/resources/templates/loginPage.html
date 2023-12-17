@@ -13,10 +13,18 @@
   </header>
 
   <section class="form-section">
-  <form th:action="@{/}">
-    <input type="text" name="username" placeholder="name">
-    <input type="password" name="password" placeholder="password">
-    <button type="submit"> <img src='/img/Login_button.png'/> </button>
+    <div th:if="${param.error}">Invalid username and password.</div>
+    <div th:if="${param.logout}">You have been logged out.</div>
+  <form th:action="@{/login}" method="post">
+    <label>
+      <input type="text" name="username" placeholder="name">
+    </label>
+    <label>
+      <input type="password" name="password" placeholder="password">
+    </label>
+    <label>
+      <button type="submit" value="Log In"> <img src='/img/Login_button.png' alt="loginButton"/> </button>
+    </label>
   </form>
   </section>
 </main>

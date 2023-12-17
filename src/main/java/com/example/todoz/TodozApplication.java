@@ -36,32 +36,32 @@ public class TodozApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Week week = new Week();
-        weekRepo.save(week);
-
-        Task task = new Task();
-        task.setDescription("Task a");
-        task.setWeek(week);
-        task.setDone(false);
-        task.setPriority(1);
-        task.setDueDate(LocalDateTime.of(2023, 12, 16, 23, 59, 59));
-        taskRepo.save(task);
-
-        Task task2 = new Task();
-        task2.setDescription("Task b");
-        task2.setWeek(week);
-        task2.setDone(false);
-        task2.setPriority(1);
-        task2.setDueDate(LocalDateTime.of(2023, 12, 15, 23, 59, 59));
-        taskRepo.save(task2);
-
-        Task task3 = new Task();
-        task3.setDescription("Task c");
-        task3.setWeek(week);
-        task3.setDone(false);
-        task3.setPriority(1);
-        task3.setDueDate(LocalDateTime.of(2023, 12, 14, 23, 59, 59));
-        taskRepo.save(task3);
+//        Week week = new Week();
+//        weekRepo.save(week);
+//
+//        Task task = new Task();
+//        task.setDescription("Task a");
+//        task.setWeek(week);
+//        task.setDone(false);
+//        task.setPriority(1);
+//        task.setDueDate(LocalDateTime.of(2023, 12, 16, 23, 59, 59));
+//        taskRepo.save(task);
+//
+//        Task task2 = new Task();
+//        task2.setDescription("Task b");
+//        task2.setWeek(week);
+//        task2.setDone(false);
+//        task2.setPriority(1);
+//        task2.setDueDate(LocalDateTime.of(2023, 12, 15, 23, 59, 59));
+//        taskRepo.save(task2);
+//
+//        Task task3 = new Task();
+//        task3.setDescription("Task c");
+//        task3.setWeek(week);
+//        task3.setDone(false);
+//        task3.setPriority(1);
+//        task3.setDueDate(LocalDateTime.of(2023, 12, 14, 23, 59, 59));
+//        taskRepo.save(task3);
 
         notificationService.save(new Notification(2L, "I think you need to do this task mate...", null));
         notificationService.save(new Notification(2L, "Come on... you have only two days for this...", null));
@@ -69,12 +69,11 @@ public class TodozApplication implements CommandLineRunner {
         notificationService.save(new Notification(1L, "Can you already do it shithead!", null));
         notificationService.save(new Notification(1L, "Procrastinating huh...", null));
         notificationService.save(new Notification(1L, "Can you be less useless?", null));
-        notificationService.save(new Notification(0L, "The number of lasting days is same as the number of bitches you have... ZERO!", null));
+        notificationService.save(new Notification(0L, "The number of remaining days is same as the number of bitches you have... ZERO!", null));
         notificationService.save(new Notification(0L, "Today is the day bitch!", null));
         notificationService.save(new Notification(0L, "Can you like... DO IT?!", null));
         notificationService.save(new Notification(null, "If you dont want to set the Deadline you better do it now!", null));
         notificationService.save(new Notification(null, "I like how you didnt specify the Deadline..so creative..", null));
         notificationService.save(new Notification(null, "No Deadline = NO BITCHES!", null));
-
     }
 }

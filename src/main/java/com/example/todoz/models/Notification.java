@@ -4,28 +4,25 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
-@Entity
+@NoArgsConstructor
 public class Notification {
+
     @Id
     @GeneratedValue
     private Long id;
-
-    String title;
-    String description;
-    Long remainingDays;
+    private String title;
+    private String description;
+    private Long remainingDays;
 
     public Notification(Long remainingDays, String title, String description) {
         this.remainingDays = remainingDays;
         this.title = title;
         this.description = description;
-    }
-
-
-    public Notification() {
-
     }
 }

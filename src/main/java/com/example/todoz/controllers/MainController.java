@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -35,11 +36,21 @@ public class MainController {
 
     @GetMapping({"", "/"})
     public String showIndex(Model model) {
+        Optional<Week> currentWeek = weekService.findCurrentWeek();
+
+        if (currentWeek.isEmpty()) {
+            Week newWeek = new Week();
+            weekService.save(newWeek);
+            model.addAttribute("currentWeek", newWeek);
+        }
+        else {
+            model.addAttribute("currentWeek", currentWeek.get());
+        }
+
         model.addAttribute("messages", notificationService.getNotificationWithSameDay(taskService.getAllAndSortByPriority().stream()
                 .filter(t -> !t.isDone())
                 .findFirst().orElse(null)));
 
-        model.addAttribute("currentWeek", weekService.findCurrentWeek());
         return "index";
     }
 
@@ -47,9 +58,9 @@ public class MainController {
     public String add(Task task, LocalDate maybeDueDate) {
 
         if (maybeDueDate == null) {
-            task.setWeek(weekService.findCurrentWeek());
+            task.setWeek(weekService.findCurrentWeek().get());
         } else if (maybeDueDate.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear()) == Week.getCurrentWeekNumber()) {
-            task.setWeek(weekService.findCurrentWeek());
+            task.setWeek(weekService.findCurrentWeek().get());
             task.setDueDate(maybeDueDate.atTime(23, 59, 59));
         } else {
             task.setDueDate(maybeDueDate.atTime(23, 59, 59));
@@ -62,12 +73,12 @@ public class MainController {
 
     @GetMapping("/weekReview")
     public String showWeekReview(Model model) {
-        Week currentWeek = weekService.findCurrentWeek();
+        Week currentWeek = weekService.findCurrentWeek().get();
         List<Task> upcomingTasks = taskService.findTasksForNextWeek();
 
         model.addAttribute("currentWeek", currentWeek);
         model.addAttribute("upcomingTasks", upcomingTasks);
-        model.addAttribute("howManyTasks", currentWeek.getNumberOfNotDone() + upcomingTasks.size());
+        model.addAttribute("howManyTasks", currentWeek.getNumberOfNotDoneTasks() + upcomingTasks.size());
         return "weekReview";
     }
 
@@ -77,7 +88,7 @@ public class MainController {
         newWeek.setWeekNumber(Week.getCurrentWeekNumber() + 1);
 
         List<Task> tasks = Stream.concat(
-                        weekService.findCurrentWeek().getNotDoneTasks().stream(),
+                        weekService.findCurrentWeek().get().getNotDoneTasks().stream(),
                         taskService.findTasksForNextWeek().stream())
                 .peek(t -> t.setWeek(newWeek))
                 .collect(Collectors.toList());
