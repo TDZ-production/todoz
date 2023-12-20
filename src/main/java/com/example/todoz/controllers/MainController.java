@@ -105,11 +105,6 @@ public class MainController {
         return "longTerm";
     }
 
-    @GetMapping("/login")
-    public String showLogin() {
-        return "loginPage";
-    }
-
     @PostMapping("/checked/{id}")
     public String checkedTask(@PathVariable Long id, @RequestParam boolean done) {
         taskService.checkedTask(id, done);
