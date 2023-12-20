@@ -92,9 +92,9 @@ public class MainController {
     }
 
     @GetMapping("longTerm")
-    public String showLongTerm(Model model) {
+    public String showLongTerm(Model model, Principal principal) {
         // TODO: Fix me, get me some Principal!
-        model.addAttribute("longTerm", taskService.findLongTerm());
+        model.addAttribute("longTerm", taskService.findLongTerm(getUser(principal)));
         return "longTerm";
     }
 

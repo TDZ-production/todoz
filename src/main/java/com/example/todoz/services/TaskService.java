@@ -70,8 +70,8 @@ public class TaskService {
                 .toList();
     }
 
-    public List<Task> findLongTerm() {
-        return taskRepo.findAll()
+    public List<Task> findLongTerm(User user) {
+        return taskRepo.findByUserId(user.getId())
                 .stream()
                 .filter(t -> t.getDueDateWeek() != null && t.getDueDateWeek() > Week.getCurrentWeekNumber())
                 .sorted(Comparator.comparing(Task::getDueDate))
