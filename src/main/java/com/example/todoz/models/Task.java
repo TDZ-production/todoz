@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
@@ -32,10 +31,6 @@ public class Task {
     private Week week;
     @ManyToOne
     private User user;
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public Task() {
         this.createdAt = LocalDateTime.now();
