@@ -66,7 +66,7 @@ public class MainController {
     @GetMapping("/weekReview")
     public String showWeekReview(Model model, Principal principal) {
         Week currentWeek = getWeek(principal);
-        List<Task> upcomingTasks = taskService.findTasksForNextWeek();
+        List<Task> upcomingTasks = taskService.findTasksForNextWeek(getUser(principal));
 
         model.addAttribute("currentWeek", currentWeek);
         model.addAttribute("upcomingTasks", upcomingTasks);
@@ -81,7 +81,7 @@ public class MainController {
 
         List<Task> tasks = Stream.concat(
                         getWeek(principal).getNotDoneTasks().stream(),
-                        taskService.findTasksForNextWeek().stream())
+                        taskService.findTasksForNextWeek(getUser(principal)).stream())
                 .peek(t -> t.setWeek(newWeek))
                 .collect(Collectors.toList());
 
