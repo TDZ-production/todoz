@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -31,10 +30,11 @@ public class UserService implements UserDetailsService {
         }
         else {
             User user = temp.get();
-            Set<GrantedAuthority> authorities = user.getRoles()
-                    .stream()
-                    .map(r -> new SimpleGrantedAuthority(r.getName()))
-                    .collect(Collectors.toSet());
+            Set<GrantedAuthority> authorities = Set.of(new SimpleGrantedAuthority("USER"));
+//                    user.getRoles()
+//                    .stream()
+//                    .map(r -> new SimpleGrantedAuthority(r.getName()))
+//                    .collect(Collectors.toSet());
             return new org.springframework.security.core.userdetails.User(username, user.getPassword(), authorities);
         }
     }
