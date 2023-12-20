@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface WeekRepo extends ListCrudRepository<Week, Long> {
-    Optional<Week> findByWeekNumber (Integer weekNumber);
+    Optional<Week> findByWeekNumberAndUserId(Integer currentWeekNumber, Long id);
 }
