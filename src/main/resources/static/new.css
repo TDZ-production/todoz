@@ -27,6 +27,10 @@ header, .task, button.cta {
     padding: .6rem 1rem;
 }
 
+header {
+    border-bottom: 2px solid #333;
+}
+
 input {
     width: 100%;
 }
@@ -53,6 +57,16 @@ button.img {
 button.cta {
     background: #FFC9C9;
     min-width: 6rem;
+    border: 2px solid #333;
+}
+
+.stars {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.stars button {
+    flex-grow: 1;
 }
 
 h1 {
@@ -136,6 +150,11 @@ main {
 
 footer {
     background: paleturquoise;
+}
+
+footer form {
+    display: flex;
+    flex-direction: column;
 }
 
 
