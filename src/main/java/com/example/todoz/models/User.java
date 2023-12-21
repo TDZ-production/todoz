@@ -4,8 +4,11 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -17,10 +20,11 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
-    private String userName;
+    private String username;
     private String password;
     private Integer pussyMeter;
-    private Role role = Role.USER;
+    @ManyToMany
+    private Set<Role> roles;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Week> week;
     @OneToMany(mappedBy = "user")

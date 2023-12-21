@@ -1,5 +1,6 @@
 package com.example.todoz.services;
 
+import com.example.todoz.models.User;
 import com.example.todoz.models.Week;
 import com.example.todoz.repos.WeekRepo;
 import org.springframework.stereotype.Service;
@@ -14,11 +15,23 @@ public class WeekService {
         this.weekRepo = weekRepo;
     }
 
-    public Optional<Week> findCurrentWeek(){
-        return weekRepo.findByWeekNumber(Week.getCurrentWeekNumber());
+    public Optional<Week> findCurrentWeek(User user){
+        return weekRepo.findByWeekNumberAndUserId(Week.getCurrentWeekNumber(), user.getId());
     }
 
-    public void save(Week week) {
-        weekRepo.save(week);
+    public Week getCurrentWeek(User user) {
+        var optWeek = findCurrentWeek(user);
+
+        if (optWeek.isPresent()) {
+            return optWeek.get();
+        }
+
+        Week w = new Week(user);
+
+        return save(w);
+    }
+
+    public Week save(Week week) {
+        return weekRepo.save(week);
     }
 }

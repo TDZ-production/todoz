@@ -1,10 +1,13 @@
 package com.example.todoz.controllers;
 
 import com.example.todoz.models.Task;
+import com.example.todoz.models.User;
 import com.example.todoz.models.Week;
 import com.example.todoz.services.NotificationService;
 import com.example.todoz.services.TaskService;
+import com.example.todoz.services.UserService;
 import com.example.todoz.services.WeekService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,40 +15,27 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Controller
+@RequiredArgsConstructor
 public class MainController {
 
+    private final UserService userService;
     private final TaskService taskService;
-
     private final WeekService weekService;
-
     private final NotificationService notificationService;
 
-    public MainController(TaskService taskService, WeekService weekService, NotificationService notificationService) {
-        this.taskService = taskService;
-        this.weekService = weekService;
-        this.notificationService = notificationService;
-    }
+    @GetMapping
+    public String showIndex(Model model, Principal principal) {
+        Week currentWeek = getWeek(principal);
 
-    @GetMapping({"", "/"})
-    public String showIndex(Model model) {
-        Optional<Week> currentWeek = weekService.findCurrentWeek();
-
-        if (currentWeek.isEmpty()) {
-            Week newWeek = new Week();
-            weekService.save(newWeek);
-            model.addAttribute("currentWeek", newWeek);
-        }
-        else {
-            model.addAttribute("currentWeek", currentWeek.get());
-        }
+        model.addAttribute("currentWeek", currentWeek);
 
         model.addAttribute("messages", notificationService.getNotificationWithSameDay(taskService.getAllAndSortByPriority().stream()
                 .filter(t -> !t.isDone())
@@ -55,16 +45,18 @@ public class MainController {
     }
 
     @PostMapping("/add")
-    public String add(Task task, LocalDate maybeDueDate) {
+    public String add(Task task, LocalDate maybeDueDate, Principal principal) {
 
         if (maybeDueDate == null) {
-            task.setWeek(weekService.findCurrentWeek().get());
+            task.setWeek(getWeek(principal));
         } else if (maybeDueDate.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear()) == Week.getCurrentWeekNumber()) {
-            task.setWeek(weekService.findCurrentWeek().get());
+            task.setWeek(getWeek(principal));
             task.setDueDate(maybeDueDate.atTime(23, 59, 59));
         } else {
             task.setDueDate(maybeDueDate.atTime(23, 59, 59));
         }
+
+        task.setUser(getUser(principal));
 
         taskService.save(task);
 
@@ -72,9 +64,9 @@ public class MainController {
     }
 
     @GetMapping("/weekReview")
-    public String showWeekReview(Model model) {
-        Week currentWeek = weekService.findCurrentWeek().get();
-        List<Task> upcomingTasks = taskService.findTasksForNextWeek();
+    public String showWeekReview(Model model, Principal principal) {
+        Week currentWeek = getWeek(principal);
+        List<Task> upcomingTasks = taskService.findTasksForNextWeek(getUser(principal));
 
         model.addAttribute("currentWeek", currentWeek);
         model.addAttribute("upcomingTasks", upcomingTasks);
@@ -83,13 +75,13 @@ public class MainController {
     }
 
     @PostMapping("/createNewWeek")
-    public String startNewWeek() {
+    public String startNewWeek(Principal principal) {
         Week newWeek = new Week();
         newWeek.setWeekNumber(Week.getCurrentWeekNumber() + 1);
 
         List<Task> tasks = Stream.concat(
-                        weekService.findCurrentWeek().get().getNotDoneTasks().stream(),
-                        taskService.findTasksForNextWeek().stream())
+                        getWeek(principal).getNotDoneTasks().stream(),
+                        taskService.findTasksForNextWeek(getUser(principal)).stream())
                 .peek(t -> t.setWeek(newWeek))
                 .collect(Collectors.toList());
 
@@ -100,20 +92,24 @@ public class MainController {
     }
 
     @GetMapping("longTerm")
-    public String showLongTerm(Model model) {
-        model.addAttribute("longTerm", taskService.findLongTerm());
+    public String showLongTerm(Model model, Principal principal) {
+        // TODO: Fix me, get me some Principal!
+        model.addAttribute("longTerm", taskService.findLongTerm(getUser(principal)));
         return "longTerm";
-    }
-
-    @GetMapping("/login")
-    public String showLogin() {
-        return "loginPage";
     }
 
     @PostMapping("/checked/{id}")
     public String checkedTask(@PathVariable Long id, @RequestParam boolean done) {
+        // TODO: Fix me, get me some Principal!
         taskService.checkedTask(id, done);
         return "redirect:/";
     }
 
+    private User getUser(Principal principal) {
+        return userService.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
+    }
+
+    private Week getWeek(Principal principal) {
+        return weekService.getCurrentWeek(getUser(principal));
+    }
 }

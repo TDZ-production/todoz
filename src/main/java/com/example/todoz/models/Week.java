@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Entity
 @Getter
 @Setter
-@Table(name = "weeks")
+@Table(name = "weeks", indexes = @Index(columnList = "weekNumber, user_id", unique = true))
 public class Week {
 
     @Id
@@ -24,9 +24,13 @@ public class Week {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "week")
     private List<Task> tasks;
 
+    public Week(User user) {
+        this();
+        this.user = user;
+    }
+
     public Week() {
-        this.weekNumber = LocalDate.now()
-                .get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
+        this.weekNumber = getCurrentWeekNumber();
     }
 
     public static Integer getCurrentWeekNumber() {

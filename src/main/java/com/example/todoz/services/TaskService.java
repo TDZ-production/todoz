@@ -1,6 +1,7 @@
 package com.example.todoz.services;
 
 import com.example.todoz.models.Task;
+import com.example.todoz.models.User;
 import com.example.todoz.models.Week;
 import com.example.todoz.repos.TaskRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,10 +54,6 @@ public class TaskService {
         taskRepo.save(task);
     }
 
-    public List<Task> findAll() {
-        return taskRepo.findAll();
-    }
-
     public Long geRemainingDays(Task task) {
         if (task.getDueDate() == null) {
             throw new RuntimeException("Inputted Task must have and DueDate assigned.");
@@ -66,15 +63,15 @@ public class TaskService {
         }
     }
 
-    public List<Task> findTasksForNextWeek() {
-        return taskRepo.findAll()
+    public List<Task> findTasksForNextWeek(User user) {
+        return taskRepo.findByUserId(user.getId())
                 .stream()
                 .filter(t -> t.getDueDateWeek() != null && t.getDueDateWeek() == Week.getCurrentWeekNumber() + 1)
                 .toList();
     }
 
-    public List<Task> findLongTerm() {
-        return taskRepo.findAll()
+    public List<Task> findLongTerm(User user) {
+        return taskRepo.findByUserId(user.getId())
                 .stream()
                 .filter(t -> t.getDueDateWeek() != null && t.getDueDateWeek() > Week.getCurrentWeekNumber())
                 .sorted(Comparator.comparing(Task::getDueDate))

@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface TaskRepo extends ListCrudRepository<Task, Long> {
     List<Task> findAllByPriority(Integer priority);
+    List<Task> findByUserId(Long id);
 }
