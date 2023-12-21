@@ -11,7 +11,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: virgil, sans-serif;
-    background-color: #ffc9c9;
+    background-color: #666;
 }
 
 p, h1, h2, h3, h4, h5 {
@@ -29,6 +29,9 @@ header, .task, button.cta {
 
 input {
     width: 100%;
+}
+
+input, button {
     font: inherit;
     border: 1px solid #333;
     background: #fff;
@@ -36,15 +39,20 @@ input {
     padding: .6rem .8rem;
 }
 
-button {
-    border: none;
-    background-color: transparent;
+button, label {
     cursor: pointer;
+}
+
+button.img {
+    border: none;
+    background: transparent;
+    border-radius: initial;
+    padding: 0;
 }
 
 button.cta {
     background: #FFC9C9;
-    border: 1px solid #333;
+    min-width: 6rem;
 }
 
 h1 {
