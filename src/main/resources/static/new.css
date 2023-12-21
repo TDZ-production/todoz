@@ -1,0 +1,142 @@
+@font-face {
+    font-family: virgil;
+    src: url("webfonts/Virgil.woff2");
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: virgil, sans-serif;
+    background-color: #ffc9c9;
+}
+
+p, h1, h2, h3, h4, h5 {
+    margin: 0;
+}
+
+label {
+    display: block;
+    margin: 1rem;
+}
+
+header, .task, button.cta {
+    padding: .6rem 1rem;
+}
+
+input {
+    width: 100%;
+    font: inherit;
+    border: 1px solid #333;
+    background: #fff;
+    border-radius: .5rem;
+    padding: .6rem .8rem;
+}
+
+button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+button.cta {
+    background: #FFC9C9;
+    border: 1px solid #333;
+}
+
+h1 {
+    margin-top: 2em;
+    font-size: 2.7rem;
+}
+
+main > form {
+    margin-top: 3rem;
+}
+
+main > form button {
+    margin-top: 2rem;
+}
+
+.hidden {
+    display: none;
+}
+
+.app {
+    margin: 0 auto;
+    min-width: 23rem;
+    max-width: 28rem;
+    min-height: 28rem;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: white;
+    text-align: center;
+}
+
+.app.login {
+    background: #FFF4C2;
+}
+
+.app main {
+    flex-grow: 1;
+}
+
+.note {
+    opacity: 0.5;
+}
+
+.addTask {
+    display: flex;
+}
+
+.task {
+    display: flex;
+    border-bottom: 1px solid #333;
+}
+
+.task p {
+    flex-grow: 1;
+    text-align: left;
+}
+
+img {
+    height: 1rem;
+}
+
+form + p {
+    margin-top: 2rem;
+}
+
+header {
+    background: antiquewhite;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    min-height: 4rem;
+}
+
+
+
+
+main {
+    background: azure;
+}
+
+footer {
+    background: paleturquoise;
+}
+
+
+@media(min-width: 420px) {
+    .app {
+        margin: 1rem auto;
+        box-shadow: 0 0 0 3px black;
+        border-radius: 2rem;
+        max-width: 394px;
+        height: calc(100svh - 2rem);
+    }
+}

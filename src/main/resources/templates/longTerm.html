@@ -3,22 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Long term</title>
-    <link rel="stylesheet" href="/styleWeekReview.css">
+    <link rel="stylesheet" href="/new.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
 </head>
 <body>
-<main class="phone-screen">
+<section class="app">
     <header>
         <a th:href="@{/}"> < </a>
-        <p>Long term tasks</p>
+        <h2>Long term tasks</h2>
     </header>
 
-    <section class="taskContainer">
+    <main>
         <div class="task" th:each="task : ${longTerm}" th:object="${task}">
-            <p class="taskText" th:text="*{getDescription()}"></p>
-            <p class="dueDate" th:text="|*{getDueDateDayOfWeek()} *{getDueDateFormat()}|"></p>
+            <p th:text="*{getDescription()}"></p>
+            <span class="due" th:text="|*{getDueDateDayOfWeek()} *{getDueDateFormat()}|"></span>
         </div>
-    </section>
+    </main>
 
-</main>
+</section>
 </body>
 </html>
