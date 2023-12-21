@@ -14,21 +14,28 @@ body {
     background-color: #666;
 }
 
+a {
+    text-decoration: none;
+    color: rgb(63, 120, 144);
+}
+
 p, h1, h2, h3, h4, h5 {
     margin: 0;
 }
 
 label {
     display: block;
-    margin: 1rem;
+    margin: 1rem 2rem;
 }
 
 header, .task, button.cta {
-    padding: .6rem 1rem;
+    padding: .8rem 1rem;
 }
 
 header {
     border-bottom: 2px solid #333;
+    padding-bottom: 1.5rem;
+    padding-top: 1.8rem;
 }
 
 input {
@@ -37,17 +44,17 @@ input {
 
 input, button {
     font: inherit;
-    border: 1px solid #333;
+    border: 2px solid #333;
     background: #fff;
     border-radius: .5rem;
-    padding: .6rem .8rem;
+    padding: .8rem;
 }
 
 button, label {
     cursor: pointer;
 }
 
-button.img {
+button.img, .stars button {
     border: none;
     background: transparent;
     border-radius: initial;
@@ -57,21 +64,42 @@ button.img {
 button.cta {
     background: #FFC9C9;
     min-width: 6rem;
-    border: 2px solid #333;
 }
 
 .stars {
     display: flex;
     flex-direction: row-reverse;
+    border-top: 2px solid;
+    border-bottom: 2px solid #333;
 }
 
 .stars button {
     flex-grow: 1;
 }
 
+.stars button + button {
+    border-right: 2px solid #333;
+}
+
 h1 {
     margin-top: 2em;
     font-size: 2.7rem;
+}
+
+h2 {
+    font-size: 1.2rem;
+}
+
+header h2 {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+header a {
+    position: relative;
+    z-index: 10;
 }
 
 main > form {
@@ -88,10 +116,9 @@ main > form button {
 
 .app {
     margin: 0 auto;
-    min-width: 23rem;
     max-width: 28rem;
     min-height: 28rem;
-    height: 100svh;
+    height: 99.98dvh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -103,8 +130,13 @@ main > form button {
     background: #FFF4C2;
 }
 
+.app.register {
+    background: #FFF0F6;
+}
+
 .app main {
     flex-grow: 1;
+    overflow: auto;
 }
 
 .note {
@@ -125,12 +157,28 @@ main > form button {
     text-align: left;
 }
 
+.task .due {
+    white-space: nowrap;
+}
+
+.task button, .task img {
+    display: block;
+}
+
 img {
-    height: 1rem;
+    height: 1.2rem;
 }
 
 form + p {
     margin-top: 2rem;
+}
+
+main > p:last-child {
+    margin-bottom: 4rem;
+}
+
+form .dateTime {
+    background: #FCEDA3;
 }
 
 header {
@@ -138,23 +186,45 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    min-height: 4rem;
-}
-
-
-
-
-main {
-    background: azure;
 }
 
 footer {
-    background: paleturquoise;
+    background: #eee;
 }
 
-footer form {
-    display: flex;
-    flex-direction: column;
+footer img {
+    height: 2.4rem;
+}
+
+footer label {
+    margin: 0;
+    padding: .42rem;
+}
+
+footer label > * + *, .task > * + * {
+    margin-left: .42rem
+}
+
+footer input, .stars button {
+    padding: .55rem;
+}
+
+.stars button {
+    background: #f7f7f7;
+}
+
+.stars > :nth-child(1):hover {background: #FFC9C9}
+.stars > :nth-child(2):hover {background: #fffac9}
+.stars > :nth-child(3):hover {background: #cbffc9}
+.stars > :nth-child(4):hover {background: #e3e3e3}
+
+.weekSummary {
+    margin-bottom: 2rem;
+}
+
+.weekSummary h1 {
+    font-size: 4rem;
+    margin-top: 3rem;
 }
 
 
@@ -162,7 +232,7 @@ footer form {
     .app {
         margin: 1rem auto;
         box-shadow: 0 0 0 3px black;
-        border-radius: 2rem;
+        border-radius: 1rem;
         max-width: 394px;
         height: calc(100svh - 2rem);
     }

@@ -22,8 +22,8 @@
     function showNotification() {
 
         if (Notification.permission === 'granted') {
-            var nextMessage = rotateArray(messages);
-            var notification = new Notification(nextMessage.title,  { body: nextMessage.description });
+            const nextMessage = rotateArray(messages);
+            new Notification(nextMessage.title,  { body: nextMessage.description });
         } else if (Notification.permission !== 'denied') {
             Notification.requestPermission().then(function (permission) {
                 if (permission === 'granted') {
@@ -50,8 +50,9 @@
             <form th:action="@{/checked/{id}(id=${task.getId()})}" th:method="POST">
                 <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
                 <button class="img" th:type="submit">
-                    <img th:src="${task.isDone() ? '/img/vector_img_checkedbox.png' : '/img/vector_img_checkbox.png'}" alt="Check Image"/>
-                </button>
+                    <img th:if="${task.isDone()}" src="/img/vector_img_checkedbox.png" alt="mark as not done"/>
+                    <img th:unless="${task.isDone()}" src="/img/vector_img_checkbox.png" alt="mark as done"/>
+               </button>
             </form>
         </div>
     </main>
@@ -59,10 +60,10 @@
     <footer>
         <form method="post" th:action="@{/add}">
             <div class="stars">
-                <button class="img" type="submit" name="priority" value="4"><img src='/img/Star.png'/></button>
-                <button class="img" type="submit" name="priority" value="3"><img src='/img/Star.png'/></button>
-                <button type="submit" name="priority" value="2"><img src='/img/Star.png'/></button>
-                <button type="submit" name="priority" value="1"><img src='/img/Star.png'/></button>
+                <button type="submit" name="priority" value="4">🔥</button>
+                <button type="submit" name="priority" value="3">⭐</button>
+                <button type="submit" name="priority" value="2">🐢</button>
+                <button type="submit" name="priority" value="1">🧊</button>
             </div>
 
             <label class="dateTime hidden">
@@ -71,7 +72,7 @@
 
             <label class="addTask">
                 <input type="text" placeholder="new task" name="description" id="add" required>
-                <img onclick="toggleDueDate()" src="/img/Clock_Yellow.png">
+                <img onclick="toggleDueDate()" src="/img/Clock_Yellow.png" alt="due date">
             </label>
         </form>
     </footer>
