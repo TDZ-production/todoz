@@ -22,6 +22,7 @@ public class Week {
     @ManyToOne
     private User user;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "week")
+    @OrderBy("done, dueDate ASC, priority DESC")
     private List<Task> tasks;
 
     public Week(User user) {
