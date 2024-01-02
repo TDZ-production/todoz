@@ -93,14 +93,13 @@ public class MainController {
 
     @GetMapping("longTerm")
     public String showLongTerm(Model model, Principal principal) {
-        // TODO: Fix me, get me some Principal!
         model.addAttribute("longTerm", taskService.findLongTerm(getUser(principal)));
         return "longTerm";
     }
 
     @PostMapping("/checked/{id}")
     public String checkedTask(@PathVariable Long id, @RequestParam boolean done) {
-        // TODO: Fix me, get me some Principal!
+        // TODO: Fix me, get me some Principal!!!
         taskService.checkedTask(id, done);
         return "redirect:/";
     }
