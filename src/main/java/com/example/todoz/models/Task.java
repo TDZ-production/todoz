@@ -61,7 +61,7 @@ public class Task {
         if (this.getDueDate() == null) {
             return null;
         } else {
-            Duration duration = Duration.between(this.getCreatedAt(), this.getDueDate());
+            Duration duration = Duration.between(LocalDateTime.now(), this.getDueDate());
             if (duration.toDays() == 1) {
                 return "Tomorrow";
             }
