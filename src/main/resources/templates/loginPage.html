@@ -3,30 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>ToDoZ-login</title>
-  <link rel="stylesheet" href="/loginStyle.css">
+    <link rel="stylesheet" href="/new.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
 </head>
 <body>
-<main class="phone-screen">
-  <header>
-    <h1> ToDoZmrd</h1>
-    <p> Do your task, bitch!</p>
-  </header>
+<section class="app login">
+    <main>
+        <h1>ToDoZmrd</h1>
+        <p class="note">Do your task, bitch!</p>
 
-  <section class="form-section">
-    <div th:if="${param.error}">Invalid username and password.</div>
-    <div th:if="${param.logout}">You have been logged out.</div>
-  <form th:action="@{/login}" method="post">
-    <label>
-      <input type="text" name="username" placeholder="name">
-    </label>
-    <label>
-      <input type="password" name="password" placeholder="password">
-    </label>
-    <label>
-      <button type="submit" value="Log In"> <img src='/img/Login_button.png' alt="loginButton"/> </button>
-    </label>
-  </form>
-  </section>
-</main>
+        <form th:action="@{/login}" method="post">
+            <p th:if="${param.error}">Invalid username and password.</p>
+            <p th:if="${param.logout}">You have been logged out.</p>
+
+            <label>
+                <input type="text" name="username" placeholder="name">
+            </label>
+            <label>
+                <input type="password" name="password" placeholder="password">
+            </label>
+
+            <button class="cta" type="submit" value="Log In">&gt;&gt;</button>
+        </form>
+        <p><a th:href="@{/register}">Sign-up</a></p>
+    </main>
+</section>
 </body>
 </html>

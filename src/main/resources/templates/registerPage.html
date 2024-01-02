@@ -3,17 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/new.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
 </head>
 <body>
-<p th:if="${userExists} == true " th:text="User with this username exists"></p>
-<form method="post">
-    <label>
-        <input name="username" type="text">
-    </label>
-    <label>
-        <input name="password" type="password" minlength="8">
-    </label>
-    <button type="submit">Submit</button>
-</form>
+<section class="app register">
+    <main>
+        <h1>ToDoZmrd</h1>
+        <p class="note">Register your ass!</p>
+
+        <p th:if="${userExists} == true " th:text="User with this username exists"></p>
+        <form method="post">
+            <label>
+                <input name="username" type="text" placeholder="username">
+            </label>
+            <label>
+                <input name="password" type="password" minlength="5" placeholder="password">
+            </label>
+            <button class="cta" type="submit">Sign-up</button>
+        </form>
+        <p><a th:href="@{/login}">Log in</a></p>
+    </main>
+</section>
 </body>
 </html>

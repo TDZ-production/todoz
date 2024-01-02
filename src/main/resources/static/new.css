@@ -1,0 +1,239 @@
+@font-face {
+    font-family: virgil;
+    src: url("webfonts/Virgil.woff2");
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: virgil, sans-serif;
+    background-color: #666;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(63, 120, 144);
+}
+
+p, h1, h2, h3, h4, h5 {
+    margin: 0;
+}
+
+label {
+    display: block;
+    margin: 1rem 2rem;
+}
+
+header, .task {
+    padding: .8rem 1rem;
+}
+
+header {
+    border-bottom: 2px solid #333;
+    padding-bottom: 1.5rem;
+    padding-top: 1.8rem;
+}
+
+input {
+    width: 100%;
+}
+
+input, button {
+    font: inherit;
+    border: 2px solid #333;
+    background: #fff;
+    border-radius: .5rem;
+    padding: .8rem;
+}
+
+button, label {
+    cursor: pointer;
+}
+
+button.img, .stars button {
+    border: none;
+    background: transparent;
+    border-radius: initial;
+    padding: 0;
+}
+
+button.cta {
+    background: #FFC9C9;
+    min-width: 6rem;
+}
+
+.stars {
+    display: flex;
+    flex-direction: row-reverse;
+    border-top: 2px solid;
+    border-bottom: 2px solid #333;
+}
+
+.stars button {
+    flex-grow: 1;
+}
+
+.stars button + button {
+    border-right: 2px solid #333;
+}
+
+h1 {
+    margin-top: 2em;
+    font-size: 2.7rem;
+}
+
+h2 {
+    font-size: 1.2rem;
+}
+
+header h2 {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+header a {
+    position: relative;
+    z-index: 10;
+}
+
+main > form {
+    margin-top: 3rem;
+}
+
+main > form button {
+    margin-top: 2rem;
+}
+
+.hidden {
+    display: none;
+}
+
+.app {
+    margin: 0 auto;
+    max-width: 28rem;
+    min-height: 28rem;
+    height: 99.98dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: white;
+    text-align: center;
+}
+
+.app.login {
+    background: #FFF4C2;
+}
+
+.app.register {
+    background: #FFF0F6;
+}
+
+.app main {
+    flex-grow: 1;
+    overflow: auto;
+}
+
+.note {
+    opacity: 0.5;
+}
+
+.addTask {
+    display: flex;
+}
+
+.task {
+    display: flex;
+    border-bottom: 1px solid #333;
+}
+
+.task p {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.task .due {
+    white-space: nowrap;
+}
+
+.task button, .task img {
+    display: block;
+}
+
+img {
+    height: 1.2rem;
+}
+
+form + p {
+    margin-top: 2rem;
+}
+
+main > p:last-child {
+    margin-bottom: 4rem;
+}
+
+form .dateTime {
+    background: #FCEDA3;
+}
+
+header {
+    background: antiquewhite;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+footer {
+    background: #eee;
+}
+
+footer img {
+    height: 2.4rem;
+}
+
+footer label {
+    margin: 0;
+    padding: .42rem;
+}
+
+footer label > * + *, .task > * + * {
+    margin-left: .42rem
+}
+
+footer input, .stars button {
+    padding: .55rem;
+}
+
+.stars button {
+    background: #f7f7f7;
+}
+
+.stars > :nth-child(1):hover {background: #FFC9C9}
+.stars > :nth-child(2):hover {background: #fffac9}
+.stars > :nth-child(3):hover {background: #cbffc9}
+.stars > :nth-child(4):hover {background: #e3e3e3}
+
+.weekSummary {
+    margin-bottom: 2rem;
+}
+
+.weekSummary h1 {
+    font-size: 4rem;
+    margin-top: 3rem;
+}
+
+
+@media(min-width: 460px) {
+    .app {
+        margin: 1rem auto;
+        box-shadow: 0 0 0 3px black;
+        border-radius: 1rem;
+        max-width: 404px;
+        height: calc(100svh - 2rem);
+    }
+}

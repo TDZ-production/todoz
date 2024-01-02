@@ -3,8 +3,11 @@
     <head>
         <meta charset="UTF-8">
         <title>TodoZ-main</title>
-        <link rel="stylesheet" href="/style.css">
+        <link rel="stylesheet" href="/new.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
     </head>
 <script th:inline="javascript">
 
@@ -19,8 +22,8 @@
     function showNotification() {
 
         if (Notification.permission === 'granted') {
-            var nextMessage = rotateArray(messages);
-            var notification = new Notification(nextMessage.title,  { body: nextMessage.description });
+            const nextMessage = rotateArray(messages);
+            new Notification(nextMessage.title,  { body: nextMessage.description });
         } else if (Notification.permission !== 'denied') {
             Notification.requestPermission().then(function (permission) {
                 if (permission === 'granted') {
@@ -33,64 +36,46 @@
 
 </script>
 <body>
-<main class="phone-screen">
+<section class="app home">
     <header>
-        <div class="link">
-            <a th:href="@{/longTerm}"> Long term </a>
-        </div>
-
-        <div class="week">
-            <p th:text="|Week ${currentWeek.getWeekNumber()}|"></p>
-        </div>
-
-        <div class="link2">
-            <a th:href="@{/weekReview}"> Week review </a>
-        </div>
-
+        <a th:href="@{/longTerm}"> Long term </a>
+        <h2 th:text="|Week ${currentWeek.getWeekNumber()}|"></h2>
+        <a th:href="@{/weekReview}"> Week review </a>
     </header>
 
-    <section class="taskContainer">
-        <div class="task" th:each="task : ${currentWeek.getTasks()}" th:if="${task.isDone() == false}">
-            <p class="taskText" th:text="${task.getDescription()}"></p>
-            <span class="dueDate" th:text="${task.getRemainingDays()}"></span>
+    <main>
+        <div class="task" th:each="task : ${currentWeek.getTasks()}">
+            <p th:text="${task.getDescription()}"></p>
+            <span class="due" th:text="${task.getRemainingDays()}"></span>
             <form th:action="@{/checked/{id}(id=${task.getId()})}" th:method="POST">
                 <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
-                <button th:type="submit">
-                    <img th:src="${task.isDone() ? '/img/vector_img_checkedbox.png' : '/img/vector_img_checkbox.png'}" alt="Check Image"/>
-                </button>
+                <button class="img" th:type="submit">
+                    <img th:if="${task.isDone()}" src="/img/vector_img_checkedbox.png" alt="mark as not done"/>
+                    <img th:unless="${task.isDone()}" src="/img/vector_img_checkbox.png" alt="mark as done"/>
+               </button>
             </form>
         </div>
-        <div class="task" th:each="task : ${currentWeek.getTasks()}" th:if="${task.isDone() == true}">
-            <p class="taskText" th:text="${task.getDescription()}"></p>
-            <span class="dueDate" th:text="${task.getRemainingDays()}"></span>
-            <form th:action="@{/checked/{id}(id=${task.getId()})}" th:method="POST">
-                <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
-                <button th:type="submit">
-                    <img th:src="${task.isDone() ? '/img/vector_img_checkedbox.png' : '/img/vector_img_checkbox.png'}" alt="Check Image"/>
-                </button>
-            </form>
-        </div>
-    </section>
+    </main>
 
-    <section class="form-section">
-    <form method="post" th:action="@{/add}">
-        <div class="stars">
-            <button type="submit" name="priority" value="4"><img src='/img/Star.png'/></button>
-            <button type="submit" name="priority" value="3"><img src='/img/Star.png'/></button>
-            <button type="submit" name="priority" value="2"><img src='/img/Star.png'/></button>
-            <button type="submit" name="priority" value="1"><img src='/img/Star.png'/></button>
-        </div>
+    <footer>
+        <form method="post" th:action="@{/add}">
+            <div class="stars">
+                <button type="submit" name="priority" value="4">🔥</button>
+                <button type="submit" name="priority" value="3">⭐</button>
+                <button type="submit" name="priority" value="2">🐢</button>
+                <button type="submit" name="priority" value="1">🧊</button>
+            </div>
 
-        <div class="dateTime hidden">
-            <input type="date" name="maybeDueDate" id="date">
-        </div>
+            <label class="dateTime hidden">
+                <input type="date" name="maybeDueDate" id="date">
+            </label>
 
-        <div class="addTask">
-            <input type="text" placeholder="new task" name="description" id="add" required>
-            <img onclick="toggleDueDate()" src="/img/Clock_Yellow.png">
-        </div>
-    </form>
-    </section>
+            <label class="addTask">
+                <input type="text" placeholder="new task" name="description" id="add" required>
+                <img onclick="toggleDueDate()" src="/img/Clock_Yellow.png" alt="due date">
+            </label>
+        </form>
+    </footer>
 
     <script>
         function toggleDueDate() {
@@ -99,6 +84,6 @@
         }
     </script>
 
-</main>
+</section>
 </body>
 </html>

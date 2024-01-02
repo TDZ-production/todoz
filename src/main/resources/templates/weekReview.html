@@ -2,27 +2,28 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en"><head>
     <meta charset="UTF-8">
     <title>Week review</title>
-    <link rel="stylesheet" href="/styleWeekReview.css">
+    <link rel="stylesheet" href="/new.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
 </head>
 <body>
 
-<main class="phone-screen">
+<section class="app">
 
     <header>
-        <a th:href="@{/}"> < </a>
-        <p> Week review</p>
+        <a th:href="@{/}">&lt;</a>
+        <h2 th:text="|Week ${currentWeek.getWeekNumber()} review|" />
     </header>
 
-    <section class="taskContainer">
+    <main>
         <div class="weekSummary">
-            <p th:text="|Week ${currentWeek.getWeekNumber()}|"></p>
-            <div class="percentage">
-                <h1 th:style="'color: red'" th:text="|${currentWeek.getDonePercentage()}%|" th:if="${currentWeek.getDonePercentage() >= 0 && currentWeek.getDonePercentage() <= 50}"></h1>
-                <h1 th:style="'color: orange'" th:text="|${currentWeek.getDonePercentage()}%|" th:if="${currentWeek.getDonePercentage() > 50 && currentWeek.getDonePercentage() <= 75}"></h1>
-                <h1 th:style="'color: green'" th:text="|${currentWeek.getDonePercentage()}%|" th:if="${currentWeek.getDonePercentage() > 75}"></h1>
-            </div>
-            <p>Tasks are finished</p>
-            <button>Add tasks to new week!</button>
+            <h1 th:style="'color: red'" th:text="|${currentWeek.getDonePercentage()}%|" th:if="${currentWeek.getDonePercentage() >= 0 && currentWeek.getDonePercentage() <= 50}"></h1>
+            <h1 th:style="'color: orange'" th:text="|${currentWeek.getDonePercentage()}%|" th:if="${currentWeek.getDonePercentage() > 50 && currentWeek.getDonePercentage() <= 75}"></h1>
+            <h1 th:style="'color: green'" th:text="|${currentWeek.getDonePercentage()}%|" th:if="${currentWeek.getDonePercentage() > 75}"></h1>
+
+            <p class="note">Tasks are finished</p>
         </div>
 
         <div class="task" th:each="task : ${upcomingTasks}" >
@@ -35,12 +36,12 @@
         </div>
 
         <form action="/createNewWeek" method="post">
-            <button type="submit" th:text="|Start new week with ${howManyTasks} tasks|"></button>
+            <button class="cta" type="submit" th:text="|Start new week with ${howManyTasks} tasks|"></button>
         </form>
-        <p id="motivation">You are crushing it!</p>
-    </section>
+        <p class="note">You are crushing it!</p>
+    </main>
 
-</main>
+</section>
 
 </body>
 </html>
