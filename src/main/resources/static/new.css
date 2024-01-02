@@ -228,12 +228,12 @@ footer input, .stars button {
 }
 
 
-@media(min-width: 420px) {
+@media(min-width: 460px) {
     .app {
         margin: 1rem auto;
         box-shadow: 0 0 0 3px black;
         border-radius: 1rem;
-        max-width: 394px;
+        max-width: 404px;
         height: calc(100svh - 2rem);
     }
 }
