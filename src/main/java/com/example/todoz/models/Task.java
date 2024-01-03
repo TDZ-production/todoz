@@ -71,6 +71,9 @@ public class Task {
             else if (duration.toDays() == -1) {
                 return "Yesterday";
             }
+            else if (duration.toDays() < -1) {
+                return Math.abs(duration.toDays()) + " days ago";
+            }
             else{
                 return duration.toDays() + " days";
             }
