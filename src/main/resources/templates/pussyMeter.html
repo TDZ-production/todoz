@@ -14,7 +14,7 @@
     <main>
         <h1>Pussy meter</h1>
         <p class="note">Choose how big of a pussy are you!</p>
-        <form action="/changeMeter" method="post">
+        <form th:action="@{/changeMeter}" method="post">
             <div class="slideContainer">
                 <input type="range" step="1" max="2" class="slider" id="myRange" name="pussyMeter">
                 <span id="demo"></span>

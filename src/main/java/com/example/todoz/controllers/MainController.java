@@ -100,6 +100,7 @@ public class MainController {
     @PostMapping("/changeMeter")
     public String postPussyMeter(Principal principal, Integer pussyMeter) {
         getUser(principal).setPussyMeter(pussyMeter);
+        userService.save(getUser(principal));
         return "redirect:/";
     }
 
