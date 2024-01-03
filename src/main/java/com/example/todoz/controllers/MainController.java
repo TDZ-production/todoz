@@ -74,6 +74,7 @@ public class MainController {
         return "weekReview";
     }
 
+
     @PostMapping("/createNewWeek")
     public String startNewWeek(Principal principal) {
         Week newWeek = new Week();
@@ -88,6 +89,17 @@ public class MainController {
         newWeek.setTasks(tasks);
         weekService.save(newWeek);
 
+        return "redirect:/";
+    }
+
+    @GetMapping("/pussyMeter")
+    public String showPussyMeter() {
+        return "pussyMeter";
+    }
+
+    @PostMapping("/changeMeter")
+    public String postPussyMeter(Principal principal, Integer pussyMeter) {
+        getUser(principal).setPussyMeter(pussyMeter);
         return "redirect:/";
     }
 
