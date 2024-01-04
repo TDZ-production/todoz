@@ -22,7 +22,7 @@ public class User {
     private Long id;
     private String username;
     private String password;
-    private Integer pussyMeter;
+    private Integer pussyMeter = 1;
     @ManyToMany
     private Set<Role> roles;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
