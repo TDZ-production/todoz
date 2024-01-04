@@ -38,7 +38,7 @@ public class Task {
 
     public Integer getDueDateWeek() {
         if (dueDate != null) {
-            return this.dueDate.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
+            return DateManager.formatWeek(this.dueDate);
         } else {
             return null;
         }

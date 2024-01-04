@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-import java.time.temporal.WeekFields;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,12 +29,11 @@ public class Week {
     }
 
     public Week() {
-        this.weekNumber = getCurrentWeekNumber();
+        this.weekNumber = DateManager.formattedCurrentWeek();
     }
 
-    public static Integer getCurrentWeekNumber() {
-        return LocalDate.now()
-                .get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
+    public Integer getWeekNumber() {
+         return this.weekNumber % 100;
     }
 
     public Long getDonePercentage() {

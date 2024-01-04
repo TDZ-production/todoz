@@ -1,5 +1,6 @@
 package com.example.todoz.controllers;
 
+import com.example.todoz.models.DateManager;
 import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
 import com.example.todoz.models.Week;
@@ -17,10 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.time.LocalDate;
-import java.time.temporal.WeekFields;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Controller
 @RequiredArgsConstructor
@@ -49,7 +46,7 @@ public class MainController {
 
         if (maybeDueDate == null) {
             task.setWeek(getWeek(principal));
-        } else if (maybeDueDate.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear()) == Week.getCurrentWeekNumber()) {
+        } else if (DateManager.formatWeek(maybeDueDate).equals(DateManager.formattedCurrentWeek())) {
             task.setWeek(getWeek(principal));
             task.setDueDate(maybeDueDate.atTime(23, 59, 59));
         } else {
@@ -63,37 +60,36 @@ public class MainController {
         return "redirect:/";
     }
 
-    @GetMapping("/weekReview")
-    public String showWeekReview(Model model, Principal principal) {
-        Week currentWeek = getWeek(principal);
-        List<Task> upcomingTasks = taskService.findTasksForNextWeek(getUser(principal));
+//    @GetMapping("/weekReview")
+//    public String showWeekReview(Model model, Principal principal) {
+//        Week currentWeek = getWeek(principal);
+//        List<Task> upcomingTasks = taskService.findTasksForNextWeek(getUser(principal));
+//
+//        model.addAttribute("currentWeek", currentWeek);
+//        model.addAttribute("upcomingTasks", upcomingTasks);
+//        model.addAttribute("howManyTasks", currentWeek.getNumberOfNotDoneTasks() + upcomingTasks.size());
+//        return "weekReview";
+//    }
 
-        model.addAttribute("currentWeek", currentWeek);
-        model.addAttribute("upcomingTasks", upcomingTasks);
-        model.addAttribute("howManyTasks", currentWeek.getNumberOfNotDoneTasks() + upcomingTasks.size());
-        return "weekReview";
-    }
-
-    @PostMapping("/createNewWeek")
-    public String startNewWeek(Principal principal) {
-        Week newWeek = new Week();
-        newWeek.setWeekNumber(Week.getCurrentWeekNumber() + 1);
-
-        List<Task> tasks = Stream.concat(
-                        getWeek(principal).getNotDoneTasks().stream(),
-                        taskService.findTasksForNextWeek(getUser(principal)).stream())
-                .peek(t -> t.setWeek(newWeek))
-                .collect(Collectors.toList());
-
-        newWeek.setTasks(tasks);
-        weekService.save(newWeek);
-
-        return "redirect:/";
-    }
+//    @PostMapping("/createNewWeek")
+//    public String startNewWeek(Principal principal) {
+//        Week newWeek = new Week();
+//        newWeek.setWeekNumber(Week.formatCurrentWeek() + 1);
+//
+//        List<Task> tasks = Stream.concat(
+//                        getWeek(principal).getNotDoneTasks().stream(),
+//                        taskService.findTasksForNextWeek(getUser(principal)).stream())
+//                .peek(t -> t.setWeek(newWeek))
+//                .collect(Collectors.toList());
+//
+//        newWeek.setTasks(tasks);
+//        weekService.save(newWeek);
+//
+//        return "redirect:/";
+//    }
 
     @GetMapping("longTerm")
     public String showLongTerm(Model model, Principal principal) {
-        // TODO: Fix me, get me some Principal!
         model.addAttribute("longTerm", taskService.findLongTerm(getUser(principal)));
         return "longTerm";
     }
