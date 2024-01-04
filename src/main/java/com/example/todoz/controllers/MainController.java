@@ -1,5 +1,6 @@
 package com.example.todoz.controllers;
 
+import com.example.todoz.dtos.TaskUpdateDTO;
 import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
 import com.example.todoz.models.Week;
@@ -10,10 +11,7 @@ import com.example.todoz.services.WeekService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -59,6 +57,13 @@ public class MainController {
         task.setUser(getUser(principal));
 
         taskService.save(task);
+
+        return "redirect:/";
+    }
+
+    @PutMapping("/tasks")
+    public String update(TaskUpdateDTO taskUpdate, Principal principal) {
+        taskService.update(taskUpdate, getUser(principal));
 
         return "redirect:/";
     }

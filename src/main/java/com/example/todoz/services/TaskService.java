@@ -1,5 +1,6 @@
 package com.example.todoz.services;
 
+import com.example.todoz.dtos.TaskUpdateDTO;
 import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
 import com.example.todoz.models.Week;
@@ -82,6 +83,13 @@ public class TaskService {
         Task task = taskRepo.findById(id).orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
         task.setDone(done);
         taskRepo.save(task);
+    }
+
+    public Task update(TaskUpdateDTO taskUpdate, User user) {
+        Task task = taskRepo.findByIdAndUser(taskUpdate.id(), user)
+                .orElseThrow(() -> new RuntimeException(String.format("Task not found with id: %d, %s", taskUpdate.id(), user)));
+
+        return taskRepo.save(task.merge(taskUpdate));
     }
 }
 

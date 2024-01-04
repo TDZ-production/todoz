@@ -1,5 +1,6 @@
 package com.example.todoz.models;
 
+import com.example.todoz.dtos.TaskUpdateDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -77,4 +78,11 @@ public class Task {
         }
     }
 
+    public Task merge(TaskUpdateDTO taskUpdate) {
+        this.dueDate = taskUpdate.dueDate();
+        this.priority = taskUpdate.priority();
+        this.description = taskUpdate.description();
+
+        return this;
+    }
 }
