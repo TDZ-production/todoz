@@ -93,7 +93,8 @@ public class MainController {
     }
 
     @GetMapping("/pussyMeter")
-    public String showPussyMeter() {
+    public String showPussyMeter(Model model, Principal principal) {
+        model.addAttribute("user", getUser(principal));
         return "pussyMeter";
     }
 
