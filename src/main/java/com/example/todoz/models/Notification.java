@@ -17,12 +17,12 @@ public class Notification {
     @GeneratedValue
     private Long id;
     private String title;
-    private String description;
-    private Long remainingDays;
+    private String type;
+    private Integer pussyMeter;
 
-    public Notification(Long remainingDays, String title, String description) {
-        this.remainingDays = remainingDays;
+    public Notification(String title, String type, Integer pussyMeter) {
         this.title = title;
-        this.description = description;
+        this.type = type;
+        this.pussyMeter = pussyMeter;
     }
 }

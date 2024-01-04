@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface NotificationRepo extends ListCrudRepository<Notification,Long> {
-    List<Notification> findAllByRemainingDays(Long remainingDays);
+
+    List<Notification> findAllByTypeAndPussyMeter(String type, Integer pussyMeter);
 }

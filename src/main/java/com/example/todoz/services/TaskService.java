@@ -4,7 +4,6 @@ import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
 import com.example.todoz.models.Week;
 import com.example.todoz.repos.TaskRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -14,9 +13,10 @@ import java.util.List;
 @Service
 public class TaskService {
     private final TaskRepo taskRepo;
-
-    public TaskService(TaskRepo taskRepo) {
+    private final WeekService weekService;
+    public TaskService(TaskRepo taskRepo, WeekService weekService) {
         this.taskRepo = taskRepo;
+        this.weekService = weekService;
     }
 
     public List<Task> findByPriority(Integer priority) {
@@ -54,7 +54,7 @@ public class TaskService {
         taskRepo.save(task);
     }
 
-    public Long geRemainingDays(Task task) {
+    public Long getRemainingDays(Task task) {
         if (task.getDueDate() == null) {
             throw new RuntimeException("Inputted Task must have and DueDate assigned.");
         } else {
@@ -82,6 +82,16 @@ public class TaskService {
         Task task = taskRepo.findById(id).orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
         task.setDone(done);
         taskRepo.save(task);
+    }
+
+    public List<Task> findNotDoneTasksByUser(User user) {
+        if(weekService.findCurrentWeek(user).isEmpty()){
+            throw new RuntimeException("User must have a current week assigned.");
+        }
+        return taskRepo.findByWeek(weekService.findCurrentWeek(user).get())
+                .stream()
+                .filter(t -> !t.isDone())
+                .toList();
     }
 }
 

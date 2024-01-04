@@ -37,9 +37,9 @@ public class MainController {
 
         model.addAttribute("currentWeek", currentWeek);
 
-        model.addAttribute("messages", notificationService.getNotificationWithSameDay(taskService.getAllAndSortByPriority().stream()
-                .filter(t -> !t.isDone())
-                .findFirst().orElse(null)));
+//        model.addAttribute("messages", notificationService.getNotificationWithSameDay(taskService.getAllAndSortByPriority().stream()
+//                .filter(t -> !t.isDone())
+//                .findFirst().orElse(null)));
 
         return "index";
     }

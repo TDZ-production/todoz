@@ -1,10 +1,13 @@
 package com.example.todoz.services;
 
+import com.example.todoz.dtos.NotificationDTO;
 import com.example.todoz.models.Notification;
 import com.example.todoz.models.Task;
+import com.example.todoz.models.User;
 import com.example.todoz.repos.NotificationRepo;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 
@@ -27,25 +30,20 @@ public class NotificationService {
         notificationRepo.save(n);
     }
 
-    public List<Notification> getNotificationWithSameDay(Task task) {
-        Random r = new Random();
-        if (task == null) {
-            return null;
-        } else if (task.getDueDate() == null) {
-            return notificationRepo.findAll().stream()
-                    .filter(n -> n.getRemainingDays() == null)
-                    .peek(n -> n.setDescription(task.getDescription()))
-                    .toList();
-        } else {
-            Long taskDay = taskService.geRemainingDays(task);
-            return notificationRepo.findAllByRemainingDays(taskDay).stream()
-                    .peek(n -> n.setDescription(task.getDescription()))
-                    .toList();
-        }
-    }
 
     public Notification getNotificationById(Long id) {
         return notificationRepo.findById(id).orElseThrow(RuntimeException::new);
+    }
+
+    public NotificationDTO getNotificationDTO(User user, String type) {
+
+        List<String> tasksDescriptions = taskService.findNotDoneTasksByUser(user).stream()
+                .map(Task::getDescription)
+                .toList();
+        List<Notification> notifications = notificationRepo.findAllByTypeAndPussyMeter(type, user.getPussyMeter());
+        String title = notifications.get(new Random().nextInt(notifications.size())).getTitle();
+
+        return new NotificationDTO(title, tasksDescriptions);
     }
 }
 
