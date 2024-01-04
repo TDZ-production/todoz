@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,7 +31,7 @@ public class MainController {
 
     @GetMapping
     public String showIndex(Model model, Principal principal) {
-        Week currentWeek = getWeek(principal);
+        Optional<Week> currentWeek = weekService.findCurrentWeek(getUser(principal));
 
         model.addAttribute("currentWeek", currentWeek);
 
@@ -90,7 +91,7 @@ public class MainController {
 
     @GetMapping("longTerm")
     public String showLongTerm(Model model, Principal principal) {
-        model.addAttribute("longTerm", taskService.findLongTerm(getUser(principal)));
+        model.addAttribute("longTerm", taskService.findLongTermTasks(getUser(principal)));
         return "longTerm";
     }
 

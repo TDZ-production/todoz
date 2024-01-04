@@ -62,19 +62,19 @@ public class TaskService {
         }
     }
 
-    public List<Task> findTasksForNextWeek(User user) {
+    public List<Task> findTasksForThisWeek(User user) {
         return taskRepo.findByUserId(user.getId())
                 .stream()
                 .filter(t -> t.getDueDateWeek() != null && t.getDueDateWeek().equals(DateManager.formattedCurrentWeek()))
                 .toList();
     }
 
-    public List<Task> findLongTerm(User user) {
+    public List<Task> findLongTermTasks(User user) {
         return taskRepo.findByUserId(user.getId())
                 .stream()
                 .filter(t -> t.getDueDateWeek() != null
                         && DateManager.getYear(t.getDueDateWeek()) >= DateManager.getYear(DateManager.formattedCurrentWeek())
-                        && DateManager.getWeekNumber(t.getDueDateWeek()) > DateManager.getYear(DateManager.formattedCurrentWeek()))
+                        && DateManager.getWeekNumber(t.getDueDateWeek()) > DateManager.getWeekNumber(DateManager.formattedCurrentWeek()))
                 .sorted(Comparator.comparing(Task::getDueDate))
                 .toList();
     }
