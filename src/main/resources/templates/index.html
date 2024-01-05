@@ -60,6 +60,8 @@
 
     <footer>
         <form method="post" th:action="@{/add}">
+            <button type="submit" name="priority" value="4" class="hidden">default</button>
+
             <div class="stars">
                 <button type="submit" name="priority" value="4">🔥</button>
                 <button type="submit" name="priority" value="3">⭐</button>
@@ -121,7 +123,7 @@
                 toggleDueDate(false);
             }
             form.querySelector("input[name='maybeDueDate']").value = dueDate;
-            form.querySelector("button[value='" + priority + "']").focus();
+            form.querySelector("button[name='priority']").value = priority;
 
         }
     </script>
