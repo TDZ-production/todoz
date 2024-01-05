@@ -60,7 +60,7 @@
 
     <footer>
         <form method="post" th:action="@{/add}">
-            <button type="submit" name="priority" value="4" class="hidden">default</button>
+            <button type="submit" name="priority" value="4" class="hidden"></button>
 
             <div class="stars">
                 <button type="submit" name="priority" value="4">🔥</button>
@@ -87,6 +87,7 @@
 
             if (state === undefined) {
                 classList.toggle(CLASS);
+                document.querySelector("#date").value = "";
             } else if (state === true) {
                 classList.remove(CLASS);
                 document.querySelector("#date").focus();
@@ -98,7 +99,7 @@
         }
 
         document.querySelector("main").addEventListener("click", function (event) {
-            if (event.target.tagName === "MAIN") {
+            if (event.target.tagName !== "P") {
                 return;
             }
             let task = event.target.closest(".task");
@@ -110,6 +111,7 @@
         });
 
         function edit(task) {
+            registerCancel();
             let description = task.querySelector("p").innerText;
             let dueDate = task.querySelector(".due").dataset.duedate;
             let priority = task.dataset.priority;
@@ -125,6 +127,25 @@
             form.querySelector("input[name='maybeDueDate']").value = dueDate;
             form.querySelector("button[name='priority']").value = priority;
 
+            const main = document.querySelector("main");
+            main.classList.add("fade");
+
+            main.addEventListener("click", function () {
+                cancelEdit();
+            }, {once: true});
+
+        }
+
+        function registerCancel() {
+            window.onkeydown = function (event) {
+                if (event.key === "Escape") {
+                    cancelEdit();
+                }
+            }
+        }
+
+        function cancelEdit() {
+            location.reload();
         }
     </script>
 

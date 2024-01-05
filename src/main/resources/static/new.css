@@ -124,6 +124,11 @@ main > form button {
     overflow: hidden;
 }
 
+.fade {
+    opacity: 0.4;
+    filter: "blur(1px)";
+}
+
 .app {
     margin: 0 auto;
     max-width: 28rem;
