@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
+import java.time.temporal.WeekFields;
 import java.util.Locale;
 
 @Entity
@@ -135,5 +136,5 @@ public class Task {
         } else {
             setDueDate(maybeDueDate.atTime(23, 59, 59));
         }
-
+    }
 }

@@ -61,23 +61,6 @@ public class MainController {
         return "index";
     }
 
-    @PostMapping("/startNewWeek")
-    public String startNewWeek(Principal principal) {
-        Week week = new Week(getUser(principal));
-        Week previousWeek = weekService.findPreviousWeek(getUser(principal)).get();
-
-        List<Task> tasks = Stream.concat(
-                        previousWeek.getNotDoneTasks().stream(),
-                        taskService.findTasksForThisWeek(getUser(principal)).stream())
-                .peek(t -> t.setWeek(week))
-                .collect(Collectors.toList());
-
-        week.setTasks(tasks);
-        weekService.save(week);
-
-        return "redirect:/";
-    }
-
     @PostMapping("/add")
     public String add(Task task, LocalDate maybeDueDate, Principal principal) {
 
