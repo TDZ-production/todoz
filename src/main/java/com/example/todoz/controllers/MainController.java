@@ -35,10 +35,10 @@ public class MainController {
     @GetMapping
     public String showIndex(Model model, Principal principal) {
         Optional<Week> currentWeek = weekService.findCurrentWeek(getUser(principal));
-        Optional<Week> OptPreviousWeek = weekService.findPreviousWeek(getUser(principal));
+        Optional<Week> optPreviousWeek = weekService.findPreviousWeek(getUser(principal));
 
-        if(currentWeek.isEmpty() && OptPreviousWeek.isPresent()) {
-            Week previousWeek = OptPreviousWeek.get();
+        if(currentWeek.isEmpty() && optPreviousWeek.isPresent()) {
+            Week previousWeek = optPreviousWeek.get();
             List<Task> upcomingTasks = taskService.findTasksForThisWeek(getUser(principal));
 
             model.addAttribute("previousWeek", previousWeek);

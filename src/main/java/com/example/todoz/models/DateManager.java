@@ -14,7 +14,7 @@ public class DateManager {
      * @return YYYYww
      */
     public static Integer formattedCurrentWeek() {
-        return getYearOfNextOrSameSaturday(LocalDate.now()) * 100 + getWeekNumberOfNextOrSameSaturday(LocalDate.now());
+        return formatWeek(LocalDate.now());
     }
 
     /**
