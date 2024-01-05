@@ -1,5 +1,6 @@
 package com.example.todoz.models;
 
+import com.example.todoz.dtos.TaskUpdateDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
@@ -35,11 +37,28 @@ public class Task {
         this.createdAt = LocalDateTime.now();
     }
 
+    // ☠️
+    public LocalDate getDueDateDate() {
+        if (dueDate != null) {
+            return this.dueDate.toLocalDate();
+        } else {
+            return null;
+        }
+    }
+
     /**
      * Formats dueDate to dd.MM.yyyy
      *
      * @return String dd.MM.yyyy
      */
+    public Integer getDueDateWeek() {
+        if (dueDate != null) {
+            return this.dueDate.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
+        } else {
+            return null;
+        }
+    }
+
     public String getDueDateFormat() {
         if (dueDate != null) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
@@ -98,5 +117,23 @@ public class Task {
             return false;
         }
     }
+
+    public Task merge(TaskUpdateDTO taskUpdate, Week currentWeek) {
+        digestDueDate(taskUpdate.maybeDueDate(), currentWeek);
+        this.priority = taskUpdate.priority();
+        this.description = taskUpdate.description();
+
+        return this;
+    }
+
+    public void digestDueDate(LocalDate maybeDueDate, Week currentWeek) {
+        if (maybeDueDate == null) {
+            setWeek(week);
+        } else if (DateManager.formatWeek(maybeDueDate).equals(DateManager.formattedCurrentWeek())) {
+            setWeek(week);
+            setDueDate(maybeDueDate.atTime(23, 59, 59));
+        } else {
+            setDueDate(maybeDueDate.atTime(23, 59, 59));
+        }
 
 }

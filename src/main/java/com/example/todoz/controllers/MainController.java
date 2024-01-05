@@ -1,5 +1,6 @@
 package com.example.todoz.controllers;
 
+import com.example.todoz.dtos.TaskUpdateDTO;
 import com.example.todoz.models.DateManager;
 import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
@@ -11,10 +12,7 @@ import com.example.todoz.services.WeekService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -83,15 +81,7 @@ public class MainController {
     @PostMapping("/add")
     public String add(Task task, LocalDate maybeDueDate, Principal principal) {
 
-        if (maybeDueDate == null) {
-            task.setWeek(getWeek(principal));
-        } else if (DateManager.formatWeek(maybeDueDate).equals(DateManager.formattedCurrentWeek())) {
-            task.setWeek(getWeek(principal));
-            task.setDueDate(maybeDueDate.atTime(23, 59, 59));
-        } else {
-            task.setDueDate(maybeDueDate.atTime(23, 59, 59));
-        }
-
+        task.digestDueDate(maybeDueDate, getWeek(principal));
         task.setUser(getUser(principal));
 
         taskService.save(task);
@@ -99,7 +89,43 @@ public class MainController {
         return "redirect:/";
     }
 
-   @GetMapping("/pussyMeter")
+    @PostMapping("/tasks/{id}")
+    public String update(@PathVariable Long id, TaskUpdateDTO taskUpdate, Principal principal) {
+        taskService.update(id, taskUpdate, getUser(principal), getWeek(principal));
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/weekReview")
+    public String showWeekReview(Model model, Principal principal) {
+        Week currentWeek = getWeek(principal);
+        List<Task> upcomingTasks = taskService.findTasksForNextWeek(getUser(principal));
+
+        model.addAttribute("currentWeek", currentWeek);
+        model.addAttribute("upcomingTasks", upcomingTasks);
+        model.addAttribute("howManyTasks", currentWeek.getNumberOfNotDoneTasks() + upcomingTasks.size());
+        return "weekReview";
+    }
+
+
+    @PostMapping("/createNewWeek")
+    public String startNewWeek(Principal principal) {
+        Week newWeek = new Week();
+        newWeek.setWeekNumber(Week.getCurrentWeekNumber() + 1);
+
+        List<Task> tasks = Stream.concat(
+                        getWeek(principal).getNotDoneTasks().stream(),
+                        taskService.findTasksForNextWeek(getUser(principal)).stream())
+                .peek(t -> t.setWeek(newWeek))
+                .collect(Collectors.toList());
+
+        newWeek.setTasks(tasks);
+        weekService.save(newWeek);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/pussyMeter")
     public String showPussyMeter(Model model, Principal principal) {
         model.addAttribute("user", getUser(principal));
         return "pussyMeter";

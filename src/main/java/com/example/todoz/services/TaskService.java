@@ -1,8 +1,10 @@
 package com.example.todoz.services;
 
+import com.example.todoz.dtos.TaskUpdateDTO;
 import com.example.todoz.models.DateManager;
 import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
+import com.example.todoz.models.Week;
 import com.example.todoz.repos.TaskRepo;
 import org.springframework.stereotype.Service;
 
@@ -53,7 +55,7 @@ public class TaskService {
         taskRepo.save(task);
     }
 
-    public Long getRemainingDays(Task task) {
+    public Long geRemainingDays(Task task) {
         if (task.getDueDate() == null) {
             throw new RuntimeException("Inputted Task must have and DueDate assigned.");
         } else {
@@ -62,17 +64,17 @@ public class TaskService {
         }
     }
 
-    public List<Task> findTasksForThisWeek(User user) {
+    public List<Task> findTasksForNextWeek(User user) {
         return taskRepo.findByUserId(user.getId())
                 .stream()
-                .filter(Task::isUpcoming)
+                .filter(t -> t.getDueDateWeek() != null && t.getDueDateWeek() == Week.getCurrentWeekNumber() + 1)
                 .toList();
     }
 
-    public List<Task> findLongTermTasks(User user) {
+    public List<Task> findLongTerm(User user) {
         return taskRepo.findByUserId(user.getId())
                 .stream()
-                .filter(Task::isLongTerm)
+                .filter(t -> t.getDueDateWeek() != null && t.getDueDateWeek() > Week.getCurrentWeekNumber())
                 .sorted(Comparator.comparing(Task::getDueDate))
                 .toList();
     }
@@ -81,6 +83,13 @@ public class TaskService {
         Task task = taskRepo.findById(id).orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
         task.setDone(done);
         taskRepo.save(task);
+    }
+
+    public Task update(Long id, TaskUpdateDTO taskUpdate, User user, Week currentWeek) {
+        Task task = taskRepo.findByIdAndUser(id, user)
+                .orElseThrow(() -> new RuntimeException(String.format("Task not found with id: %d, %s", id, user)));
+
+        return taskRepo.save(task.merge(taskUpdate, currentWeek));
     }
 }
 
