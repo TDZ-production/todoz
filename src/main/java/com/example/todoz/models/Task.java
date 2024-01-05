@@ -129,11 +129,13 @@ public class Task {
 
     public void digestDueDate(LocalDate maybeDueDate, Week currentWeek) {
         if (maybeDueDate == null) {
-            setWeek(week);
-        } else if (DateManager.formatWeek(maybeDueDate).equals(DateManager.formattedCurrentWeek())) {
-            setWeek(week);
+            setWeek(currentWeek);
+            setDueDate(null);
+        } else if (maybeDueDate.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear()) == Week.getCurrentWeekNumber()) {
+            setWeek(currentWeek);
             setDueDate(maybeDueDate.atTime(23, 59, 59));
         } else {
+            setWeek(null);
             setDueDate(maybeDueDate.atTime(23, 59, 59));
         }
     }
