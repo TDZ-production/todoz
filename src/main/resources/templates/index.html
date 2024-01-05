@@ -111,41 +111,43 @@
         });
 
         function edit(task) {
-            registerCancel();
-            let description = task.querySelector("p").innerText;
-            let dueDate = task.querySelector(".due").dataset.duedate;
-            let priority = task.dataset.priority;
+            const main = document.querySelector("main");
+            registerCancel(main);
 
-            let form = document.querySelector("footer form");
+            const description = task.querySelector("p").innerText;
+            const dueDate = task.querySelector(".due").dataset.duedate;
+            const priority = task.dataset.priority;
+
+            const form = document.querySelector("footer form");
+
             form.action = "/tasks/" + task.dataset.id;
             form.querySelector("input[name='description']").value = description;
+            form.querySelector("input[name='maybeDueDate']").value = dueDate;
+            form.querySelector("button[name='priority']").value = priority;
+
             if (dueDate) {
                 toggleDueDate(true);
             } else {
                 toggleDueDate(false);
             }
-            form.querySelector("input[name='maybeDueDate']").value = dueDate;
-            form.querySelector("button[name='priority']").value = priority;
 
-            const main = document.querySelector("main");
-            main.classList.add("fade");
+            function registerCancel(el) {
+                el.classList.add("fade");
 
-            main.addEventListener("click", function () {
-                cancelEdit();
-            }, {once: true});
-
-        }
-
-        function registerCancel() {
-            window.onkeydown = function (event) {
-                if (event.key === "Escape") {
+                el.addEventListener("click", function () {
                     cancelEdit();
+                }, {once: true});
+
+                window.onkeydown = function (event) {
+                    if (event.key === "Escape") {
+                        cancelEdit();
+                    }
+                }
+
+                function cancelEdit() {
+                    location.reload();
                 }
             }
-        }
-
-        function cancelEdit() {
-            location.reload();
         }
     </script>
 
