@@ -126,7 +126,7 @@ main > form button {
 
 .fade {
     opacity: 0.4;
-    filter: "blur(1px)";
+    filter: blur(1px);
 }
 
 .app {
