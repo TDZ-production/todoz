@@ -131,7 +131,7 @@ public class Task {
         if (maybeDueDate == null) {
             setWeek(currentWeek);
             setDueDate(null);
-        } else if (maybeDueDate.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear()) == Week.getCurrentWeekNumber()) {
+        } else if (DateManager.formatWeek(maybeDueDate).equals(DateManager.formattedCurrentWeek())) {
             setWeek(currentWeek);
             setDueDate(maybeDueDate.atTime(23, 59, 59));
         } else {
