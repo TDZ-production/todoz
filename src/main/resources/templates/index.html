@@ -45,14 +45,14 @@
     </header>
 
     <main>
-        <div class="task" th:each="task : ${currentWeek.getTasks()}">
-            <p th:text="${task.getDescription()}"></p>
-            <span class="due" th:text="${task.getRemainingDays()}"></span>
+        <div class="task" th:each="task : ${currentWeek.getTasks()}" th:object="${task}" th:data-priority="*{priority}" th:data-id="*{id}">
+            <p th:text="*{description}"></p>
+            <span class="due" th:text="*{getRemainingDays()}" th:data-duedate="*{dueDateDate}"></span>
             <form th:action="@{/checked/{id}(id=${task.getId()})}" th:method="POST">
                 <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
                 <button class="img" th:type="submit">
-                    <img th:if="${task.isDone()}" src="/img/vector_img_checkedbox.png" alt="mark as not done"/>
-                    <img th:unless="${task.isDone()}" src="/img/vector_img_checkbox.png" alt="mark as done"/>
+                    <img th:if="*{done}" src="/img/vector_img_checkedbox.png" alt="mark as not done"/>
+                    <img th:unless="*{done}" src="/img/vector_img_checkbox.png" alt="mark as done"/>
                </button>
             </form>
         </div>
@@ -79,9 +79,50 @@
     </footer>
 
     <script>
-        function toggleDueDate() {
-            document.querySelector(".dateTime").classList.toggle("hidden");
-            document.querySelector("#date").value = "";
+        function toggleDueDate(state) {
+            const CLASS = "hidden";
+            const classList = document.querySelector(".dateTime").classList;
+
+            if (state === undefined) {
+                classList.toggle(CLASS);
+            } else if (state === true) {
+                classList.remove(CLASS);
+                document.querySelector("#date").focus();
+            } else {
+                classList.add(CLASS);
+                document.querySelector("#date").value = "";
+                document.querySelector("#add").focus();
+            }
+        }
+
+        document.querySelector("main").addEventListener("click", function (event) {
+            if (event.target.tagName === "MAIN") {
+                return;
+            }
+            let task = event.target.closest(".task");
+            if (!task) {
+                return;
+            }
+
+            edit(task);
+        });
+
+        function edit(task) {
+            let description = task.querySelector("p").innerText;
+            let dueDate = task.querySelector(".due").dataset.duedate;
+            let priority = task.dataset.priority;
+
+            let form = document.querySelector("footer form");
+            form.action = "/tasks/" + task.dataset.id;
+            form.querySelector("input[name='description']").value = description;
+            if (dueDate) {
+                toggleDueDate(true);
+            } else {
+                toggleDueDate(false);
+            }
+            form.querySelector("input[name='maybeDueDate']").value = dueDate;
+            form.querySelector("button[value='" + priority + "']").focus();
+
         }
     </script>
 

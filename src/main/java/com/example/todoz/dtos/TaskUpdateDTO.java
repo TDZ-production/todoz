@@ -1,6 +1,9 @@
 package com.example.todoz.dtos;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-public record TaskUpdateDTO(Long id, String description, Integer priority, LocalDateTime dueDate) {
+/**
+ * used only for editing a task, not to e.g. mark it as (not) done.
+ */
+public record TaskUpdateDTO(String description, Integer priority, LocalDate maybeDueDate) {
 }

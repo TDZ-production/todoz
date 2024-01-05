@@ -85,11 +85,11 @@ public class TaskService {
         taskRepo.save(task);
     }
 
-    public Task update(TaskUpdateDTO taskUpdate, User user) {
-        Task task = taskRepo.findByIdAndUser(taskUpdate.id(), user)
-                .orElseThrow(() -> new RuntimeException(String.format("Task not found with id: %d, %s", taskUpdate.id(), user)));
+    public Task update(Long id, TaskUpdateDTO taskUpdate, User user, Week currentWeek) {
+        Task task = taskRepo.findByIdAndUser(id, user)
+                .orElseThrow(() -> new RuntimeException(String.format("Task not found with id: %d, %s", id, user)));
 
-        return taskRepo.save(task.merge(taskUpdate));
+        return taskRepo.save(task.merge(taskUpdate, currentWeek));
     }
 }
 

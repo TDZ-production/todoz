@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
@@ -37,6 +38,14 @@ public class Task {
         this.createdAt = LocalDateTime.now();
     }
 
+    // ☠️
+    public LocalDate getDueDateDate() {
+        if (dueDate != null) {
+            return this.dueDate.toLocalDate();
+        } else {
+            return null;
+        }
+    }
     public Integer getDueDateWeek() {
         if (dueDate != null) {
             return this.dueDate.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
@@ -81,11 +90,23 @@ public class Task {
         }
     }
 
-    public Task merge(TaskUpdateDTO taskUpdate) {
-        this.dueDate = taskUpdate.dueDate();
+    public Task merge(TaskUpdateDTO taskUpdate, Week currentWeek) {
+        digestDueDate(taskUpdate.maybeDueDate(), currentWeek);
         this.priority = taskUpdate.priority();
         this.description = taskUpdate.description();
 
         return this;
+    }
+
+    public void digestDueDate(LocalDate maybeDueDate, Week currentWeek) {
+        if (maybeDueDate == null) {
+            setWeek(currentWeek);
+        } else if (maybeDueDate.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear()) == Week.getCurrentWeekNumber()) {
+            setWeek(currentWeek);
+            setDueDate(maybeDueDate.atTime(23, 59, 59));
+        } else {
+            setWeek(null);
+            setDueDate(maybeDueDate.atTime(23, 59, 59));
+        }
     }
 }

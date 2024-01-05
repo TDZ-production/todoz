@@ -45,15 +45,7 @@ public class MainController {
     @PostMapping("/add")
     public String add(Task task, LocalDate maybeDueDate, Principal principal) {
 
-        if (maybeDueDate == null) {
-            task.setWeek(getWeek(principal));
-        } else if (maybeDueDate.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear()) == Week.getCurrentWeekNumber()) {
-            task.setWeek(getWeek(principal));
-            task.setDueDate(maybeDueDate.atTime(23, 59, 59));
-        } else {
-            task.setDueDate(maybeDueDate.atTime(23, 59, 59));
-        }
-
+        task.digestDueDate(maybeDueDate, getWeek(principal));
         task.setUser(getUser(principal));
 
         taskService.save(task);
@@ -61,9 +53,9 @@ public class MainController {
         return "redirect:/";
     }
 
-    @PutMapping("/tasks")
-    public String update(TaskUpdateDTO taskUpdate, Principal principal) {
-        taskService.update(taskUpdate, getUser(principal));
+    @PostMapping("/tasks/{id}")
+    public String update(@PathVariable Long id, TaskUpdateDTO taskUpdate, Principal principal) {
+        taskService.update(id, taskUpdate, getUser(principal), getWeek(principal));
 
         return "redirect:/";
     }
