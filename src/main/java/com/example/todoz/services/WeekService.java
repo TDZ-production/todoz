@@ -39,4 +39,8 @@ public class WeekService {
     public Optional<Week> findPreviousWeek(User user) {
         return weekRepo.findTopByUserIdOrderByWeekNumberDesc(user.getId());
     }
+
+    public Week getPreviousWeek(User user) {
+        return weekRepo.findTopByUserIdOrderByWeekNumberDesc(user.getId()).orElseThrow(() -> new RuntimeException("No previous week found."));
+    }
 }

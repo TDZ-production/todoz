@@ -1,11 +1,9 @@
 package com.example.todoz.controllers;
 
 import com.example.todoz.dtos.TaskUpdateDTO;
-import com.example.todoz.models.DateManager;
 import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
 import com.example.todoz.models.Week;
-import com.example.todoz.services.NotificationService;
 import com.example.todoz.services.TaskService;
 import com.example.todoz.services.UserService;
 import com.example.todoz.services.WeekService;
@@ -28,7 +26,6 @@ public class MainController {
     private final UserService userService;
     private final TaskService taskService;
     private final WeekService weekService;
-    private final NotificationService notificationService;
 
     @GetMapping
     public String showIndex(Model model, Principal principal) {
@@ -54,9 +51,8 @@ public class MainController {
             model.addAttribute("currentWeek", currentWeek.get());
         }
 
-        model.addAttribute("messages", notificationService.getNotificationWithSameDay(taskService.getAllAndSortByPriority().stream()
-                .filter(t -> !t.isDone())
-                .findFirst().orElse(null)));
+        // TODO: resolve this
+        model.addAttribute("messages", null);
 
         return "index";
     }
@@ -79,31 +75,19 @@ public class MainController {
         return "redirect:/";
     }
 
-    @GetMapping("/weekReview")
-    public String showWeekReview(Model model, Principal principal) {
-        Week currentWeek = getWeek(principal);
-        List<Task> upcomingTasks = taskService.findTasksForNextWeek(getUser(principal));
-
-        model.addAttribute("currentWeek", currentWeek);
-        model.addAttribute("upcomingTasks", upcomingTasks);
-        model.addAttribute("howManyTasks", currentWeek.getNumberOfNotDoneTasks() + upcomingTasks.size());
-        return "weekReview";
-    }
-
-
-    @PostMapping("/createNewWeek")
+    @PostMapping("/startNewWeek")
     public String startNewWeek(Principal principal) {
-        Week newWeek = new Week();
-        newWeek.setWeekNumber(Week.getCurrentWeekNumber() + 1);
+        Week week = new Week(getUser(principal));
+        Week previousWeek = weekService.getPreviousWeek(getUser(principal));
 
         List<Task> tasks = Stream.concat(
-                        getWeek(principal).getNotDoneTasks().stream(),
-                        taskService.findTasksForNextWeek(getUser(principal)).stream())
-                .peek(t -> t.setWeek(newWeek))
+                        previousWeek.getNotDoneTasks().stream(),
+                        taskService.findTasksForThisWeek(getUser(principal)).stream())
+                .peek(t -> t.setWeek(week))
                 .collect(Collectors.toList());
 
-        newWeek.setTasks(tasks);
-        weekService.save(newWeek);
+        week.setTasks(tasks);
+        weekService.save(week);
 
         return "redirect:/";
     }
