@@ -101,6 +101,7 @@ public class Task {
     public void digestDueDate(LocalDate maybeDueDate, Week currentWeek) {
         if (maybeDueDate == null) {
             setWeek(currentWeek);
+            setDueDate(null);
         } else if (maybeDueDate.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear()) == Week.getCurrentWeekNumber()) {
             setWeek(currentWeek);
             setDueDate(maybeDueDate.atTime(23, 59, 59));
