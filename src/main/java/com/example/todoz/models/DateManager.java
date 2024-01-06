@@ -1,29 +1,49 @@
 package com.example.todoz.models;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.WeekFields;
 
 public class DateManager {
 
+    /**
+     * Formats current day to YYYYww
+     *
+     * @return YYYYww
+     */
     public static Integer formattedCurrentWeek() {
-        LocalDate today = LocalDate.now();
-        return (today.getYear() * 100) + today.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
+        return getYearOfNextOrSameSaturday(LocalDate.now()) * 100 + getWeekNumberOfNextOrSameSaturday(LocalDate.now());
     }
 
-    public static Integer formatWeek(LocalDateTime date) {
-        return (date.getYear() * 100) + date.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
+    /**
+     * Formats a day to YYYYww
+     *
+     * @return YYYYww
+     */
+    public static Integer formatWeek(TemporalAccessor date) {
+        return getYearOfNextOrSameSaturday(date) * 100 + getWeekNumberOfNextOrSameSaturday(date);
     }
 
-    public static Integer formatWeek(LocalDate date) {
-        return (date.getYear() * 100) + date.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
+    /**
+     * Gets year of the nearest Saturday
+     *
+     * @param date Date
+     * @return Year as Integer
+     */
+    public static Integer getYearOfNextOrSameSaturday(TemporalAccessor date) {
+        LocalDate localDate = LocalDate.from(date);
+        return localDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY)).getYear();
     }
 
-    public static Integer getYear(Integer week) {
-        return week / 100;
-    }
-
-    public static Integer getWeekNumber(Integer week) {
-        return week%100;
+    /**
+     * Gets week number of the nearest Saturday
+     *
+     * @param date Date
+     * @return Week number as Integer
+     */
+    public static Integer getWeekNumberOfNextOrSameSaturday(TemporalAccessor date) {
+        return date.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
     }
 }

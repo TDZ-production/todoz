@@ -53,7 +53,7 @@ public class TaskService {
         taskRepo.save(task);
     }
 
-    public Long geRemainingDays(Task task) {
+    public Long getRemainingDays(Task task) {
         if (task.getDueDate() == null) {
             throw new RuntimeException("Inputted Task must have and DueDate assigned.");
         } else {
@@ -65,16 +65,14 @@ public class TaskService {
     public List<Task> findTasksForThisWeek(User user) {
         return taskRepo.findByUserId(user.getId())
                 .stream()
-                .filter(t -> t.getDueDateWeek() != null && t.getDueDateWeek().equals(DateManager.formattedCurrentWeek()))
+                .filter(Task::isUpcoming)
                 .toList();
     }
 
     public List<Task> findLongTermTasks(User user) {
         return taskRepo.findByUserId(user.getId())
                 .stream()
-                .filter(t -> t.getDueDateWeek() != null
-                        && DateManager.getYear(t.getDueDateWeek()) >= DateManager.getYear(DateManager.formattedCurrentWeek())
-                        && DateManager.getWeekNumber(t.getDueDateWeek()) > DateManager.getWeekNumber(DateManager.formattedCurrentWeek()))
+                .filter(Task::isLongTerm)
                 .sorted(Comparator.comparing(Task::getDueDate))
                 .toList();
     }

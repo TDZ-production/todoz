@@ -37,7 +37,7 @@ public class NotificationService {
                     .peek(n -> n.setDescription(task.getDescription()))
                     .toList();
         } else {
-            Long taskDay = taskService.geRemainingDays(task);
+            Long taskDay = taskService.getRemainingDays(task);
             return notificationRepo.findAllByRemainingDays(taskDay).stream()
                     .peek(n -> n.setDescription(task.getDescription()))
                     .toList();

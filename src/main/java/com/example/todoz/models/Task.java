@@ -35,14 +35,11 @@ public class Task {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Integer getDueDateWeek() {
-        if (dueDate != null) {
-            return DateManager.formatWeek(this.dueDate);
-        } else {
-            return null;
-        }
-    }
-
+    /**
+     * Formats dueDate to dd.MM.yyyy
+     *
+     * @return String dd.MM.yyyy
+     */
     public String getDueDateFormat() {
         if (dueDate != null) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
@@ -52,6 +49,11 @@ public class Task {
         }
     }
 
+    /**
+     * Gets day of the week
+     *
+     * @return Mon, Tue, Wed etc.
+     */
     public String getDueDateDayOfWeek() {
         return this.dueDate.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault());
     }
@@ -76,6 +78,24 @@ public class Task {
             else{
                 return duration.toDays() + " days";
             }
+        }
+    }
+
+    public boolean isLongTerm(){
+        if (this.dueDate != null) {
+            return DateManager.formatWeek(this.dueDate) > DateManager.formattedCurrentWeek();
+        }
+        else {
+            return false;
+        }
+    }
+
+    public boolean isUpcoming() {
+        if (this.dueDate != null) {
+            return DateManager.formatWeek(this.dueDate).equals(DateManager.formattedCurrentWeek());
+        }
+        else {
+            return false;
         }
     }
 
