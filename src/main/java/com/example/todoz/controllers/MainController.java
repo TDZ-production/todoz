@@ -63,7 +63,7 @@ public class MainController {
         return "index";
     }
 
-    @PostMapping("startNewWeek")
+    @PostMapping("/startNewWeek")
     public String startNewWeek(Principal principal) {
         Week week = new Week(getUser(principal));
         Week previousWeek = weekService.findPreviousWeek(getUser(principal)).get();
