@@ -35,4 +35,8 @@ public class WeekService {
     public Week save(Week week) {
         return weekRepo.save(week);
     }
+
+    public Optional<Week> findPreviousWeek(User user) {
+        return weekRepo.findTopByUserIdOrderByWeekNumberDesc(user.getId());
+    }
 }

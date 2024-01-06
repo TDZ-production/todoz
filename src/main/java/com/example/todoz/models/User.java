@@ -26,7 +26,6 @@ public class User {
     @ManyToMany
     private Set<Role> roles;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    @OrderBy("weekNumber ASC")
     private List<Week> week;
     @OneToMany(mappedBy = "user")
     List<Task> tasks;
