@@ -99,6 +99,19 @@ public class MainController {
         return "redirect:/";
     }
 
+   @GetMapping("/pussyMeter")
+    public String showPussyMeter(Model model, Principal principal) {
+        model.addAttribute("user", getUser(principal));
+        return "pussyMeter";
+    }
+
+    @PostMapping("/changeMeter")
+    public String postPussyMeter(Principal principal, Integer pussyMeter) {
+        getUser(principal).setPussyMeter(pussyMeter);
+        userService.save(getUser(principal));
+        return "redirect:/";
+    }
+
     @GetMapping("longTerm")
     public String showLongTerm(Model model, Principal principal) {
         model.addAttribute("longTerm", taskService.findLongTermTasks(getUser(principal)));

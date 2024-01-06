@@ -60,7 +60,7 @@ public class Task {
         if (this.getDueDate() == null) {
             return null;
         } else {
-            Duration duration = Duration.between(this.getCreatedAt(), this.getDueDate());
+            Duration duration = Duration.between(LocalDateTime.now(), this.getDueDate());
             if (duration.toDays() == 1) {
                 return "Tomorrow";
             }
@@ -69,6 +69,9 @@ public class Task {
             }
             else if (duration.toDays() == -1) {
                 return "Yesterday";
+            }
+            else if (duration.toDays() < -1) {
+                return Math.abs(duration.toDays()) + " days ago";
             }
             else{
                 return duration.toDays() + " days";
