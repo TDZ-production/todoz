@@ -17,6 +17,7 @@
         <h2 th:text="|Week ${previousWeek.getWeekNumber()} review|" />
     </header>
 
+
     <main>
         <div class="weekSummary">
             <h1 th:style="'color: red'" th:text="|${previousWeek.getDonePercentage()}%|" th:if="${previousWeek.getDonePercentage() >= 0 && previousWeek.getDonePercentage() <= 50}"></h1>
@@ -26,20 +27,51 @@
             <p class="note">Tasks are finished</p>
         </div>
 
+        <form action="/startNewWeek" method="post" id="form">
         <div class="task" th:each="task : ${upcomingTasks}" >
             <p class="taskText" th:text="${task.getDescription()}"></p>
+            <label>
+                <input type="checkbox" class="delegateTask" name="tasks[]" th:value="${task.id}">
+            </label>
         </div>
 
         <div class="task" th:each="task : ${previousWeek.getTasks()}" >
             <p class="taskText" th:text="${task.getDescription()}"></p>
             <span th:if="${task.isDone()}"><img src="/img/vector_img_checkmark-09.png"></span>
+            <label>
+                <input type="checkbox" class="delegateTask" name="tasks[]" th:value="${task.id}">
+            </label>
         </div>
-
-        <form action="/startNewWeek" method="post">
             <button class="cta" type="submit" th:text="|Start new week with ${howManyTasks} tasks|"></button>
         </form>
         <p class="note">You are crushing it!</p>
     </main>
+
+<!--    <script>-->
+<!--        function submitForm() {-->
+<!--            let checkedTasks = [];-->
+<!--            let tasks = document.querySelectorAll(".delegateTask:checked");-->
+<!--            tasks.forEach(task => checkedTasks.push({taskId : task.value}));-->
+
+<!--            const data = JSON.stringify({delegatedTasks : checkedTasks});-->
+<!--            fetch('/startNewWeek', {-->
+<!--                method: 'POST',-->
+<!--                headers: {-->
+<!--                    'Content-Type': 'application/json'-->
+<!--                },-->
+<!--                body: data-->
+<!--            })-->
+<!--                .then(response => response.json())-->
+<!--                .then(data => {-->
+<!--                    console.log('Success:', data);-->
+<!--                    // Handle the response from the server if needed-->
+<!--                })-->
+<!--                .catch(error => {-->
+<!--                    console.error('Error:', error);-->
+<!--                });-->
+
+<!--        }-->
+<!--    </script>-->
 
 </section>
 

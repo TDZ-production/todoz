@@ -9,4 +9,5 @@ import java.util.List;
 public interface TaskRepo extends ListCrudRepository<Task, Long> {
     List<Task> findAllByPriority(Integer priority);
     List<Task> findByUserId(Long id);
+    Task findByIdAndUserId(Long taskId, Long id);
 }

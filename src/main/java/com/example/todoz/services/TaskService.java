@@ -82,6 +82,10 @@ public class TaskService {
         task.setDone(done);
         taskRepo.save(task);
     }
+
+    public Task findTaskByIdAndUserId(Long taskId, User user) {
+        return taskRepo.findByIdAndUserId(taskId, user.getId());
+    }
 }
 
 

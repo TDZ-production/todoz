@@ -1,5 +1,7 @@
 package com.example.todoz.controllers;
 
+import com.example.todoz.dtos.TaskDTO;
+import com.example.todoz.dtos.TasksDTO;
 import com.example.todoz.models.DateManager;
 import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
@@ -11,13 +13,11 @@ import com.example.todoz.services.WeekService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,19 +64,15 @@ public class MainController {
     }
 
     @PostMapping("/startNewWeek")
-    public String startNewWeek(Principal principal) {
+    public String startNewWeek(Principal principal, String[] tasks) {
         Week week = new Week(getUser(principal));
-        Week previousWeek = weekService.findPreviousWeek(getUser(principal)).get();
+        for (String taskId : tasks) {
+            if (taskId != null) {
+                taskService.findTaskByIdAndUserId(Long.valueOf(taskId), getUser(principal)).setWeek(week);
+            }
+        }
 
-        List<Task> tasks = Stream.concat(
-                        previousWeek.getNotDoneTasks().stream(),
-                        taskService.findTasksForThisWeek(getUser(principal)).stream())
-                .peek(t -> t.setWeek(week))
-                .collect(Collectors.toList());
-
-        week.setTasks(tasks);
         weekService.save(week);
-
         return "redirect:/";
     }
 
