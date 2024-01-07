@@ -31,7 +31,7 @@
         <div class="task" th:each="task : ${upcomingTasks}" >
             <p class="taskText" th:text="${task.getDescription()}"></p>
             <label>
-                <input type="checkbox" class="delegateTask" name="tasks[]" th:value="${task.id}">
+                <input type="checkbox" name="tasks" th:value="${task.id}">
             </label>
         </div>
 
@@ -39,7 +39,7 @@
             <p class="taskText" th:text="${task.getDescription()}"></p>
             <span th:if="${task.isDone()}"><img src="/img/vector_img_checkmark-09.png"></span>
             <label>
-                <input type="checkbox" class="delegateTask" name="tasks[]" th:value="${task.id}">
+                <input type="checkbox" name="tasks" th:value="${task.id}">
             </label>
         </div>
             <button class="cta" type="submit" th:text="|Start new week with ${howManyTasks} tasks|"></button>

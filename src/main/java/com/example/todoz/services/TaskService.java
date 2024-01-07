@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -84,7 +85,8 @@ public class TaskService {
     }
 
     public Task findTaskByIdAndUserId(Long taskId, User user) {
-        return taskRepo.findByIdAndUserId(taskId, user.getId());
+        return taskRepo.findByIdAndUserId(taskId, user.getId())
+                .orElseThrow(() -> new RuntimeException(String.format("Task not found with id: %d, %s", taskId, user)));
     }
 }
 

@@ -5,9 +5,11 @@ import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface TaskRepo extends ListCrudRepository<Task, Long> {
     List<Task> findAllByPriority(Integer priority);
     List<Task> findByUserId(Long id);
-    Task findByIdAndUserId(Long taskId, Long id);
+    Optional<Task> findByIdAndUserId(Long taskId, Long id);
 }

@@ -1,7 +1,5 @@
 package com.example.todoz.controllers;
 
-import com.example.todoz.dtos.TaskDTO;
-import com.example.todoz.dtos.TasksDTO;
 import com.example.todoz.models.DateManager;
 import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
@@ -17,11 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Controller
 @RequiredArgsConstructor
@@ -64,14 +59,11 @@ public class MainController {
     }
 
     @PostMapping("/startNewWeek")
-    public String startNewWeek(Principal principal, String[] tasks) {
+    public String startNewWeek(Principal principal, @RequestParam("tasks") List<Long> delegatedTasks) {
         Week week = new Week(getUser(principal));
-        for (String taskId : tasks) {
-            if (taskId != null) {
-                taskService.findTaskByIdAndUserId(Long.valueOf(taskId), getUser(principal)).setWeek(week);
-            }
-        }
-
+        delegatedTasks.stream()
+                        .map(taskId -> taskService.findTaskByIdAndUserId(taskId, getUser(principal)))
+                        .forEach(task -> task.setWeek(week));
         weekService.save(week);
         return "redirect:/";
     }
@@ -119,6 +111,22 @@ public class MainController {
         // TODO: Fix me, get me some Principal!
         taskService.checkedTask(id, done);
         return "redirect:/";
+    }
+
+    @GetMapping("/test")
+    public String showTest() {
+        return "test";
+    }
+
+    @PostMapping("/test")
+    public String receiveArray(@RequestParam("numbers") List<Integer> numbers, Model model) {
+        if (numbers.size() > 1){
+            model.addAttribute("numbers", numbers);
+            return "testPositive";
+        }
+        else {
+            return "testNegative";
+        }
     }
 
     private User getUser(Principal principal) {
