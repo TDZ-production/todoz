@@ -173,6 +173,9 @@ main > form button {
     position: relative;
 }
 
+.task[data-done=true] img.notdone { display: none; }
+.task[data-done=false] img.isdone { display: none; }
+
 .task p {
     flex-grow: 1;
     text-align: left;
