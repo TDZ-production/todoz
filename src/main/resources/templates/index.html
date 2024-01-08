@@ -93,13 +93,15 @@
                 method: 'POST',
                 body: data
             }).then(resp => {
-                if (resp.ok) {
-                    const done = form.elements["done"];
-                    done.value = done.value === "false" ? "true" : "false";
-
-                    const task = form.closest(".task");
-                    task.dataset.done = task.dataset.done === "true" ? "false" : "true";
+                if (!resp.ok) {
+                    window.location.reload();
                 }
+                
+                const done = form.elements["done"];
+                done.value = done.value === "false" ? "true" : "false";
+
+                const task = form.closest(".task");
+                task.dataset.done = task.dataset.done === "true" ? "false" : "true";
             });
         }
 
