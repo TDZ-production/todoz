@@ -51,7 +51,8 @@ public class MainController {
             model.addAttribute("currentWeek", currentWeek.get());
         }
 
-        // TODO: resolve this
+        //part of the messages
+
         model.addAttribute("messages", null);
 
         return "index";
