@@ -42,11 +42,4 @@ public class Week {
                 .count();
         return Math.round((double) count / this.getTasks().size() * 100);
     }
-
-    public Long getNumberOfNotDoneTasks() {
-        return this.tasks
-                .stream()
-                .filter(t -> !t.isDone())
-                .count();
-    }
 }

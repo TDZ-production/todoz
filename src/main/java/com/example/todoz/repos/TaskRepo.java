@@ -11,5 +11,6 @@ import java.util.Optional;
 public interface TaskRepo extends ListCrudRepository<Task, Long> {
     List<Task> findAllByUserId(Long id);
     Optional<Task> findByIdAndUserId(Long taskId, Long id);
-    List<Task> findAllByUserIdAndDueDateWeekNumberGreaterThanAndDueDateWeekNumberLessThan(Long userId, Integer previousWeek, Integer currentWeek);
+    List<Task> findAllByUserIdAndDueDateWeekNumberGreaterThanAndDueDateWeekNumberLessThanEqual(Long userId, Integer previousWeek, Integer currentWeek);
+    List<Task> findAllByUserIdAndDueDateWeekNumberGreaterThan(Long userId, Integer currentWeek);
 }

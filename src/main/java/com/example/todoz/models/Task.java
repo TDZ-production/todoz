@@ -100,24 +100,6 @@ public class Task {
         }
     }
 
-    public boolean isLongTerm(){
-        if (this.dueDate != null) {
-            return this.dueDateWeekNumber > DateManager.formattedCurrentWeek();
-        }
-        else {
-            return false;
-        }
-    }
-
-    public boolean isUpcoming() {
-        if (this.dueDate != null) {
-            return this.dueDateWeekNumber.equals(DateManager.formattedCurrentWeek());
-        }
-        else {
-            return false;
-        }
-    }
-
     public Task merge(TaskUpdateDTO taskUpdate, Week currentWeek) {
         digestDueDate(taskUpdate.maybeDueDate(), currentWeek);
         this.priority = taskUpdate.priority();
@@ -143,6 +125,7 @@ public class Task {
         Task task = new Task();
         task.setDescription(this.description);
         task.setUser(this.user);
+        task.setPriority(this.priority);
         task.setWeek(week);
         return task;
     }

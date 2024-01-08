@@ -22,19 +22,12 @@ public class TaskService {
         taskRepo.save(task);
     }
 
-    public List<Task> findTasksForThisWeek(User user) {
-        return taskRepo.findAllByUserId(user.getId())
-                .stream()
-                .filter(Task::isUpcoming)
-                .toList();
+    public List<Task> findUpcomingTasks(User user, Integer previousWeekNumber, Integer currentWeekNumber) {
+        return taskRepo.findAllByUserIdAndDueDateWeekNumberGreaterThanAndDueDateWeekNumberLessThanEqual(user.getId(), previousWeekNumber, currentWeekNumber);
     }
 
-    public List<Task> findLongTermTasks(User user) {
-        return taskRepo.findAllByUserId(user.getId())
-                .stream()
-                .filter(Task::isLongTerm)
-                .sorted(Comparator.comparing(Task::getDueDate))
-                .toList();
+    public List<Task> findLongTermTasks(User user, Integer currentWeek) {
+        return taskRepo.findAllByUserIdAndDueDateWeekNumberGreaterThan(user.getId(), currentWeek);
     }
 
     public void checkedTask(Long taskId, User user, boolean done) {
@@ -54,10 +47,6 @@ public class TaskService {
                 .orElseThrow(() -> new RuntimeException(String.format("Task not found with id: %d, %s", taskId, user)));
 
         return taskRepo.save(task.merge(taskUpdate, currentWeek));
-    }
-
-    public List<Task> findMissedTasks( User user, Integer previousWeekNumber, Integer currentWeekNumber) {
-        return taskRepo.findAllByUserIdAndDueDateWeekNumberGreaterThanAndDueDateWeekNumberLessThan(user.getId(), previousWeekNumber, currentWeekNumber);
     }
 }
 

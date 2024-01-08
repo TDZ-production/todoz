@@ -17,7 +17,6 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Controller
@@ -35,15 +34,11 @@ public class MainController {
 
         if(currentWeek.isEmpty() && optPreviousWeek.isPresent()) {
             Week previousWeek = optPreviousWeek.get();
-            List<Task> upcomingTasks = Stream.concat(
-                    taskService.findTasksForThisWeek(getUser(principal)).stream(),
-                    taskService
-                            .findMissedTasks(getUser(principal), previousWeek.getWeekNumber(), DateManager.formattedCurrentWeek()).stream())
-                    .toList();
+            List<Task> upcomingTasks = taskService
+                            .findUpcomingTasks(getUser(principal), previousWeek.getWeekNumber(), DateManager.formattedCurrentWeek());
 
             model.addAttribute("previousWeek", previousWeek);
             model.addAttribute("upcomingTasks", upcomingTasks);
-            model.addAttribute("howManyTasks", previousWeek.getNumberOfNotDoneTasks() + upcomingTasks.size());
 
             return "weekReview";
         }
@@ -76,9 +71,11 @@ public class MainController {
                             taskService.save(task.copy(week));
                         } else {
                             task.setWeek(week);
+                            weekService.save(week);
                         }
                     });
         }
+
         return "redirect:/";
     }
 
@@ -114,7 +111,8 @@ public class MainController {
 
     @GetMapping("longTerm")
     public String showLongTerm(Model model, Principal principal) {
-        model.addAttribute("longTerm", taskService.findLongTermTasks(getUser(principal)));
+        model.addAttribute("longTerm",
+                taskService.findLongTermTasks(getUser(principal), DateManager.formattedCurrentWeek()));
         return "longTerm";
     }
 
@@ -122,23 +120,6 @@ public class MainController {
     public String checkedTask(@PathVariable Long id, @RequestParam boolean done, Principal principal) {
         taskService.checkedTask(id, getUser(principal), done);
         return "redirect:/";
-    }
-
-    @GetMapping("/test")
-    public String showTest(Principal principal, Model model) {
-        model.addAttribute("missedTasks", taskService.findMissedTasks(getUser(principal), 202402, 202404));
-        return "test";
-    }
-
-    @PostMapping("/test")
-    public String receiveArray(@RequestParam(value = "numbers", required = false) List<Integer> numbers, Model model) {
-        if (numbers != null && !numbers.isEmpty()){
-            model.addAttribute("numbers", numbers);
-            return "testPositive";
-        }
-        else {
-            return "testNegative";
-        }
     }
 
     private User getUser(Principal principal) {
