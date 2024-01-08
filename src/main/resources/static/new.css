@@ -169,6 +169,8 @@ main > form button {
 .task {
     display: flex;
     border-bottom: 1px solid #333;
+    padding-left: .5rem;
+    position: relative;
 }
 
 .task p {
@@ -182,6 +184,29 @@ main > form button {
 
 .task button, .task img {
     display: block;
+}
+
+.prio1, .prio2, .prio3, .prio4 {
+    width: .45rem;
+    position: absolute;
+    left: 0;
+    top: .3rem;
+    bottom: .3rem;
+}
+
+.prio1 {
+    background: #e3e3e3;
+}
+
+.prio2 {
+    background: #cbffc9;
+}
+
+.prio3 {
+    background: #fffac9;
+}
+.prio4 {
+    background: #FFC9C9;
 }
 
 img {
@@ -217,15 +242,15 @@ footer img {
 
 footer label {
     margin: 0;
-    padding: .42rem;
+    padding: .5rem;
 }
 
 footer label > * + *, .task > * + * {
-    margin-left: .42rem
+    margin-left: .5rem
 }
 
 footer input, .stars button {
-    padding: .55rem;
+    padding: .5rem;
 }
 
 .stars button {
