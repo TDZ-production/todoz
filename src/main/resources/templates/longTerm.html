@@ -18,6 +18,7 @@
 
     <main>
         <div class="task" th:each="task : ${longTerm}" th:object="${task}">
+            <span th:classappend="|prio${task.getPriority()}|"></span>
             <p th:text="*{getDescription()}"></p>
             <span class="due" th:text="|*{getDueDateDayOfWeek()} *{getDueDateFormat()}|"></span>
         </div>

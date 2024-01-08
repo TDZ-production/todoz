@@ -27,10 +27,12 @@
         </div>
 
         <div class="task" th:each="task : ${upcomingTasks}" >
+            <span th:classappend="|prio${task.getPriority()}|"></span>
             <p class="taskText" th:text="${task.getDescription()}"></p>
         </div>
 
         <div class="task" th:each="task : ${previousWeek.getTasks()}" >
+            <span th:classappend="|prio${task.getPriority()}|"></span>
             <p class="taskText" th:text="${task.getDescription()}"></p>
             <span th:if="${task.isDone()}"><img src="/img/vector_img_checkmark-09.png"></span>
         </div>
