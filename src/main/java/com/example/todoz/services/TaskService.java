@@ -23,14 +23,14 @@ public class TaskService {
     }
 
     public List<Task> findTasksForThisWeek(User user) {
-        return taskRepo.findByUserId(user.getId())
+        return taskRepo.findAllByUserId(user.getId())
                 .stream()
                 .filter(Task::isUpcoming)
                 .toList();
     }
 
     public List<Task> findLongTermTasks(User user) {
-        return taskRepo.findByUserId(user.getId())
+        return taskRepo.findAllByUserId(user.getId())
                 .stream()
                 .filter(Task::isLongTerm)
                 .sorted(Comparator.comparing(Task::getDueDate))
@@ -54,6 +54,10 @@ public class TaskService {
                 .orElseThrow(() -> new RuntimeException(String.format("Task not found with id: %d, %s", taskId, user)));
 
         return taskRepo.save(task.merge(taskUpdate, currentWeek));
+    }
+
+    public List<Task> findMissedTasks( User user, Integer previousWeekNumber, Integer currentWeekNumber) {
+        return taskRepo.findAllByUserIdAndDueDateWeekNumberGreaterThanAndDueDateWeekNumberLessThan(user.getId(), previousWeekNumber, currentWeekNumber);
     }
 }
 

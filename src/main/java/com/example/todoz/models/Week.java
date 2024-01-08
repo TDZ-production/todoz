@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -32,7 +31,7 @@ public class Week {
         this.weekNumber = DateManager.formattedCurrentWeek();
     }
 
-    public Integer getWeekNumber() {
+    public Integer getWeekNumberNumber() {
          return this.weekNumber % 100;
     }
 

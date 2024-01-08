@@ -1,6 +1,7 @@
 package com.example.todoz.controllers;
 
 import com.example.todoz.dtos.TaskUpdateDTO;
+import com.example.todoz.models.DateManager;
 import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
 import com.example.todoz.models.Week;
@@ -16,6 +17,8 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 @RequiredArgsConstructor
@@ -32,7 +35,11 @@ public class MainController {
 
         if(currentWeek.isEmpty() && optPreviousWeek.isPresent()) {
             Week previousWeek = optPreviousWeek.get();
-            List<Task> upcomingTasks = taskService.findTasksForThisWeek(getUser(principal));
+            List<Task> upcomingTasks = Stream.concat(
+                    taskService.findTasksForThisWeek(getUser(principal)).stream(),
+                    taskService
+                            .findMissedTasks(getUser(principal), previousWeek.getWeekNumber(), DateManager.formattedCurrentWeek()).stream())
+                    .toList();
 
             model.addAttribute("previousWeek", previousWeek);
             model.addAttribute("upcomingTasks", upcomingTasks);
@@ -57,7 +64,7 @@ public class MainController {
     }
 
     @PostMapping("/startNewWeek")
-    public String startNewWeek(Principal principal, @RequestParam(value = "taskId", required = false) List<Long> taskIds) {
+    public String startNewWeek(Principal principal, @RequestParam(value = "taskIds", required = false) List<Long> taskIds) {
         Week week = new Week(getUser(principal));
         weekService.save(week);
 
@@ -66,7 +73,7 @@ public class MainController {
                     .map(taskId -> taskService.findTaskByIdAndUserId(taskId, getUser(principal)))
                     .forEach(task -> {
                         if (task.isDone()) {
-                            taskService.save(task.cloneTask(week));
+                            taskService.save(task.copy(week));
                         } else {
                             task.setWeek(week);
                         }
@@ -118,7 +125,8 @@ public class MainController {
     }
 
     @GetMapping("/test")
-    public String showTest() {
+    public String showTest(Principal principal, Model model) {
+        model.addAttribute("missedTasks", taskService.findMissedTasks(getUser(principal), 202402, 202404));
         return "test";
     }
 

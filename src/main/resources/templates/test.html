@@ -25,6 +25,8 @@
         <button type="submit" id="submitButton">SUBMIT</button>
     </form>
 
+    <p th:each="task : ${missedTasks}" th:text="${task.description}"></p>
+
     <script>
         function updateButton() {
             const checkedTasks = document.querySelectorAll(".toDelegate:checked");

@@ -27,6 +27,7 @@ public class Task {
     private Integer priority;
     private LocalDateTime createdAt;
     private LocalDateTime dueDate;
+    private Integer dueDateWeekNumber;
     private boolean done;
     @ManyToOne
     private Week week;
@@ -43,6 +44,13 @@ public class Task {
             return this.dueDate.toLocalDate();
         } else {
             return null;
+        }
+    }
+
+    public void setDueDate(LocalDateTime dueDate) {
+        if(dueDate != null) {
+            this.dueDate = dueDate;
+            this.dueDateWeekNumber = DateManager.formatWeek(dueDate);
         }
     }
 
@@ -94,7 +102,7 @@ public class Task {
 
     public boolean isLongTerm(){
         if (this.dueDate != null) {
-            return DateManager.formatWeek(this.dueDate) > DateManager.formattedCurrentWeek();
+            return this.dueDateWeekNumber > DateManager.formattedCurrentWeek();
         }
         else {
             return false;
@@ -103,7 +111,7 @@ public class Task {
 
     public boolean isUpcoming() {
         if (this.dueDate != null) {
-            return DateManager.formatWeek(this.dueDate).equals(DateManager.formattedCurrentWeek());
+            return this.dueDateWeekNumber.equals(DateManager.formattedCurrentWeek());
         }
         else {
             return false;
@@ -131,8 +139,8 @@ public class Task {
         }
     }
 
-    public Task cloneTask(Week week) {
-        Task task =new Task();
+    public Task copy(Week week) {
+        Task task = new Task();
         task.setDescription(this.description);
         task.setUser(this.user);
         task.setWeek(week);
