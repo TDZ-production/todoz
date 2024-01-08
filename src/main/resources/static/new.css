@@ -187,9 +187,9 @@ main > form button {
 }
 
 .prio1, .prio2, .prio3, .prio4 {
-    width: .4rem;
+    width: .45rem;
     position: absolute;
-    left: .3rem;
+    left: 0;
     top: .3rem;
     bottom: .3rem;
 }
