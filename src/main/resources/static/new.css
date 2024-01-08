@@ -11,12 +11,12 @@ body {
     margin: 0;
     padding: 0;
     font-family: virgil, sans-serif;
-    background-color: #666;
+    background-color: #ededed;
 }
 
 a {
     text-decoration: none;
-    color: rgb(63, 120, 144);
+    color: #c69c28;
 }
 
 p, h1, h2, h3, h4, h5 {
@@ -34,9 +34,14 @@ header, .task {
 
 header {
     border-bottom: 2px solid #333;
-    padding-bottom: 1.5rem;
-    padding-top: 1.8rem;
+    padding-bottom: 2rem;
+    padding-top: 2.2rem;
+    background: #f4eace;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
 }
+
 
 input {
     width: 100%;
@@ -149,7 +154,7 @@ main > form button {
     background: #FFF0F6;
 }
 
-.app.pussyMeter{
+.app.pussyMeter {
     background: #FFC9C9;
 }
 
@@ -164,11 +169,13 @@ main > form button {
 
 .addTask {
     display: flex;
+    background-color: #f4eace;
+    padding: 0.8rem 0.5rem;
 }
 
 .task {
     display: flex;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #dddad7;
     padding-left: .5rem;
     position: relative;
 }
@@ -180,6 +187,7 @@ main > form button {
 
 .task .due {
     white-space: nowrap;
+    color: #919191;
 }
 
 .task button, .task img {
@@ -195,18 +203,19 @@ main > form button {
 }
 
 .prio1 {
-    background: #e3e3e3;
+    background: #d3e6ed;
 }
 
 .prio2 {
-    background: #cbffc9;
+    background: #c7dbc3;
 }
 
 .prio3 {
-    background: #fffac9;
+    background: #f4eace;
 }
+
 .prio4 {
-    background: #FFC9C9;
+    background: #eebeab;
 }
 
 img {
@@ -222,22 +231,16 @@ main > p:last-child {
 }
 
 form .dateTime {
-    background: #FCEDA3;
+    background: #f4eace;
 }
 
-header {
-    background: antiquewhite;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-}
 
 footer {
     background: #eee;
 }
 
 footer img {
-    height: 2.4rem;
+    height: 3rem;
 }
 
 footer label {
@@ -250,17 +253,29 @@ footer label > * + *, .task > * + * {
 }
 
 footer input, .stars button {
-    padding: .5rem;
+    padding: .5rem .5rem;
 }
 
 .stars button {
-    background: #f7f7f7;
+    background: #ffff;
+    padding-bottom: 0;
 }
 
-.stars > :nth-child(1):hover {background: #FFC9C9}
-.stars > :nth-child(2):hover {background: #fffac9}
-.stars > :nth-child(3):hover {background: #cbffc9}
-.stars > :nth-child(4):hover {background: #e3e3e3}
+.stars > :nth-child(1):hover {
+    background: rgb(238, 209, 201)
+}
+
+.stars > :nth-child(2):hover {
+    background: #f5ebdb
+}
+
+.stars > :nth-child(3):hover {
+    background: #e2eae2
+}
+
+.stars > :nth-child(4):hover {
+    background: #f2f6fc
+}
 
 .weekSummary {
     margin-bottom: 2rem;
@@ -283,7 +298,7 @@ footer input, .stars button {
     opacity: 1;
 }
 
-@media(min-width: 460px) {
+@media (min-width: 460px) {
     .app {
         margin: 1rem auto;
         box-shadow: 0 0 0 3px black;
