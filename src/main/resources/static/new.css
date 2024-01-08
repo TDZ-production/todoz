@@ -187,11 +187,11 @@ main > form button {
 }
 
 .prio1, .prio2, .prio3, .prio4 {
-    width: .5rem;
+    width: .4rem;
     position: absolute;
-    left: .25rem;
-    top: .25rem;
-    bottom: .25rem;
+    left: .3rem;
+    top: .3rem;
+    bottom: .3rem;
 }
 
 .prio1 {
