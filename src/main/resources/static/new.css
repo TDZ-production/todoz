@@ -169,7 +169,7 @@ main > form button {
 .task {
     display: flex;
     border-bottom: 1px solid #333;
-    padding-left: .4rem;
+    padding-left: .5rem;
     position: relative;
 }
 
@@ -187,11 +187,11 @@ main > form button {
 }
 
 .prio1, .prio2, .prio3, .prio4 {
-    width: .4rem;
-    height: 80%;
+    width: .5rem;
     position: absolute;
-    left: .2rem;
-    top: 10%;
+    left: .25rem;
+    top: .25rem;
+    bottom: .25rem;
 }
 
 .prio1 {
@@ -242,15 +242,15 @@ footer img {
 
 footer label {
     margin: 0;
-    padding: .42rem;
+    padding: .5rem;
 }
 
 footer label > * + *, .task > * + * {
-    margin-left: .42rem
+    margin-left: .5rem
 }
 
 footer input, .stars button {
-    padding: .55rem;
+    padding: .5rem;
 }
 
 .stars button {
