@@ -1,5 +1,6 @@
 package com.example.todoz.services;
 
+import com.example.todoz.models.DateManager;
 import com.example.todoz.models.User;
 import com.example.todoz.models.Week;
 import com.example.todoz.repos.WeekRepo;
@@ -16,7 +17,7 @@ public class WeekService {
     }
 
     public Optional<Week> findCurrentWeek(User user){
-        return weekRepo.findByWeekNumberAndUserId(Week.getCurrentWeekNumber(), user.getId());
+        return weekRepo.findByWeekNumberAndUserId(DateManager.formattedCurrentWeek(), user.getId());
     }
 
     public Week getCurrentWeek(User user) {
@@ -33,5 +34,13 @@ public class WeekService {
 
     public Week save(Week week) {
         return weekRepo.save(week);
+    }
+
+    public Optional<Week> findPreviousWeek(User user) {
+        return weekRepo.findTopByUserIdOrderByWeekNumberDesc(user.getId());
+    }
+
+    public Week getPreviousWeek(User user) {
+        return weekRepo.findTopByUserIdOrderByWeekNumberDesc(user.getId()).orElseThrow(() -> new RuntimeException("No previous week found."));
     }
 }

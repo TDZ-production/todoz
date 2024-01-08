@@ -1,13 +1,12 @@
 package com.example.todoz.services;
 
+import com.example.todoz.dtos.TaskUpdateDTO;
 import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
 import com.example.todoz.models.Week;
 import com.example.todoz.repos.TaskRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.util.Comparator;
 import java.util.List;
 
@@ -19,61 +18,21 @@ public class TaskService {
         this.taskRepo = taskRepo;
     }
 
-    public List<Task> findByPriority(Integer priority) {
-        if (priority == 0 || priority > 4) {
-            throw new RuntimeException("Input Integer must have value between 1 and 4.");
-        } else {
-            return taskRepo.findAllByPriority(priority).stream()
-                    .filter(t -> t.getDueDate() == null)
-                    .toList();
-        }
-    }
-
-    public List<Task> findByPriorityWithDates(Integer priority) {
-        if (priority == 0 || priority > 4) {
-            throw new RuntimeException("Input Integer must have value between 1 and 4.");
-        } else {
-            return taskRepo.findAllByPriority(priority).stream()
-                    .filter(t -> t.getDueDate() != null)
-                    .toList();
-        }
-    }
-
-    public List<Task> getAllAndSortByPriority() {
-        return taskRepo.findAll()
-                .stream()
-                .sorted(Comparator.comparing(Task::getPriority).reversed())
-                .toList();
-    }
-
-    public void deleteById(Long id) {
-        taskRepo.deleteById(id);
-    }
-
     public void save(Task task) {
         taskRepo.save(task);
     }
 
-    public Long geRemainingDays(Task task) {
-        if (task.getDueDate() == null) {
-            throw new RuntimeException("Inputted Task must have and DueDate assigned.");
-        } else {
-            Duration duration = Duration.between(task.getCreatedAt(), task.getDueDate());
-            return duration.toDays();
-        }
-    }
-
-    public List<Task> findTasksForNextWeek(User user) {
+    public List<Task> findTasksForThisWeek(User user) {
         return taskRepo.findByUserId(user.getId())
                 .stream()
-                .filter(t -> t.getDueDateWeek() != null && t.getDueDateWeek() == Week.getCurrentWeekNumber() + 1)
+                .filter(Task::isUpcoming)
                 .toList();
     }
 
-    public List<Task> findLongTerm(User user) {
+    public List<Task> findLongTermTasks(User user) {
         return taskRepo.findByUserId(user.getId())
                 .stream()
-                .filter(t -> t.getDueDateWeek() != null && t.getDueDateWeek() > Week.getCurrentWeekNumber())
+                .filter(Task::isLongTerm)
                 .sorted(Comparator.comparing(Task::getDueDate))
                 .toList();
     }
@@ -82,6 +41,13 @@ public class TaskService {
         Task task = taskRepo.findById(id).orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
         task.setDone(done);
         taskRepo.save(task);
+    }
+
+    public Task update(Long id, TaskUpdateDTO taskUpdate, User user, Week currentWeek) {
+        Task task = taskRepo.findByIdAndUser(id, user)
+                .orElseThrow(() -> new RuntimeException(String.format("Task not found with id: %d, %s", id, user)));
+
+        return taskRepo.save(task.merge(taskUpdate, currentWeek));
     }
 }
 
