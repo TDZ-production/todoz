@@ -14,14 +14,14 @@
 
     <header>
         <a th:href="@{/}">&lt;</a>
-        <h2 th:text="|Week ${currentWeek.getWeekNumber()} review|" />
+        <h2 th:text="|Week ${previousWeek.getWeekNumber()} review|" />
     </header>
 
     <main>
         <div class="weekSummary">
-            <h1 th:style="'color: red'" th:text="|${currentWeek.getDonePercentage()}%|" th:if="${currentWeek.getDonePercentage() >= 0 && currentWeek.getDonePercentage() <= 50}"></h1>
-            <h1 th:style="'color: orange'" th:text="|${currentWeek.getDonePercentage()}%|" th:if="${currentWeek.getDonePercentage() > 50 && currentWeek.getDonePercentage() <= 75}"></h1>
-            <h1 th:style="'color: green'" th:text="|${currentWeek.getDonePercentage()}%|" th:if="${currentWeek.getDonePercentage() > 75}"></h1>
+            <h1 th:style="'color: red'" th:text="|${previousWeek.getDonePercentage()}%|" th:if="${previousWeek.getDonePercentage() >= 0 && previousWeek.getDonePercentage() <= 50}"></h1>
+            <h1 th:style="'color: orange'" th:text="|${previousWeek.getDonePercentage()}%|" th:if="${previousWeek.getDonePercentage() > 50 && previousWeek.getDonePercentage() <= 75}"></h1>
+            <h1 th:style="'color: green'" th:text="|${previousWeek.getDonePercentage()}%|" th:if="${previousWeek.getDonePercentage() > 75}"></h1>
 
             <p class="note">Tasks are finished</p>
         </div>
@@ -31,13 +31,12 @@
             <p class="taskText" th:text="${task.getDescription()}"></p>
         </div>
 
-        <div class="task" th:each="task : ${currentWeek.getTasks()}" >
-            <span th:classappend="|prio${task.getPriority()}|"></span>
+        <div class="task" th:each="task : ${previousWeek.getTasks()}" >
             <p class="taskText" th:text="${task.getDescription()}"></p>
             <span th:if="${task.isDone()}"><img src="/img/vector_img_checkmark-09.png"></span>
         </div>
 
-        <form action="/createNewWeek" method="post">
+        <form action="/startNewWeek" method="post">
             <button class="cta" type="submit" th:text="|Start new week with ${howManyTasks} tasks|"></button>
         </form>
         <p class="note">You are crushing it!</p>
