@@ -14,6 +14,63 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/touch-icon.png">
     <link rel="manifest" href="/manifest.json">
 </head>
+<script th:inline="javascript">
+
+    var messages = [[${messages}]];
+
+    function urlB64ToUint8Array(base64String) {
+        const padding = '='.repeat((4 - base64String.length % 4) % 4);
+        const base64 = (base64String + padding)
+            .replace(/\-/g, '+')
+            .replace(/_/g, '/');
+
+        const rawData = window.atob(base64);
+        const outputArray = new Uint8Array(rawData.length);
+
+        for (let i = 0; i < rawData.length; ++i) {
+            outputArray[i] = rawData.charCodeAt(i);
+        }
+
+        return outputArray;
+    }
+
+    const publicKeyBase64 = 'BKVvKfX0nn7uwsAgdEpBW_XEF1rOcMKRaQEheDzqcBusYqXO8Xdd6coDJrO364yuiWIXU-8xYEQ4PpzFLRsl-9c';
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/js/service-worker.js')
+            .then(function(registration) {
+                console.log('Service Worker registered successfully:', registration);
+                return registration;
+            })
+            .catch((error) => {
+                console.error('Error registering Service Worker:', error);
+            })
+            .then(function(registration) {
+                const applicationServerKey = urlB64ToUint8Array(publicKeyBase64);
+
+                return registration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: applicationServerKey,
+                });
+            })
+            .then(function(subscription) {
+                console.log('Push Subscription successful:', subscription);
+
+                fetch('/send-notification', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(subscription),
+                });
+            })
+            .catch(function(error) {
+                console.error('Error setting up Service Worker:', error);
+            });
+    }
+    setInterval(showNotification,  10000 );
+
+</script>
 <body>
 <section class="app home">
     <header>
@@ -236,22 +293,12 @@
          function toggleDropdown() {
              let dropdown = document.querySelector(".dropdown-content");
              const main = document.querySelector("main");
-             const line1 = document.querySelector(".line1");
-             const line2 = document.querySelector(".line2");
-             const line3 = document.querySelector(".line3");
-
              registerCancel(main);
 
              if (dropdown.style.display === "block") {
                  dropdown.style.display = "none";
-                 line1.style.transform = "rotate(0)";
-                 line2.style.transform = "scaleY(1)";
-                 line3.style.transform = "rotate(0)";
              } else {
                  dropdown.style.display = "block";
-                 line1.style.transform = "rotate(40deg)";
-                 line2.style.transform = "scaleY(0)";
-                 line3.style.transform = "rotate(-40deg)";
              }
 
              function registerCancel(event) {
