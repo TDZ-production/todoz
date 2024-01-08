@@ -46,6 +46,7 @@
 
     <main>
         <div class="task" th:each="task : ${currentWeek.getTasks()}">
+            <span th:classappend="|prio${task.getPriority()}|"></span>
             <p th:text="${task.getDescription()}"></p>
             <span class="due" th:text="${task.getRemainingDays()}"></span>
             <form th:action="@{/checked/{id}(id=${task.getId()})}" th:method="POST">

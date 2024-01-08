@@ -159,6 +159,8 @@ main > form button {
 .task {
     display: flex;
     border-bottom: 1px solid #333;
+    padding-left: .4rem;
+    position: relative;
 }
 
 .task p {
@@ -172,6 +174,29 @@ main > form button {
 
 .task button, .task img {
     display: block;
+}
+
+.prio1, .prio2, .prio3, .prio4 {
+    width: .4rem;
+    height: 80%;
+    position: absolute;
+    left: .2rem;
+    top: 10%;
+}
+
+.prio1 {
+    background: #e3e3e3;
+}
+
+.prio2 {
+    background: #cbffc9;
+}
+
+.prio3 {
+    background: #fffac9;
+}
+.prio4 {
+    background: #FFC9C9;
 }
 
 img {
