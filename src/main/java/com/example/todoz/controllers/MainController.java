@@ -21,6 +21,7 @@ import java.util.stream.Stream;
 
 @Controller
 @RequiredArgsConstructor
+@CrossOrigin
 public class MainController {
 
     private final UserService userService;
@@ -109,13 +110,6 @@ public class MainController {
     public String showLongTerm(Model model, Principal principal) {
         model.addAttribute("longTerm", taskService.findLongTermTasks(getUser(principal)));
         return "longTerm";
-    }
-
-    @PostMapping("/checked/{id}")
-    public String checkedTask(@PathVariable Long id, @RequestParam boolean done) {
-        // TODO: Fix me, get me some Principal!
-        taskService.checkedTask(id, done);
-        return "redirect:/";
     }
 
     private User getUser(Principal principal) {
