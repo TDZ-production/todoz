@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>TodoZ-main</title>
-        <link rel="stylesheet" href="/new.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <title>TodoZ-main</title>
+    <link rel="stylesheet" href="/new.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+</head>
 <script th:inline="javascript">
 
     var messages = [[${messages}]];
 
-    function rotateArray(arr){
+    function rotateArray(arr) {
         var nextItem = arr.shift();
         arr.push(nextItem);
         return nextItem
@@ -23,7 +23,7 @@
 
         if (Notification.permission === 'granted') {
             const nextMessage = rotateArray(messages);
-            new Notification(nextMessage.title,  { body: nextMessage.description });
+            new Notification(nextMessage.title, {body: nextMessage.description});
         } else if (Notification.permission !== 'denied') {
             Notification.requestPermission().then(function (permission) {
                 if (permission === 'granted') {
@@ -32,7 +32,8 @@
             });
         }
     }
-    setInterval(showNotification,  10000 );
+
+    setInterval(showNotification, 10000);
 
 </script>
 <body>
@@ -41,6 +42,7 @@
         <a th:href="@{/longTerm}"> Long term </a>
         <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>
 <!--        <a th:href="@{/weekReview}"> Week review </a>-->
+        <!--        <a th:href="@{/weekReview}"> Week review </a>-->
         <a th:href="@{/pussyMeter}"> Pussy meter </a>
     </header>
 
@@ -64,10 +66,22 @@
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
             <div class="stars">
-                <button type="submit" name="priority" value="4">🔥</button>
-                <button type="submit" name="priority" value="3">⭐</button>
-                <button type="submit" name="priority" value="2">🐢</button>
-                <button type="submit" name="priority" value="1">🧊</button>
+                <button type="submit" name="priority" value="4">
+                    <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-04.png">
+                    <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-04.png">
+                    <img th:if="${user.pussyMeter == 2}" src="/img/skull_icon-05.png"></button>
+                <button type="submit" name="priority" value="3">
+                    <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-03.png">
+                    <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-03.png">
+                    <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-03.png"></button>
+                <button type="submit" name="priority" value="2">
+                    <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-02.png">
+                    <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-02.png">
+                    <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-02.png"></button>
+                <button type="submit" name="priority" value="1">
+                    <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-01.png">
+                    <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-01.png">
+                    <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-01.png"></button>
             </div>
 
             <label class="dateTime hidden">
@@ -76,7 +90,7 @@
 
             <label class="addTask">
                 <input type="text" placeholder="new task" name="description" id="add" required>
-                <img onclick="toggleDueDate()" src="/img/Clock_Yellow.png" alt="due date">
+                <img onclick="toggleDueDate()" src="/img/Kalendar_Icon-02.png" alt="due date">
             </label>
         </form>
     </footer>
@@ -93,10 +107,10 @@
                 method: 'POST',
                 body: data
             }).then(resp => {
-                if (!resp.ok) {
+                if (resp.redirected) { // session expired
                     window.location.reload();
                 }
-                
+
                 const done = form.elements["done"];
                 done.value = done.value === "false" ? "true" : "false";
 
@@ -111,14 +125,17 @@
 
             if (state === undefined) {
                 classList.toggle(CLASS);
+                if (classList.contains(CLASS)) {
+                    document.querySelector("#date").focus();
+                } else {
+                    document.querySelector("#add").focus();
+                }
                 document.querySelector("#date").value = "";
             } else if (state === true) {
                 classList.remove(CLASS);
-                document.querySelector("#date").focus();
             } else {
                 classList.add(CLASS);
                 document.querySelector("#date").value = "";
-                document.querySelector("#add").focus();
             }
         }
 
@@ -135,6 +152,8 @@
         });
 
         function edit(task) {
+            document.querySelector("#add").focus();
+            
             const main = document.querySelector("main");
             registerCancel(main);
 
