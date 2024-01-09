@@ -30,8 +30,8 @@ label {
 }
 
 header {
-    border-bottom: 2px solid #333;
-    padding-bottom: 1rem;
+    border-bottom: 1.5px solid #333;
+    padding-bottom: 1.2rem;
     padding-top: 2rem;
     background: #fff0c1;
     display: flex;
