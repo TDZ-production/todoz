@@ -81,15 +81,15 @@ public class Task {
         if (this.getDueDate() == null) {
             return null;
         } else {
-            Duration duration = Duration.between(LocalDateTime.now(), this.getDueDate());
+            Duration duration = Duration.between(LocalDateTime.now().toLocalDate().atTime(23, 59, 59), this.getDueDate());
             if (duration.toDays() == 1) {
                 return "Tomorrow";
             }
-            else if (duration.toDays() == 0) {
-                return "Today";
-            }
             else if (duration.toDays() == -1) {
                 return "Yesterday";
+            }
+            else if (duration.toDays() == 0) {
+                return "Today";
             }
             else if (duration.toDays() < -1) {
                 return Math.abs(duration.toDays()) + " days ago";

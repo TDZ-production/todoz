@@ -11,12 +11,13 @@ body {
     margin: 0;
     padding: 0;
     font-family: virgil, sans-serif;
-    background-color: #666;
+    background-color: #ededed;
+    color: #333;
 }
 
 a {
     text-decoration: none;
-    color: rgb(63, 120, 144);
+    color: #b78300;
 }
 
 p, h1, h2, h3, h4, h5 {
@@ -30,9 +31,9 @@ label {
 
 header {
     border-bottom: 2px solid #333;
-    padding-bottom: .5rem;
-    padding-top: .8rem;
-    background: antiquewhite;
+    padding-bottom: 1.2rem;
+    padding-top: 1.5rem;
+    background: #fff0c1;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -40,6 +41,9 @@ header {
 
 input {
     width: 100%;
+}
+.slideContainer input{
+    padding: 0;
 }
 
 input, button {
@@ -100,6 +104,7 @@ header h2 {
     left: 0;
     right: 0;
     text-align: center;
+    font-size: 1.5rem;
 }
 
 header a {
@@ -150,7 +155,7 @@ main > form button {
     background: #FFF0F6;
 }
 
-.app.pussyMeter{
+.app.pussyMeter {
     background: #FFC9C9;
 }
 
@@ -165,11 +170,13 @@ main > form button {
 
 .addTask {
     display: flex;
+    background-color: #fff0c1;
+    padding: 0.8rem 0.5rem;
 }
 
 .task {
     display: flex;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #dddad7;
     padding-left: .5rem;
     position: relative;
 }
@@ -186,6 +193,12 @@ main > form button {
 
 .task .due {
     white-space: nowrap;
+    color: #919191;
+    align-self: center;
+    padding: 1rem .5rem;
+}
+.due {
+    margin-right: 0;
 }
 
 .task button, .task img {
@@ -194,6 +207,7 @@ main > form button {
 
 .task button {
     padding: 1rem;
+    padding-left: 0.5rem;
 }
 
 .prio1, .prio2, .prio3, .prio4 {
@@ -205,18 +219,18 @@ main > form button {
 }
 
 .prio1 {
-    background: #e3e3e3;
+    background: #c7e9fb;
 }
 
 .prio2 {
-    background: #cbffc9;
+    background: #c3eab5;
 }
 
 .prio3 {
-    background: #fffac9;
+    background: #fff0c1;
 }
 .prio4 {
-    background: #FFC9C9;
+    background: #ffb692;
 }
 
 img {
@@ -232,7 +246,7 @@ main > p:last-child {
 }
 
 form .dateTime {
-    background: #FCEDA3;
+    background: #fff0c1;
 }
 
 footer {
@@ -240,7 +254,7 @@ footer {
 }
 
 footer img {
-    height: 2.4rem;
+    height: 3rem;
 }
 
 footer label {
@@ -248,22 +262,34 @@ footer label {
     padding: .5rem;
 }
 
-footer label > * + *, .task > * + * {
-    margin-left: .5rem
+footer input + img  {
+    margin-left: 0.5rem;
 }
 
 footer input, .stars button {
-    padding: .5rem;
+    padding: .5rem .5rem;
 }
 
 .stars button {
-    background: #f7f7f7;
+    background: #ffff;
+    padding-bottom: 0;
 }
 
-.stars > :nth-child(1):hover {background: #FFC9C9}
-.stars > :nth-child(2):hover {background: #fffac9}
-.stars > :nth-child(3):hover {background: #cbffc9}
-.stars > :nth-child(4):hover {background: #e3e3e3}
+.stars > :nth-child(1):hover {
+    background: rgb(238, 209, 201)
+}
+
+.stars > :nth-child(2):hover {
+    background: #f5ebdb
+}
+
+.stars > :nth-child(3):hover {
+    background: #e2eae2
+}
+
+.stars > :nth-child(4):hover {
+    background: #f2f6fc
+}
 
 .weekSummary {
     margin-bottom: 2rem;
@@ -275,18 +301,26 @@ footer input, .stars button {
 }
 
 .slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width:90%;
+    height:1px;
+    border-radius:5px;
+    outline:none;
     margin-top: 5rem;
     margin-bottom: 1rem;
-    width: 90%;
-    padding-left: 0;
-    padding-right: 0;
+    color: #fff0c1;
 }
 
-.slider:hover {
-    opacity: 1;
+.slider::-webkit-slider-thumb {
+    -webkit-appearance:none;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background-color:#ffffff;
 }
 
-@media(min-width: 460px) {
+@media (min-width: 460px) {
     .app {
         margin: 1rem auto;
         box-shadow: 0 0 0 3px black;

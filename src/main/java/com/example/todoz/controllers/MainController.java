@@ -54,6 +54,7 @@ public class MainController {
 
         // TODO: resolve this
         model.addAttribute("messages", null);
+        model.addAttribute("user", getUser(principal));
 
         return "index";
     }
