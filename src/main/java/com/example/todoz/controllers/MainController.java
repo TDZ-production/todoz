@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -113,6 +114,14 @@ public class MainController {
         model.addAttribute("longTerm",
                 taskService.findLongTermTasks(getUser(principal), DateManager.formattedCurrentWeek()));
         return "longTerm";
+    }
+
+    @GetMapping("/leftBehind")
+    public String showLeftBehind(Model model, Principal principal) {
+        List<Task> leftBehind = taskService.findLeftBehind(getUser(principal), getWeek(principal), DateManager.formattedCurrentWeek());
+
+        model.addAttribute("leftBehind", leftBehind);
+        return "leftBehind";
     }
 
     private User getUser(Principal principal) {

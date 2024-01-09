@@ -48,6 +48,10 @@ public class TaskService {
 
         return taskRepo.save(task.merge(taskUpdate, currentWeek));
     }
+
+    public List<Task> findLeftBehind(User user, Week week, Integer currentWeek) {
+        return taskRepo.findAllByUserIdAndDoneIsFalseAndWeekIdLessThanOrWeekIdNullAndDueDateWeekNumberLessThan(user.getId(), week.getId(), currentWeek + 1);
+    }
 }
 
 

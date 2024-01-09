@@ -12,4 +12,5 @@ public interface TaskRepo extends ListCrudRepository<Task, Long> {
     Optional<Task> findByIdAndUserId(Long taskId, Long userId);
     List<Task> findAllByUserIdAndDueDateWeekNumberGreaterThanAndDueDateWeekNumberLessThanEqual(Long userId, Integer previousWeek, Integer currentWeek);
     List<Task> findAllByUserIdAndDueDateWeekNumberGreaterThan(Long userId, Integer currentWeek);
+    List<Task> findAllByUserIdAndDoneIsFalseAndWeekIdLessThanOrWeekIdNullAndDueDateWeekNumberLessThan(Long userId, Long weekId, Integer currentWeek);
 }

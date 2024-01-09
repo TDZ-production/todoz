@@ -116,7 +116,9 @@ public class Task {
             setWeek(currentWeek);
             setDueDate(maybeDueDate.atTime(23, 59, 59));
         } else {
-            setWeek(null);
+            if (DateManager.formatWeek(maybeDueDate) > DateManager.formattedCurrentWeek()) {
+                setWeek(null);
+            }
             setDueDate(maybeDueDate.atTime(23, 59, 59));
         }
     }
