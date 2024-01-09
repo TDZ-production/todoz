@@ -18,6 +18,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(request -> request.requestMatchers("/login", "/register", "/*.css", "/img/*", "/webfonts/*")
                         .permitAll()
                         .anyRequest()
+                        .requiresSecure()
                         .authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(form -> form.loginPage("/login").permitAll());
