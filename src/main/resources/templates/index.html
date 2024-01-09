@@ -35,6 +35,8 @@
     }
 
     const publicKeyBase64 = 'BKVvKfX0nn7uwsAgdEpBW_XEF1rOcMKRaQEheDzqcBusYqXO8Xdd6coDJrO364yuiWIXU-8xYEQ4PpzFLRsl-9c';
+    const serverKey = urlB64ToUint8Array(publicKeyBase64);
+
 
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/js/service-worker.js')
@@ -46,22 +48,25 @@
                 console.error('Error registering Service Worker:', error);
             })
             .then(function(registration) {
-                const applicationServerKey = urlB64ToUint8Array(publicKeyBase64);
 
                 return registration.pushManager.subscribe({
                     userVisibleOnly: true,
-                    applicationServerKey: applicationServerKey,
+                    applicationServerKey: serverKey,
                 });
             })
             .then(function(subscription) {
-                console.log('Push Subscription successful:', subscription);
+                window.bertasStash = subscription;
+                console.log('Push Subscription successful:', subscription.endpoint);
 
-                fetch('/send-notification', {
+                fetch('/subscribe', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(subscription),
+                });
+                fetch('/send-notification', {
+                    method: 'POST',
                 });
             })
             .catch(function(error) {
