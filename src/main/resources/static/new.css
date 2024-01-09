@@ -28,14 +28,14 @@ label {
     margin: 1rem 2rem;
 }
 
-header, .task {
-    padding: 1rem;
-}
-
 header {
     border-bottom: 2px solid #333;
-    padding-bottom: 1.5rem;
-    padding-top: 1.8rem;
+    padding-bottom: .5rem;
+    padding-top: .8rem;
+    background: antiquewhite;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 input {
@@ -105,6 +105,7 @@ header h2 {
 header a {
     position: relative;
     z-index: 10;
+    padding: 1rem;
 }
 
 main > form {
@@ -179,6 +180,8 @@ main > form button {
 .task p {
     flex-grow: 1;
     text-align: left;
+    padding: 1rem .5rem;
+    cursor: text;
 }
 
 .task .due {
@@ -187,6 +190,10 @@ main > form button {
 
 .task button, .task img {
     display: block;
+}
+
+.task button {
+    padding: 1rem;
 }
 
 .prio1, .prio2, .prio3, .prio4 {
@@ -226,13 +233,6 @@ main > p:last-child {
 
 form .dateTime {
     background: #FCEDA3;
-}
-
-header {
-    background: antiquewhite;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
 }
 
 footer {
