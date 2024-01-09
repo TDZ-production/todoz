@@ -125,7 +125,7 @@
 
             if (state === undefined) {
                 classList.toggle(CLASS);
-                if (classList.contains(CLASS)) {
+                if (!classList.contains(CLASS)) {
                     document.querySelector("#date").focus();
                 } else {
                     document.querySelector("#add").focus();
