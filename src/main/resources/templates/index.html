@@ -111,14 +111,17 @@
 
             if (state === undefined) {
                 classList.toggle(CLASS);
+                if (classList.contains(CLASS)) {
+                    document.querySelector("#date").focus();
+                } else {
+                    document.querySelector("#add").focus();
+                }
                 document.querySelector("#date").value = "";
             } else if (state === true) {
                 classList.remove(CLASS);
-                document.querySelector("#date").focus();
             } else {
                 classList.add(CLASS);
                 document.querySelector("#date").value = "";
-                document.querySelector("#add").focus();
             }
         }
 
@@ -135,6 +138,8 @@
         });
 
         function edit(task) {
+            document.querySelector("#add").focus();
+            
             const main = document.querySelector("main");
             registerCancel(main);
 
