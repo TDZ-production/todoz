@@ -28,10 +28,6 @@ label {
     margin: 1rem 2rem;
 }
 
-header, .task {
-    padding: 1rem;
-}
-
 header {
     border-bottom: 2px solid #333;
     padding-bottom: 2rem;
@@ -41,7 +37,6 @@ header {
     justify-content: space-between;
     align-items: flex-end;
 }
-
 
 input {
     width: 100%;
@@ -183,9 +178,14 @@ main > form button {
     position: relative;
 }
 
+.task[data-done=true] img.notdone { display: none; }
+.task[data-done=false] img.isdone { display: none; }
+
 .task p {
     flex-grow: 1;
     text-align: left;
+    padding: 1rem .5rem;
+    cursor: text;
 }
 
 .task .due {
@@ -196,6 +196,10 @@ main > form button {
 
 .task button, .task img {
     display: block;
+}
+
+.task button {
+    padding: 1rem;
 }
 
 .prio1, .prio2, .prio3, .prio4 {
@@ -217,7 +221,6 @@ main > form button {
 .prio3 {
     background: #fff0c1;
 }
-
 .prio4 {
     background: #ffb692;
 }
@@ -238,6 +241,12 @@ form .dateTime {
     background: #fff0c1;
 }
 
+header {
+    background: antiquewhite;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
 
 footer {
     background: #eee;

@@ -40,23 +40,24 @@
 <section class="app home">
     <header>
         <a th:href="@{/longTerm}"> Long term </a>
+        <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>
+<!--        <a th:href="@{/weekReview}"> Week review </a>-->
         <h2 th:text="|Week ${currentWeek.getWeekNumber()}|"></h2>
         <!--        <a th:href="@{/weekReview}"> Week review </a>-->
         <a th:href="@{/pussyMeter}"> Pussy meter </a>
     </header>
 
     <main>
-        <div class="task" th:each="task : ${currentWeek.getTasks()}" th:object="${task}" th:data-priority="*{priority}"
-             th:data-id="*{id}">
+        <div class="task" th:each="task : ${currentWeek.getTasks()}" th:object="${task}" th:data-priority="*{priority}" th:data-id="*{id}" th:data-done="*{done}">
             <span th:classappend="|prio${task.getPriority()}|"></span>
             <p th:text="*{description}"></p>
             <span class="due" th:text="*{getRemainingDays()}" th:data-duedate="*{dueDateDate}"></span>
-            <form th:action="@{/checked/{id}(id=${task.getId()})}" th:method="POST">
+            <form onsubmit="handleSubmit(event)" th:action="@{/tasks/check/{id}(id=${task.getId()})}" th:method="POST">
                 <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
                 <button class="img" th:type="submit">
-                    <img th:if="*{done}" src="/img/vector_img_checkedbox.png" alt="mark as not done"/>
-                    <img th:unless="*{done}" src="/img/vector_img_checkbox.png" alt="mark as done"/>
-                </button>
+                    <img class="isdone" src="/img/vector_img_checkedbox.png" alt="mark as not done"/>
+                    <img class="notdone" src="/img/vector_img_checkbox.png" alt="mark as done"/>
+               </button>
             </form>
         </div>
     </main>
@@ -96,6 +97,29 @@
     </footer>
 
     <script>
+         function handleSubmit(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const data = new FormData(form);
+            const url = form.action;
+
+            fetch(url, {
+                method: 'POST',
+                body: data
+            }).then(resp => {
+                if (!resp.ok) {
+                    window.location.reload();
+                }
+
+                const done = form.elements["done"];
+                done.value = done.value === "false" ? "true" : "false";
+
+                const task = form.closest(".task");
+                task.dataset.done = task.dataset.done === "true" ? "false" : "true";
+            });
+        }
+
         function toggleDueDate(state) {
             const CLASS = "hidden";
             const classList = document.querySelector(".dateTime").classList;

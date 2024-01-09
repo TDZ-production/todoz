@@ -13,7 +13,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
-import java.time.temporal.WeekFields;
 import java.util.Locale;
 
 @Entity
@@ -28,6 +27,7 @@ public class Task {
     private Integer priority;
     private LocalDateTime createdAt;
     private LocalDateTime dueDate;
+    private Integer dueDateWeekNumber;
     private boolean done;
     @ManyToOne
     private Week week;
@@ -47,19 +47,18 @@ public class Task {
         }
     }
 
+    public void setDueDate(LocalDateTime dueDate) {
+        if(dueDate != null) {
+            this.dueDate = dueDate;
+            this.dueDateWeekNumber = DateManager.formatWeek(dueDate);
+        }
+    }
+
     /**
      * Formats dueDate to dd.MM.yyyy
      *
      * @return String dd.MM.yyyy
      */
-    public Integer getDueDateWeek() {
-        if (dueDate != null) {
-            return this.dueDate.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
-        } else {
-            return null;
-        }
-    }
-
     public String getDueDateFormat() {
         if (dueDate != null) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
@@ -101,24 +100,6 @@ public class Task {
         }
     }
 
-    public boolean isLongTerm(){
-        if (this.dueDate != null) {
-            return DateManager.formatWeek(this.dueDate) > DateManager.formattedCurrentWeek();
-        }
-        else {
-            return false;
-        }
-    }
-
-    public boolean isUpcoming() {
-        if (this.dueDate != null) {
-            return DateManager.formatWeek(this.dueDate).equals(DateManager.formattedCurrentWeek());
-        }
-        else {
-            return false;
-        }
-    }
-
     public Task merge(TaskUpdateDTO taskUpdate, Week currentWeek) {
         digestDueDate(taskUpdate.maybeDueDate(), currentWeek);
         this.priority = taskUpdate.priority();
@@ -138,5 +119,14 @@ public class Task {
             setWeek(null);
             setDueDate(maybeDueDate.atTime(23, 59, 59));
         }
+    }
+
+    public Task copy(Week week) {
+        Task task = new Task();
+        task.setDescription(this.description);
+        task.setUser(this.user);
+        task.setPriority(this.priority);
+        task.setWeek(week);
+        return task;
     }
 }
