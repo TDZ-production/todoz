@@ -42,7 +42,6 @@
         <a th:href="@{/longTerm}"> Long term </a>
         <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>
 <!--        <a th:href="@{/weekReview}"> Week review </a>-->
-        <h2 th:text="|Week ${currentWeek.getWeekNumber()}|"></h2>
         <!--        <a th:href="@{/weekReview}"> Week review </a>-->
         <a th:href="@{/pussyMeter}"> Pussy meter </a>
     </header>
@@ -68,21 +67,21 @@
 
             <div class="stars">
                 <button type="submit" name="priority" value="4">
-                    <img th:if="${user.pussyMeter == 0}" src="/img/vector_img_checkmark-09.png">
+                    <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-04.png">
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-04.png">
-                    <img th:if="${user.pussyMeter == 2}" src="/img/Fire_Icon-04.png"></button>
+                    <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-04.png"></button>
                 <button type="submit" name="priority" value="3">
-                    <img th:if="${user.pussyMeter == 0}" src="/img/vector_checkmark-10.png">
+                    <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-03.png">
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-03.png">
-                    <img th:if="${user.pussyMeter == 2}" src="/img/Fire_Icon-03.png"></button>
+                    <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-03.png"></button>
                 <button type="submit" name="priority" value="2">
-                    <img th:if="${user.pussyMeter == 0}" src="/img/vector_img_checkbox.png">
+                    <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-02.png">
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-02.png">
-                    <img th:if="${user.pussyMeter == 2}" src="/img/Fire_Icon-02.png"></button>
+                    <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-02.png"></button>
                 <button type="submit" name="priority" value="1">
-                    <img th:if="${user.pussyMeter == 0}" src="/img/Star.png">
+                    <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-01.png">
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-01.png">
-                    <img th:if="${user.pussyMeter == 2}" src="/img/Fire_Icon-01.png"></button>
+                    <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-01.png"></button>
             </div>
 
             <label class="dateTime hidden">
