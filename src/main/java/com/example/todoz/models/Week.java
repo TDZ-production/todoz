@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -32,7 +31,7 @@ public class Week {
         this.weekNumber = DateManager.formattedCurrentWeek();
     }
 
-    public Integer getWeekNumber() {
+    public Integer getWeekNumberNumber() {
          return this.weekNumber % 100;
     }
 
@@ -42,19 +41,5 @@ public class Week {
                 .filter(Task::isDone)
                 .count();
         return Math.round((double) count / this.getTasks().size() * 100);
-    }
-
-    public Long getNumberOfNotDoneTasks() {
-        return this.tasks
-                .stream()
-                .filter(t -> !t.isDone())
-                .count();
-    }
-
-    public List<Task> getNotDoneTasks() {
-        return this.tasks
-                .stream()
-                .filter(t -> !t.isDone())
-                .collect(Collectors.toList());
     }
 }

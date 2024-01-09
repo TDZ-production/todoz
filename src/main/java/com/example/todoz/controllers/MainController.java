@@ -1,6 +1,7 @@
 package com.example.todoz.controllers;
 
 import com.example.todoz.dtos.TaskUpdateDTO;
+import com.example.todoz.models.DateManager;
 import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
 import com.example.todoz.models.Week;
@@ -16,8 +17,6 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Controller
 @RequiredArgsConstructor
@@ -34,11 +33,12 @@ public class MainController {
 
         if(currentWeek.isEmpty() && optPreviousWeek.isPresent()) {
             Week previousWeek = optPreviousWeek.get();
-            List<Task> upcomingTasks = taskService.findTasksForThisWeek(getUser(principal));
+            List<Task> upcomingTasks = taskService
+                            .findUpcomingTasks(getUser(principal), previousWeek.getWeekNumber(), DateManager.formattedCurrentWeek());
 
             model.addAttribute("previousWeek", previousWeek);
             model.addAttribute("upcomingTasks", upcomingTasks);
-            model.addAttribute("howManyTasks", previousWeek.getNumberOfNotDoneTasks() + upcomingTasks.size());
+
             return "weekReview";
         }
         else if(currentWeek.isEmpty()) {
@@ -57,9 +57,29 @@ public class MainController {
         return "index";
     }
 
+    @PostMapping("/startNewWeek")
+    public String startNewWeek(Principal principal, @RequestParam(value = "taskIds", required = false) List<Long> taskIds) {
+        Week week = new Week(getUser(principal));
+        weekService.save(week);
+
+        if (taskIds != null && !taskIds.isEmpty()){
+            taskIds.stream()
+                    .map(taskId -> taskService.findTaskByIdAndUserId(taskId, getUser(principal)))
+                    .forEach(task -> {
+                        if (task.isDone()) {
+                            taskService.save(task.copy(week));
+                        } else {
+                            task.setWeek(week);
+                            weekService.save(week);
+                        }
+                    });
+        }
+
+        return "redirect:/";
+    }
+
     @PostMapping("/add")
     public String add(Task task, LocalDate maybeDueDate, Principal principal) {
-
         task.digestDueDate(maybeDueDate, getWeek(principal));
         task.setUser(getUser(principal));
 
@@ -71,23 +91,6 @@ public class MainController {
     @PostMapping("/tasks/{id}")
     public String update(@PathVariable Long id, TaskUpdateDTO taskUpdate, Principal principal) {
         taskService.update(id, taskUpdate, getUser(principal), getWeek(principal));
-
-        return "redirect:/";
-    }
-
-    @PostMapping("/startNewWeek")
-    public String startNewWeek(Principal principal) {
-        Week week = new Week(getUser(principal));
-        Week previousWeek = weekService.getPreviousWeek(getUser(principal));
-
-        List<Task> tasks = Stream.concat(
-                        previousWeek.getNotDoneTasks().stream(),
-                        taskService.findTasksForThisWeek(getUser(principal)).stream())
-                .peek(t -> t.setWeek(week))
-                .collect(Collectors.toList());
-
-        week.setTasks(tasks);
-        weekService.save(week);
 
         return "redirect:/";
     }
@@ -107,7 +110,8 @@ public class MainController {
 
     @GetMapping("longTerm")
     public String showLongTerm(Model model, Principal principal) {
-        model.addAttribute("longTerm", taskService.findLongTermTasks(getUser(principal)));
+        model.addAttribute("longTerm",
+                taskService.findLongTermTasks(getUser(principal), DateManager.formattedCurrentWeek()));
         return "longTerm";
     }
 

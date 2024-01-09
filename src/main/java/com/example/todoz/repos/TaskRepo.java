@@ -1,7 +1,6 @@
 package com.example.todoz.repos;
 
 import com.example.todoz.models.Task;
-import com.example.todoz.models.User;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,8 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface TaskRepo extends ListCrudRepository<Task, Long> {
-    List<Task> findAllByPriority(Integer priority);
-    List<Task> findByUserId(Long id);
-
-    Optional<Task> findByIdAndUser(Long id, User u);
+    Optional<Task> findByIdAndUserId(Long taskId, Long userId);
+    List<Task> findAllByUserIdAndDueDateWeekNumberGreaterThanAndDueDateWeekNumberLessThanEqual(Long userId, Integer previousWeek, Integer currentWeek);
+    List<Task> findAllByUserIdAndDueDateWeekNumberGreaterThan(Long userId, Integer currentWeek);
 }
