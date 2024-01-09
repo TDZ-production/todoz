@@ -188,6 +188,7 @@ main > form button {
 .task .due {
     white-space: nowrap;
     color: #919191;
+    align-self: center;
 }
 
 .task button, .task img {
@@ -250,6 +251,7 @@ footer label {
 
 footer label > * + *, .task > * + * {
     margin-left: .5rem;
+    align-self: center;
 }
 
 footer input, .stars button {
