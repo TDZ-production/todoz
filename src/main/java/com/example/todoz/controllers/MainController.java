@@ -21,7 +21,6 @@ import java.util.stream.Stream;
 
 @Controller
 @RequiredArgsConstructor
-@CrossOrigin
 public class MainController {
 
     private final UserService userService;
