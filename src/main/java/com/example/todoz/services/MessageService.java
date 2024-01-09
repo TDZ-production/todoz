@@ -2,12 +2,15 @@ package com.example.todoz.services;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.security.Principal;
 import java.security.Security;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
+
+import com.example.todoz.models.PushSubscription;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -29,7 +32,7 @@ public class MessageService {
     private String privateKey;
 
     private PushService pushService;
-    private List<Subscription> subscriptions = new ArrayList<>();
+    private List<PushSubscription> subscriptions = new ArrayList<>();
 
     @PostConstruct
     private void init() throws GeneralSecurityException {
@@ -37,14 +40,14 @@ public class MessageService {
         pushService = new PushService(publicKey, privateKey);
     }
 
-    public void subscribe(Subscription subscription) {
+    public void subscribe(Subscription subscription, Principal principal) {
         System.out.println("Subscribed to " + subscription.endpoint);
-        this.subscriptions.add(subscription);
+        this.subscriptions.add(new PushSubscription(principal, subscription));
     }
 
     public void unsubscribe(String endpoint) {
         System.out.println("Unsubscribed from " + endpoint);
-        subscriptions = subscriptions.stream().filter(s -> !endpoint.equals(s.endpoint))
+        subscriptions = subscriptions.stream().filter(s -> !endpoint.equals(s.subscription().endpoint))
                 .collect(Collectors.toList());
     }
 
@@ -58,18 +61,30 @@ public class MessageService {
     }
 
     @Scheduled(fixedRate = 5000)
-    public void sendNotifications() {
+    public void sendNotifications(Principal principal) {
+
         System.out.println("Sending notifications to all subscribers");
 
         var json = """
         {
-          "title": "Server says hello!",
+          "title": "Server says hello to Bery!",
+          "body": "hello"
+        }
+        """;
+        var json2 = """
+        {
+          "title": "Server says hello to 123!",
           "body": "hello"
         }
         """;
 
         subscriptions.forEach(subscription -> {
-            sendNotification(subscription, String.format(json, LocalTime.now()));
+            if(subscription.principal().getName().equals("bery")){
+                sendNotification(subscription.subscription(), String.format(json, LocalTime.now()));
+            }else if (subscription.principal().getName().equals("123")){
+                sendNotification(subscription.subscription(), String.format(json2, LocalTime.now()));
+
+            }
         });
     }
 }
