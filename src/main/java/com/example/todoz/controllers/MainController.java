@@ -17,7 +17,6 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @Controller
 @RequiredArgsConstructor
@@ -114,12 +113,6 @@ public class MainController {
         model.addAttribute("longTerm",
                 taskService.findLongTermTasks(getUser(principal), DateManager.formattedCurrentWeek()));
         return "longTerm";
-    }
-
-    @PostMapping("/checked/{id}")
-    public String checkedTask(@PathVariable Long id, @RequestParam boolean done, Principal principal) {
-        taskService.checkedTask(id, getUser(principal), done);
-        return "redirect:/";
     }
 
     private User getUser(Principal principal) {
