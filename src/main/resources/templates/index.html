@@ -93,7 +93,7 @@
                 method: 'POST',
                 body: data
             }).then(resp => {
-                if (!resp.ok) {
+                if (resp.status !== 200) {
                     window.location.reload();
                 }
                 
