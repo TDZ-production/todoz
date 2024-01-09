@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>TodoZ-main</title>
-        <link rel="stylesheet" href="/new.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <title>TodoZ-main</title>
+    <link rel="stylesheet" href="/new.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+</head>
 <script th:inline="javascript">
 
     var messages = [[${messages}]];
 
-    function rotateArray(arr){
+    function rotateArray(arr) {
         var nextItem = arr.shift();
         arr.push(nextItem);
         return nextItem
@@ -23,7 +23,7 @@
 
         if (Notification.permission === 'granted') {
             const nextMessage = rotateArray(messages);
-            new Notification(nextMessage.title,  { body: nextMessage.description });
+            new Notification(nextMessage.title, {body: nextMessage.description});
         } else if (Notification.permission !== 'denied') {
             Notification.requestPermission().then(function (permission) {
                 if (permission === 'granted') {
@@ -32,7 +32,8 @@
             });
         }
     }
-    setInterval(showNotification,  10000 );
+
+    setInterval(showNotification, 10000);
 
 </script>
 <body>
@@ -40,12 +41,13 @@
     <header>
         <a th:href="@{/longTerm}"> Long term </a>
         <h2 th:text="|Week ${currentWeek.getWeekNumber()}|"></h2>
-<!--        <a th:href="@{/weekReview}"> Week review </a>-->
+        <!--        <a th:href="@{/weekReview}"> Week review </a>-->
         <a th:href="@{/pussyMeter}"> Pussy meter </a>
     </header>
 
     <main>
-        <div class="task" th:each="task : ${currentWeek.getTasks()}" th:object="${task}" th:data-priority="*{priority}" th:data-id="*{id}">
+        <div class="task" th:each="task : ${currentWeek.getTasks()}" th:object="${task}" th:data-priority="*{priority}"
+             th:data-id="*{id}">
             <span th:classappend="|prio${task.getPriority()}|"></span>
             <p th:text="*{description}"></p>
             <span class="due" th:text="*{getRemainingDays()}" th:data-duedate="*{dueDateDate}"></span>
@@ -54,7 +56,7 @@
                 <button class="img" th:type="submit">
                     <img th:if="*{done}" src="/img/vector_img_checkedbox.png" alt="mark as not done"/>
                     <img th:unless="*{done}" src="/img/vector_img_checkbox.png" alt="mark as done"/>
-               </button>
+                </button>
             </form>
         </div>
     </main>
@@ -64,10 +66,22 @@
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
             <div class="stars">
-                <button type="submit" name="priority" value="4"><img src="/img/Fire_Icon-04.png"></button>
-                <button type="submit" name="priority" value="3"><img src="/img/Fire_Icon-03.png"></button>
-                <button type="submit" name="priority" value="2"><img src="/img/Fire_Icon-02.png"></button>
-                <button type="submit" name="priority" value="1"><img src="/img/Fire_Icon-01.png"></button>
+                <button type="submit" name="priority" value="4">
+                    <img th:if="${user.pussyMeter == 0}" src="/img/vector_img_checkmark-09.png">
+                    <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-04.png">
+                    <img th:if="${user.pussyMeter == 2}" src="/img/Fire_Icon-04.png"></button>
+                <button type="submit" name="priority" value="3">
+                    <img th:if="${user.pussyMeter == 0}" src="/img/vector_checkmark-10.png">
+                    <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-03.png">
+                    <img th:if="${user.pussyMeter == 2}" src="/img/Fire_Icon-03.png"></button>
+                <button type="submit" name="priority" value="2">
+                    <img th:if="${user.pussyMeter == 0}" src="/img/vector_img_checkbox.png">
+                    <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-02.png">
+                    <img th:if="${user.pussyMeter == 2}" src="/img/Fire_Icon-02.png"></button>
+                <button type="submit" name="priority" value="1">
+                    <img th:if="${user.pussyMeter == 0}" src="/img/Star.png">
+                    <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-01.png">
+                    <img th:if="${user.pussyMeter == 2}" src="/img/Fire_Icon-01.png"></button>
             </div>
 
             <label class="dateTime hidden">

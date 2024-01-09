@@ -16,7 +16,7 @@ body {
 
 a {
     text-decoration: none;
-    color: #c69c28;
+    color: #fcba15;
 }
 
 p, h1, h2, h3, h4, h5 {
@@ -36,7 +36,7 @@ header {
     border-bottom: 2px solid #333;
     padding-bottom: 2rem;
     padding-top: 2.2rem;
-    background: #f4eace;
+    background: #fff0c1;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -169,7 +169,7 @@ main > form button {
 
 .addTask {
     display: flex;
-    background-color: #f4eace;
+    background-color: #fff0c1;
     padding: 0.8rem 0.5rem;
 }
 
@@ -203,19 +203,19 @@ main > form button {
 }
 
 .prio1 {
-    background: #d3e6ed;
+    background: #c7e9fb;
 }
 
 .prio2 {
-    background: #c7dbc3;
+    background: #c3eab5;
 }
 
 .prio3 {
-    background: #f4eace;
+    background: #fff0c1;
 }
 
 .prio4 {
-    background: #eebeab;
+    background: #ffb692;
 }
 
 img {
@@ -231,7 +231,7 @@ main > p:last-child {
 }
 
 form .dateTime {
-    background: #f4eace;
+    background: #fff0c1;
 }
 
 
@@ -249,7 +249,7 @@ footer label {
 }
 
 footer label > * + *, .task > * + * {
-    margin-left: .5rem
+    margin-left: .5rem;
 }
 
 footer input, .stars button {
