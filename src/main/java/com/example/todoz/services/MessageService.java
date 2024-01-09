@@ -6,7 +6,9 @@ import java.security.Principal;
 import java.security.Security;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
@@ -32,7 +34,7 @@ public class MessageService {
     private String privateKey;
 
     private PushService pushService;
-    private List<PushSubscription> subscriptions = new ArrayList<>();
+    private final Map<String, PushSubscription> subscriptions = new HashMap<>();
 
     @PostConstruct
     private void init() throws GeneralSecurityException {
@@ -42,14 +44,19 @@ public class MessageService {
 
     public void subscribe(Subscription subscription, Principal principal) {
         System.out.println("Subscribed to " + subscription.endpoint);
-        this.subscriptions.add(new PushSubscription(principal, subscription));
+        this.subscriptions.put(subscription.keys.auth, new PushSubscription(principal, subscription));
     }
 
-    public void unsubscribe(String endpoint) {
-        System.out.println("Unsubscribed from " + endpoint);
-        subscriptions = subscriptions.stream().filter(s -> !endpoint.equals(s.subscription().endpoint))
-                .collect(Collectors.toList());
+
+    public void unsubscribe(Subscription subscription) {
+        System.out.println("Unsubscribed from " + subscription.endpoint);
+        subscriptions.forEach((key, sub) -> {
+            if(key.equals(subscription.keys.auth)) {
+                subscriptions.remove(key);
+            }
+        });
     }
+
 
     public void sendNotification(Subscription subscription, String messageJson) {
         try {
@@ -61,30 +68,28 @@ public class MessageService {
     }
 
     @Scheduled(fixedRate = 5000)
-    public void sendNotifications(Principal principal) {
+    public void sendNotifications(Principal principal, Subscription subscription) {
 
-        System.out.println("Sending notifications to all subscribers");
 
         var json = """
         {
-          "title": "Server says hello to Bery!",
+          "title": "Server says hello to %s !",
           "body": "hello"
         }
-        """;
-        var json2 = """
-        {
-          "title": "Server says hello to 123!",
-          "body": "hello"
+        """.formatted(principal.getName());
+
+        List<Map.Entry<String, PushSubscription>> listUserSubscription = subscriptions.entrySet().stream()
+                .filter(sub -> sub.getValue().principal().getName().equals(principal.getName()))
+                .filter(sub -> sub.getKey().equals(subscription.keys.auth))
+                .toList();
+
+        if(listUserSubscription.size() > 1){
+            unsubscribe(subscription);
+        }else{
+                sendNotification(listUserSubscription.get(0).getValue().subscription(), String.format(json, LocalTime.now()));
+
         }
-        """;
 
-        subscriptions.forEach(subscription -> {
-            if(subscription.principal().getName().equals("bery")){
-                sendNotification(subscription.subscription(), String.format(json, LocalTime.now()));
-            }else if (subscription.principal().getName().equals("123")){
-                sendNotification(subscription.subscription(), String.format(json2, LocalTime.now()));
 
-            }
-        });
     }
 }
