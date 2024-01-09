@@ -111,13 +111,6 @@ public class MainController {
         return "longTerm";
     }
 
-    @PostMapping("/checked/{id}")
-    public String checkedTask(@PathVariable Long id, @RequestParam boolean done) {
-        // TODO: Fix me, get me some Principal!
-        taskService.checkedTask(id, done);
-        return "redirect:/";
-    }
-
     private User getUser(Principal principal) {
         return userService.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
     }
