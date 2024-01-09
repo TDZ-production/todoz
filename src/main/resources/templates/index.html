@@ -93,7 +93,7 @@
                 method: 'POST',
                 body: data
             }).then(resp => {
-                if (resp.status !== 200) {
+                if (resp.redirected) { // session expired
                     window.location.reload();
                 }
                 
