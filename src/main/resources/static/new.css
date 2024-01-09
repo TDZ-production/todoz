@@ -262,11 +262,7 @@ footer label {
     padding: .5rem;
 }
 
-footer label > * + *, .task > * + * {
-    align-self: center;
-}
-
-footer label > * + * {
+footer input + img  {
     margin-left: 0.5rem;
 }
 
