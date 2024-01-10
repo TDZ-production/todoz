@@ -39,11 +39,9 @@
 <body>
 <section class="app home">
     <header>
-        <a th:href="@{/longTerm}"> Long term </a>
+        <a th:href="@{/longTerm}">Upcoming</a>
         <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>
-<!--        <a th:href="@{/weekReview}"> Week review </a>-->
-        <!--        <a th:href="@{/weekReview}"> Week review </a>-->
-        <a th:href="@{/pussyMeter}"> Pussy meter </a>
+        <a th:href="@{/pussyMeter}">Pussy meter</a>
     </header>
 
     <main>
@@ -66,19 +64,19 @@
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
             <div class="stars">
-                <button type="submit" name="priority" value="4">
+                <button onclick="setPriority(4)" type="submit" name="priority" value="4">
                     <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-04.png">
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-04.png">
                     <img th:if="${user.pussyMeter == 2}" src="/img/skull_icon-05.png"></button>
-                <button type="submit" name="priority" value="3">
+                <button onclick="setPriority(3)" type="submit" name="priority" value="3">
                     <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-03.png">
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-03.png">
                     <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-03.png"></button>
-                <button type="submit" name="priority" value="2">
+                <button onclick="setPriority(2)" type="submit" name="priority" value="2">
                     <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-02.png">
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-02.png">
                     <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-02.png"></button>
-                <button type="submit" name="priority" value="1">
+                <button onclick="setPriority(1)" type="submit" name="priority" value="1">
                     <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-01.png">
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-01.png">
                     <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-01.png"></button>
@@ -107,7 +105,7 @@
                 method: 'POST',
                 body: data
             }).then(resp => {
-                if (!resp.ok) {
+                if (resp.redirected) { // session expired
                     window.location.reload();
                 }
 
@@ -125,14 +123,17 @@
 
             if (state === undefined) {
                 classList.toggle(CLASS);
+                if (!classList.contains(CLASS)) {
+                    document.querySelector("#date").focus();
+                } else {
+                    document.querySelector("#add").focus();
+                }
                 document.querySelector("#date").value = "";
             } else if (state === true) {
                 classList.remove(CLASS);
-                document.querySelector("#date").focus();
             } else {
                 classList.add(CLASS);
                 document.querySelector("#date").value = "";
-                document.querySelector("#add").focus();
             }
         }
 
@@ -149,6 +150,8 @@
         });
 
         function edit(task) {
+            document.querySelector("#add").focus();
+
             const main = document.querySelector("main");
             registerCancel(main);
 
@@ -157,11 +160,11 @@
             const priority = task.dataset.priority;
 
             const form = document.querySelector("footer form");
+            setPriority(priority);
 
             form.action = "/tasks/" + task.dataset.id;
             form.querySelector("input[name='description']").value = description;
             form.querySelector("input[name='maybeDueDate']").value = dueDate;
-            form.querySelector("button[name='priority']").value = priority;
 
             if (dueDate) {
                 toggleDueDate(true);
@@ -187,6 +190,19 @@
                 }
             }
         }
+
+         function setPriority(priority) {
+             document.querySelector("button[name='priority']").value = priority;
+
+             const buttons = document.querySelectorAll("footer .stars button");
+             buttons.forEach(button => {
+                 if (button.value == priority) {
+                     button.classList.add("active");
+                 } else {
+                     button.classList.remove("active");
+                 }
+             });
+         }
     </script>
 
 </section>

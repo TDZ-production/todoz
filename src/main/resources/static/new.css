@@ -12,6 +12,10 @@ body {
     padding: 0;
     font-family: virgil, sans-serif;
     background-color: #ededed;
+<<<<<<< HEAD
+=======
+    color: #333;
+>>>>>>> main
 }
 
 a {
@@ -30,8 +34,13 @@ label {
 
 header {
     border-bottom: 2px solid #333;
+<<<<<<< HEAD
     padding-bottom: 1.8rem;
     padding-top: 2rem;
+=======
+    padding-bottom: 1.2rem;
+    padding-top: 1.5rem;
+>>>>>>> main
     background: #fff0c1;
     display: flex;
     justify-content: space-between;
@@ -261,11 +270,15 @@ footer label {
     padding: .5rem;
 }
 
+<<<<<<< HEAD
 footer label > * + *, .task > * + * {
     align-self: center;
 }
 
 footer label > * + * {
+=======
+footer input + img  {
+>>>>>>> main
     margin-left: 0.5rem;
 }
 
@@ -278,6 +291,7 @@ footer input, .stars button {
     padding-bottom: 0;
 }
 
+<<<<<<< HEAD
 .stars > :nth-child(1):hover {
     background: rgb(238, 209, 201)
 }
@@ -293,6 +307,16 @@ footer input, .stars button {
 .stars > :nth-child(4):hover {
     background: #f2f6fc
 }
+=======
+.stars > :nth-child(1):hover, .stars > :nth-child(1).active { background: #ffb692 }
+
+.stars > :nth-child(2):hover, .stars > :nth-child(2).active { background: #fff0c1 }
+
+.stars > :nth-child(3):hover, .stars > :nth-child(3).active { background: #c3eab5 }
+
+.stars > :nth-child(4):hover, .stars > :nth-child(4).active { background: #c7e9fb }
+
+>>>>>>> main
 
 .weekSummary {
     margin-bottom: 2rem;
@@ -304,10 +328,21 @@ footer input, .stars button {
 }
 
 .slider {
+<<<<<<< HEAD
     -webkit-appearance:none;
     height: 2px;
     //margin-top: 5rem;
     //margin-bottom: 1rem;
+=======
+    -webkit-appearance: none;
+    appearance: none;
+    width:90%;
+    height:1px;
+    border-radius:5px;
+    outline:none;
+    margin-top: 5rem;
+    margin-bottom: 1rem;
+>>>>>>> main
     color: #fff0c1;
 }
 
