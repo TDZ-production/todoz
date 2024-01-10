@@ -251,6 +251,7 @@ form .dateTime {
 
 footer {
     background: #eee;
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 footer img {
