@@ -34,7 +34,7 @@ public class AuthenticationController {
         Optional<User> temp = userService.findByUsername(registerDTO.username());
 
         if(temp.isPresent()) {
-            ra.addAttribute("userExists", true);
+            ra.addFlashAttribute("userExists", true);
             return "redirect:/register";
         }
         else {

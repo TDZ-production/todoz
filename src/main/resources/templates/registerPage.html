@@ -15,7 +15,7 @@
         <h1>ToDoZmrd</h1>
         <p class="note">Register your ass!</p>
 
-        <p th:if="${userExists} == true " th:text="User with this username exists"></p>
+        <p th:if="${userExists} == true">User with this username exists</p>
         <form method="post">
             <label>
                 <input name="username" type="text" placeholder="username">
