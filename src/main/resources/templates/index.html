@@ -119,14 +119,14 @@
 
         function toggleDueDate(state) {
             const CLASS = "hidden";
-            const classList = document.querySelector(".dateTime").classList;
             const date = document.querySelector("#date");
+            const dateLabel = document.querySelector(".dateTime")
+            const classList = dateLabel.classList;
 
             if (state === undefined) {
                 classList.toggle(CLASS);
                 if (!classList.contains(CLASS)) {
-                    date.focus();
-                    date.showPicker();
+                    dateLabel.dispatchEvent(new Event("click"));
                 } else {
                     document.querySelector("#add").focus();
                 }
