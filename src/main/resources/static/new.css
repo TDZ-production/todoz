@@ -296,13 +296,7 @@ footer input, .stars button {
 .slider {
     -webkit-appearance: none;
     appearance: none;
-    width:90%;
-    height:1px;
-    border-radius:5px;
-    outline:none;
-    margin-top: 5rem;
-    margin-bottom: 1rem;
-    color: #fff0c1;
+    height: 2px;
 }
 
 .slider::-webkit-slider-thumb {
