@@ -16,7 +16,7 @@
         <p class="note">Do your task and else!</p>
 
         <form th:action="@{/login}" method="post">
-            <p th:if="${param.error}">Invalid username or password.</p>
+            <p th:if="${param.error}">Invalid username and password.</p>
             <p th:if="${param.logout}">You have been logged out.</p>
 
             <label>
