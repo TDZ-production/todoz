@@ -120,20 +120,22 @@
         function toggleDueDate(state) {
             const CLASS = "hidden";
             const classList = document.querySelector(".dateTime").classList;
+            const date = document.querySelector("#date");
 
             if (state === undefined) {
                 classList.toggle(CLASS);
                 if (!classList.contains(CLASS)) {
-                    document.querySelector("#date").focus();
+                    date.focus();
+                    date.showPicker();
                 } else {
                     document.querySelector("#add").focus();
                 }
-                document.querySelector("#date").value = "";
+                date.value = "";
             } else if (state === true) {
                 classList.remove(CLASS);
             } else {
                 classList.add(CLASS);
-                document.querySelector("#date").value = "";
+                date.value = "";
             }
         }
 
