@@ -30,7 +30,7 @@ label {
 }
 
 header {
-    border-bottom: 2px solid #333;
+    position: relative;
     padding-bottom: 1.2rem;
     padding-top: 1.5rem;
     background: #fff0c1;
@@ -305,6 +305,13 @@ footer input, .stars button {
     height:20px;
     border-radius:50%;
     background-color:#ffffff;
+}
+
+#week-progressbar {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background-color: #333;
 }
 
 @media (min-width: 460px) {
