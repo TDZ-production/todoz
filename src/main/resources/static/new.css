@@ -170,7 +170,6 @@ main > form button {
 
 .addTask {
     display: flex;
-    background-color: #fff0c1;
     padding: 0.8rem 0.5rem;
 }
 
@@ -245,13 +244,10 @@ main > p:last-child {
     margin-bottom: 4rem;
 }
 
-form .dateTime {
-    background: #fff0c1;
-}
-
 footer {
     background: #eee;
     padding-bottom: env(safe-area-inset-bottom);
+    background: #fff0c1;
 }
 
 footer img {
