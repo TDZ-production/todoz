@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
 </head>
 <script th:inline="javascript">
 
@@ -94,6 +93,7 @@
     </footer>
 
     <script>
+        initiPhoneHack();
          function handleSubmit(event) {
             event.preventDefault();
 
@@ -208,6 +208,18 @@
                      button.classList.remove("active");
                  }
              });
+         }
+
+         function initiPhoneHack() {
+             document.querySelector("#add").addEventListener('focusin', () => {
+                 adjustSafeAreaInset(0);
+             });
+             document.addEventListener('focusout', () => {
+                 adjustSafeAreaInset();
+             });
+             function adjustSafeAreaInset(value = 'env(safe-area-inset-bottom)') {
+                 document.querySelector("footer").style.paddingBottom = value;
+             }
          }
     </script>
 

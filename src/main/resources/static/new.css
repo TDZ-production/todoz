@@ -246,8 +246,8 @@ main > p:last-child {
 
 footer {
     background: #eee;
-    padding-bottom: env(safe-area-inset-bottom);
     background: #fff0c1;
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 footer img {
