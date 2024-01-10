@@ -37,18 +37,19 @@
 
     function changeComment() {
         counter++;
+        const note = document.querySelector(".note");
 
         if (counter % 4 === 0) {
-            document.querySelector(".note").innerText = "Do your task or else!"
+            note.innerText = "Do your task or else!"
         }
         else if (counter % 4 === 1) {
-            document.querySelector(".note").innerText = "Not great, not terrible"
+            note.innerText = "Not great, not terrible"
         }
         else if (counter % 4 === 2) {
-            document.querySelector(".note").innerText = "Mediocre app for mediocre people"
+            note.innerText = "Mediocre app for mediocre people"
         }
         else if (counter % 4 === 3) {
-            document.querySelector(".note").innerText = "OMG, sign-up already!"
+            note.innerText = "OMG, sign-up already!"
         }
         console.log(counter);
     }
