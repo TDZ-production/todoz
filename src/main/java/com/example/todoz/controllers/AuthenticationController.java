@@ -41,6 +41,7 @@ public class AuthenticationController {
             User user = new User();
             user.setUsername(registerDTO.username());
             user.setPassword(passwordEncoder.encode(registerDTO.password()));
+            user.setPussyMeter(registerDTO.pussyMeter());
             userService.save(user);
         }
 

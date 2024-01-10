@@ -15,10 +15,10 @@
         <h1>Pussy meter</h1>
         <p class="note">Choose how big of a pussy are you!</p>
         <form th:action="@{/changeMeter}" method="post" th:object="${user}">
-            <div class="slideContainer">
+            <label class="slideContainer">
+                <span id="pussyLabel"></span>
                 <input type="range" step="1" max="2" class="slider" id="myRange" name="pussyMeter" th:field="*{pussyMeter}">
-                <span id="demo"></span>
-            </div>
+            </label>
             <button class="ctm" type="submit">&gt;&gt;</button>
         </form>
     </main>
@@ -26,13 +26,13 @@
 </body>
 <script>
     const slider = document.getElementById("myRange");
-    const output = document.getElementById("demo");
+    const output = document.getElementById("pussyLabel");
 
     output.innerHTML = slider.innerHTML;
 
     slider.oninput = function() {
         if (this.value <= 0) {
-            output.innerText = "Family Friendly";
+            output.innerText = "Friendly";
         } else if (this.value == 1) {
             output.innerText = "Neutral";
         } else {
