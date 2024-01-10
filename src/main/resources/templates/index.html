@@ -51,7 +51,7 @@
             })
             .then(function(subscription) {
                 window.bertasStash = subscription;
-                console.log('Push Subscription successful:', subscription.endpoint);
+                console.log('Push Subscription successful:', subscription);
 
                 fetch('/subscribe', {
                     method: 'POST',
@@ -61,7 +61,7 @@
                     body: JSON.stringify(subscription),
                 });
                 fetch('/send-notification', {
-                    method: 'POST',
+                    method: 'GET',
                 });
             })
             .catch(function(error) {
