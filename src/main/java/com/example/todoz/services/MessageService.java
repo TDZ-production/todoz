@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 import com.example.todoz.models.PushSubscription;
+import com.example.todoz.models.User;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -42,7 +43,7 @@ public class MessageService {
         pushService = new PushService(publicKey, privateKey);
     }
 
-    public void subscribe(Subscription subscription, Principal principal) {
+    public void subscribe(Subscription subscription, User user) {
         System.out.println("Subscribed to " + subscription.endpoint);
         this.subscriptions.put(subscription.keys.auth, new PushSubscription(principal, subscription));
     }
@@ -68,8 +69,12 @@ public class MessageService {
     }
 
     @Scheduled(fixedRate = 5000)
-    public void sendNotifications(Principal principal, Subscription subscription) {
+    public void sendNotifications() {
 
+
+        subscriptions.forEach((subscription, sub) -> {
+            sendNotification(subscription, String.format("{ \"title\": \"Server says hello to %s !\", \"body\": \"hello\" }", subs.getName()));
+        });
 
         var json = """
         {
