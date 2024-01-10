@@ -127,6 +127,10 @@
                 classList.toggle(CLASS);
                 if (!classList.contains(CLASS)) {
                     dateLabel.dispatchEvent(new Event("click"));
+                    if (document.activeElement !== date) {
+                        date.focus();
+                        date.showPicker();
+                    }
                 } else {
                     document.querySelector("#add").focus();
                 }
