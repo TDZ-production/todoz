@@ -12,11 +12,11 @@
 <body>
 <section class="app login">
     <main>
-        <h1>ToDoZmrd</h1>
-        <p class="note">Do your task, bitch!</p>
+        <h1>ToDoZ*</h1>
+        <p class="note">Do your task or else!</p>
 
         <form th:action="@{/login}" method="post">
-            <p th:if="${param.error}">Invalid username and password.</p>
+            <p th:if="${param.error}">Invalid username or password.</p>
             <p th:if="${param.logout}">You have been logged out.</p>
 
             <label>
@@ -31,5 +31,27 @@
         <p><a th:href="@{/register}">Sign-up</a></p>
     </main>
 </section>
+<script>
+    setInterval(changeComment, 4666);
+    let counter = 0;
+
+    function changeComment() {
+        counter++;
+
+        if (counter % 4 === 0) {
+            document.querySelector(".note").innerText = "Do your task or else!"
+        }
+        else if (counter % 4 === 1) {
+            document.querySelector(".note").innerText = "Not great, not terrible"
+        }
+        else if (counter % 4 === 2) {
+            document.querySelector(".note").innerText = "Mediocre app for mediocre people"
+        }
+        else if (counter % 4 === 3) {
+            document.querySelector(".note").innerText = "OMG, sign-up already!"
+        }
+        console.log(counter);
+    }
+</script>
 </body>
 </html>
