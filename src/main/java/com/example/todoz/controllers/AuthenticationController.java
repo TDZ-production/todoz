@@ -5,11 +5,13 @@ import com.example.todoz.models.User;
 import com.example.todoz.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
@@ -41,9 +43,14 @@ public class AuthenticationController {
             User user = new User();
             user.setUsername(registerDTO.username());
             user.setPassword(passwordEncoder.encode(registerDTO.password()));
+            user.setPussyMeter(registerDTO.pussyMeter());
             userService.save(user);
         }
 
         return "redirect:/login";
+    }
+
+    private User getUser(Principal principal) {
+        return userService.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
     }
 }
