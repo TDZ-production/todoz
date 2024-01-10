@@ -275,21 +275,14 @@ footer input, .stars button {
     padding-bottom: 0;
 }
 
-.stars > :nth-child(1):hover {
-    background: rgb(238, 209, 201)
-}
+.stars > :nth-child(1):hover, .stars > :nth-child(1).active { background: #ffb692 }
 
-.stars > :nth-child(2):hover {
-    background: #f5ebdb
-}
+.stars > :nth-child(2):hover, .stars > :nth-child(2).active { background: #fff0c1 }
 
-.stars > :nth-child(3):hover {
-    background: #e2eae2
-}
+.stars > :nth-child(3):hover, .stars > :nth-child(3).active { background: #c3eab5 }
 
-.stars > :nth-child(4):hover {
-    background: #f2f6fc
-}
+.stars > :nth-child(4):hover, .stars > :nth-child(4).active { background: #c7e9fb }
+
 
 .weekSummary {
     margin-bottom: 2rem;
