@@ -14,8 +14,9 @@
 
     <header>
         <a th:href="@{/}">&lt;</a>
-        <h2 th:text="|Week ${previousWeek.getWeekNumber()} review|" />
+        <h2 th:text="|Week ${previousWeek.getWeekNumberNumber()} review|" />
     </header>
+
 
     <main>
         <div class="weekSummary">
@@ -26,20 +27,38 @@
             <p class="note">Tasks are finished</p>
         </div>
 
-        <div class="task" th:each="task : ${upcomingTasks}" >
-            <p class="taskText" th:text="${task.getDescription()}"></p>
-        </div>
+        <form action="/startNewWeek" method="post" id="form">
+            <p>Upcoming tasks:</p>
+            <div class="task" th:each="task : ${upcomingTasks}" >
+                <span th:classappend="|prio${task.getPriority()}|"></span>
+                <p class="taskText" th:text="${task.getDescription()}"></p>
+                <label>
+                    <input type="checkbox" class="toDelegate" checked onclick="updateButton()" name="taskIds" th:value="${task.id}">
+                </label>
+            </div>
 
-        <div class="task" th:each="task : ${previousWeek.getTasks()}" >
-            <p class="taskText" th:text="${task.getDescription()}"></p>
-            <span th:if="${task.isDone()}"><img src="/img/vector_img_checkmark-09.png"></span>
-        </div>
+            <p>Tasks from previous week:</p>
+            <div class="task" th:each="task : ${previousWeek.getTasks()}" >
+                <span th:classappend="|prio${task.getPriority()}|"></span>
+                <p class="taskText" th:text="${task.getDescription()}"></p>
+                <span th:if="${task.isDone()}"><img src="/img/vector_img_checkmark-09.png" alt="checkmark"></span>
+                <label>
+                    <input type="checkbox" class="toDelegate" onclick="updateButton()" name="taskIds" th:value="${task.id}">
+                </label>
+            </div>
 
-        <form action="/startNewWeek" method="post">
-            <button class="cta" type="submit" th:text="|Start new week with ${howManyTasks} tasks|"></button>
+            <button class="cta" type="submit" th:text="|Start new week with ${upcomingTasks.size()} tasks|"></button>
         </form>
         <p class="note">You are crushing it!</p>
     </main>
+
+    <script>
+        function updateButton() {
+            const checkedTasks = document.querySelectorAll(".toDelegate:checked");
+            document.querySelector(".cta")
+                .textContent = `Start new week with ${checkedTasks.length} task${checkedTasks.length === 1 ? '' : 's'}`;
+        }
+    </script>
 
 </section>
 

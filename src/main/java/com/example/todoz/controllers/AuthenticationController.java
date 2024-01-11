@@ -34,13 +34,14 @@ public class AuthenticationController {
         Optional<User> temp = userService.findByUsername(registerDTO.username());
 
         if(temp.isPresent()) {
-            ra.addAttribute("userExists", true);
+            ra.addFlashAttribute("userExists", true);
             return "redirect:/register";
         }
         else {
             User user = new User();
             user.setUsername(registerDTO.username());
             user.setPassword(passwordEncoder.encode(registerDTO.password()));
+            user.setPussyMeter(registerDTO.pussyMeter());
             userService.save(user);
         }
 

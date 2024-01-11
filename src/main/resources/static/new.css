@@ -11,12 +11,13 @@ body {
     margin: 0;
     padding: 0;
     font-family: virgil, sans-serif;
-    background-color: #666;
+    background-color: #ededed;
+    color: #333;
 }
 
 a {
     text-decoration: none;
-    color: rgb(63, 120, 144);
+    color: #b78300;
 }
 
 p, h1, h2, h3, h4, h5 {
@@ -28,18 +29,33 @@ label {
     margin: 1rem 2rem;
 }
 
-header, .task {
-    padding: 1rem;
-}
-
 header {
-    border-bottom: 2px solid #333;
-    padding-bottom: 1.5rem;
-    padding-top: 1.8rem;
+    position: relative;
+    padding-bottom: 1.2rem;
+    padding-top: 1.5rem;
+    background: #fff0c1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 input {
     width: 100%;
+}
+
+.pussySliderIcons img {
+    width: 100px;
+    height: 80px;
+}
+
+.pussySliderIcons {
+    margin-top: 5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.slideContainer input{
+    padding: 0;
 }
 
 input, button {
@@ -100,11 +116,13 @@ header h2 {
     left: 0;
     right: 0;
     text-align: center;
+    font-size: 1.5rem;
 }
 
 header a {
     position: relative;
     z-index: 10;
+    padding: 1rem;
 }
 
 main > form {
@@ -149,7 +167,7 @@ main > form button {
     background: #FFF0F6;
 }
 
-.app.pussyMeter{
+.app.pussyMeter {
     background: #FFC9C9;
 }
 
@@ -164,24 +182,66 @@ main > form button {
 
 .addTask {
     display: flex;
+    padding: 0.8rem 0.5rem;
 }
 
 .task {
     display: flex;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #dddad7;
+    padding-left: .5rem;
+    position: relative;
 }
+
+.task[data-done=true] img.notdone { display: none; }
+.task[data-done=false] img.isdone { display: none; }
 
 .task p {
     flex-grow: 1;
     text-align: left;
+    padding: 1rem .5rem;
+    cursor: text;
 }
 
 .task .due {
     white-space: nowrap;
+    color: #919191;
+    align-self: center;
+    padding: 1rem .5rem;
+}
+.due {
+    margin-right: 0;
 }
 
 .task button, .task img {
     display: block;
+}
+
+.task button {
+    padding: 1rem;
+    padding-left: 0.5rem;
+}
+
+.prio1, .prio2, .prio3, .prio4 {
+    width: .45rem;
+    position: absolute;
+    left: 0;
+    top: .3rem;
+    bottom: .3rem;
+}
+
+.prio1 {
+    background: #c7e9fb;
+}
+
+.prio2 {
+    background: #c3eab5;
+}
+
+.prio3 {
+    background: #fff0c1;
+}
+.prio4 {
+    background: #ffb692;
 }
 
 img {
@@ -196,46 +256,42 @@ main > p:last-child {
     margin-bottom: 4rem;
 }
 
-form .dateTime {
-    background: #FCEDA3;
-}
-
-header {
-    background: antiquewhite;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-
 footer {
     background: #eee;
+    background: #fff0c1;
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 footer img {
-    height: 2.4rem;
+    height: 3rem;
 }
 
 footer label {
     margin: 0;
-    padding: .42rem;
+    padding: .5rem;
 }
 
-footer label > * + *, .task > * + * {
-    margin-left: .42rem
+footer input + img  {
+    margin-left: 0.5rem;
 }
 
 footer input, .stars button {
-    padding: .55rem;
+    padding: .5rem .5rem;
 }
 
 .stars button {
-    background: #f7f7f7;
+    background: #ffff;
+    padding-bottom: 0;
 }
 
-.stars > :nth-child(1):hover {background: #FFC9C9}
-.stars > :nth-child(2):hover {background: #fffac9}
-.stars > :nth-child(3):hover {background: #cbffc9}
-.stars > :nth-child(4):hover {background: #e3e3e3}
+.stars > :nth-child(1):hover, .stars > :nth-child(1).active { background: #ffb692 }
+
+.stars > :nth-child(2):hover, .stars > :nth-child(2).active { background: #fff0c1 }
+
+.stars > :nth-child(3):hover, .stars > :nth-child(3).active { background: #c3eab5 }
+
+.stars > :nth-child(4):hover, .stars > :nth-child(4).active { background: #c7e9fb }
+
 
 .weekSummary {
     margin-bottom: 2rem;
@@ -247,18 +303,27 @@ footer input, .stars button {
 }
 
 .slider {
-    margin-top: 5rem;
-    margin-bottom: 1rem;
-    width: 90%;
-    padding-left: 0;
-    padding-right: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 2px;
 }
 
-.slider:hover {
-    opacity: 1;
+.slider::-webkit-slider-thumb {
+    -webkit-appearance:none;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background-color:#ffffff;
 }
 
-@media(min-width: 460px) {
+#week-progressbar {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background-color: #333;
+}
+
+@media (min-width: 460px) {
     .app {
         margin: 1rem auto;
         box-shadow: 0 0 0 3px black;

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>ToDoZ-Sign-up</title>
     <link rel="stylesheet" href="/new.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="mobile-web-app-capable" content="yes">
@@ -73,21 +73,48 @@
 <body>
 <section class="app register">
     <main>
-        <h1>ToDoZmrd</h1>
-        <p class="note">Register your ass!</p>
+        <h1 id="title">ToDoZápisník</h1>
+        <p class="note">Register your account</p>
 
-        <p th:if="${userExists} == true " th:text="User with this username exists"></p>
         <form method="post">
+            <p th:if="${userExists} == true">User with this username exists</p>
             <label>
-                <input name="username" type="text" placeholder="username">
+                <input name="username" type="text" placeholder="email or username" >
             </label>
             <label>
                 <input name="password" type="password" minlength="5" placeholder="password">
+            </label>
+            <label class="slideContainer">
+                <p id="pussyLabel">Neutral</p>
+                <input type="range" name="pussyMeter" step="1" max="2" class="slider" id="myRange" oninput="updateTitle()">
             </label>
             <button class="cta" type="submit">Sign-up</button>
         </form>
         <p><a th:href="@{/login}">Log in</a></p>
     </main>
 </section>
+
+<script>
+    function updateTitle() {
+        const range = document.querySelector("#myRange");
+        const title = document.querySelector("#title");
+        const subtitle = document.querySelector("#title + p");
+        const pussyLabel = document.querySelector("#pussyLabel");
+
+        if(range.value == 0) {
+            title.innerText = "ToDoZlatíčko";
+            subtitle.innerText = "Register yourself fam";
+            pussyLabel.innerText = "Friendly";
+        } else if(range.value == 1) {
+            title.innerText = "ToDoZápisník";
+            subtitle.innerText = "Register your account";
+            pussyLabel.innerText = "Neutral";
+        } else {
+            title.innerText = "ToDoZmrd";
+            subtitle.innerText = "Register your ass!";
+            pussyLabel.innerText = "Aggressive";
+        }
+    }
+</script>
 </body>
 </html>

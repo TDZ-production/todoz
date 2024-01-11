@@ -9,21 +9,16 @@ import java.time.temporal.WeekFields;
 public class DateManager {
 
     /**
-     * Formats current day to YYYYww
-     *
-     * @return YYYYww
-     */
-    public static Integer formattedCurrentWeek() {
-        return formatWeek(LocalDate.now());
-    }
-
-    /**
      * Formats a day to YYYYww
      *
      * @return YYYYww
      */
     public static Integer formatWeek(TemporalAccessor date) {
-        return getYearOfNextOrSameSaturday(date) * 100 + getWeekNumberOfNextOrSameSaturday(date);
+        return getYearOfNextOrSameSaturday(date) * 100 + date.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
+    }
+
+    public static Integer formattedCurrentWeek() {
+        return formatWeek(LocalDate.now());
     }
 
     /**
@@ -35,15 +30,5 @@ public class DateManager {
     public static Integer getYearOfNextOrSameSaturday(TemporalAccessor date) {
         LocalDate localDate = LocalDate.from(date);
         return localDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY)).getYear();
-    }
-
-    /**
-     * Gets week number of the nearest Saturday
-     *
-     * @param date Date
-     * @return Week number as Integer
-     */
-    public static Integer getWeekNumberOfNextOrSameSaturday(TemporalAccessor date) {
-        return date.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
     }
 }
