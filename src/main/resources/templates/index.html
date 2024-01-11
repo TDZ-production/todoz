@@ -32,7 +32,7 @@
         }
     }
 
-    setInterval(showNotification, 10000);
+    //setInterval(showNotification, 10000);
 
 </script>
 <body>
@@ -41,6 +41,7 @@
         <a th:href="@{/longTerm}">Upcoming</a>
         <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>
         <a th:href="@{/pussyMeter}">Pussy meter</a>
+        <div id="week-progressbar" />
     </header>
 
     <main>
@@ -93,7 +94,20 @@
     </footer>
 
     <script>
+        updateWeekProgressbar();
+        initTaskEditListener();
         initiPhoneHack();
+
+        setInterval(updateWeekProgressbar, 3600);
+
+        function updateWeekProgressbar() {
+            const progressbar = document.querySelector("#week-progressbar");
+            const now = new Date();
+            const weekProgress = (now.getDay() / 7 + now.getHours() / 24 / 7) * 100;
+
+            progressbar.style.width = weekProgress + "%";
+        }
+
          function handleSubmit(event) {
             event.preventDefault();
 
@@ -143,17 +157,17 @@
             }
         }
 
-        document.querySelector("main").addEventListener("click", function (event) {
-            if (event.target.tagName !== "P") {
-                return;
-            }
-            let task = event.target.closest(".task");
-            if (!task) {
-                return;
-            }
+        function initTaskEditListener() {
+            document.querySelector("main").addEventListener("click", function (event) {
+                if (event.target.tagName !== "P") return;
 
-            edit(task);
-        });
+                let task = event.target.closest(".task");
+
+                if (!task) return;
+
+                edit(task);
+            });
+        }
 
         function edit(task) {
             document.querySelector("#add").focus();
