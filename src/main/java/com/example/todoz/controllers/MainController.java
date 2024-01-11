@@ -116,6 +116,11 @@ public class MainController {
         return "longTerm";
     }
 
+    @GetMapping("/feedback")
+    public String showFeedback() {
+        return "feedback";
+    }
+
     private User getUser(Principal principal) {
         return userService.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
     }

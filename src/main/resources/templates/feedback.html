@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback</title>
+    <link rel="stylesheet" href="/new.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+</head>
+<style>
+    textarea {
+        width: 21rem;
+        height: 4rem;
+    }
+
+    main button {
+        margin-top: 0;
+    }
+</style>
+<body>
+<section class="app">
+    <header>
+        <a th:href="@{/}"> < </a>
+        <h2>Feedback</h2>
+    </header>
+
+    <main>
+        <br>
+        <p>We'd love to hear from you!</p>
+        <p>Your feedback is crucial for our improvement.</p>
+
+        <form method="post">
+            <p>Feel free to share your thoughts anonymously:</p>
+            <label>
+                <textarea name="feedback"></textarea>
+            </label>
+            <button type="submit">SUBMIT</button>
+        </form>
+        <p>Join our Discord Community</p>
+        <a href="https://discord.gg/KGem37GgcA">TodoZ*</a>
+        <p>Engage in discussions, stay updated on new features and interact with our team and other users.</p>
+        </main>
+
+</section>
+</body>
+</html>
