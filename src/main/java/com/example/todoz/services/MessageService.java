@@ -2,18 +2,14 @@ package com.example.todoz.services;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.security.Principal;
 import java.security.Security;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
 
-import com.example.todoz.models.PushSubscription;
+
 import com.example.todoz.models.User;
+import com.example.todoz.models.UserSubscription;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -35,7 +31,12 @@ public class MessageService {
     private String privateKey;
 
     private PushService pushService;
-    private final Map<String, PushSubscription> subscriptions = new HashMap<>();
+    private final UserSubscriptionService userSubscriptionService;
+
+    public MessageService(UserSubscriptionService userSubscriptionService) {
+        this.userSubscriptionService = userSubscriptionService;
+    }
+
 
     @PostConstruct
     private void init() throws GeneralSecurityException {
@@ -45,22 +46,31 @@ public class MessageService {
 
     public void subscribe(Subscription subscription, User user) {
         System.out.println("Subscribed to " + subscription.endpoint);
-        this.subscriptions.put(subscription.keys.auth, new PushSubscription(principal, subscription));
+        UserSubscription userSubscription =  new UserSubscription(subscription, user);
+        userSubscriptionService.save(userSubscription);
+
+        List<UserSubscription> userSubscriptionList = userSubscriptionService.getAll().stream()
+                .filter(userSub -> userSub.getAuthKey() == subscription.keys.auth)
+                .toList();
+
+        userSubscriptionService.getAll().stream()
+                        .peek(userSub -> {
+                            if(userSubscriptionList.size() > 1){
+                                unsubscribe(userSub);
+                            }
+                        });
     }
 
 
-    public void unsubscribe(Subscription subscription) {
-        System.out.println("Unsubscribed from " + subscription.endpoint);
-        subscriptions.forEach((key, sub) -> {
-            if(key.equals(subscription.keys.auth)) {
-                subscriptions.remove(key);
-            }
-        });
+    public void unsubscribe(UserSubscription userSubscription) {
+        System.out.println("Unsubscribed from " + userSubscription.getEndpoint());
+        userSubscriptionService.remove(userSubscription);
     }
 
 
-    public void sendNotification(Subscription subscription, String messageJson) {
+    public void sendNotification(UserSubscription userSubscription, String messageJson) {
         try {
+            Subscription subscription = new Subscription(userSubscription.getEndpoint(), new Subscription.Keys(userSubscription.getP256dhKey(), userSubscription.getAuthKey()));
             pushService.send(new Notification(subscription, messageJson));
         } catch (GeneralSecurityException | IOException | JoseException | ExecutionException
                  | InterruptedException e) {
@@ -71,30 +81,24 @@ public class MessageService {
     @Scheduled(fixedRate = 5000)
     public void sendNotifications() {
 
-
-        subscriptions.forEach((subscription, sub) -> {
-            sendNotification(subscription, String.format("{ \"title\": \"Server says hello to %s !\", \"body\": \"hello\" }", subs.getName()));
-        });
-
+//        AtomicReference<String> userName = new AtomicReference<>("");
         var json = """
         {
           "title": "Server says hello to %s !",
           "body": "hello"
         }
-        """.formatted(principal.getName());
+        """;
 
-        List<Map.Entry<String, PushSubscription>> listUserSubscription = subscriptions.entrySet().stream()
-                .filter(sub -> sub.getValue().principal().getName().equals(principal.getName()))
-                .filter(sub -> sub.getKey().equals(subscription.keys.auth))
-                .toList();
+        userSubscriptionService.getAll().forEach(userSub -> sendNotification(userSub, String.format(json, LocalTime.now())));
 
-        if(listUserSubscription.size() > 1){
-            unsubscribe(subscription);
-        }else{
-                sendNotification(listUserSubscription.get(0).getValue().subscription(), String.format(json, LocalTime.now()));
 
-        }
 
+//        var json = """
+//        {
+//          "title": "Server says hello to %s !",
+//          "body": "hello"
+//        }
+//        """.formatted(principal.getName());
 
     }
 }
