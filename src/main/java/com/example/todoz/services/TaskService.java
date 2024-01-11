@@ -7,7 +7,6 @@ import com.example.todoz.models.Week;
 import com.example.todoz.repos.TaskRepo;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -27,7 +26,7 @@ public class TaskService {
     }
 
     public List<Task> findLongTermTasks(User user, Integer currentWeek) {
-        return taskRepo.findAllByUserIdAndDueDateWeekNumberGreaterThan(user.getId(), currentWeek);
+        return taskRepo.findAllByUserIdAndDueDateWeekNumberGreaterThanOrderByDueDate(user.getId(), currentWeek);
     }
 
     public void checkedTask(Long taskId, User user, boolean done) {
