@@ -323,6 +323,36 @@ footer input, .stars button {
     background-color: #333;
 }
 
+.checkboxContainer {
+    cursor: pointer;
+    caret-color: transparent;
+    position: relative;
+}
+.checkboxContainer input {
+    display: none;
+}
+.img-container {
+    position: relative;
+    display: inline-block;
+}
+.img-checked {
+    display: none;
+}
+.img-unchecked,
+.img-checked {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.checkboxContainer input:checked + .img-container .img-checked {
+    display: block;
+}
+
+.checkboxContainer input:not(:checked) + .img-container .img-unchecked {
+    display: block;
+}
+
 @media (min-width: 460px) {
     .app {
         margin: 1rem auto;

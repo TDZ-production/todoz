@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en"><head>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
     <meta charset="UTF-8">
     <title>Week review</title>
     <link rel="stylesheet" href="/new.css">
@@ -12,44 +13,53 @@
 
 <section class="app">
 
-    <header>
-        <a th:href="@{/}">&lt;</a>
-        <h2 th:text="|Week ${previousWeek.getWeekNumberNumber()} review|" />
-    </header>
-
-
     <main>
-        <div class="weekSummary">
-            <h1 th:style="'color: red'" th:text="|${previousWeek.getDonePercentage()}%|" th:if="${previousWeek.getDonePercentage() >= 0 && previousWeek.getDonePercentage() <= 50}"></h1>
-            <h1 th:style="'color: orange'" th:text="|${previousWeek.getDonePercentage()}%|" th:if="${previousWeek.getDonePercentage() > 50 && previousWeek.getDonePercentage() <= 75}"></h1>
-            <h1 th:style="'color: green'" th:text="|${previousWeek.getDonePercentage()}%|" th:if="${previousWeek.getDonePercentage() > 75}"></h1>
+        <h2> Week Review </h2>
 
-            <p class="note">Tasks are finished</p>
+        <div class="weekSummary">
+            <h1 th:style="'color: red'" th:text="|${previousWeek.getDonePercentage()}%|"
+                th:if="${previousWeek.getDonePercentage() >= 0 && previousWeek.getDonePercentage() <= 50}"></h1>
+            <h1 th:style="'color: orange'" th:text="|${previousWeek.getDonePercentage()}%|"
+                th:if="${previousWeek.getDonePercentage() > 50 && previousWeek.getDonePercentage() <= 75}"></h1>
+            <h1 th:style="'color: green'" th:text="|${previousWeek.getDonePercentage()}%|"
+                th:if="${previousWeek.getDonePercentage() > 75}"></h1>
+
+            <h2>tasks done</h2>
+            <p class="note">Pick tasks and start new week</p>
         </div>
 
         <form action="/startNewWeek" method="post" id="form">
-            <p>Upcoming tasks:</p>
-            <div class="task" th:each="task : ${upcomingTasks}" >
+            <div class="task" th:each="task : ${upcomingTasks}">
                 <span th:classappend="|prio${task.getPriority()}|"></span>
+                <span> <img src="/img/vector_img_filled_clock.png" alt="clock"></span>
                 <p class="taskText" th:text="${task.getDescription()}"></p>
-                <label>
-                    <input type="checkbox" class="toDelegate" checked onclick="updateButton()" name="taskIds" th:value="${task.id}">
+                <span class="due" th:text="|${task.getDueDateDayOfWeek()} ${task.getDueDateFormat()}|"></span>
+                <label class="checkboxContainer">
+                    <input type="checkbox" class="toDelegate" onclick="updateButton()" name="taskIds"
+                           th:value="${task.id}" checked>
+                    <div class="img-container">
+                        <img class="img-unchecked" src="/img/todoz_weekReviewIcon+-02.png">
+                        <img class="img-checked" src="/img/todoz_weekReviewIcon--01.png">
+                    </div>
+                    <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
                 </label>
             </div>
 
-            <p>Tasks from previous week:</p>
-            <div class="task" th:each="task : ${previousWeek.getTasks()}" >
+            <div class="task" th:each="task : ${previousWeek.getTasks()}">
                 <span th:classappend="|prio${task.getPriority()}|"></span>
-                <p class="taskText" th:text="${task.getDescription()}"></p>
                 <span th:if="${task.isDone()}"><img src="/img/vector_img_checkmark-09.png" alt="checkmark"></span>
-                <label>
-                    <input type="checkbox" class="toDelegate" onclick="updateButton()" name="taskIds" th:value="${task.id}">
+                <p class="taskText" th:text="${task.getDescription()}"></p>
+                <label class="checkboxContainer">
+                    <input type="checkbox" class="toDelegate" onclick="updateButton()" name="taskIds"
+                           th:value="${task.id}" checked>
+                    <img class="img-unchecked" src="/img/todoz_weekReviewIcon+-02.png">
+                    <img class="img-checked" src="/img/todoz_weekReviewIcon--01.png">
+                    <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
                 </label>
             </div>
 
             <button class="cta" type="submit" th:text="|Start new week with ${upcomingTasks.size()} tasks|"></button>
         </form>
-        <p class="note">You are crushing it!</p>
     </main>
 
     <script>

@@ -31,23 +31,21 @@ public class MainController {
         Optional<Week> currentWeek = weekService.findCurrentWeek(getUser(principal));
         Optional<Week> optPreviousWeek = weekService.findPreviousWeek(getUser(principal));
 
-        if(currentWeek.isEmpty() && optPreviousWeek.isPresent()) {
+        if (currentWeek.isEmpty() && optPreviousWeek.isPresent()) {
             Week previousWeek = optPreviousWeek.get();
             List<Task> upcomingTasks = taskService
-                            .findUpcomingTasks(getUser(principal), previousWeek.getWeekNumber(), DateManager.formattedCurrentWeek());
+                    .findUpcomingTasks(getUser(principal), previousWeek.getWeekNumber(), DateManager.formattedCurrentWeek());
 
             model.addAttribute("previousWeek", previousWeek);
             model.addAttribute("upcomingTasks", upcomingTasks);
 
             return "weekReview";
-        }
-        else if(currentWeek.isEmpty()) {
+        } else if (currentWeek.isEmpty()) {
             Week week = new Week(getUser(principal));
             weekService.save(week);
 
             model.addAttribute("currentWeek", week);
-        }
-        else {
+        } else {
             model.addAttribute("currentWeek", currentWeek.get());
         }
 
@@ -63,7 +61,7 @@ public class MainController {
         Week week = new Week(getUser(principal));
         weekService.save(week);
 
-        if (taskIds != null && !taskIds.isEmpty()){
+        if (taskIds != null && !taskIds.isEmpty()) {
             taskIds.stream()
                     .map(taskId -> taskService.findTaskByIdAndUserId(taskId, getUser(principal)))
                     .forEach(task -> {
@@ -114,6 +112,22 @@ public class MainController {
         model.addAttribute("longTerm",
                 taskService.findLongTermTasks(getUser(principal), DateManager.formattedCurrentWeek()));
         return "longTerm";
+    }
+
+    @GetMapping("/weekReview")
+    public String showWeekReview(Model model, Principal principal) {
+        Optional<Week> currentWeek = weekService.findCurrentWeek(getUser(principal));
+        Optional<Week> optPreviousWeek = weekService.findPreviousWeek(getUser(principal));
+
+
+        Week previousWeek = optPreviousWeek.get();
+        List<Task> upcomingTasks = taskService
+                .findUpcomingTasks(getUser(principal), DateManager.formattedCurrentWeek(), DateManager.formattedCurrentWeek()+1);
+
+        model.addAttribute("previousWeek", previousWeek);
+        model.addAttribute("upcomingTasks", upcomingTasks);
+        model.addAttribute("currentWeek", currentWeek);
+        return "weekReview";
     }
 
     private User getUser(Principal principal) {
