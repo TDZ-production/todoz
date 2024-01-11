@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <title>TodoZ-main</title>
     <link rel="stylesheet" href="/new.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="white">
 </head>
 <script th:inline="javascript">
 
@@ -97,6 +96,7 @@
     <script>
         updateWeekProgressbar();
         initTaskEditListener();
+        initiPhoneHack();
 
         setInterval(updateWeekProgressbar, 3600);
 
@@ -133,21 +133,27 @@
 
         function toggleDueDate(state) {
             const CLASS = "hidden";
-            const classList = document.querySelector(".dateTime").classList;
+            const date = document.querySelector("#date");
+            const dateLabel = document.querySelector(".dateTime")
+            const classList = dateLabel.classList;
 
             if (state === undefined) {
                 classList.toggle(CLASS);
                 if (!classList.contains(CLASS)) {
-                    document.querySelector("#date").focus();
+                    dateLabel.dispatchEvent(new Event("click"));
+                    if (document.activeElement !== date) {
+                        date.focus();
+                        date.showPicker();
+                    }
                 } else {
                     document.querySelector("#add").focus();
                 }
-                document.querySelector("#date").value = "";
+                date.value = "";
             } else if (state === true) {
                 classList.remove(CLASS);
             } else {
                 classList.add(CLASS);
-                document.querySelector("#date").value = "";
+                date.value = "";
             }
         }
 
@@ -216,6 +222,18 @@
                      button.classList.remove("active");
                  }
              });
+         }
+
+         function initiPhoneHack() {
+             document.querySelector("#add").addEventListener('focusin', () => {
+                 adjustSafeAreaInset(0);
+             });
+             document.addEventListener('focusout', () => {
+                 adjustSafeAreaInset();
+             });
+             function adjustSafeAreaInset(value = 'env(safe-area-inset-bottom)') {
+                 document.querySelector("footer").style.paddingBottom = value;
+             }
          }
     </script>
 
