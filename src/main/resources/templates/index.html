@@ -58,9 +58,6 @@
                     },
                     body: JSON.stringify(subscription),
                 });
-                fetch('/send-notification', {
-                    method: 'GET',
-                });
             })
             .catch(function(error) {
                 console.error('Error setting up Service Worker:', error);
