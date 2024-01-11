@@ -50,15 +50,12 @@ public class MessageService {
         userSubscriptionService.save(userSubscription);
 
         List<UserSubscription> userSubscriptionList = userSubscriptionService.getAll().stream()
-                .filter(userSub -> userSub.getAuthKey() == subscription.keys.auth)
+                .filter(userSub -> userSub.getAuthKey().equals(subscription.keys.auth))
                 .toList();
 
-        userSubscriptionService.getAll().stream()
-                        .peek(userSub -> {
-                            if(userSubscriptionList.size() > 1){
-                                unsubscribe(userSub);
-                            }
-                        });
+        if(userSubscriptionList.size() > 1){
+            unsubscribe(userSubscription);
+        }
     }
 
 
@@ -81,7 +78,6 @@ public class MessageService {
     @Scheduled(fixedRate = 5000)
     public void sendNotifications() {
 
-//        AtomicReference<String> userName = new AtomicReference<>("");
         var json = """
         {
           "title": "Server says hello to %s !",
@@ -90,15 +86,5 @@ public class MessageService {
         """;
 
         userSubscriptionService.getAll().forEach(userSub -> sendNotification(userSub, String.format(json, LocalTime.now())));
-
-
-
-//        var json = """
-//        {
-//          "title": "Server says hello to %s !",
-//          "body": "hello"
-//        }
-//        """.formatted(principal.getName());
-
     }
 }
