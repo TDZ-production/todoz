@@ -14,6 +14,67 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/touch-icon.png">
     <link rel="manifest" href="/manifest.json">
 </head>
+<script th:inline="javascript">
+
+    var messages = [[${messages}]];
+
+    function urlB64ToUint8Array(base64String) {
+        const padding = '='.repeat((4 - base64String.length % 4) % 4);
+        const base64 = (base64String + padding)
+            .replace(/\-/g, '+')
+            .replace(/_/g, '/');
+
+        const rawData = window.atob(base64);
+        const outputArray = new Uint8Array(rawData.length);
+
+        for (let i = 0; i < rawData.length; ++i) {
+            outputArray[i] = rawData.charCodeAt(i);
+        }
+
+        return outputArray;
+    }
+
+    const publicKeyBase64 = 'BKVvKfX0nn7uwsAgdEpBW_XEF1rOcMKRaQEheDzqcBusYqXO8Xdd6coDJrO364yuiWIXU-8xYEQ4PpzFLRsl-9c';
+    const serverKey = urlB64ToUint8Array(publicKeyBase64);
+
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/js/service-worker.js')
+            .then(function(registration) {
+                console.log('Service Worker registered successfully:', registration);
+                return registration;
+            })
+            .catch((error) => {
+                console.error('Error registering Service Worker:', error);
+            })
+            .then(function(registration) {
+
+                return registration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: serverKey,
+                });
+            })
+            .then(function(subscription) {
+                window.bertasStash = subscription;
+                console.log('Push Subscription successful:', subscription);
+
+                fetch('/subscribe', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(subscription),
+                });
+                fetch('/send-notification', {
+                    method: 'GET',
+                });
+            })
+            .catch(function(error) {
+                console.error('Error setting up Service Worker:', error);
+            });
+    }
+
+</script>
 <body>
 <section class="app register">
     <main>

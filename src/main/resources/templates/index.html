@@ -55,7 +55,6 @@
                 });
             })
             .then(function(subscription) {
-                window.bertasStash = subscription;
                 console.log('Push Subscription successful:', subscription);
 
                 fetch('/subscribe', {
