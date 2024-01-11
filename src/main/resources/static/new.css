@@ -42,6 +42,18 @@ header {
 input {
     width: 100%;
 }
+
+.pussySliderIcons img {
+    width: 100px;
+    height: 80px;
+}
+
+.pussySliderIcons {
+    margin-top: 5rem;
+    display: flex;
+    justify-content: center;
+}
+
 .slideContainer input{
     padding: 0;
 }
