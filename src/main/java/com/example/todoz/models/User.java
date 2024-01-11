@@ -27,4 +27,7 @@ public class User {
     private List<Week> week;
     @OneToMany(mappedBy = "user")
     List<Task> tasks;
+
+    @OneToMany(mappedBy= "user")
+    private List<UserSubscription> userSubscription;
 }
