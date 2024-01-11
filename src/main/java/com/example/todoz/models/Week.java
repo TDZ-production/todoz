@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 @Entity
@@ -19,7 +21,7 @@ public class Week {
     @ManyToOne
     private User user;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "week")
-    @OrderBy("done, priority DESC, dueDate ASC")
+    //@OrderBy("done, priority DESC, dueDate ASC")
     private List<Task> tasks;
 
     public Week(User user) {
@@ -31,6 +33,14 @@ public class Week {
         this.weekNumber = DateManager.formattedCurrentWeek();
     }
 
+    public List<Task> getSortedTasks() {
+        tasks.sort(
+                Comparator.comparing(Task::isDone)
+                        .thenComparing(Task::getPriority).reversed()
+                        .thenComparing(t -> t.getDueDate() == null ? LocalDateTime.now().plusDays(1) : t.getDueDate())
+        );
+        return tasks;
+    }
     public Integer getWeekNumberNumber() {
          return this.weekNumber % 100;
     }
