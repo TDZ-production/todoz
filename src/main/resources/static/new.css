@@ -30,7 +30,7 @@ label {
 }
 
 header {
-    border-bottom: 2px solid #333;
+    position: relative;
     padding-bottom: 1.2rem;
     padding-top: 1.5rem;
     background: #fff0c1;
@@ -42,6 +42,18 @@ header {
 input {
     width: 100%;
 }
+
+.pussySliderIcons img {
+    width: 100px;
+    height: 80px;
+}
+
+.pussySliderIcons {
+    margin-top: 5rem;
+    display: flex;
+    justify-content: center;
+}
+
 .slideContainer input{
     padding: 0;
 }
@@ -170,7 +182,6 @@ main > form button {
 
 .addTask {
     display: flex;
-    background-color: #fff0c1;
     padding: 0.8rem 0.5rem;
 }
 
@@ -245,12 +256,10 @@ main > p:last-child {
     margin-bottom: 4rem;
 }
 
-form .dateTime {
-    background: #fff0c1;
-}
-
 footer {
     background: #eee;
+    background: #fff0c1;
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 footer img {
@@ -296,13 +305,7 @@ footer input, .stars button {
 .slider {
     -webkit-appearance: none;
     appearance: none;
-    width:90%;
-    height:1px;
-    border-radius:5px;
-    outline:none;
-    margin-top: 5rem;
-    margin-bottom: 1rem;
-    color: #fff0c1;
+    height: 2px;
 }
 
 .slider::-webkit-slider-thumb {
@@ -311,6 +314,13 @@ footer input, .stars button {
     height:20px;
     border-radius:50%;
     background-color:#ffffff;
+}
+
+#week-progressbar {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background-color: #333;
 }
 
 @media (min-width: 460px) {

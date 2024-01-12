@@ -14,11 +14,17 @@
     <main>
         <h1>Pussy meter</h1>
         <p class="note">Choose how big of a pussy are you!</p>
+
         <form th:action="@{/changeMeter}" method="post" th:object="${user}">
-            <div class="slideContainer">
-                <input type="range" step="1" max="2" class="slider" id="myRange" name="pussyMeter" th:field="*{pussyMeter}">
-                <span id="demo"></span>
+            <div class="pussySliderIcons">
+                <img src="/img/star_icon-family-03.png" id="starIcon">
+                <img src="/img/Fire_Icon-02.png" id="fireIcon">
+                <img src="/img/skull_icon-05.png" id="skullIcon">
             </div>
+            <label class="slideContainer">
+                <span id="pussyLabel"></span>
+                <input type="range" step="1" max="2" class="slider" id="myRange" name="pussyMeter" th:field="*{pussyMeter}">
+            </label>
             <button class="ctm" type="submit">&gt;&gt;</button>
         </form>
     </main>
@@ -26,17 +32,29 @@
 </body>
 <script>
     const slider = document.getElementById("myRange");
-    const output = document.getElementById("demo");
+    const output = document.getElementById("pussyLabel");
+    const starIcon = document.getElementById("starIcon");
+    const fireIcon = document.getElementById("fireIcon");
+    const skullIcon = document.getElementById("skullIcon");
 
     output.innerHTML = slider.innerHTML;
 
     slider.oninput = function() {
         if (this.value <= 0) {
-            output.innerText = "Family Friendly";
+            output.innerText = "Friendly";
+            starIcon.style.display = "inline";
+            fireIcon.style.display = "none";
+            skullIcon.style.display = "none";
         } else if (this.value == 1) {
             output.innerText = "Neutral";
+            fireIcon.style.display = "inline";
+            starIcon.style.display = "none";
+            skullIcon.style.display = "none";
         } else {
             output.innerText = "Aggressive";
+            skullIcon.style.display = "inline";
+            starIcon.style.display = "none";
+            fireIcon.style.display = "none";
         }
     }
 
