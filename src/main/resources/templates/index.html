@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <title>TodoZ-main</title>
     <link rel="stylesheet" href="/new.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
 </head>
 <script th:inline="javascript">
 
@@ -33,17 +32,16 @@
         }
     }
 
-    setInterval(showNotification, 10000);
+    //setInterval(showNotification, 10000);
 
 </script>
 <body>
 <section class="app home">
     <header>
-        <a th:href="@{/longTerm}"> Long term </a>
+        <a th:href="@{/longTerm}">Upcoming</a>
         <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>
-<!--        <a th:href="@{/weekReview}"> Week review </a>-->
-        <!--        <a th:href="@{/weekReview}"> Week review </a>-->
-        <a th:href="@{/pussyMeter}"> Pussy meter </a>
+        <a th:href="@{/pussyMeter}">Pussy meter</a>
+        <div id="week-progressbar" />
     </header>
 
     <main>
@@ -66,19 +64,19 @@
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
             <div class="stars">
-                <button type="submit" name="priority" value="4">
+                <button onclick="setPriority(4)" type="submit" name="priority" value="4">
                     <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-04.png">
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-04.png">
                     <img th:if="${user.pussyMeter == 2}" src="/img/skull_icon-05.png"></button>
-                <button type="submit" name="priority" value="3">
+                <button onclick="setPriority(3)" type="submit" name="priority" value="3">
                     <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-03.png">
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-03.png">
                     <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-03.png"></button>
-                <button type="submit" name="priority" value="2">
+                <button onclick="setPriority(2)" type="submit" name="priority" value="2">
                     <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-02.png">
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-02.png">
                     <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-02.png"></button>
-                <button type="submit" name="priority" value="1">
+                <button onclick="setPriority(1)" type="submit" name="priority" value="1">
                     <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-01.png">
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-01.png">
                     <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-01.png"></button>
@@ -96,6 +94,20 @@
     </footer>
 
     <script>
+        updateWeekProgressbar();
+        initTaskEditListener();
+        initiPhoneHack();
+
+        setInterval(updateWeekProgressbar, 3600);
+
+        function updateWeekProgressbar() {
+            const progressbar = document.querySelector("#week-progressbar");
+            const now = new Date();
+            const weekProgress = (now.getDay() / 7 + now.getHours() / 24 / 7) * 100;
+
+            progressbar.style.width = weekProgress + "%";
+        }
+
          function handleSubmit(event) {
             event.preventDefault();
 
@@ -121,35 +133,41 @@
 
         function toggleDueDate(state) {
             const CLASS = "hidden";
-            const classList = document.querySelector(".dateTime").classList;
+            const date = document.querySelector("#date");
+            const dateLabel = document.querySelector(".dateTime")
+            const classList = dateLabel.classList;
 
             if (state === undefined) {
                 classList.toggle(CLASS);
                 if (!classList.contains(CLASS)) {
-                    document.querySelector("#date").focus();
+                    dateLabel.dispatchEvent(new Event("click"));
+                    if (document.activeElement !== date) {
+                        date.focus();
+                        date.showPicker();
+                    }
                 } else {
                     document.querySelector("#add").focus();
                 }
-                document.querySelector("#date").value = "";
+                date.value = "";
             } else if (state === true) {
                 classList.remove(CLASS);
             } else {
                 classList.add(CLASS);
-                document.querySelector("#date").value = "";
+                date.value = "";
             }
         }
 
-        document.querySelector("main").addEventListener("click", function (event) {
-            if (event.target.tagName !== "P") {
-                return;
-            }
-            let task = event.target.closest(".task");
-            if (!task) {
-                return;
-            }
+        function initTaskEditListener() {
+            document.querySelector("main").addEventListener("click", function (event) {
+                if (event.target.tagName !== "P") return;
 
-            edit(task);
-        });
+                let task = event.target.closest(".task");
+
+                if (!task) return;
+
+                edit(task);
+            });
+        }
 
         function edit(task) {
             document.querySelector("#add").focus();
@@ -162,11 +180,11 @@
             const priority = task.dataset.priority;
 
             const form = document.querySelector("footer form");
+            setPriority(priority);
 
             form.action = "/tasks/" + task.dataset.id;
             form.querySelector("input[name='description']").value = description;
             form.querySelector("input[name='maybeDueDate']").value = dueDate;
-            form.querySelector("button[name='priority']").value = priority;
 
             if (dueDate) {
                 toggleDueDate(true);
@@ -192,6 +210,31 @@
                 }
             }
         }
+
+         function setPriority(priority) {
+             document.querySelector("button[name='priority']").value = priority;
+
+             const buttons = document.querySelectorAll("footer .stars button");
+             buttons.forEach(button => {
+                 if (button.value == priority) {
+                     button.classList.add("active");
+                 } else {
+                     button.classList.remove("active");
+                 }
+             });
+         }
+
+         function initiPhoneHack() {
+             document.querySelector("#add").addEventListener('focusin', () => {
+                 adjustSafeAreaInset(0);
+             });
+             document.addEventListener('focusout', () => {
+                 adjustSafeAreaInset();
+             });
+             function adjustSafeAreaInset(value = 'env(safe-area-inset-bottom)') {
+                 document.querySelector("footer").style.paddingBottom = value;
+             }
+         }
     </script>
 
 </section>

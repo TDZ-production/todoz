@@ -110,16 +110,15 @@ public class Task {
 
     public void digestDueDate(LocalDate maybeDueDate, Week currentWeek) {
         if (maybeDueDate == null) {
-            setWeek(currentWeek);
             setDueDate(null);
-        } else if (DateManager.formatWeek(maybeDueDate).equals(DateManager.formattedCurrentWeek())) {
-            setWeek(currentWeek);
-            setDueDate(maybeDueDate.atTime(23, 59, 59));
         } else {
-            if (DateManager.formatWeek(maybeDueDate) > DateManager.formattedCurrentWeek()) {
-                setWeek(null);
-            }
             setDueDate(maybeDueDate.atTime(23, 59, 59));
+        }
+
+        if (maybeDueDate != null && DateManager.formatWeek(maybeDueDate) > DateManager.formattedCurrentWeek()) {
+            setWeek(null);
+        } else {
+            setWeek(currentWeek);
         }
     }
 
