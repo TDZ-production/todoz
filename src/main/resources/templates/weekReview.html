@@ -32,27 +32,27 @@
         <form action="/startNewWeek" method="post" id="form">
             <div class="task" th:each="task : ${upcomingTasks}">
                 <span th:classappend="|prio${task.getPriority()}|"></span>
-                <span class="taskStatus"> <img src="/img/vector_img_filled_clock.png"></span>
+                <span class="taskStatus"> <img src="/img/todoz_icon_weekReview-clock-03.png"></span>
                 <p class="taskText" th:text="${task.getDescription()}"></p>
-                <span class="due" th:text="|${task.getDueDateDayOfWeek()} ${task.getDueDateFormat()}|"></span>
+<!--                <span class="due" th:text="|${task.getDueDateDayOfWeek()} ${task.getDueDateFormat()}|"></span>-->
                 <label class="checkboxContainer">
                     <input type="checkbox" class="toDelegate" onclick="updateButton()" name="taskIds"
                            th:value="${task.id}" checked>
-                    <span><img src="/img/todoz_weekReviewIcon+-02.png"></span>
-                    <span th:style="'color: green'"> added </span>
+                    <span class="weekIcon"><img class="icon-unchecked" src="/img/todoz_weekReviewIcon+-02.png"></span>
+                    <span class="weekIcon" th:style="'color: green'" th:text="|due by ${task.getDueDateDayOfWeek()}|"></span>
                 </label>
             </div>
 
             <div class="task" th:each="task : ${previousWeek.getTasks()}">
                 <span th:classappend="|prio${task.getPriority()}|"></span>
-                <span class="taskStatus" th:if="${task.isDone()}"><img src="/img/vector_img_checkmark-09.png"></span>
-                <span class="taskStatus" th:if="${!task.isDone()}"><img src="/img/todoz_icon_cross-25.png" class="cross"></span>
+                <span class="taskStatus" th:if="${task.isDone()}"><img src="/img/todoz_icon_weekReview-check-01.png"></span>
+                <span class="taskStatus" th:if="${!task.isDone()}"><img src="/img/todoz_icon_weekReview-cross-02.png" class="cross"></span>
                 <p class="taskText" th:text="${task.getDescription()}"></p>
                 <label class="checkboxContainer">
                     <input type="checkbox" class="toDelegate" onclick="updateButton()" name="taskIds"
                            th:value="${task.id}">
-                    <span><img id="icon-unchecked" src="/img/todoz_weekReviewIcon+-02.png"></span>
-                    <span th:style="'color: green'"> added </span>
+                    <span class="weekIcon"><img class="icon-unchecked" src="/img/todoz_weekReviewIcon+-02.png"></span>
+                    <span class="weekIcon" th:style="'color: green'">added</span>
                 </label>
             </div>
 
@@ -65,19 +65,8 @@
             const checkedTasks = document.querySelectorAll(".toDelegate:checked");
             document.querySelector(".startWeek")
                 .textContent = `Start new week with ${checkedTasks.length} task${checkedTasks.length === 1 ? '' : 's'}`;
-
-            changeIcon();
         }
 
-        function changeIcon() {
-            let currentIconURL = document.querySelector("#icon-unchecked");
-
-            if (currentIconURL.src.includes("/img/todoz_weekReviewIcon+-02.png")) {
-                currentIconURL.src = "/img/todoz_weekReviewIcon--01.png";
-            } else {
-                currentIconURL.src = "/img/todoz_weekReviewIcon+-02.png";
-            }
-        }
     </script>
 
 </section>

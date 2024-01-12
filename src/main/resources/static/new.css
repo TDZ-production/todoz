@@ -353,7 +353,7 @@ footer input, .stars button {
 }
 
 .checkboxContainer {
-    padding: 1rem;
+    padding: 0.5rem;
     margin: 0;
     align-self: center;
     cursor: pointer;
@@ -368,18 +368,23 @@ footer input, .stars button {
     background: #ffffff;
 }
 
-span, input.toDelegate {
+span.weekIcon, input.toDelegate {
     display: none;
 }
 
-input.toDelegate + span {
+input.toDelegate + span.weekIcon {
     display: initial;
 }
-input.toDelegate:checked + span {
+input.toDelegate:checked + span.weekIcon {
     display: none;
 }
-input.toDelegate:checked + span + span {
+input.toDelegate:checked + span.weekIcon + span.weekIcon {
     display: initial;
+}
+
+
+.icon-unchecked {
+    height: 2rem;
 }
 
 @media (min-width: 460px) {
