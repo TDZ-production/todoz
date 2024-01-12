@@ -75,8 +75,9 @@ public class MessageService {
         }
     }
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(cron = "0 38 12 * * *")
     public void sendNotifications() {
+        System.out.println("The message was sent" + LocalTime.now());
 
         var json = """
         {
@@ -85,6 +86,6 @@ public class MessageService {
         }
         """;
 
-        userSubscriptionService.getAll().forEach(userSub -> sendNotification(userSub, String.format(json, LocalTime.now())));
+        userSubscriptionService.getAll().forEach(userSub -> sendNotification(userSub, String.format(json, userSub.getUser().getUsername())));
     }
 }
