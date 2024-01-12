@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<form th:method="put" action="/feedback/update">
+<form th:method="post" action="/feedback/update">
     <table>
         <tr>
             <th>feedback</th>
@@ -15,7 +15,7 @@
             <td th:text="${feedback.description}"></td>
             <td>
                 <label>
-                    <input type="checkbox" name="feedbackIds">
+                    <input type="checkbox" name="feedbackIds" th:value="${feedback.id}">
                 </label>
             </td>
         </tr>

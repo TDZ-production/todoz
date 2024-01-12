@@ -35,12 +35,13 @@ public class FeedbackController {
         return "feedbackRead";
     }
 
-    @PutMapping("/feedback/update")
+    @PostMapping("/feedback/update")
     public String updateFeedback(@RequestParam(value = "feedbackIds", required = false) List<Long> feedbackIds) {
         if (feedbackIds != null && !feedbackIds.isEmpty()) {
             feedbackIds.stream()
                     .map(service::findById)
-                    .forEach(f -> f.setResolved(true));
+                    .peek(f -> f.setResolved(true))
+                    .forEach(service::save);
         }
         return "redirect:/feedback/read";
     }
