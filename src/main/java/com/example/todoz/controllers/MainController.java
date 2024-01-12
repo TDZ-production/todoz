@@ -1,10 +1,7 @@
 package com.example.todoz.controllers;
 
 import com.example.todoz.dtos.TaskUpdateDTO;
-import com.example.todoz.models.DateManager;
-import com.example.todoz.models.Task;
-import com.example.todoz.models.User;
-import com.example.todoz.models.Week;
+import com.example.todoz.models.*;
 import com.example.todoz.services.TaskService;
 import com.example.todoz.services.UserService;
 import com.example.todoz.services.WeekService;
@@ -114,11 +111,6 @@ public class MainController {
         model.addAttribute("longTerm",
                 taskService.findLongTermTasks(getUser(principal), DateManager.formattedCurrentWeek()));
         return "longTerm";
-    }
-
-    @GetMapping("/feedback")
-    public String showFeedback() {
-        return "feedback";
     }
 
     private User getUser(Principal principal) {

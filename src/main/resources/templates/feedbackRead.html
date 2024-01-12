@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:method="put" action="/feedback/update">
+    <table>
+        <tr>
+            <th>feedback</th>
+            <th></th>
+        </tr>
+        <tr th:each="feedback : ${feedbacks}">
+            <td th:text="${feedback.description}"></td>
+            <td>
+                <label>
+                    <input type="checkbox" name="feedbackIds">
+                </label>
+            </td>
+        </tr>
+    </table>
+    <button>REFRESH</button>
+</form>
+</body>
+</html>

@@ -8,17 +8,49 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-</head>
-<style>
-    textarea {
-        width: 21rem;
-        height: 4rem;
-    }
+    <style>
+        .intro {
+            margin-top: 3rem;
+        }
 
-    main button {
-        margin-top: 0;
-    }
-</style>
+        #form {
+            margin-top: 4rem;
+        }
+
+        textarea {
+            width: 21rem;
+            height: 5rem;
+            border: 2px solid #333;
+            font: inherit;
+            border-radius: .5rem;
+        }
+
+        #received {
+            padding: .8rem;
+            color: darkgreen;
+        }
+
+        #formButton {
+            margin-top: 0;
+            background: #C3EDCE;
+        }
+
+        .discord {
+            margin: 2rem 5rem;
+            cursor: pointer;
+            padding: .625rem;
+            text-align: center;
+            border: 2px solid #333;
+            border-radius: .5rem;
+            width: 15rem;
+            background: #d9d9ff
+        }
+
+        .discord img {
+            margin: 1rem 1rem 0;
+        }
+    </style>
+</head>
 <body>
 <section class="app">
     <header>
@@ -27,22 +59,35 @@
     </header>
 
     <main>
-        <br>
-        <p>We'd love to hear from you!</p>
-        <p>Your feedback is crucial for our improvement.</p>
+        <div class="intro">
+            <p>We'd love to hear from you!</p>
+            <p>Your feedback is crucial for our improvement.</p>
+        </div>
 
-        <form method="post">
-            <p>Feel free to share your thoughts anonymously:</p>
+        <form method="post" id="form">
+            <p>Anonymous review:</p>
             <label>
-                <textarea name="feedback"></textarea>
+                <textarea name="description"></textarea>
             </label>
-            <button type="submit">SUBMIT</button>
+            <p th:if="${received} == true" id="received">Feedback received!</p>
+            <button th:unless="${received} == true" id="formButton" type="submit">SUBMIT</button>
         </form>
-        <p>Join our Discord Community</p>
-        <a href="https://discord.gg/KGem37GgcA">TodoZ*</a>
-        <p>Engage in discussions, stay updated on new features and interact with our team and other users.</p>
+
+        <p>or</p>
+
+        <div class="discord" onclick="redirectToDiscord()">
+            <p>Join our Discord Community</p>
+            <img src="/img/discord_icon.png" alt="discord logo">
+        </div>
         </main>
 
 </section>
+
+<script>
+    function redirectToDiscord() {
+        let newWindowUrl = 'https://discord.gg/cP9Xa5TcuX';
+        window.open(newWindowUrl, '_blank');
+    }
+</script>
 </body>
 </html>

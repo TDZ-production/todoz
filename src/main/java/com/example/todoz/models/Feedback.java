@@ -16,5 +16,6 @@ public class Feedback {
     @Id
     @GeneratedValue
     private Long id;
-    private String feedback;
+    private String description;
+    private boolean resolved = false;
 }
