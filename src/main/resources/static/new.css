@@ -82,9 +82,16 @@ button.cta {
     min-width: 6rem;
 }
 
+
 button.ctm {
     background: #fff;
     min-width: 6rem;
+}
+
+button.startWeek {
+    min-width: 6rem;
+    background: #c3eab5;
+    margin-bottom: 5rem;
 }
 
 .stars {
@@ -110,6 +117,11 @@ h1 {
 h2 {
     font-size: 1.2rem;
 }
+.reviewTitle {
+    font-size: 1.2rem;
+    margin-top: 2rem;
+    color: #919191;
+}
 
 header h2 {
     position: absolute;
@@ -123,10 +135,6 @@ header a {
     position: relative;
     z-index: 10;
     padding: 1rem;
-}
-
-main > form {
-    margin-top: 3rem;
 }
 
 main > form button {
@@ -175,9 +183,17 @@ main > form button {
     flex-grow: 1;
     overflow: auto;
 }
+.app.week-review {
+    background: #FCFAEE;
+}
 
 .note {
     opacity: 0.5;
+    margin-bottom: 3rem;
+}
+.weekNote {
+    color: #919191;
+    border-bottom: 1px solid #dddad7;
 }
 
 .addTask {
@@ -200,6 +216,10 @@ main > form button {
     text-align: left;
     padding: 1rem .5rem;
     cursor: text;
+}
+
+.task form {
+    align-self: center;
 }
 
 .task .due {
@@ -293,13 +313,14 @@ footer input, .stars button {
 .stars > :nth-child(4):hover, .stars > :nth-child(4).active { background: #c7e9fb }
 
 
-.weekSummary {
-    margin-bottom: 2rem;
-}
-
 .weekSummary h1 {
-    font-size: 4rem;
-    margin-top: 3rem;
+    font-size: 5rem;
+    margin-top: 1.5rem;
+}
+.weekSummary h2{
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    opacity: 1;
 }
 
 .slider {
@@ -322,35 +343,26 @@ footer input, .stars button {
     height: 2px;
     background-color: #333;
 }
+.taskStatus {
+    align-self: center;
+    padding: 0 0.3rem;
+}
+
 
 .checkboxContainer {
+    padding: 1rem;
+    margin: 0;
+    align-self: center;
     cursor: pointer;
     caret-color: transparent;
     position: relative;
 }
-.checkboxContainer input {
-    display: none;
-}
-.img-container {
-    position: relative;
-    display: inline-block;
-}
-.img-checked {
-    display: none;
-}
-.img-unchecked,
-.img-checked {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
 
-.checkboxContainer input:checked + .img-container .img-checked {
-    display: block;
+.task:has(.toDelegate:checked) {
+    background: #ebffe7;
 }
-
-.checkboxContainer input:not(:checked) + .img-container .img-unchecked {
-    display: block;
+.task:has(.cross) {
+    background: #ffffff;
 }
 
 @media (min-width: 460px) {

@@ -11,62 +11,73 @@
 </head>
 <body>
 
-<section class="app">
+<section class="app week-review">
 
     <main>
-        <h2> Week Review </h2>
+        <h2 class="reviewTitle"> Week Review </h2>
 
         <div class="weekSummary">
             <h1 th:style="'color: red'" th:text="|${previousWeek.getDonePercentage()}%|"
                 th:if="${previousWeek.getDonePercentage() >= 0 && previousWeek.getDonePercentage() <= 50}"></h1>
-            <h1 th:style="'color: orange'" th:text="|${previousWeek.getDonePercentage()}%|"
+            <h1 th:style="'color: #ffb692'" th:text="|${previousWeek.getDonePercentage()}%|"
                 th:if="${previousWeek.getDonePercentage() > 50 && previousWeek.getDonePercentage() <= 75}"></h1>
-            <h1 th:style="'color: green'" th:text="|${previousWeek.getDonePercentage()}%|"
+            <h1 th:style="'color: #c3eab5'" th:text="|${previousWeek.getDonePercentage()}%|"
                 th:if="${previousWeek.getDonePercentage() > 75}"></h1>
 
             <h2>tasks done</h2>
-            <p class="note">Pick tasks and start new week</p>
+            <p class="weekNote">Pick tasks and start new week</p>
         </div>
 
         <form action="/startNewWeek" method="post" id="form">
             <div class="task" th:each="task : ${upcomingTasks}">
                 <span th:classappend="|prio${task.getPriority()}|"></span>
-                <span> <img src="/img/vector_img_filled_clock.png" alt="clock"></span>
+                <span class="taskStatus"> <img src="/img/vector_img_filled_clock.png"></span>
                 <p class="taskText" th:text="${task.getDescription()}"></p>
                 <span class="due" th:text="|${task.getDueDateDayOfWeek()} ${task.getDueDateFormat()}|"></span>
                 <label class="checkboxContainer">
                     <input type="checkbox" class="toDelegate" onclick="updateButton()" name="taskIds"
                            th:value="${task.id}" checked>
-                    <div class="img-container">
-                        <img class="img-unchecked" src="/img/todoz_weekReviewIcon+-02.png">
-                        <img class="img-checked" src="/img/todoz_weekReviewIcon--01.png">
-                    </div>
+<!--                        <img id="img-unchecked" src="/img/todoz_weekReviewIcon+-02.png">-->
+<!--                    <img id="img-checked" src="/img/todoz_weekReviewIcon&#45;&#45;01.png">-->
                     <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
                 </label>
             </div>
 
             <div class="task" th:each="task : ${previousWeek.getTasks()}">
                 <span th:classappend="|prio${task.getPriority()}|"></span>
-                <span th:if="${task.isDone()}"><img src="/img/vector_img_checkmark-09.png" alt="checkmark"></span>
+                <span class="taskStatus" th:if="${task.isDone()}"><img src="/img/vector_img_checkmark-09.png"></span>
+                <span class="taskStatus" th:if="${!task.isDone()}"><img src="/img/todoz_icon_cross-25.png" class="cross"></span>
                 <p class="taskText" th:text="${task.getDescription()}"></p>
                 <label class="checkboxContainer">
                     <input type="checkbox" class="toDelegate" onclick="updateButton()" name="taskIds"
-                           th:value="${task.id}" checked>
-                    <img class="img-unchecked" src="/img/todoz_weekReviewIcon+-02.png">
-                    <img class="img-checked" src="/img/todoz_weekReviewIcon--01.png">
+                           th:value="${task.id}">
+<!--                    <img id="icon-unchecked" src="/img/todoz_weekReviewIcon+-02.png">-->
+<!--                    <img id="icon-checked" src="/img/todoz_weekReviewIcon&#45;&#45;01.png">-->
                     <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
                 </label>
             </div>
 
-            <button class="cta" type="submit" th:text="|Start new week with ${upcomingTasks.size()} tasks|"></button>
+            <button class="startWeek" type="submit" th:text="|Start new week with ${upcomingTasks.size()} tasks|"></button>
         </form>
     </main>
 
     <script>
         function updateButton() {
             const checkedTasks = document.querySelectorAll(".toDelegate:checked");
-            document.querySelector(".cta")
+            document.querySelector(".startWeek")
                 .textContent = `Start new week with ${checkedTasks.length} task${checkedTasks.length === 1 ? '' : 's'}`;
+
+            changeIcon();
+        }
+
+        function changeIcon() {
+            let currentIconURL = document.querySelector("#icon-unchecked");
+
+            if (currentIconURL.src.includes("/img/todoz_weekReviewIcon+-02.png")) {
+                currentIconURL.src = "/img/todoz_weekReviewIcon--01.png";
+            } else {
+                currentIconURL.src = "/img/todoz_weekReviewIcon+-02.png";
+            }
         }
     </script>
 
