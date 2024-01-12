@@ -319,8 +319,11 @@ footer input, .stars button {
 }
 .weekSummary h2{
     margin-top: 0;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
     opacity: 1;
+}
+.weekSummary p {
+    padding: 1rem 2rem;
 }
 
 .slider {
@@ -343,11 +346,11 @@ footer input, .stars button {
     height: 2px;
     background-color: #333;
 }
+
 .taskStatus {
     align-self: center;
     padding: 0 0.3rem;
 }
-
 
 .checkboxContainer {
     padding: 1rem;
@@ -363,6 +366,20 @@ footer input, .stars button {
 }
 .task:has(.cross) {
     background: #ffffff;
+}
+
+span, input.toDelegate {
+    display: none;
+}
+
+input.toDelegate + span {
+    display: initial;
+}
+input.toDelegate:checked + span {
+    display: none;
+}
+input.toDelegate:checked + span + span {
+    display: initial;
 }
 
 @media (min-width: 460px) {

@@ -19,13 +19,14 @@
         <div class="weekSummary">
             <h1 th:style="'color: red'" th:text="|${previousWeek.getDonePercentage()}%|"
                 th:if="${previousWeek.getDonePercentage() >= 0 && previousWeek.getDonePercentage() <= 50}"></h1>
-            <h1 th:style="'color: #ffb692'" th:text="|${previousWeek.getDonePercentage()}%|"
+            <h1 th:style="'color: #f39875'" th:text="|${previousWeek.getDonePercentage()}%|"
                 th:if="${previousWeek.getDonePercentage() > 50 && previousWeek.getDonePercentage() <= 75}"></h1>
-            <h1 th:style="'color: #c3eab5'" th:text="|${previousWeek.getDonePercentage()}%|"
+            <h1 th:style="'color: #83e162'" th:text="|${previousWeek.getDonePercentage()}%|"
                 th:if="${previousWeek.getDonePercentage() > 75}"></h1>
 
             <h2>tasks done</h2>
-            <p class="weekNote">Pick tasks and start new week</p>
+            <p th:text="|Well you managed to survive through this week with ${previousWeek.getDonePercentage()}% of finished tasks... Not bad, not bad..|"></p>
+            <p class="weekNote">Pick tasks you'll start new week with</p>
         </div>
 
         <form action="/startNewWeek" method="post" id="form">
@@ -37,9 +38,8 @@
                 <label class="checkboxContainer">
                     <input type="checkbox" class="toDelegate" onclick="updateButton()" name="taskIds"
                            th:value="${task.id}" checked>
-<!--                        <img id="img-unchecked" src="/img/todoz_weekReviewIcon+-02.png">-->
-<!--                    <img id="img-checked" src="/img/todoz_weekReviewIcon&#45;&#45;01.png">-->
-                    <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
+                    <span><img src="/img/todoz_weekReviewIcon+-02.png"></span>
+                    <span th:style="'color: green'"> added </span>
                 </label>
             </div>
 
@@ -51,9 +51,8 @@
                 <label class="checkboxContainer">
                     <input type="checkbox" class="toDelegate" onclick="updateButton()" name="taskIds"
                            th:value="${task.id}">
-<!--                    <img id="icon-unchecked" src="/img/todoz_weekReviewIcon+-02.png">-->
-<!--                    <img id="icon-checked" src="/img/todoz_weekReviewIcon&#45;&#45;01.png">-->
-                    <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
+                    <span><img id="icon-unchecked" src="/img/todoz_weekReviewIcon+-02.png"></span>
+                    <span th:style="'color: green'"> added </span>
                 </label>
             </div>
 
