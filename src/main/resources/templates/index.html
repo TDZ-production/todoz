@@ -34,7 +34,7 @@
         return outputArray;
     }
 
-    const publicKeyBase64 = 'BKVvKfX0nn7uwsAgdEpBW_XEF1rOcMKRaQEheDzqcBusYqXO8Xdd6coDJrO364yuiWIXU-8xYEQ4PpzFLRsl-9c';
+    const publicKeyBase64 = 'BI1fcXabf9obXNMDzAuhjaRIszIvJ8tCPBoFbL3esBp-2Tpr--iygxiI4E4KI85f-_DQ-bXWG2tYaWlOloRI1RQ';
     const serverKey = urlB64ToUint8Array(publicKeyBase64);
 
 
@@ -64,15 +64,11 @@
                     },
                     body: JSON.stringify(subscription),
                 });
-                fetch('/send-notification', {
-                    method: 'GET',
-                });
             })
             .catch(function(error) {
                 console.error('Error setting up Service Worker:', error);
             });
     }
-    setInterval(showNotification,  10000 );
 
 </script>
 <body>
