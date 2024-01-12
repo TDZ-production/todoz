@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import nl.martijndwars.webpush.Subscription;
 
+import java.time.LocalTime;
+
 
 @Getter
 @Setter
@@ -22,6 +24,7 @@ public class UserSubscription {
     private String authKey;
     private String p256dhKey;
 
+    private LocalTime created;
     @ManyToOne
     private User user;
 
@@ -30,6 +33,7 @@ public class UserSubscription {
         this.authKey= subscription.keys.auth;
         this.p256dhKey = subscription.keys.p256dh;
         this.user = user;
+        this.created = LocalTime.now();
     }
 
     public UserSubscription() {

@@ -5,6 +5,7 @@ import com.example.todoz.repos.UserSubscriptionRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserSubscriptionService {
@@ -14,6 +15,10 @@ public class UserSubscriptionService {
 
     public UserSubscriptionService(UserSubscriptionRepo userSubscriptionRepo) {
         this.userSubscriptionRepo = userSubscriptionRepo;
+    }
+
+    public Optional<UserSubscription> findByAuth( String authKey){
+        return userSubscriptionRepo.findByAuthKey(authKey);
     }
 
     public List<UserSubscription> getAll(){

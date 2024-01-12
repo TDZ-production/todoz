@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.Security;
 import java.time.LocalTime;
-import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 
@@ -46,21 +46,18 @@ public class MessageService {
 
     public void subscribe(Subscription subscription, User user) {
         System.out.println("Subscribed to " + subscription.endpoint);
-        UserSubscription userSubscription =  new UserSubscription(subscription, user);
-        userSubscriptionService.save(userSubscription);
 
-        List<UserSubscription> userSubscriptionList = userSubscriptionService.getAll().stream()
-                .filter(userSub -> userSub.getAuthKey().equals(subscription.keys.auth))
-                .toList();
+        Optional<UserSubscription> maybeUserSub = userSubscriptionService.findByAuth(subscription.keys.auth);
 
-        if(userSubscriptionList.size() > 1){
-            unsubscribe(userSubscription);
+        if(maybeUserSub.isEmpty()){
+            UserSubscription userSubscription =  new UserSubscription(subscription, user);
+            userSubscriptionService.save(userSubscription);
         }
     }
 
 
     public void unsubscribe(UserSubscription userSubscription) {
-        System.out.println("Unsubscribed from " + userSubscription.getEndpoint());
+         System.out.println("Unsubscribed from " + userSubscription.getEndpoint());
         userSubscriptionService.remove(userSubscription);
     }
 
@@ -75,7 +72,7 @@ public class MessageService {
         }
     }
 
-    @Scheduled(cron = "0 38 12 * * *")
+    @Scheduled(cron = "0 31 13 * * *")
     public void sendNotifications() {
         System.out.println("The message was sent" + LocalTime.now());
 
