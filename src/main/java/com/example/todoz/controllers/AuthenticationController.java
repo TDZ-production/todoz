@@ -24,6 +24,11 @@ public class AuthenticationController {
         return "loginPage";
     }
 
+    @PostMapping("/")
+    public String login() {
+        return "redirect:/";
+    }
+
     @GetMapping("/register")
     public String showRegisterPage() {
         return "registerPage";
