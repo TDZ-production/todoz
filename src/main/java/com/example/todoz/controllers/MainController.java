@@ -1,6 +1,5 @@
 package com.example.todoz.controllers;
 
-import com.example.todoz.dtos.TaskUpdateDTO;
 import com.example.todoz.models.*;
 import com.example.todoz.services.TaskService;
 import com.example.todoz.services.UserService;
@@ -11,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,23 +73,6 @@ public class MainController {
         return "redirect:/";
     }
 
-    @PostMapping("/add")
-    public String add(Task task, LocalDate maybeDueDate, Principal principal) {
-        task.digestDueDate(maybeDueDate, getWeek(principal));
-        task.setUser(getUser(principal));
-
-        taskService.save(task);
-
-        return "redirect:/";
-    }
-
-    @PostMapping("/tasks/{id}")
-    public String update(@PathVariable Long id, TaskUpdateDTO taskUpdate, Principal principal) {
-        taskService.update(id, taskUpdate, getUser(principal), getWeek(principal));
-
-        return "redirect:/";
-    }
-
     @GetMapping("/pussyMeter")
     public String showPussyMeter(Model model, Principal principal) {
         model.addAttribute("user", getUser(principal));
@@ -110,6 +91,14 @@ public class MainController {
         model.addAttribute("longTerm",
                 taskService.findLongTermTasks(getUser(principal), DateManager.formattedCurrentWeek()));
         return "longTerm";
+    }
+
+    @GetMapping("leftBehind")
+    public String showLeftBehind(Model model, Principal principal) {
+        List<Task> leftBehind = taskService.findLeftBehind(getUser(principal), getWeek(principal), DateManager.formattedCurrentWeek());
+
+        model.addAttribute("leftBehind", leftBehind);
+        return "leftBehind";
     }
 
     private User getUser(Principal principal) {

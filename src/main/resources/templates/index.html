@@ -45,7 +45,7 @@
         <a th:href="@{/longTerm}">Upcoming</a>
         <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>
         <a th:href="@{/pussyMeter}">Pussy meter</a>
-        <div id="week-progressbar" />
+        <div id="week-progressbar"/>
     </header>
 
     <main>
@@ -53,7 +53,7 @@
             <span th:classappend="|prio${task.getPriority()}|"></span>
             <p th:text="*{description}"></p>
             <span class="due" th:text="*{getRemainingDays()}" th:data-duedate="*{dueDateDate}"></span>
-            <form onsubmit="handleSubmit(event)" th:action="@{/tasks/check/{id}(id=${task.getId()})}" th:method="POST">
+            <form onsubmit="handleSubmit(event)" th:action="|/tasks/check/*{id}|" th:method="POST">
                 <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
                 <button class="img" th:type="submit">
                     <img class="isdone" src="/img/vector_img_checkedbox.png" alt="mark as not done"/>
@@ -64,7 +64,7 @@
     </main>
 
     <footer>
-        <form method="post" th:action="@{/add}">
+        <form method="post" th:action="@{/tasks/add}">
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
             <div class="stars">
