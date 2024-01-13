@@ -34,8 +34,9 @@
             <p class="weekNote">Select tasks you want in week <span th:text="|${previousWeek.nextWeekNumber()}|" />. This&nbsp;is&nbsp;to help&nbsp;you look back on&nbsp;your&nbsp;week and&nbsp;retrospect; and&nbsp;to&nbsp;keep your&nbsp;week clean and&nbsp;focused! Woo-hoo! <span th:if="${upcomingTasks.size() > 0}">Planned&nbsp;tasks are already selected.</span></p>
         </div>
 
-        <form action="/startNewWeek" method="post" id="form">
-            <div class="task" th:each="task : ${upcomingTasks}">
+        <form th:action="@{/startNewWeek}" th:method="post" id="form">
+            <p>Upcoming tasks:</p>
+            <div class="task" th:each="task : ${upcomingTasks}" >
                 <span th:classappend="|prio${task.getPriority()}|"></span>
                 <span class="taskStatus"> <img src="/img/todoz_icon_weekReview-clock-03.png"></span>
                 <p class="taskText" th:text="${task.getDescription()}"></p>
