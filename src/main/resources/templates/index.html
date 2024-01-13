@@ -43,10 +43,18 @@
 <body>
 <section class="app home">
     <header>
-        <a th:href="@{/longTerm}">Upcoming</a>
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggleDropdown()">≡</button>
+            <div class="dropdown-content">
+                <a href="/longTerm">Planned</a>
+                <a href="/leftBehind">Left behind</a>
+                <a href="/pussyMeter">Pussy meter</a>
+                <a href="/feedback">Feedback</a>
+                <a href="/logout">Log out</a>
+            </div>
+        </div>
         <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>
-        <a th:href="@{/pussyMeter}">Pussy meter</a>
-        <div id="week-progressbar"/>
+        <div id="week-progressbar" />
     </header>
 
     <main>
@@ -242,6 +250,34 @@
              });
              function adjustSafeAreaInset(value = 'env(safe-area-inset-bottom)') {
                  document.querySelector("footer").style.paddingBottom = value;
+             }
+         }
+
+         function toggleDropdown() {
+             let dropdown = document.querySelector(".dropdown-content");
+             const main = document.querySelector("main");
+             registerCancel(main);
+
+             if (dropdown.style.display === "block") {
+                 dropdown.style.display = "none";
+             } else {
+                 dropdown.style.display = "block";
+             }
+
+             function registerCancel(event) {
+                 event.addEventListener("click", function () {
+                     cancelMenu();
+                 }, {once: true});
+
+                 window.onkeydown = function (event) {
+                     if (event.key === "Escape") {
+                         cancelMenu();
+                     }
+                 }
+
+                 function cancelMenu() {
+                     dropdown.style.display = "none";
+                 }
              }
          }
     </script>
