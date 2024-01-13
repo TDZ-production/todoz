@@ -9,6 +9,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <script async src="https://umami.petabyte.farm/script.js" data-website-id="0076ce35-dec8-4042-ba76-0dc4b52922b0"></script>
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/iconx32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
 </head>
 <body>
 <section class="app login">
@@ -18,10 +21,10 @@
 
         <form th:action="@{/login}" method="post">
             <p th:if="${param.error}">Invalid username and/or password.</p>
-            <p th:if="${param.logout}">You have been logged out.</p>
+            <p th:if="${logout}">You have been logged out.</p>
 
             <label>
-                <input type="text" name="username" placeholder="username">
+                <input type="text" name="username" placeholder="email or username">
             </label>
             <label>
                 <input type="password" name="password" placeholder="password">

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Left Behind</title>
+    <link rel="stylesheet" href="/new.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+</head>
+<body>
+<section class="app">
+    <header>
+        <a th:href="@{/}"><</a>
+        <h2>Left behind tasks</h2>
+    </header>
+
+    <main>
+        <div class="task" th:each="task : ${leftBehind}" th:object="${task}" th:data-priority="*{priority}" th:data-id="*{id}" th:data-done="*{done}">
+            <form method="post" th:action="|/tasks/re-add/${task.id}|">
+                <span th:classappend="|prio${task.getPriority()}|"></span>
+                <p th:text="*{description}"></p>
+                <button>Add to current week</button>
+            </form>
+        </div>
+    </main>
+
+</section>
+</body>
+</html>
