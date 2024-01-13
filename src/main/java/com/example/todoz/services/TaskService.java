@@ -22,7 +22,7 @@ public class TaskService {
     }
 
     public List<Task> findUpcomingTasks(User user, Integer previousWeekNumber, Integer currentWeekNumber) {
-        return taskRepo.findAllByUserIdAndDueDateWeekNumberGreaterThanAndDueDateWeekNumberLessThanEqual(user.getId(), previousWeekNumber, currentWeekNumber);
+        return taskRepo.findAllByUserIdAndDueDateWeekNumberGreaterThanAndDueDateWeekNumberLessThanEqualOrderByDueDate(user.getId(), previousWeekNumber, currentWeekNumber);
     }
 
     public List<Task> findLongTermTasks(User user, Integer currentWeek) {

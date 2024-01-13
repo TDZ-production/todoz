@@ -7,6 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/iconx32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
 </head>
 <script th:inline="javascript">
 
@@ -67,19 +71,23 @@
                 <button onclick="setPriority(4)" type="submit" name="priority" value="4">
                     <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-04.png">
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-04.png">
-                    <img th:if="${user.pussyMeter == 2}" src="/img/skull_icon-05.png"></button>
+                    <img th:if="${user.pussyMeter == 2}" src="/img/skull_icon-05.png">
+                </button>
                 <button onclick="setPriority(3)" type="submit" name="priority" value="3">
                     <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-03.png">
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-03.png">
-                    <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-03.png"></button>
+                    <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-03.png">
+                </button>
                 <button onclick="setPriority(2)" type="submit" name="priority" value="2">
                     <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-02.png">
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-02.png">
-                    <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-02.png"></button>
+                    <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-02.png">
+                </button>
                 <button onclick="setPriority(1)" type="submit" name="priority" value="1">
                     <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-01.png">
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-01.png">
-                    <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-01.png"></button>
+                    <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-01.png">
+                </button>
             </div>
 
             <label class="dateTime hidden">
