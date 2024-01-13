@@ -40,7 +40,6 @@
         </div>
 
         <form th:action="@{/startNewWeek}" th:method="post" id="form">
-            <p>Upcoming tasks:</p>
             <div class="task" th:each="task : ${upcomingTasks}" >
                 <span th:classappend="|prio${task.getPriority()}|"></span>
                 <span class="taskStatus"> <img src="/img/todoz_icon_weekReview-clock-03.png"></span>
@@ -53,7 +52,7 @@
                 </label>
             </div>
 
-            <div class="task" th:each="task : ${previousWeek.getTasks()}">
+            <div class="task" th:each="task : ${previousWeek.getSortedTasks()}">
                 <span th:classappend="|prio${task.getPriority()}|"></span>
                 <span class="taskStatus" th:if="${task.isDone()}"><img src="/img/todoz_icon_weekReview-check-01.png"></span>
                 <span class="taskStatus" th:if="${!task.isDone()}"><img src="/img/todoz_icon_weekReview-cross-02.png" class="cross"></span>
