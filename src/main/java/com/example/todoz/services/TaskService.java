@@ -22,7 +22,7 @@ public class TaskService {
     }
 
     public List<Task> findUpcomingTasks(User user, Integer previousWeekNumber, Integer currentWeekNumber) {
-        return taskRepo.findAllByUserIdAndDueDateWeekNumberGreaterThanAndDueDateWeekNumberLessThanEqual(user.getId(), previousWeekNumber, currentWeekNumber);
+        return taskRepo.findAllByUserIdAndDueDateWeekNumberGreaterThanAndDueDateWeekNumberLessThanEqualOrderByDueDate(user.getId(), previousWeekNumber, currentWeekNumber);
     }
 
     public List<Task> findLongTermTasks(User user, Integer currentWeek) {
@@ -41,11 +41,15 @@ public class TaskService {
                 .orElseThrow(() -> new RuntimeException(String.format("Task not found with id: %d, %s", taskId, user)));
     }
 
-    public Task update(Long taskId, TaskUpdateDTO taskUpdate, User user, Week currentWeek) {
+    public void update(Long taskId, TaskUpdateDTO taskUpdate, User user, Week currentWeek) {
         Task task = taskRepo.findByIdAndUserId(taskId, user.getId())
                 .orElseThrow(() -> new RuntimeException(String.format("Task not found with id: %d, %s", taskId, user)));
 
-        return taskRepo.save(task.merge(taskUpdate, currentWeek));
+        taskRepo.save(task.merge(taskUpdate, currentWeek));
+    }
+
+    public List<Task> findLeftBehind(User user, Week week, Integer currentWeek) {
+        return taskRepo.findAllByUserIdAndDoneIsFalseAndWeekIdLessThanOrWeekIdNullAndDueDateWeekNumberLessThanEqual(user.getId(), week.getId(), currentWeek);
     }
 }
 
