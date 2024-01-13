@@ -26,7 +26,7 @@ public class TaskService {
     }
 
     public List<Task> findLongTermTasks(User user, Integer currentWeek) {
-        return taskRepo.findAllByUserIdAndDueDateWeekNumberGreaterThan(user.getId(), currentWeek);
+        return taskRepo.findAllByUserIdAndDueDateWeekNumberGreaterThanOrderByDueDate(user.getId(), currentWeek);
     }
 
     public void checkedTask(Long taskId, User user, boolean done) {
