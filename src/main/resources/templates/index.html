@@ -255,8 +255,8 @@
                  dropdown.style.display = "block";
              }
 
-             function registerCancel(el) {
-                 el.addEventListener("click", function () {
+             function registerCancel(event) {
+                 event.addEventListener("click", function () {
                      cancelMenu();
                  }, {once: true});
 
@@ -267,7 +267,7 @@
                  }
 
                  function cancelMenu() {
-                     location.reload();
+                     dropdown.style.display = "none";
                  }
              }
          }
