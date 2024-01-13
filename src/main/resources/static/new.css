@@ -76,10 +76,15 @@ button.img, .stars button {
     padding: 0;
 }
 
+button {
+    color: inherit;
+}
+
 button.cta {
     background: #FFC9C9;
     min-width: 6rem;
 }
+
 
 button.ctm {
     background: #fff;
@@ -109,6 +114,11 @@ h1 {
 h2 {
     font-size: 1.2rem;
 }
+.reviewTitle {
+    font-size: 1.2rem;
+    margin-top: 2rem;
+    color: #919191;
+}
 
 header h2 {
     position: absolute;
@@ -125,10 +135,6 @@ header a, header div {
 
 header a {
     padding: 1rem;
-}
-
-main > form {
-    margin-top: 3rem;
 }
 
 main > form button {
@@ -180,6 +186,7 @@ main > form button {
 
 .note {
     opacity: 0.5;
+    margin-bottom: 3rem;
 }
 
 .addTask {
@@ -201,7 +208,10 @@ main > form button {
     flex-grow: 1;
     text-align: left;
     padding: 1rem .5rem;
-    cursor: text;
+}
+
+.task form {
+    align-self: center;
 }
 
 .task .due {
@@ -259,7 +269,6 @@ main > p:last-child {
 }
 
 footer {
-    background: #eee;
     background: #fff0c1;
     padding-bottom: env(safe-area-inset-bottom);
 }
@@ -295,13 +304,55 @@ footer input, .stars button {
 .stars > :nth-child(4):hover, .stars > :nth-child(4).active { background: #c7e9fb }
 
 
-.weekSummary {
-    margin-bottom: 2rem;
+.weekSummary h1 {
+    font-size: 5rem;
+    margin-top: 1.5rem;
+}
+.weekSummary h2 {
+    margin-top: 0;
+    margin-bottom: 1.2rem;
+    opacity: 1;
+}
+.weekSummary p, .week-review .awesome {
+    padding: 1rem 2rem;
+    line-height: 1.666;
 }
 
-.weekSummary h1 {
-    font-size: 4rem;
-    margin-top: 3rem;
+.weekSummary img {
+    height: 3.5rem;
+}
+
+.weekSummary .weekNote {
+    border-bottom: 1px solid #dddad7;
+    margin-top: 2rem;
+}
+
+.weekSummary .weekNote, .week-review .awesome {
+    font-size: 86%;
+    padding: 1rem;
+    text-align: left;
+    color: #333;
+    line-height: 1.666;
+}
+
+.app.week-review {
+    background: #FCFAEE;
+}
+
+.week-review .task p {
+    cursor: pointer;
+}
+
+button.startWeek {
+    background: #c3eab5;
+    margin-bottom: 28vh;
+    margin-top: 10vh;
+}
+
+.stickman {
+    height: 4rem;
+    display: block;
+    margin-left: 78%;
 }
 
 .slider {
@@ -360,6 +411,46 @@ footer input, .stars button {
 
 .dropdown-content a:hover {
     background-color: #ffb4b4;
+}
+
+.taskStatus {
+    align-self: center;
+    padding: 0 0.3rem;
+}
+
+.checkboxContainer {
+    padding: 0.5rem;
+    margin: 0;
+    align-self: center;
+    cursor: pointer;
+    caret-color: transparent;
+    position: relative;
+}
+
+.task:has(.toDelegate:checked) {
+    background: #ebffe7;
+}
+.task:has(.cross) {
+    background: #ffffff;
+}
+
+span.weekIcon, input.toDelegate {
+    display: none;
+}
+
+input.toDelegate + span.weekIcon {
+    display: initial;
+}
+input.toDelegate:checked + span.weekIcon {
+    display: none;
+}
+input.toDelegate:checked + span.weekIcon + span.weekIcon {
+    display: initial;
+}
+
+
+.icon-unchecked {
+    height: 2rem;
 }
 
 @media (min-width: 460px) {

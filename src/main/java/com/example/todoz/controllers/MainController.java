@@ -1,10 +1,6 @@
 package com.example.todoz.controllers;
 
-import com.example.todoz.dtos.TaskUpdateDTO;
-import com.example.todoz.models.DateManager;
-import com.example.todoz.models.Task;
-import com.example.todoz.models.User;
-import com.example.todoz.models.Week;
+import com.example.todoz.models.*;
 import com.example.todoz.services.TaskService;
 import com.example.todoz.services.UserService;
 import com.example.todoz.services.WeekService;
@@ -14,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,23 +26,22 @@ public class MainController {
         Optional<Week> currentWeek = weekService.findCurrentWeek(getUser(principal));
         Optional<Week> optPreviousWeek = weekService.findPreviousWeek(getUser(principal));
 
-        if(currentWeek.isEmpty() && optPreviousWeek.isPresent()) {
+        if (currentWeek.isEmpty() && optPreviousWeek.isPresent()) {
             Week previousWeek = optPreviousWeek.get();
             List<Task> upcomingTasks = taskService
-                            .findUpcomingTasks(getUser(principal), previousWeek.getWeekNumber(), DateManager.formattedCurrentWeek());
+                    .findUpcomingTasks(getUser(principal), previousWeek.getWeekNumber(), DateManager.formattedCurrentWeek());
 
+            model.addAttribute("user", getUser(principal));
             model.addAttribute("previousWeek", previousWeek);
             model.addAttribute("upcomingTasks", upcomingTasks);
 
             return "weekReview";
-        }
-        else if(currentWeek.isEmpty()) {
+        } else if (currentWeek.isEmpty()) {
             Week week = new Week(getUser(principal));
             weekService.save(week);
 
             model.addAttribute("currentWeek", week);
-        }
-        else {
+        } else {
             model.addAttribute("currentWeek", currentWeek.get());
         }
 
@@ -63,7 +57,7 @@ public class MainController {
         Week week = new Week(getUser(principal));
         weekService.save(week);
 
-        if (taskIds != null && !taskIds.isEmpty()){
+        if (taskIds != null && !taskIds.isEmpty()) {
             taskIds.stream()
                     .map(taskId -> taskService.findTaskByIdAndUserId(taskId, getUser(principal)))
                     .forEach(task -> {
@@ -75,23 +69,6 @@ public class MainController {
                         }
                     });
         }
-
-        return "redirect:/";
-    }
-
-    @PostMapping("/add")
-    public String add(Task task, LocalDate maybeDueDate, Principal principal) {
-        task.digestDueDate(maybeDueDate, getWeek(principal));
-        task.setUser(getUser(principal));
-
-        taskService.save(task);
-
-        return "redirect:/";
-    }
-
-    @PostMapping("/tasks/{id}")
-    public String update(@PathVariable Long id, TaskUpdateDTO taskUpdate, Principal principal) {
-        taskService.update(id, taskUpdate, getUser(principal), getWeek(principal));
 
         return "redirect:/";
     }
@@ -114,6 +91,14 @@ public class MainController {
         model.addAttribute("longTerm",
                 taskService.findLongTermTasks(getUser(principal), DateManager.formattedCurrentWeek()));
         return "longTerm";
+    }
+
+    @GetMapping("leftBehind")
+    public String showLeftBehind(Model model, Principal principal) {
+        List<Task> leftBehind = taskService.findLeftBehind(getUser(principal), getWeek(principal), DateManager.formattedCurrentWeek());
+
+        model.addAttribute("leftBehind", leftBehind);
+        return "leftBehind";
     }
 
     private User getUser(Principal principal) {

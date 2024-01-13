@@ -24,9 +24,20 @@ public class AuthenticationController {
         return "loginPage";
     }
 
+    @PostMapping("/")
+    public String login() {
+        return "redirect:/";
+    }
+
     @GetMapping("/register")
     public String showRegisterPage() {
         return "registerPage";
+    }
+
+    @GetMapping("/logout")
+    public String showLogout(RedirectAttributes ra) {
+        ra.addFlashAttribute("logout", true);
+        return "redirect:/login";
     }
 
     @PostMapping("/register")
