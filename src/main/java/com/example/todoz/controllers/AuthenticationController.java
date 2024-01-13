@@ -34,6 +34,12 @@ public class AuthenticationController {
         return "registerPage";
     }
 
+    @GetMapping("/logout")
+    public String showLogout(RedirectAttributes ra) {
+        ra.addFlashAttribute("logout", true);
+        return "redirect:/login";
+    }
+
     @PostMapping("/register")
     public String register(RegisterDTO registerDTO, RedirectAttributes ra) {
         Optional<User> temp = userService.findByUsername(registerDTO.username());

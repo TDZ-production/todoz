@@ -20,10 +20,10 @@
 
         <form th:action="@{/login}" method="post">
             <p th:if="${param.error}">Invalid username and/or password.</p>
-            <p th:if="${param.logout}">You have been logged out.</p>
+            <p th:if="${logout}">You have been logged out.</p>
 
             <label>
-                <input type="text" name="username" placeholder="username">
+                <input type="text" name="username" placeholder="email or username">
             </label>
             <label>
                 <input type="password" name="password" placeholder="password">
