@@ -34,9 +34,8 @@ public class AuthenticationController {
         return "registerPage";
     }
 
-    @GetMapping("/logout")
-    public String showLogout(RedirectAttributes ra) {
-        ra.addFlashAttribute("logout", true);
+    @PostMapping("/logout")
+    public String logout() {
         return "redirect:/login";
     }
 
