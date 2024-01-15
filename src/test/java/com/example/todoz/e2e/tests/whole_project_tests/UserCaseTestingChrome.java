@@ -1,4 +1,4 @@
-package com.example.todoz.e2e.tests;
+package com.example.todoz.e2e.tests.whole_project_tests;
 
 import com.example.todoz.e2e.prepared_actions.TestAction;
 import com.microsoft.playwright.*;
@@ -69,7 +69,7 @@ public class UserCaseTestingChrome {
         int priority = 4;
 
         actions.createDueDateTask(page, nextWeek.toString(), priority);
-        page.navigate(webUrl + "/leftBehind");
+        page.navigate(webUrl + "/longTerm");
         page.waitForTimeout(3500);
         page.navigate(webUrl + "/");
     }
