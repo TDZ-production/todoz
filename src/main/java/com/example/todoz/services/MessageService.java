@@ -72,7 +72,7 @@ public class MessageService {
         }
     }
 
-    @Scheduled(cron = "0 31 13 * * *")
+    @Scheduled(cron = "0 01 14 * * *")
     public void sendNotifications() {
         System.out.println("The message was sent" + LocalTime.now());
 
