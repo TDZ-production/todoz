@@ -14,33 +14,6 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/touch-icon.png">
     <link rel="manifest" href="/manifest.json">
 </head>
-<script th:inline="javascript">
-
-    var messages = [[${messages}]];
-
-    function rotateArray(arr) {
-        var nextItem = arr.shift();
-        arr.push(nextItem);
-        return nextItem
-    }
-
-    function showNotification() {
-
-        if (Notification.permission === 'granted') {
-            const nextMessage = rotateArray(messages);
-            new Notification(nextMessage.title, {body: nextMessage.description});
-        } else if (Notification.permission !== 'denied') {
-            Notification.requestPermission().then(function (permission) {
-                if (permission === 'granted') {
-                    showNotification();
-                }
-            });
-        }
-    }
-
-    //setInterval(showNotification, 10000);
-
-</script>
 <body>
 <section class="app home">
     <header>
@@ -51,7 +24,9 @@
                 <a href="/leftBehind">Left behind</a>
                 <a href="/pussyMeter">Pussy meter</a>
                 <a href="/feedback">Feedback</a>
-                <a href="/logout">Log out</a>
+                <form method="post" id="logoutForm" th:action="|/logout|">
+                    <a id="logout" onclick="logout()">Log out</a>
+                </form>
             </div>
         </div>
         <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>
@@ -282,6 +257,10 @@
                      dropdown.style.display = "none";
                  }
              }
+         }
+
+         function logout() {
+             document.querySelector('#logoutForm').submit();
          }
     </script>
 
