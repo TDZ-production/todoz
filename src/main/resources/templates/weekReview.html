@@ -37,7 +37,7 @@
 
         <div class="task" th:each="task : ${previousWeek.getTasks()}" >
             <p class="taskText" th:text="${task.getDescription()}"></p>
-            <span th:if="${task.isDone()}"><img src="/img/vector_img_checkmark-09.png"></span>
+            <span th:if="${task.isDone()}"><img src="/img/vector_img_checkmark-09.png" alt="checkmark"></span>
             <label>
                 <input type="checkbox" class="toDelegate" onclick="updateButton()" name="taskId" th:value="${task.id}">
             </label>
@@ -46,6 +46,7 @@
         </form>
         <p class="note">You are crushing it!</p>
     </main>
+
     <script>
         function updateButton() {
             const checkedTasks = document.querySelectorAll(".toDelegate:checked");

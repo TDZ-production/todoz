@@ -1,10 +1,9 @@
 package com.example.todoz.controllers;
 
-import com.example.todoz.models.DateManager;
+import com.example.todoz.dtos.TaskUpdateDTO;
 import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
 import com.example.todoz.models.Week;
-import com.example.todoz.services.NotificationService;
 import com.example.todoz.services.TaskService;
 import com.example.todoz.services.UserService;
 import com.example.todoz.services.WeekService;
@@ -25,19 +24,20 @@ public class MainController {
     private final UserService userService;
     private final TaskService taskService;
     private final WeekService weekService;
-    private final NotificationService notificationService;
 
     @GetMapping
     public String showIndex(Model model, Principal principal) {
         Optional<Week> currentWeek = weekService.findCurrentWeek(getUser(principal));
-        Optional<Week> OptPreviousWeek = weekService.findPreviousWeek(getUser(principal));
+        Optional<Week> optPreviousWeek = weekService.findPreviousWeek(getUser(principal));
 
-        if(currentWeek.isEmpty() && OptPreviousWeek.isPresent()) {
-            Week previousWeek = OptPreviousWeek.get();
+        if(currentWeek.isEmpty() && optPreviousWeek.isPresent()) {
+            Week previousWeek = optPreviousWeek.get();
             List<Task> upcomingTasks = taskService.findTasksForThisWeek(getUser(principal));
 
             model.addAttribute("previousWeek", previousWeek);
             model.addAttribute("upcomingTasks", upcomingTasks);
+            model.addAttribute("howManyTasks", previousWeek.getNumberOfNotDoneTasks() + upcomingTasks.size());
+
             return "weekReview";
         }
         else if(currentWeek.isEmpty()) {
@@ -50,9 +50,8 @@ public class MainController {
             model.addAttribute("currentWeek", currentWeek.get());
         }
 
-        model.addAttribute("messages", notificationService.getNotificationWithSameDay(taskService.getAllAndSortByPriority().stream()
-                .filter(t -> !t.isDone())
-                .findFirst().orElse(null)));
+        // TODO: resolve this
+        model.addAttribute("messages", null);
 
         return "index";
     }
@@ -73,16 +72,7 @@ public class MainController {
 
     @PostMapping("/add")
     public String add(Task task, LocalDate maybeDueDate, Principal principal) {
-
-        if (maybeDueDate == null) {
-            task.setWeek(getWeek(principal));
-        } else if (DateManager.formatWeek(maybeDueDate).equals(DateManager.formattedCurrentWeek())) {
-            task.setWeek(getWeek(principal));
-            task.setDueDate(maybeDueDate.atTime(23, 59, 59));
-        } else {
-            task.setDueDate(maybeDueDate.atTime(23, 59, 59));
-        }
-
+        task.digestDueDate(maybeDueDate, getWeek(principal));
         task.setUser(getUser(principal));
 
         taskService.save(task);
@@ -90,7 +80,14 @@ public class MainController {
         return "redirect:/";
     }
 
-   @GetMapping("/pussyMeter")
+    @PostMapping("/tasks/{id}")
+    public String update(@PathVariable Long id, TaskUpdateDTO taskUpdate, Principal principal) {
+        taskService.update(id, taskUpdate, getUser(principal), getWeek(principal));
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/pussyMeter")
     public String showPussyMeter(Model model, Principal principal) {
         model.addAttribute("user", getUser(principal));
         return "pussyMeter";
@@ -110,9 +107,8 @@ public class MainController {
     }
 
     @PostMapping("/checked/{id}")
-    public String checkedTask(@PathVariable Long id, @RequestParam boolean done) {
-        // TODO: Fix me, get me some Principal!
-        taskService.checkedTask(id, done);
+    public String checkedTask(@PathVariable Long id, @RequestParam boolean done, Principal principal) {
+        taskService.checkedTask(id, done, getUser(principal));
         return "redirect:/";
     }
 

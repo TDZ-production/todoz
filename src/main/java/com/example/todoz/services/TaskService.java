@@ -1,15 +1,15 @@
 package com.example.todoz.services;
 
-import com.example.todoz.models.DateManager;
+import com.example.todoz.dtos.TaskUpdateDTO;
 import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
+import com.example.todoz.models.Week;
 import com.example.todoz.repos.TaskRepo;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -17,37 +17,6 @@ public class TaskService {
 
     public TaskService(TaskRepo taskRepo) {
         this.taskRepo = taskRepo;
-    }
-
-    public List<Task> findByPriority(Integer priority) {
-        if (priority == 0 || priority > 4) {
-            throw new RuntimeException("Input Integer must have value between 1 and 4.");
-        } else {
-            return taskRepo.findAllByPriority(priority).stream()
-                    .filter(t -> t.getDueDate() == null)
-                    .toList();
-        }
-    }
-
-    public List<Task> findByPriorityWithDates(Integer priority) {
-        if (priority == 0 || priority > 4) {
-            throw new RuntimeException("Input Integer must have value between 1 and 4.");
-        } else {
-            return taskRepo.findAllByPriority(priority).stream()
-                    .filter(t -> t.getDueDate() != null)
-                    .toList();
-        }
-    }
-
-    public List<Task> getAllAndSortByPriority() {
-        return taskRepo.findAll()
-                .stream()
-                .sorted(Comparator.comparing(Task::getPriority).reversed())
-                .toList();
-    }
-
-    public void deleteById(Long id) {
-        taskRepo.deleteById(id);
     }
 
     public void save(Task task) {
@@ -78,8 +47,9 @@ public class TaskService {
                 .toList();
     }
 
-    public void checkedTask(Long id, boolean done) {
-        Task task = taskRepo.findById(id).orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
+    public void checkedTask(Long taskId, boolean done, User user) {
+        Task task = taskRepo.findByIdAndUserId(taskId, user.getId())
+                .orElseThrow(() -> new RuntimeException(String.format("Task not found with id: %d, %s", taskId, user)));
         task.setDone(done);
         taskRepo.save(task);
     }
@@ -87,6 +57,13 @@ public class TaskService {
     public Task findTaskByIdAndUserId(Long taskId, User user) {
         return taskRepo.findByIdAndUserId(taskId, user.getId())
                 .orElseThrow(() -> new RuntimeException(String.format("Task not found with id: %d, %s", taskId, user)));
+    }
+
+    public Task update(Long taskId, TaskUpdateDTO taskUpdate, User user, Week currentWeek) {
+        Task task = taskRepo.findByIdAndUserId(taskId, user.getId())
+                .orElseThrow(() -> new RuntimeException(String.format("Task not found with id: %d, %s", taskId, user)));
+
+        return taskRepo.save(task.merge(taskUpdate, currentWeek));
     }
 }
 
