@@ -34,19 +34,24 @@ public class Week {
     }
 
     public List<Task> getSortedTasks() {
-        LocalDateTime now = LocalDateTime.now();
-        tasks.sort(
-                Comparator.comparing(Task::isDone).reversed()
-                        .thenComparing(Task::getPriority).reversed()
-                        .thenComparing(t -> t.getDueDate() == null ? now.plusDays(1) : t.getDueDate()).reversed()
-                        .thenComparing(Task::getId).reversed()
-        );
+        if (tasks != null) {
+            LocalDateTime now = LocalDateTime.now();
+
+            tasks.sort(
+                    Comparator.comparing(Task::isDone).reversed()
+                            .thenComparing(Task::getPriority).reversed()
+                            .thenComparing(t -> t.getDueDate() == null ? now.plusDays(1) : t.getDueDate()).reversed()
+                            .thenComparing(Task::getId).reversed()
+            );
+        }
+
         return tasks;
     }
 
     public int nextWeekNumber() {
         return (getWeekNumberNumber() % WEEKS_IN_YEAR) + 1;
     }
+
     public int getWeekNumberNumber() {
          return this.weekNumber % 100;
     }

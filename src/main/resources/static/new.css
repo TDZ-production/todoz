@@ -462,6 +462,10 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     padding: .4rem;
 }
 
+#logout {
+    cursor: pointer;
+}
+
 @media (min-width: 460px) {
     .app {
         margin: 1rem auto;

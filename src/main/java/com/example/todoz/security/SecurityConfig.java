@@ -14,11 +14,17 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(request -> request.requestMatchers("/login", "/register", "/*.css", "/img/*", "/icons/*", "/webfonts/*", "manifest.json")
+        http.authorizeHttpRequests(request -> request.requestMatchers("/register", "/*.css", "/img/*", "/icons/*", "/webfonts/*", "manifest.json")
                         .permitAll()
                         .anyRequest()
                         .authenticated())
-                .formLogin(form -> form.loginPage("/login").successForwardUrl("/").permitAll());
+                .formLogin(form -> form.loginPage("/login")
+                        .successForwardUrl("/")
+                        .permitAll())
+                .logout(logout -> logout.logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .invalidateHttpSession(true)
+                        .permitAll());
 
         return http.build();
     }
