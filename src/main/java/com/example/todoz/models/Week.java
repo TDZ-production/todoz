@@ -20,7 +20,7 @@ public class Week {
     private User user;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "week")
     //@OrderBy("done, priority DESC, dueDate ASC")
-    private List<Task> tasks;
+    private List<Task> tasks = List.of();
 
     private final static int WEEKS_IN_YEAR = 52;
 
@@ -34,16 +34,14 @@ public class Week {
     }
 
     public List<Task> getSortedTasks() {
-        if (tasks != null) {
-            LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now();
 
-            tasks.sort(
-                    Comparator.comparing(Task::isDone).reversed()
-                            .thenComparing(Task::getPriority).reversed()
-                            .thenComparing(t -> t.getDueDate() == null ? now.plusDays(1) : t.getDueDate()).reversed()
-                            .thenComparing(Task::getId).reversed()
-            );
-        }
+        tasks.sort(
+                Comparator.comparing(Task::isDone).reversed()
+                        .thenComparing(Task::getPriority).reversed()
+                        .thenComparing(t -> t.getDueDate() == null ? now.plusDays(1) : t.getDueDate()).reversed()
+                        .thenComparing(Task::getId).reversed()
+        );
 
         return tasks;
     }
