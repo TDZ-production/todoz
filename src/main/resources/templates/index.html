@@ -59,7 +59,7 @@
     </header>
 
     <main>
-        <div class="task" th:each="task : ${currentWeek.getSortedTasks()}" th:object="${task}" th:data-priority="*{priority}" th:data-id="*{id}" th:data-done="*{done}">
+        <div class="task" th:each="task : ${currentWeek.getSortedTasks()}" th:object="${task}" th:data-priority="*{priority}" th:data-id="*{id}" th:data-done="*{done}" id="task-input">
             <span th:classappend="|prio${task.getPriority()}|"></span>
             <p th:text="*{description}"></p>
             <span class="due" th:text="*{getRemainingDays()}" th:data-duedate="*{dueDateDate}"></span>
@@ -105,8 +105,10 @@
             </label>
 
             <div class="addTask">
-                <input type="text" placeholder="new task" name="description" id="add" required>
-                <img onclick="toggleDueDate()" src="/img/Kalendar_Icon-02.png" alt="due date">
+                <label id="createTask-input">
+                    <input type="text" placeholder="new task" name="description" id="add" required>
+                </label>
+                <img onclick="toggleDueDate()" src="/img/Kalendar_Icon-02.png" alt="due date" id="calendar_icon">
             </div>
         </form>
     </footer>
