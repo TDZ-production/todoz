@@ -31,8 +31,7 @@ label {
 
 header {
     position: relative;
-    padding-bottom: .9rem;
-    padding-top: 1.2rem;
+    padding: .7rem 0;
     background: #fff0c1;
     display: flex;
     justify-content: space-between;
@@ -113,16 +112,18 @@ h2 {
 
 header h2 {
     position: absolute;
-    left: 8rem;
+    left: 0;
     right: 0;
     text-align: center;
-    font-size: 1.5rem;
-    width: 10rem;
+    font-size: 1.22rem;
+}
+
+header a, header div {
+    position: relative;
+    z-index: 10;
 }
 
 header a {
-    position: relative;
-    z-index: 10;
     padding: 1rem;
 }
 
@@ -319,6 +320,7 @@ footer input, .stars button {
 
 #week-progressbar {
     position: absolute;
+    z-index: 1;
     bottom: 0;
     height: 2px;
     background-color: #333;
@@ -329,9 +331,10 @@ footer input, .stars button {
     border: none;
     background: none;
     color: #b78300;
-    padding: 1rem;
+    padding: 0 1rem;
     margin-left: .625rem;
-    font-size: 2rem;
+    font-size: 3rem;
+    height: 3.3rem;
 }
 
 .dropdown {
@@ -344,7 +347,7 @@ footer input, .stars button {
     position: absolute;
     background-color: #FFC9C9;
     min-width: 9rem;
-    z-index: 1;
+    z-index: 100;
     box-shadow: 0 .5rem 1rem 0 rgba(0,0,0,0.2);
 }
 
