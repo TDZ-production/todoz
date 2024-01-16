@@ -136,7 +136,7 @@
                 method: 'POST',
                 body: data
             }).then(resp => {
-                if (resp.redirected) { // session expired
+                if (resp.redirected && resp.url.indexOf("login") > -1) { // session expired
                     window.location.reload();
                 }
 
