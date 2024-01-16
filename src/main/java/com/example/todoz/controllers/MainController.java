@@ -114,22 +114,6 @@ public class MainController {
         return "longTerm";
     }
 
-    @GetMapping("/weekReview")
-    public String showWeekReview(Model model, Principal principal) {
-        Optional<Week> currentWeek = weekService.findCurrentWeek(getUser(principal));
-        Optional<Week> optPreviousWeek = weekService.findPreviousWeek(getUser(principal));
-
-
-        Week previousWeek = optPreviousWeek.get();
-        List<Task> upcomingTasks = taskService
-                .findUpcomingTasks(getUser(principal), DateManager.formattedCurrentWeek(), DateManager.formattedCurrentWeek()+1);
-
-        model.addAttribute("previousWeek", previousWeek);
-        model.addAttribute("upcomingTasks", upcomingTasks);
-        model.addAttribute("currentWeek", currentWeek);
-        return "weekReview";
-    }
-
     private User getUser(Principal principal) {
         return userService.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
     }
