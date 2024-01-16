@@ -35,7 +35,7 @@ public class Week {
 
     public List<Task> getSortedTasks() {
         tasks.sort(
-                Comparator.comparing(Task::isDone)
+                Comparator.comparing(Task::isDone).reversed()
                         .thenComparing(Task::getPriority).reversed()
                         .thenComparing(t -> t.getDueDate() == null ? LocalDateTime.now().plusDays(1) : t.getDueDate())
         );
