@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutionException;
 
 import com.example.todoz.models.User;
 import com.example.todoz.models.UserSubscription;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -31,9 +32,11 @@ public class MessageService {
     private String privateKey;
 
     private PushService pushService;
+    private final NotificationService notificationService;
     private final UserSubscriptionService userSubscriptionService;
 
-    public MessageService(UserSubscriptionService userSubscriptionService) {
+    public MessageService(NotificationService notificationService, UserSubscriptionService userSubscriptionService) {
+        this.notificationService = notificationService;
         this.userSubscriptionService = userSubscriptionService;
     }
 
@@ -72,17 +75,19 @@ public class MessageService {
         }
     }
 
-    @Scheduled(cron = "0 01 14 * * *")
+//    @Scheduled(cron = "0 04 11 * * *")
+    @Scheduled(fixedRate = 10000)
     public void sendNotifications() {
         System.out.println("The message was sent" + LocalTime.now());
 
-        var json = """
-        {
-          "title": "Server says hello to %s !",
-          "body": "hello"
-        }
-        """;
 
-        userSubscriptionService.getAll().forEach(userSub -> sendNotification(userSub, String.format(json, userSub.getUser().getUsername())));
+
+        userSubscriptionService.getAll().forEach(userSub -> {
+            try {
+                sendNotification(userSub, notificationService.getMorningNotification(userSub.getUser()));
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }

@@ -21,6 +21,7 @@ public class User {
     private String username;
     private String password;
     private Integer pussyMeter = 1;
+    private boolean morningNotificationSingleTask = true;
     @ManyToMany
     private Set<Role> roles;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
