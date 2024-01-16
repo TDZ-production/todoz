@@ -24,6 +24,10 @@ p, h1, h2, h3, h4, h5 {
     margin: 0;
 }
 
+p {
+    word-break: break-word;
+}
+
 label {
     display: block;
     margin: 1rem 2rem;
