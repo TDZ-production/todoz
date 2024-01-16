@@ -92,12 +92,6 @@ button.ctm {
     min-width: 6rem;
 }
 
-button.startWeek {
-    background: #c3eab5;
-    margin-bottom: 9rem;
-    margin-top: 4rem;
-}
-
 .stars {
     display: flex;
     flex-direction: row-reverse;
@@ -186,13 +180,6 @@ main > form button {
 .app main {
     flex-grow: 1;
     overflow: auto;
-}
-.app.week-review {
-    background: #FCFAEE;
-}
-
-.week-review .task p {
-    cursor: pointer;
 }
 
 .note {
@@ -324,7 +311,7 @@ footer input, .stars button {
     margin-bottom: 1.2rem;
     opacity: 1;
 }
-.weekSummary p {
+.weekSummary p, .week-review .awesome {
     padding: 1rem 2rem;
     line-height: 1.666;
 }
@@ -336,9 +323,34 @@ footer input, .stars button {
 .weekSummary .weekNote {
     border-bottom: 1px solid #dddad7;
     margin-top: 2rem;
+}
+
+.weekSummary .weekNote, .week-review .awesome {
     font-size: 86%;
     padding: 1rem;
     text-align: left;
+    color: #333;
+    line-height: 1.666;
+}
+
+.app.week-review {
+    background: #FCFAEE;
+}
+
+.week-review .task p {
+    cursor: pointer;
+}
+
+button.startWeek {
+    background: #c3eab5;
+    margin-bottom: 28vh;
+    margin-top: 10vh;
+}
+
+.stickman {
+    height: 4rem;
+    display: block;
+    margin-left: 78%;
 }
 
 .slider {
