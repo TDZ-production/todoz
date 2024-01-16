@@ -7,8 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.util.Assert;
 
 import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.Locale;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -47,7 +52,13 @@ public class UserCaseTestingChrome {
         actions.RegisterAndLogin(page, webUrl);
         page.waitForTimeout(2000);
         actions.createFourNoDueDateTasks(page);
-        page.waitForTimeout(3500);
+
+        for (int i = 1; i <= 4; i++) {
+            String descriptionSelector = String.format(".task:has(p:has-text('NoDueDateTask%d'))", i);
+
+            assertEquals("NoDueDateTask" + i, page.innerText(descriptionSelector));
+            assertEquals(String.valueOf(i), page.getAttribute(descriptionSelector, "data-priority"));
+        }
     }
 
     @Test
@@ -57,8 +68,10 @@ public class UserCaseTestingChrome {
         int priority = 4;
         LocalDate tomorrow = today.plusDays(1);
 
-        actions.createDueDateTask(page, tomorrow.toString(), priority);
-        page.waitForTimeout(3500);
+        actions.createDueDateTask(page, tomorrow.toString(), priority, "tomorrow");
+        page.waitForTimeout(2000);
+
+        assertEquals(tomorrow.toString(), page.getAttribute(".task:has(p:has-text('tomorrow')) .due", "data-duedate"));
     }
 
     @Test
@@ -68,10 +81,13 @@ public class UserCaseTestingChrome {
         LocalDate nextWeek = today.plusWeeks(1);
         int priority = 4;
 
-        actions.createDueDateTask(page, nextWeek.toString(), priority);
+        actions.createDueDateTask(page, nextWeek.toString(), priority, "nextWeek");
         page.navigate(webUrl + "/longTerm");
-        page.waitForTimeout(3500);
+        page.waitForTimeout(2000);
         page.navigate(webUrl + "/");
+
+        assertEquals(nextWeek.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()) +
+                nextWeek.toString(), page.innerText(".task:has(p:has-text('nextWeek')) .due"));
     }
 
     @Test
@@ -81,49 +97,60 @@ public class UserCaseTestingChrome {
         LocalDate nextTwoWeeks = today.plusWeeks(2);
         int priority = 4;
 
-        actions.createDueDateTask(page, nextTwoWeeks.toString(), priority);
-        page.navigate(webUrl + "/leftBehind");
-        page.waitForTimeout(3500);
+        actions.createDueDateTask(page, nextTwoWeeks.toString(), priority, "nextTwoWeeks");
+        page.navigate(webUrl + "/longTerm");
+        page.waitForTimeout(2000);
         page.navigate(webUrl + "/");
+
+        assertEquals(nextTwoWeeks.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()) + nextTwoWeeks.toString(), page.innerText(".task:has(p:has-text('nextTwoWeeks')) .due"));
     }
 
     @Test
     @Order(5)
     public void editTaskPriority() {
-        int priority = 2;
+        int priority = 1;
 
-        page.click("#task-input");
+        page.click(".task:nth-child(1)");
+        page.dblclick("#createTask-input");
+        page.keyboard().press("Backspace");
         page.type("#createTask-input", "editTaskPriority");
-        page.evaluate("setPriority(" + priority + ");");
-        page.waitForTimeout(3500);
-        page.navigate(webUrl + "/");
+        page.click(".stars button[value='" + priority + "']");
+        page.waitForTimeout(3000);
+
+        assertEquals(String.valueOf(priority), page.getAttribute(".task:has(p:has-text('editTaskPriority'))", "data-priority"));
     }
 
     @Test
     @Order(6)
     public void editTaskDescription() {
-        int priority = 4;
+        int priority = 2;
 
-        page.click("#task-input");
+        page.click(".task:nth-child(2)");
+        page.dblclick("#createTask-input");
+        page.keyboard().press("Backspace");
         page.type("#createTask-input", "editTaskDescription");
-        page.evaluate("setPriority(" + priority + ");");
-        page.waitForTimeout(3500);
-        page.navigate(webUrl + "/");
+        page.click(".stars button[value='" + priority + "']");
+        page.waitForTimeout(3000);
+
+        assertEquals("editTaskDescription", page.innerText(".task:has(p:has-text('editTaskDescription'))"));
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     public void editTaskDueDate() {
         LocalDate today = LocalDate.now();
         LocalDate nextTwoDays = today.plusDays(2);
         int priority = 4;
 
-        page.click("#task-input");
+        page.click(".task:nth-child(3)");
+        page.dblclick("#createTask-input");
+        page.keyboard().press("Backspace");
         page.type("#createTask-input", "editTaskDueDate");
         page.click("#calendar_icon");
-        page.type("#date",nextTwoDays.toString());
-        page.evaluate("setPriority(" + priority + ");");
-        page.waitForTimeout(3500);
-        page.navigate(webUrl + "/");
+        page.fill("#date", nextTwoDays.toString());
+        page.click(".stars button[value='" + priority + "']");
+        page.waitForTimeout(2000);
+
+        assertEquals(nextTwoDays.toString(), page.getAttribute(".task:has(p:has-text('editTaskDueDate')) .due", "data-duedate"));
     }
 }

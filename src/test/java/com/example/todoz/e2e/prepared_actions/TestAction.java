@@ -15,7 +15,7 @@ public class TestAction {
         page.type("input[name=password]", "testPassword");
         page.click("button[type=submit]");
 
-        if ((webUrl + "/register?userExists=true").equals(page.url())) {
+        if ((webUrl + "/register").equals(page.url())) {
             page.navigate(webUrl + "/login");
             page.type("input[name=username]", "testUser");
             page.type("input[name=password]", "testPassword");
@@ -27,28 +27,29 @@ public class TestAction {
         page.type("input[name=password]", "testPassword");
         page.click("button[type=submit]");
     }
+
     public void createFourNoDueDateTasks(Page page) {
         for (int i = 1; i <= 4; i++) {
             page.type("#createTask-input", "NoDueDateTask" + i);
-            page.evaluate("setPriority(" + i + ");");
+            page.click(".stars button[value='" + i + "']");
         }
     }
-    public void createDueDateTask(Page page,String date,int priority){
-        page.waitForTimeout(2000);
-        page.type("#createTask-input", "tomorrowTask");
-        page.evaluate("setPriority(" + priority + ");");
+
+    public void createDueDateTask(Page page, String date, int priority, String title) {
+        page.type("#createTask-input", title);
         page.click("#calendar_icon");
-        page.type("#date",date);
+        page.fill("#date", date);
+        page.click(".stars button[value='" + priority + "']");
     }
 
-    public void createTasksForAllCases(Page page, LocalDate date){
+    public void createTasksForAllCases(Page page, LocalDate date) {
         LocalDate tomorrow = date.plusDays(1);
         LocalDate nextWeek = date.plusWeeks(1);
         LocalDate nextTwoWeeks = date.plusWeeks(2);
 
-        createDueDateTask(page,tomorrow.toString(),4);
-        createDueDateTask(page,nextWeek.toString(),4);
-        createDueDateTask(page,nextTwoWeeks.toString(),4);
+        createDueDateTask(page, tomorrow.toString(), 4,"tomorrow");
+        createDueDateTask(page, nextWeek.toString(), 4,"nextWeek");
+        createDueDateTask(page, nextTwoWeeks.toString(), 4,"nextTwoWeeks");
 
         createFourNoDueDateTasks(page);
     }
