@@ -49,7 +49,7 @@ public class TaskService {
     }
 
     public List<Task> findLeftBehind(User user, Week week, Integer currentWeek) {
-        return taskRepo.findAllByUserIdAndDoneIsFalseAndWeekIdLessThanOrWeekIdNullAndDueDateWeekNumberLessThanEqual(user.getId(), week.getId(), currentWeek);
+        return taskRepo.findAllByUserIdAndDoneIsFalseAndWeekIdLessThanOrWeekIdNullAndUserIdAndDoneIsFalseAndDueDateWeekNumberLessThanEqual(user.getId(), week.getId(), user.getId(), currentWeek);
     }
 }
 
