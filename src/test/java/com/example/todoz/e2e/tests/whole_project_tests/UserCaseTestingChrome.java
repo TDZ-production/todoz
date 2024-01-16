@@ -10,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
@@ -77,6 +78,7 @@ public class UserCaseTestingChrome {
     @Test
     @Order(3)
     public void CreateNextWeekDueDateTask() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate today = LocalDate.now();
         LocalDate nextWeek = today.plusWeeks(1);
         int priority = 4;
@@ -84,25 +86,26 @@ public class UserCaseTestingChrome {
         actions.createDueDateTask(page, nextWeek.toString(), priority, "nextWeek");
         page.navigate(webUrl + "/longTerm");
         page.waitForTimeout(2000);
-        page.navigate(webUrl + "/");
 
-        assertEquals(nextWeek.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()) +
-                nextWeek.toString(), page.innerText(".task:has(p:has-text('nextWeek')) .due"));
+        assertEquals(nextWeek.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault())  + " " +
+                nextWeek.format(formatter), page.innerText(".task:has(p:has-text('nextWeek')) .due"));
     }
 
     @Test
     @Order(4)
     public void CreateNextTwoWeeksDueDateTask() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate today = LocalDate.now();
         LocalDate nextTwoWeeks = today.plusWeeks(2);
         int priority = 4;
 
+        page.navigate(webUrl + "/");
         actions.createDueDateTask(page, nextTwoWeeks.toString(), priority, "nextTwoWeeks");
         page.navigate(webUrl + "/longTerm");
         page.waitForTimeout(2000);
-        page.navigate(webUrl + "/");
 
-        assertEquals(nextTwoWeeks.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()) + nextTwoWeeks.toString(), page.innerText(".task:has(p:has-text('nextTwoWeeks')) .due"));
+        assertEquals(nextTwoWeeks.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()) + " " +
+                nextTwoWeeks.format(formatter), page.innerText(".task:has(p:has-text('nextTwoWeeks')) .due"));
     }
 
     @Test
@@ -110,6 +113,7 @@ public class UserCaseTestingChrome {
     public void editTaskPriority() {
         int priority = 1;
 
+        page.navigate(webUrl + "/");
         page.click(".task:nth-child(1)");
         page.dblclick("#createTask-input");
         page.keyboard().press("Backspace");
