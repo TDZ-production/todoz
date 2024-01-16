@@ -14,19 +14,24 @@
 <section class="app week-review">
 
     <main>
-        <h2 class="reviewTitle"> Week Review </h2>
+        <h2 class="reviewTitle">Week <span th:text="${previousWeek.getWeekNumberNumber()}" /> Review</h2>
 
         <div class="weekSummary">
             <h1 th:style="'color: red'" th:text="|${previousWeek.getDonePercentage()}%|"
-                th:if="${previousWeek.getDonePercentage() >= 0 && previousWeek.getDonePercentage() <= 50}"></h1>
+                th:if="${previousWeek.getDonePercentage() <= 30}"></h1>
             <h1 th:style="'color: #f39875'" th:text="|${previousWeek.getDonePercentage()}%|"
-                th:if="${previousWeek.getDonePercentage() > 50 && previousWeek.getDonePercentage() <= 75}"></h1>
+                th:if="${previousWeek.getDonePercentage() > 30 && previousWeek.getDonePercentage() <= 60}"></h1>
             <h1 th:style="'color: #83e162'" th:text="|${previousWeek.getDonePercentage()}%|"
-                th:if="${previousWeek.getDonePercentage() > 75}"></h1>
+                th:if="${previousWeek.getDonePercentage() > 60}"></h1>
 
             <h2>tasks done</h2>
-            <p th:text="|Well you managed to survive through this week with ${previousWeek.getDonePercentage()}% of finished tasks... Not bad, not bad..|"></p>
-            <p class="weekNote">Pick tasks you'll start new week with</p>
+            <p th:text="|Well you managed to survive through that week with ${previousWeek.getDonePercentage()}% of finished tasks... Not bad, not bad!|"></p>
+            <p style="margin-top:0.5rem">
+                <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-04.png">
+                <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-04.png">
+                <img th:if="${user.pussyMeter == 2}" src="/img/skull_icon-05.png">
+            </p>
+            <p class="weekNote">Select tasks you want in week <span th:text="|${previousWeek.nextWeekNumber()}|" />. This&nbsp;is&nbsp;to help&nbsp;you look back on&nbsp;your&nbsp;week and&nbsp;retrospect; and&nbsp;to&nbsp;keep your&nbsp;week clean and&nbsp;focused! Woo-hoo! <span th:if="${upcomingTasks.size() > 0}">Planned&nbsp;tasks are already selected.</span></p>
         </div>
 
         <form action="/startNewWeek" method="post" id="form">
@@ -54,7 +59,7 @@
                     <span class="weekIcon" th:style="'color: green'">added</span>
                 </label>
             </div>
-            <button class="startWeek" type="submit" th:text="|Start new week with ${upcomingTasks.size()} tasks|"></button>
+            <button class="startWeek" type="submit" th:text="|Start your week with ${upcomingTasks.size()} tasks|"></button>
         </form>
     </main>
 

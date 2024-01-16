@@ -199,10 +199,6 @@ main > form button {
     opacity: 0.5;
     margin-bottom: 3rem;
 }
-.weekNote {
-    color: #919191;
-    border-bottom: 1px solid #dddad7;
-}
 
 .addTask {
     display: flex;
@@ -323,13 +319,26 @@ footer input, .stars button {
     font-size: 5rem;
     margin-top: 1.5rem;
 }
-.weekSummary h2{
+.weekSummary h2 {
     margin-top: 0;
     margin-bottom: 1.2rem;
     opacity: 1;
 }
 .weekSummary p {
     padding: 1rem 2rem;
+    line-height: 1.666;
+}
+
+.weekSummary img {
+    height: 3.5rem;
+}
+
+.weekSummary .weekNote {
+    border-bottom: 1px solid #dddad7;
+    margin-top: 2rem;
+    font-size: 86%;
+    padding: 1rem;
+    text-align: left;
 }
 
 .slider {

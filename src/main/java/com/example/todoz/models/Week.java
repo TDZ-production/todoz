@@ -11,9 +11,7 @@ import java.util.List;
 @Setter
 @Table(name = "weeks", indexes = @Index(columnList = "weekNumber, user_id", unique = true))
 public class Week {
-
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue
     private Long id;
     private Integer weekNumber;
     @ManyToOne
@@ -21,6 +19,8 @@ public class Week {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "week")
     @OrderBy("done, priority DESC, dueDate ASC")
     private List<Task> tasks;
+
+    private final static int WEEKS_IN_YEAR = 52;
 
     public Week(User user) {
         this();
@@ -31,7 +31,10 @@ public class Week {
         this.weekNumber = DateManager.formattedCurrentWeek();
     }
 
-    public Integer getWeekNumberNumber() {
+    public int nextWeekNumber() {
+        return (getWeekNumberNumber() % WEEKS_IN_YEAR) + 1;
+    }
+    public int getWeekNumberNumber() {
          return this.weekNumber % 100;
     }
 
