@@ -64,12 +64,12 @@
             <p>Your feedback is crucial for our improvement.</p>
         </div>
 
-        <form method="post" id="form">
+        <form method="post" th:action="|/feedback|" id="form">
             <p>Anonymous review:</p>
             <label>
                 <textarea name="description"></textarea>
             </label>
-            <p th:if="${received} == true" id="received">Feedback received!</p>
+            <p th:if="${received} == true" id="received">Feedback received, thank you!</p>
             <button th:unless="${received} == true" id="formButton" type="submit">SUBMIT</button>
         </form>
 
