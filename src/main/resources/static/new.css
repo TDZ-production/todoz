@@ -453,6 +453,11 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     height: 2rem;
 }
 
+.left-behind .task button {
+    border: none;
+    padding: .4rem;
+}
+
 @media (min-width: 460px) {
     .app {
         margin: 1rem auto;
