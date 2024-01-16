@@ -67,8 +67,9 @@
 
         ((tasks) => {
             tasks.forEach(task =>
-                task.addEventListener("click", () =>
-                    task.querySelector(".checkboxContainer").dispatchEvent(new Event("click"))
+                task.addEventListener("click", (event) =>
+                    event.target.tagName === "P" &&
+                        task.querySelector(".checkboxContainer").dispatchEvent(new Event("click"))
                 )
             );
         })(document.querySelectorAll(".task"));
