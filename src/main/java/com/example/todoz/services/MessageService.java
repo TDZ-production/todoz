@@ -78,16 +78,11 @@ public class MessageService {
 //    @Scheduled(cron = "0 04 11 * * *")
     @Scheduled(fixedRate = 10000)
     public void sendNotifications() {
-        System.out.println("The message was sent" + LocalTime.now());
-
-
 
         userSubscriptionService.getAll().forEach(userSub -> {
-            try {
-                sendNotification(userSub, notificationService.getMorningNotification(userSub.getUser()));
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
+            sendNotification(userSub, notificationService.getMorningNotification(userSub.getUser()));
         });
+
+        System.out.println("The message was sent" + LocalTime.now());
     }
 }

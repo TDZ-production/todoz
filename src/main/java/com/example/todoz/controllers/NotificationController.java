@@ -2,6 +2,7 @@ package com.example.todoz.controllers;
 
 import com.example.todoz.models.User;
 import com.example.todoz.services.MessageService;
+import com.example.todoz.services.NotificationService;
 import com.example.todoz.services.UserService;
 import nl.martijndwars.webpush.Subscription;
 import org.springframework.stereotype.Controller;
@@ -16,10 +17,12 @@ public class NotificationController {
 
     private final MessageService messageService;
     private final UserService userService;
+    private final NotificationService notificationService;
 
-    public NotificationController(MessageService messageService, UserService userService) {
+    public NotificationController(MessageService messageService, UserService userService, NotificationService notificationService) {
         this.messageService = messageService;
         this.userService = userService;
+        this.notificationService = notificationService;
     }
 
     @PostMapping("/subscribe")
