@@ -382,13 +382,13 @@ button.startWeek {
 }
 
 .dropbtn {
-    height: 2rem;
-    width: 2.5rem;
+    height: 3.25rem;
+    width: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     border: none;
-    padding : .33rem;
+    padding : .9rem .5rem;
     margin-left: .666rem;
     background-color: #fff0c1;
 }
