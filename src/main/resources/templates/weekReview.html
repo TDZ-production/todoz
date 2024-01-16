@@ -64,6 +64,14 @@
             document.querySelector(".startWeek")
                 .textContent = `Start new week with ${checkedTasks.length} task${checkedTasks.length === 1 ? '' : 's'}`;
         }
+
+        ((tasks) => {
+            tasks.forEach(task =>
+                task.addEventListener("click", () =>
+                    task.querySelector(".checkboxContainer").dispatchEvent(new Event("click"))
+                )
+            );
+        })(document.querySelectorAll(".task"));
     </script>
 
 </section>

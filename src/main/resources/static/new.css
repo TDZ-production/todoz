@@ -187,6 +187,10 @@ main > form button {
     background: #FCFAEE;
 }
 
+.week-review .task {
+    cursor: pointer;
+}
+
 .note {
     opacity: 0.5;
     margin-bottom: 3rem;
@@ -215,7 +219,6 @@ main > form button {
     flex-grow: 1;
     text-align: left;
     padding: 1rem .5rem;
-    cursor: text;
 }
 
 .task form {
@@ -277,7 +280,6 @@ main > p:last-child {
 }
 
 footer {
-    background: #eee;
     background: #fff0c1;
     padding-bottom: env(safe-area-inset-bottom);
 }
