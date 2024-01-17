@@ -55,6 +55,7 @@
     <footer>
         <form method="post" th:action="@{/tasks/add}">
             <button type="submit" name="priority" value="4" class="hidden"></button>
+            <p th:if="${longtermTask} == true" th:text="|Task added to week ${taskWeek}|"></p>
 
             <div class="stars">
                 <button onclick="setPriority(4)" type="submit" name="priority" value="4" data-umami-event="setPriority" data-umami-event-priority="4">
@@ -219,6 +220,25 @@
                      button.classList.remove("active");
                  }
              });
+
+             // Adding fadeout message functionality
+             const fadeoutMessage = document.getElementById('fadeoutMessage');
+
+             // Display the message
+             fadeoutMessage.style.display = 'block';
+
+             // Reset opacity to 1 in case it's already faded
+             fadeoutMessage.style.opacity = 1;
+
+             // Set a timeout to fade out the message after 3 seconds
+             setTimeout(function () {
+                 fadeoutMessage.style.opacity = 0;
+             }, 3000);
+
+             // Set a timeout to hide the message after the fadeout animation
+             setTimeout(function () {
+                 fadeoutMessage.style.display = 'none';
+             }, 3500);
          }
 
          function initiPhoneHack() {
