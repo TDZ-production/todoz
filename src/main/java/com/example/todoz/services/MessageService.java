@@ -57,13 +57,6 @@ public class MessageService {
         }
     }
 
-
-    public void unsubscribe(UserSubscription userSubscription) {
-         System.out.println("Unsubscribed from " + userSubscription.getEndpoint());
-        userSubscriptionService.remove(userSubscription);
-    }
-
-
     public void sendNotification(UserSubscription userSubscription, String messageJson) {
         try {
             Subscription subscription = new Subscription(userSubscription.getEndpoint(), new Subscription.Keys(userSubscription.getP256dhKey(), userSubscription.getAuthKey()));
@@ -75,13 +68,11 @@ public class MessageService {
     }
 
     @Scheduled(cron = "0 00 8 * * *")
-//    @Scheduled(fixedRate = 10000)
     public void sendNotifications() {
 
 
-        userSubscriptionService.getAll().forEach(userSub -> {
-            sendNotification(userSub, notificationService.getMorningNotification(userSub.getUser()));
-        });
+        userSubscriptionService.getAll().forEach(userSub ->
+            sendNotification(userSub, notificationService.getMorningNotification(userSub.getUser())));
 
         System.out.println("The message was sent" + LocalTime.now());
     }
