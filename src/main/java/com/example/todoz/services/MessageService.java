@@ -10,7 +10,6 @@ import java.util.concurrent.ExecutionException;
 
 import com.example.todoz.models.User;
 import com.example.todoz.models.UserSubscription;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -75,9 +74,10 @@ public class MessageService {
         }
     }
 
-//    @Scheduled(cron = "0 04 11 * * *")
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(cron = "0 00 8 * * *")
+//    @Scheduled(fixedRate = 10000)
     public void sendNotifications() {
+
 
         userSubscriptionService.getAll().forEach(userSub -> {
             sendNotification(userSub, notificationService.getMorningNotification(userSub.getUser()));

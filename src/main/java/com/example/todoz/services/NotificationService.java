@@ -11,10 +11,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class NotificationService {
@@ -29,10 +28,33 @@ public class NotificationService {
     }
 
     public String getMorningNotification(User user) {
+        Map<List<Task>, Integer> mapTaskAndTypeTask = getTasks();
+
+        List<Task> tasks = mapTaskAndTypeTask
+                .keySet()
+                .stream()
+                .findFirst()
+                .orElse(null);
+
+        Integer typeTask = mapTaskAndTypeTask
+                .values()
+                .stream()
+                .findFirst()
+                .orElse(null);
+
+        if (tasks == null || typeTask == null){
+            throw new RuntimeException("no tasks or no type tasks");
+        }
+
         int pussyMeter = user.getPussyMeter();
         boolean notificationSingleTask = user.isMorningNotificationSingleTask();
-        List<Notification> notifications = notificationRepo.findAllByTimeSlotAndPussyMeterAndMorningNotificationSingleTask("morning", pussyMeter, notificationSingleTask);
-        List<Task> tasks = getTasksForToday();
+
+        List<Notification> notifications = notificationRepo.
+                findAllByTimeSlotAndPussyMeterAndMorningNotificationSingleTaskAndTypeTask("morning", pussyMeter, notificationSingleTask, typeTask);
+
+        if(notifications.isEmpty()){
+            throw new RuntimeException("There is no notification for that case");
+        }
 
         Notification notification = getRandomNotification(notifications);
 
@@ -40,28 +62,41 @@ public class NotificationService {
     }
 
 
-    public List<Task> getTasksForToday() {
-        LocalDateTime now = LocalDateTime.now();
+    public Map<List<Task>, Integer> getTasks() {
         List<Task> tasks = taskRepo.findAll();
 
-        tasks.sort(
-                Comparator.comparing(Task::isDone).reversed()
-                        .thenComparing(Task::getPriority).reversed()
-                        .thenComparing(t -> t.getDueDate() == null ? now.plusDays(1) : t.getDueDate()).reversed()
-                        .thenComparing(Task::getId).reversed()
-        );
+        //tasks for today
+        List<Task> tasksToday =tasks.stream().
+                filter(t -> !t.isDone())
+                .filter(t -> t.getRemainingDays() == "Today")
+                .sorted(Comparator.comparing(Task::getPriority).reversed())
+                .collect(Collectors.toList());
 
-        return tasks;
+        //tasks for today, tomorrow and yesterday
+        List<Task> filteredTasks = tasks.stream()
+                .filter(t -> !t.isDone() &&
+                        (("Today".equals(t.getRemainingDays())) ||
+                                (("Yesterday".equals(t.getRemainingDays()) ||  "Tomorrow".equals(t.getRemainingDays())) && t.getPriority() == 4)))
+                .sorted(Comparator.comparing(Task::getPriority).reversed())
+                .toList();
+
+
+        if(tasksToday.size() > 3){
+            return new HashMap<>(){{put(tasksToday, 1);}};
+        } else if (!tasksToday.isEmpty()) {
+            return new HashMap<>(){{put(filteredTasks, 2);}};
+        }else if( filteredTasks.size() > 1){
+            return new HashMap<>(){{put(filteredTasks, 3);}};
+        }else{ //no tasks
+            return new HashMap<>(){{put(filteredTasks, 4);}};
+
+        }
     }
 
     public Notification getRandomNotification(List<Notification> notifications){
         Random random = new Random();
         return notifications.get(random.nextInt(notifications.size()));
     }
-
-//    public List<Task> getMoreTasks(){
-//
-//    }
 
 
     public String getJsonNotificationOneTask(List<Task> tasks, Notification notification, boolean notificationSingleTask){
@@ -84,7 +119,5 @@ public class NotificationService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 }
