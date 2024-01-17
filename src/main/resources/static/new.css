@@ -140,6 +140,12 @@ header a, header div {
 header a {
     padding: 1rem;
 }
+header.pussyBack {
+    background: rgb(255, 201, 201);
+}
+h1.pussyHeader {
+    margin-top: 1em;
+}
 
 main > form button {
     margin-top: 2rem;
