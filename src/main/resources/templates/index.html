@@ -18,7 +18,11 @@
 <section class="app home">
     <header>
         <div class="dropdown">
-            <button class="dropbtn" onclick="toggleDropdown()">≡</button>
+            <button class="dropbtn" onclick="toggleDropdown()">
+                <span class="line line1"></span>
+                <span class="line line2"></span>
+                <span class="line line3"></span>
+            </button>
             <div class="dropdown-content">
                 <a href="/longTerm">Planned</a>
                 <a href="/leftBehind">Left behind</a>
@@ -30,7 +34,7 @@
             </div>
         </div>
         <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>
-        <div id="week-progressbar" />
+        <div id="week-progressbar"></div>
     </header>
 
     <main>
@@ -232,12 +236,22 @@
          function toggleDropdown() {
              let dropdown = document.querySelector(".dropdown-content");
              const main = document.querySelector("main");
+             const line1 = document.querySelector(".line1");
+             const line2 = document.querySelector(".line2");
+             const line3 = document.querySelector(".line3");
+
              registerCancel(main);
 
              if (dropdown.style.display === "block") {
                  dropdown.style.display = "none";
+                 line1.style.transform = "rotate(0)";
+                 line2.style.transform = "scaleY(1)";
+                 line3.style.transform = "rotate(0)";
              } else {
                  dropdown.style.display = "block";
+                 line1.style.transform = "rotate(40deg)";
+                 line2.style.transform = "scaleY(0)";
+                 line3.style.transform = "rotate(-40deg)";
              }
 
              function registerCancel(event) {
@@ -253,6 +267,9 @@
 
                  function cancelMenu() {
                      dropdown.style.display = "none";
+                     line1.style.transform = "rotate(0)";
+                     line2.style.transform = "scaleY(1)";
+                     line3.style.transform = "rotate(0)";
                  }
              }
          }

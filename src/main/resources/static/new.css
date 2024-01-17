@@ -382,14 +382,36 @@ button.startWeek {
 }
 
 .dropbtn {
-    font: inherit;
+    height: 3.25rem;
+    width: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     border: none;
-    background: none;
-    color: #b78300;
-    padding: 0 1rem;
-    margin-left: .625rem;
-    font-size: 3rem;
-    height: 3.3rem;
+    padding : .9rem .5rem;
+    margin-left: .666rem;
+    background-color: #fff0c1;
+}
+
+.line {
+    height: 4px;
+    width: 100%;
+    border-radius: 10px;
+    background: #b78300;
+}
+
+.line1 {
+    transform-origin: 0 0;
+    transition: transform 0.4s ease-in-out;
+}
+
+.line2 {
+    transition: transform 0.2s ease-in-out;
+}
+
+.line3 {
+    transform-origin: 0 100%;
+    transition: transform 0.4s ease-in-out;
 }
 
 .dropdown {
@@ -403,7 +425,7 @@ button.startWeek {
     background-color: #FFC9C9;
     min-width: 9rem;
     z-index: 100;
-    box-shadow: 0 .5rem 1rem 0 rgba(0,0,0,0.2);
+    box-shadow: 0 .3rem .4rem 0 rgba(255, 180, 180, 0.3);
 }
 
 .dropdown-content a {
