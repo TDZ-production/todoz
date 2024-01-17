@@ -55,6 +55,7 @@ public class AuthenticationController {
             user.setPussyMeter(registerDTO.pussyMeter());
             userService.save(user);
         } else {
+            ra.addFlashAttribute("usernameWrong", true);
             return "redirect:/register";
         }
 

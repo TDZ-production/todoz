@@ -22,6 +22,7 @@
 
         <form th:action="|/register|" method="post">
             <p th:if="${userExists} == true">User with this username exists</p>
+            <p th:if="${usernameWrong} == true">Username must not be blank and atleast 3 characters long!</p>
             <label>
                 <input name="username" type="text" placeholder="email or username" >
             </label>
