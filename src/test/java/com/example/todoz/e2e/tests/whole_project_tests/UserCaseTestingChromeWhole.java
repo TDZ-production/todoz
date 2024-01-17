@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -19,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ComponentScan(basePackages = "com.example.todoz.e2e.prepared_actions")
-public class UserCaseTestingChrome {
+public class UserCaseTestingChromeWhole {
 
     @Autowired
     private TestAction actions;
@@ -50,10 +49,11 @@ public class UserCaseTestingChrome {
     @Test
     @Order(1)
     public void userCreateNoDueDateTask() {
+        //act
         actions.RegisterAndLogin(page, webUrl);
         page.waitForTimeout(2000);
         actions.createFourNoDueDateTasks(page);
-
+        //assert
         for (int i = 1; i <= 4; i++) {
             String descriptionSelector = String.format(".task:has(p:has-text('NoDueDateTask%d'))", i);
 
@@ -65,96 +65,122 @@ public class UserCaseTestingChrome {
     @Test
     @Order(2)
     public void CreateThisWeekDueDateTask() {
+        //arrange
+        String taskLocator = ".task:has(p:has-text('tomorrow')) .due";
         LocalDate today = LocalDate.now();
-        int priority = 4;
         LocalDate tomorrow = today.plusDays(1);
-
+        int priority = 4;
+        //act
         actions.createDueDateTask(page, tomorrow.toString(), priority, "tomorrow");
         page.waitForTimeout(2000);
-
-        assertEquals(tomorrow.toString(), page.getAttribute(".task:has(p:has-text('tomorrow')) .due", "data-duedate"));
+        //assert
+        assertEquals(tomorrow.toString(), page.getAttribute(taskLocator, "data-duedate"));
     }
 
     @Test
     @Order(3)
     public void CreateNextWeekDueDateTask() {
+        //arrange
+        String taskLocator = ".task:has(p:has-text('nextWeek')) .due";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate today = LocalDate.now();
         LocalDate nextWeek = today.plusWeeks(1);
+        String dayAfterNextWeek = nextWeek.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault());
+        String expectedDateFormat = dayAfterNextWeek + " " + nextWeek.format(formatter);
         int priority = 4;
-
+        //act
         actions.createDueDateTask(page, nextWeek.toString(), priority, "nextWeek");
         page.navigate(webUrl + "/longTerm");
         page.waitForTimeout(2000);
-
-        assertEquals(nextWeek.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault())  + " " +
-                nextWeek.format(formatter), page.innerText(".task:has(p:has-text('nextWeek')) .due"));
+        //assert
+        assertEquals(expectedDateFormat, page.innerText(taskLocator));
     }
 
     @Test
     @Order(4)
     public void CreateNextTwoWeeksDueDateTask() {
+        //arrange
+        String taskLocator = ".task:has(p:has-text('nextTwoWeeks')) .due";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate today = LocalDate.now();
         LocalDate nextTwoWeeks = today.plusWeeks(2);
+        String dayAfterNextTwoWeeks = nextTwoWeeks.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault());
+        String expectedDateFormat = dayAfterNextTwoWeeks + " " + nextTwoWeeks.format(formatter);
         int priority = 4;
-
+        //act
         page.navigate(webUrl + "/");
         actions.createDueDateTask(page, nextTwoWeeks.toString(), priority, "nextTwoWeeks");
         page.navigate(webUrl + "/longTerm");
         page.waitForTimeout(2000);
-
-        assertEquals(nextTwoWeeks.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()) + " " +
-                nextTwoWeeks.format(formatter), page.innerText(".task:has(p:has-text('nextTwoWeeks')) .due"));
+        //assert
+        assertEquals(expectedDateFormat, page.innerText(taskLocator));
     }
 
     @Test
     @Order(5)
     public void editTaskPriority() {
-        int priority = 1;
-
+        //arrange
+        String taskBeforeEditLocator = ".task:nth-child(1)";
+        String taskEditedTextLocator = ".task:has(p:has-text('editTaskPriority'))";
+        int newPriority = 1;
+        //act
+        //choosing task to edit
         page.navigate(webUrl + "/");
-        page.click(".task:nth-child(1)");
+        page.click(taskBeforeEditLocator);
+        //deleting previous text
         page.dblclick("#createTask-input");
         page.keyboard().press("Backspace");
+        //editing priority
         page.type("#createTask-input", "editTaskPriority");
-        page.click(".stars button[value='" + priority + "']");
+        page.click(".stars button[value='" + newPriority + "']");
         page.waitForTimeout(3000);
-
-        assertEquals(String.valueOf(priority), page.getAttribute(".task:has(p:has-text('editTaskPriority'))", "data-priority"));
+        //assert
+        assertEquals(String.valueOf(newPriority), page.getAttribute(taskEditedTextLocator, "data-priority"));
     }
 
     @Test
     @Order(6)
     public void editTaskDescription() {
-        int priority = 2;
-
-        page.click(".task:nth-child(2)");
+        //arrange
+        String taskBeforeEditLocator = ".task:nth-child(2)";
+        String taskEditedTextLocator = ".task:has(p:has-text('editTaskDescription'))";
+        int newPriority = 2;
+        //act
+        //choosing task to edit
+        page.click(taskBeforeEditLocator);
+        //deleting previous text
         page.dblclick("#createTask-input");
         page.keyboard().press("Backspace");
+        //editing previous description
         page.type("#createTask-input", "editTaskDescription");
-        page.click(".stars button[value='" + priority + "']");
+        page.click(".stars button[value='" + newPriority + "']");
         page.waitForTimeout(3000);
-
-        assertEquals("editTaskDescription", page.innerText(".task:has(p:has-text('editTaskDescription'))"));
+        //assert
+        assertEquals("editTaskDescription", page.innerText(taskEditedTextLocator));
     }
 
     @Test
     @Order(7)
     public void editTaskDueDate() {
+        //arrange
+        String taskBeforeEditLocator = ".task:nth-child(3)";
+        String taskEditedTextLocator = ".task:has(p:has-text('editTaskDueDate')) .due";
         LocalDate today = LocalDate.now();
         LocalDate nextTwoDays = today.plusDays(2);
-        int priority = 4;
-
-        page.click(".task:nth-child(3)");
+        int newPriority = 4;
+        //act
+        //choosing task to edit
+        page.click(taskBeforeEditLocator);
+        //deleting previous text
         page.dblclick("#createTask-input");
         page.keyboard().press("Backspace");
+        //editing dueDate
         page.type("#createTask-input", "editTaskDueDate");
         page.click("#calendar_icon");
         page.fill("#date", nextTwoDays.toString());
-        page.click(".stars button[value='" + priority + "']");
+        page.click(".stars button[value='" + newPriority + "']");
         page.waitForTimeout(2000);
-
-        assertEquals(nextTwoDays.toString(), page.getAttribute(".task:has(p:has-text('editTaskDueDate')) .due", "data-duedate"));
+        //assert
+        assertEquals(nextTwoDays.toString(), page.getAttribute(taskEditedTextLocator, "data-duedate"));
     }
 }
