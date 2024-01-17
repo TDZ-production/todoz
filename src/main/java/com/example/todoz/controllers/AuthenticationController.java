@@ -48,7 +48,7 @@ public class AuthenticationController {
             return "redirect:/register";
         }
 
-        if (validateUsername(registerDTO.username())){
+        if (validateUsername(registerDTO.username()) && validatePassword(registerDTO.password())){
             User user = new User();
             user.setUsername(registerDTO.username());
             user.setPassword(passwordEncoder.encode(registerDTO.password()));
@@ -63,9 +63,10 @@ public class AuthenticationController {
     }
 
     public boolean validateUsername(String username) {
-        if (username.isBlank()) {
-            return false;
-        }
-        return username.length() > 2;
+        return !username.isBlank() && username.length() >= 3;
+    }
+
+    public boolean validatePassword(String password) {
+        return !password.isBlank() && password.length() >= 5;
     }
 }
