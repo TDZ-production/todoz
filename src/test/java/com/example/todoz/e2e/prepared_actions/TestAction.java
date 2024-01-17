@@ -3,10 +3,12 @@ package com.example.todoz.e2e.prepared_actions;
 import com.microsoft.playwright.Page;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Component
 public class TestAction {
+
     public void RegisterAndLogin(Page page, String webUrl) {
         //Register action
         page.navigate(webUrl + "/register");
@@ -42,16 +44,11 @@ public class TestAction {
         page.click(".stars button[value='" + priority + "']");
     }
 
-    public void createTasksForAllCases(Page page, LocalDate date) {
-        LocalDate tomorrow = date.plusDays(1);
-        LocalDate nextWeek = date.plusWeeks(1);
-        LocalDate nextTwoWeeks = date.plusWeeks(2);
+    public void takeScreenshot(String testName, Page page, String packagePath) {
+        String screenshotFileName = testName + "_screenshot.png";
+        Path screenshotPath = Paths.get(packagePath, screenshotFileName);
 
-        createDueDateTask(page, tomorrow.toString(), 4,"tomorrow");
-        createDueDateTask(page, nextWeek.toString(), 4,"nextWeek");
-        createDueDateTask(page, nextTwoWeeks.toString(), 4,"nextTwoWeeks");
-
-        createFourNoDueDateTasks(page);
+        page.screenshot(new Page.ScreenshotOptions().setPath(screenshotPath));
     }
 
 }
