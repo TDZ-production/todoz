@@ -47,14 +47,24 @@ public class AuthenticationController {
             ra.addFlashAttribute("userExists", true);
             return "redirect:/register";
         }
-        else {
+
+        if (validateUsername(registerDTO.username())){
             User user = new User();
             user.setUsername(registerDTO.username());
             user.setPassword(passwordEncoder.encode(registerDTO.password()));
             user.setPussyMeter(registerDTO.pussyMeter());
             userService.save(user);
+        } else {
+            return "redirect:/register";
         }
 
         return "redirect:/login";
+    }
+
+    public boolean validateUsername(String username) {
+        if (username.isBlank()) {
+            return false;
+        }
+        return username.length() > 2;
     }
 }
