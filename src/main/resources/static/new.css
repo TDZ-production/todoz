@@ -488,6 +488,19 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     cursor: pointer;
 }
 
+.NoTaskPlaceholder{
+    margin: 4.5rem;
+    opacity: 0.6;
+}
+.NoTaskPlaceholder img{
+    width: 200px;
+    height: auto;
+}
+.NoTaskPlaceholder p {
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
 @media (min-width: 460px) {
     .app {
         margin: 1rem auto;
