@@ -55,7 +55,7 @@
     <footer>
         <form method="post" th:action="@{/tasks/add}">
             <button type="submit" name="priority" value="4" class="hidden"></button>
-            <p th:if="${longtermTask} == true" th:text="|Task added to week ${taskWeek}|"></p>
+            <p th:if="${longtermTask} == true" th:text="|Task added to week ${taskDueWeek}|"></p>
 
             <div class="stars">
                 <button onclick="setPriority(4)" type="submit" name="priority" value="4" data-umami-event="setPriority" data-umami-event-priority="4">

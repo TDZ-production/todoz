@@ -31,7 +31,7 @@ public class TaskController {
         taskService.save(task);
         if (task.getDueDateWeekNumber() > DateManager.formattedCurrentWeek()) {
             ra.addFlashAttribute("longtermTask", true);
-            ra.addFlashAttribute("taskWeek", (task.getDueDateWeekNumber() % 100));
+            ra.addFlashAttribute("taskDueWeek", (task.getDueDateWeekNumber() % 100));
         }
 
         return "redirect:/";
