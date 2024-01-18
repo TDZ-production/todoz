@@ -4,7 +4,6 @@ import com.example.todoz.dtos.NotificationDTO;
 import com.example.todoz.models.Notification;
 import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
-import com.example.todoz.models.Week;
 import com.example.todoz.repos.NotificationRepo;
 import com.example.todoz.repos.TaskRepo;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -47,10 +46,10 @@ public class NotificationService {
         }
 
         int pussyMeter = user.getPussyMeter();
-        boolean notificationSingleTask = user.isMorningNotificationSingleTask();
+        boolean notificationSingleTask = user.isNotificationSingleTask();
 
         List<Notification> notifications = notificationRepo.
-                findAllByTimeSlotAndPussyMeterAndMorningNotificationSingleTaskAndTypeTask("morning", pussyMeter, notificationSingleTask, typeTask);
+                findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask("morning", pussyMeter, notificationSingleTask, typeTask);
 
         if(notifications.isEmpty()){
             throw new RuntimeException("There is no notification for that case");
@@ -58,26 +57,26 @@ public class NotificationService {
 
         Notification notification = getRandomNotification(notifications);
 
-        return getJsonNotificationOneTask(tasks, notification,  notificationSingleTask);
+        return getJsonNotification(tasks, notification,  notificationSingleTask);
     }
 
 
     public Map<List<Task>, Integer> getTasks() {
         List<Task> tasks = taskRepo.findAll();
 
-        //tasks for today
+        /** tasks for today */
         List<Task> tasksToday =tasks.stream().
                 filter(t -> !t.isDone())
                 .filter(t -> t.getRemainingDays() == "Today")
                 .sorted(Comparator.comparing(Task::getPriority).reversed())
                 .collect(Collectors.toList());
 
-        //tasks for today, tomorrow and yesterday
+        /** tasks for today, tomorrow and yesterday */
         List<Task> filteredTasks = tasks.stream()
                 .filter(t -> !t.isDone() &&
                         (("Today".equals(t.getRemainingDays())) ||
                                 (("Yesterday".equals(t.getRemainingDays()) ||  "Tomorrow".equals(t.getRemainingDays())) && t.getPriority() == 4)))
-                .sorted(Comparator.comparing(Task::getPriority).reversed())
+                .sorted(Comparator.comparing(Task::getPriority))
                 .toList();
 
 
@@ -99,18 +98,25 @@ public class NotificationService {
     }
 
 
-    public String getJsonNotificationOneTask(List<Task> tasks, Notification notification, boolean notificationSingleTask){
+        public String getJsonNotification(List<Task> tasks, Notification notification, boolean notificationSingleTask){
 
         NotificationDTO notificationDTO;
-        if(notificationSingleTask){
-            notificationDTO = new NotificationDTO(
+
+            if(notificationSingleTask){
+                notificationDTO = new NotificationDTO(
                     String.format(notification.getTitle(), tasks.size()),
                     String.format(notification.getDescription(), tasks.get(0).getDescription()));
 
-        }else{
-            notificationDTO = new NotificationDTO(
-                    String.format(notification.getTitle(), tasks.size()),
-                    String.format(notification.getDescription(), tasks.subList(0, 2).stream().map(task -> task.getDescription())));
+            }else{
+                String threeTasksString =tasks.subList(0,3).stream()
+                        .map(task -> "- " + task.getDescription() + " \n")
+                        .collect(Collectors.joining());
+
+
+                notificationDTO = new NotificationDTO(
+                        String.format(notification.getTitle(), tasks.size()),
+                        String.format(notification.getDescription(), threeTasksString));
+
         }
 
         ObjectMapper objectMapper = new ObjectMapper();

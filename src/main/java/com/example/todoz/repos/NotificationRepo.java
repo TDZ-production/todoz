@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface NotificationRepo extends ListCrudRepository<Notification,Long> {
-    List<Notification> findAllByTimeSlotAndPussyMeterAndMorningNotificationSingleTaskAndTypeTask(String timeSlot, int pussyMeter, boolean notificationSingleTask, int typeTask);
+    List<Notification> findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask(String timeSlot, int pussyMeter, boolean notificationSingleTask, int typeTask);
 }

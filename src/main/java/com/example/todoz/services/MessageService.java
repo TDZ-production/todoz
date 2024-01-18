@@ -68,6 +68,7 @@ public class MessageService {
     }
 
     @Scheduled(cron = "0 00 8 * * *")
+//    @Scheduled(fixedRate = 10000)
     public void sendNotifications() {
 
 
