@@ -63,10 +63,10 @@ public class AuthenticationController {
     }
 
     public boolean validateUsername(String username) {
-        return !username.isBlank() && username.length() >= 3;
+        return !username.isBlank() && !username.contains(" ") && username.length() >= 3;
     }
 
     public boolean validatePassword(String password) {
-        return !password.isBlank() && password.length() >= 5;
+        return !password.isBlank() && !password.contains(" ") && password.length() >= 5;
     }
 }
