@@ -16,8 +16,6 @@
 </head>
 <script th:inline="javascript">
 
-    var messages = [[${messages}]];
-
     function urlB64ToUint8Array(base64String) {
         const padding = '='.repeat((4 - base64String.length % 4) % 4);
         const base64 = (base64String + padding)
@@ -95,7 +93,7 @@
     </header>
 
     <main>
-        <div class="task" th:each="task : ${currentWeek.getSortedTasks()}" th:object="${task}" th:data-priority="*{priority}" th:data-id="*{id}" th:data-done="*{done}">
+        <div th:if="${currentWeek.getSortedTasks()}" class="task" th:each="task : ${currentWeek.getSortedTasks()}" th:object="${task}" th:data-priority="*{priority}" th:data-id="*{id}" th:data-done="*{done}">
             <span th:classappend="|prio${task.getPriority()}|"></span>
             <p th:text="*{description}"></p>
             <span class="due" th:text="*{getRemainingDays()}" th:data-duedate="*{dueDateDate}"></span>
@@ -106,6 +104,10 @@
                     <img class="notdone" src="/img/vector_img_checkbox.png" alt="mark as done"/>
                </button>
             </form>
+        </div>
+        <div th:if="${currentWeek.getSortedTasks().isEmpty()}" class="NoTaskPlaceholder">
+            <p>Don´t be lazy! Choose priority, deadline and create your first task!</p>
+            <img src="/img/bush_icon_todoz-05.png" alt="no image">
         </div>
     </main>
 

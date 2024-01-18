@@ -22,10 +22,14 @@
     </header>
 
     <main>
-        <div class="task" th:each="task : ${longTerm}" th:object="${task}">
+        <div th:if="${longTerm}" class="task" th:each="task : ${longTerm}" th:object="${task}">
             <span th:classappend="|prio${task.getPriority()}|"></span>
             <p th:text="*{getDescription()}"></p>
             <span class="due" th:text="|*{getDueDateDayOfWeek()} *{getDueDateFormat()}|"></span>
+        </div>
+        <div th:if="${longTerm.isEmpty()}" class="NoTaskPlaceholder">
+            <p>Here will be all your planned tasks... <br> in the meantime enjoy this bouncing bush...</p>
+            <img src="/img/bush_icon_todoz-05.png" alt="no image">
         </div>
     </main>
 
