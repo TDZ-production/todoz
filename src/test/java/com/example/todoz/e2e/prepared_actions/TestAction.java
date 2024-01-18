@@ -43,12 +43,4 @@ public class TestAction {
         page.fill("#date", date);
         page.click(".stars button[value='" + priority + "']");
     }
-
-    public void takeScreenshot(String testName, Page page, String packagePath) {
-        String screenshotFileName = testName + "_screenshot.png";
-        Path screenshotPath = Paths.get(packagePath, screenshotFileName);
-
-        page.screenshot(new Page.ScreenshotOptions().setPath(screenshotPath));
-    }
-
 }
