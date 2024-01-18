@@ -466,6 +466,17 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     cursor: pointer;
 }
 
+.password {
+    position: relative;
+}
+
+#showPassword {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 @media (min-width: 460px) {
     .app {
         margin: 1rem auto;
