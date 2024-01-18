@@ -21,11 +21,12 @@
         <p class="note">Do your task or else!</p>
 
         <form th:action="@{/login}" method="post">
-            <p th:if="${param.error}">Invalid username and/or password.</p>
+            <p th:if="${param.error}">Invalid username or password.</p>
             <p th:if="${param.logout}">You have been logged out.</p>
+            <p th:if="${passwordReset} == true">Password reset successful</p>
 
             <label>
-                <input type="text" name="username" placeholder="email or username">
+                <input type="text" name="username" placeholder="email">
             </label>
             <label>
                 <input type="password" name="password" placeholder="password">
@@ -34,6 +35,7 @@
             <button class="cta" type="submit" value="Log In">&gt;&gt;</button>
         </form>
         <p><a th:href="@{/register}">Sign-up</a></p>
+        <p><a th:href="@{/resetPassword}">Forgot password?</a></p>
     </main>
 </section>
 <script>

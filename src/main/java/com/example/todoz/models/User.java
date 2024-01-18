@@ -1,5 +1,6 @@
 package com.example.todoz.models;
 
+import com.example.todoz.prtoken.PasswordResetToken;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +24,16 @@ public class User {
     private Integer pussyMeter = 1;
     @ManyToMany
     private Set<Role> roles;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Week> week;
     @OneToMany(mappedBy = "user")
     List<Task> tasks;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    List<PasswordResetToken> pRToken;
+
+    public User(String username, String password, Integer pussyMeter) {
+        this.username = username;
+        this.password = password;
+        this.pussyMeter = pussyMeter;
+    }
 }

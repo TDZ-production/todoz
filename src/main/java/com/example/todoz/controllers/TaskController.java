@@ -55,7 +55,7 @@ public class TaskController {
     }
 
     private User getUser(Principal principal) {
-        return userService.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
+        return userService.findByUsername(principal.getName());
     }
 
     private Week getWeek(Principal principal) {
