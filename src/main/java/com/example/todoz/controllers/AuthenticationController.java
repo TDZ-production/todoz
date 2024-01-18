@@ -109,7 +109,7 @@ public class AuthenticationController {
             ra.addFlashAttribute("doesNotMatch", true);
             ra.addFlashAttribute("userId", userId);
             return "redirect:/newPassword";
-        } else if (password.contains(" ") || password.length() < 4) {
+        } else if (password.length() < 4) {
             ra.addFlashAttribute("invalid", true);
             ra.addFlashAttribute("userId", userId);
             return "redirect:/newPassword";
