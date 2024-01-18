@@ -83,11 +83,11 @@ public class NotificationService {
         if(tasksToday.size() > 3){
             return new HashMap<>(){{put(tasksToday, 1);}};
         } else if (!tasksToday.isEmpty()) {
-            return new HashMap<>(){{put(filteredTasks, 2);}};
-        }else if( filteredTasks.size() > 1){
-            return new HashMap<>(){{put(filteredTasks, 3);}};
+            return new HashMap<>(){{put(filteredTasks, 1);}};
+        }else if(!filteredTasks.isEmpty()){
+            return new HashMap<>(){{put(filteredTasks, 1);}};
         }else{ //no tasks
-            return new HashMap<>(){{put(filteredTasks, 4);}};
+            return new HashMap<>(){{put(filteredTasks, 2);}};
 
         }
     }
