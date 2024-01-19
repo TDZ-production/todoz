@@ -30,6 +30,7 @@ public class User {
     List<Task> tasks;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     List<PasswordResetToken> pRToken;
+    public static final int MINIMAL_PASSWORD_LENGTH = 5;
 
     public User(String username, String password, Integer pussyMeter) {
         this.username = username;

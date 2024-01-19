@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
+
+import static com.example.todoz.models.User.MINIMAL_PASSWORD_LENGTH;
+
 @Controller
 @RequiredArgsConstructor
 public class AuthenticationController {
@@ -46,15 +50,18 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public String register(RegisterDTO registerDTO, RedirectAttributes ra) {
-        try {
-            userService.findByUsername(registerDTO.username());
+        Optional<User> optUSer = userService.findByUsername(registerDTO.username());
+
+        if (optUSer.isPresent()) {
             ra.addFlashAttribute("userExists", true);
-        } catch (EntityNotFoundException e) {
+
+            return "redirect:/register";
+        }
+        else {
             userService.createAndSave(registerDTO.username(), passwordEncoder.encode(registerDTO.password()), registerDTO.pussyMeter());
+
             return "redirect:/login";
         }
-
-        return "redirect:/register";
     }
 
     @GetMapping("/resetPassword")
@@ -64,14 +71,16 @@ public class AuthenticationController {
 
     @PostMapping("/resetPassword")
     public String resetPasswordRequest(String email, final HttpServletRequest request, RedirectAttributes ra) {
-        try {
-            User user = userService.findByUsername(email);
-            emailService.sendEmail(user.getUsername(), passwordResetEmailLink(request, pRTService.createPRToken(user).getToken()));
-            ra.addFlashAttribute("sent", true);
-        } catch (EntityNotFoundException e) {
+        Optional<User> optUser = userService.findByUsername(email);
+
+        if (optUser.isEmpty()) {
             ra.addFlashAttribute("userNotFound", true);
+
             return "redirect:/resetPassword";
         }
+        User user = optUser.get();
+        emailService.sendEmail(user.getUsername(), passwordResetEmailLink(request, pRTService.createPRToken(user).getToken()));
+        ra.addFlashAttribute("sent", true);
 
         return "redirect:/resetPassword";
     }
@@ -104,12 +113,12 @@ public class AuthenticationController {
     }
 
     @PostMapping("/newPassword")
-    public String resetPassword(String password, String confirmation, RedirectAttributes ra, Long userId, String token) {
+    public String resetPassword(String password, String confirmation, RedirectAttributes ra, Long userId) {
         if (!password.equals(confirmation)) {
             ra.addFlashAttribute("doesNotMatch", true);
             ra.addFlashAttribute("userId", userId);
             return "redirect:/newPassword";
-        } else if (password.length() < 4) {
+        } else if (password.length() < MINIMAL_PASSWORD_LENGTH) {
             ra.addFlashAttribute("invalid", true);
             ra.addFlashAttribute("userId", userId);
             return "redirect:/newPassword";
@@ -123,7 +132,6 @@ public class AuthenticationController {
     }
 
     private String passwordResetEmailLink(HttpServletRequest request, String token) {
-        return "https://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath()
-                + "/validateToken?token=" + token;
+        return "https://" + request.getServerName() + request.getContextPath() + "/validateToken?token=" + token;
     }
 }

@@ -40,16 +40,16 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public User findByUsername(String username) {
-        return userRepo.findByUsername(username).orElseThrow(EntityNotFoundException::new);
+    public Optional<User> findByUsername(String username) {
+        return userRepo.findByUsername(username);
     }
 
     public void save(User user) {
         userRepo.save(user);
     }
 
-    public User findById(Long userId) {
-        return userRepo.findById(userId).orElseThrow(EntityNotFoundException::new);
+    public Optional<User> findById(Long userId) {
+        return userRepo.findById(userId);
     }
 
     public void createAndSave(String username, String password, Integer pussyMeter) {
@@ -58,7 +58,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void updatePassword(Long userId, String password) {
-        User user = findById(userId);
+        User user = findById(userId).orElseThrow(EntityNotFoundException::new);
         user.setPassword(password);
         save(user);
     }
