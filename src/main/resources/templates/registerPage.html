@@ -25,8 +25,9 @@
             <label>
                 <input name="username" type="text" placeholder="email" >
             </label>
-            <label>
-                <input name="password" type="password" minlength="5" placeholder="password">
+            <label class="password">
+                <input name="password" type="password" id="password" placeholder="password">
+                <img src="/img/eye_icon_todo-03.png" id="showPassword" onclick="togglePasswordVisibility()" alt="hide icon">
             </label>
             <label class="slideContainer">
                 <p id="pussyLabel">Neutral</p>
@@ -57,6 +58,20 @@
             title.innerText = "ToDoZmrd";
             subtitle.innerText = "Register your ass!";
             pussyLabel.innerText = "Aggressive";
+        }
+    }
+
+    function togglePasswordVisibility() {
+        const password = document.querySelector("#password");
+        const img = document.querySelector("#showPassword")
+
+        if (password.type === "password") {
+            password.type = "text";
+            img.src = "/img/eye_icon_todo-02.png"
+        }
+        else {
+            password.type = "password";
+            img.src = "/img/eye_icon_todo-03.png"
         }
     }
 </script>

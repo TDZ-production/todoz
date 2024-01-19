@@ -64,7 +64,7 @@ input {
 input, button {
     font: inherit;
     border: 2px solid #333;
-    background: #fff;
+    background: #fcfcf6;
     border-radius: .5rem;
     padding: .8rem;
 }
@@ -91,7 +91,7 @@ button.cta {
 
 
 button.ctm {
-    background: #fff;
+    background: #fcfcf6;
     min-width: 6rem;
 }
 
@@ -140,6 +140,12 @@ header a, header div {
 header a {
     padding: 1rem;
 }
+header.pussyBack {
+    background: rgb(255, 201, 201);
+}
+h1.pussyHeader {
+    margin-top: 1em;
+}
 
 main > form button {
     margin-top: 2rem;
@@ -167,7 +173,7 @@ main > form button {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    background-color: white;
+    background-color: #FCFAEE;
     text-align: center;
 }
 
@@ -254,7 +260,7 @@ main > form button {
 }
 
 .prio3 {
-    background: #fff0c1;
+    background: #f6ed75;
 }
 .prio4 {
     background: #ffb692;
@@ -295,7 +301,7 @@ footer input, .stars button {
 }
 
 .stars button {
-    background: #ffff;
+    background: #fcfcf6;
     padding-bottom: 0;
 }
 
@@ -370,7 +376,7 @@ button.startWeek {
     width:20px;
     height:20px;
     border-radius:50%;
-    background-color:#ffffff;
+    background-color:#fcfcf6;
 }
 
 #week-progressbar {
@@ -456,8 +462,8 @@ button.startWeek {
 .task:has(.toDelegate:checked) {
     background: #ebffe7;
 }
-.task:has(.cross) {
-    background: #ffffff;
+.task:has(.cross), .task:has(input[value="true"]) {
+    background: #fcfcf6;
 }
 
 span.weekIcon, input.toDelegate {
@@ -486,6 +492,33 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 
 #logout {
     cursor: pointer;
+}
+
+.NoTaskPlaceholder{
+    margin: 4.5rem;
+    opacity: 0.6;
+}
+
+.NoTaskPlaceholder img{
+    width: 12.5rem;
+    height: auto;
+}
+
+.NoTaskPlaceholder p {
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.password {
+    position: relative;
+}
+
+#showPassword {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+
 }
 
 @media (min-width: 460px) {
