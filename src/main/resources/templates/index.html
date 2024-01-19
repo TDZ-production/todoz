@@ -41,7 +41,7 @@
         <a th:href="@{/longTerm}">Upcoming</a>
         <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>
         <a th:href="@{/pussyMeter}">Pussy meter</a>
-        <div id="week-progressbar" />
+        <div id="week-progressbar"/>
     </header>
 
     <main>
@@ -60,7 +60,7 @@
     </main>
 
     <footer>
-        <form method="post" th:action="@{/add}">
+        <form method="post" th:action="@{/tasks/add}">
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
             <div class="stars">
