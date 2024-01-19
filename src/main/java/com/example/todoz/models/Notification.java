@@ -25,10 +25,9 @@ public class Notification {
     /**morning, noon or afternoon */
     private String timeSlot;
 
-    /** 1 -> more than 1 task for today
-   2 -> 1 task for today + pending and remaining tasks
-   3 -> 0 task for today only pending and remaining tasks
-   4 -> any type of tasks for today
+    /** 1 -> You have tasks for today
+     *  2- > You have only one task today
+        3 -> 0 tasks for today
  */
     private int typeTask;
 
