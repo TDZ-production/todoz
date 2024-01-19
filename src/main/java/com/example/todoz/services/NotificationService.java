@@ -80,7 +80,6 @@ public class NotificationService {
             if (typeTask == null){
                 throw new RuntimeException("no type task for the notification");
             }
-            
             return typeTask;
         }
 
@@ -96,7 +95,6 @@ public class NotificationService {
             if (tasks == null){
                 throw new RuntimeException("no tasks");
             }
-
             return tasks;
         }
 
