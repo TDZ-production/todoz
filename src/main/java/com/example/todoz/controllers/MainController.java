@@ -26,7 +26,7 @@ public class MainController {
         Optional<Week> currentWeek = weekService.findCurrentWeek(getUser(principal));
         Optional<Week> optPreviousWeek = weekService.findPreviousWeek(getUser(principal));
 
-        if (currentWeek.isEmpty() && optPreviousWeek.isPresent()) {
+        if (currentWeek.isEmpty() && optPreviousWeek.isPresent() && !optPreviousWeek.get().getTasks().isEmpty()) {
             Week previousWeek = optPreviousWeek.get();
             List<Task> upcomingTasks = taskService
                     .findUpcomingTasks(getUser(principal), previousWeek.getWeekNumber(), DateManager.formattedCurrentWeek());
