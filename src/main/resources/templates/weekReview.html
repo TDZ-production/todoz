@@ -27,7 +27,7 @@
             <p class="note">Tasks are finished</p>
         </div>
 
-        <form action="/startNewWeek" method="post" id="form">
+        <form th:action="@{/startNewWeek}" th:method="post" id="form">
             <p>Upcoming tasks:</p>
             <div class="task" th:each="task : ${upcomingTasks}" >
                 <span th:classappend="|prio${task.getPriority()}|"></span>
