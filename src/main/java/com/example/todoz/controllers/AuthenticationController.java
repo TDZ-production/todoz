@@ -96,7 +96,7 @@ public class AuthenticationController {
             pRTService.deleteByToken(token);
             return "redirect:/resetPassword";
         } else {
-            ra.addFlashAttribute("userId", optToken.get().getId());
+            ra.addFlashAttribute("userId", optToken.get().getUser().getId());
             return "redirect:/newPassword";
         }
     }
