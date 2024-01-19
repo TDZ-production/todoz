@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <title>TodoZ-main</title>
     <link rel="stylesheet" href="/new.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <script async src="https://umami.petabyte.farm/script.js" data-website-id="0076ce35-dec8-4042-ba76-0dc4b52922b0"></script>
+    <script async src="https://umami.petabyte.farm/script.js"
+            data-website-id="0076ce35-dec8-4042-ba76-0dc4b52922b0"></script>
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="icon" type="image/png" sizes="32x32" href="/icons/iconx32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/touch-icon.png">
@@ -19,9 +21,7 @@
     <header>
         <div class="dropdown">
             <button class="dropbtn" onclick="toggleDropdown()">
-                <span class="line line1"></span>
-                <span class="line line2"></span>
-                <span class="line line3"></span>
+                <img src="/img/todoz_menu_icon-31.png" alt="open menu">
             </button>
             <div class="dropdown-content">
                 <a href="/longTerm">Planned</a>
@@ -38,7 +38,9 @@
     </header>
 
     <main>
-        <div class="task" th:each="task : ${currentWeek.getSortedTasks()}" th:object="${task}" th:data-priority="*{priority}" th:data-id="*{id}" th:data-done="*{done}">
+        <div th:unless="${currentWeek.getSortedTasks().isEmpty()}" class="task"
+             th:each="task : ${currentWeek.getSortedTasks()}" th:object="${task}"
+             th:data-priority="*{priority}" th:data-id="*{id}" th:data-done="*{done}">
             <span th:classappend="|prio${task.getPriority()}|"></span>
             <p th:text="*{description}"></p>
             <span class="due" th:text="*{getRemainingDays()}" th:data-duedate="*{dueDateDate}"></span>
@@ -47,8 +49,15 @@
                 <button class="img" th:type="submit">
                     <img class="isdone" src="/img/vector_img_checkedbox.png" alt="mark as not done"/>
                     <img class="notdone" src="/img/vector_img_checkbox.png" alt="mark as done"/>
-               </button>
+                </button>
             </form>
+        </div>
+
+        <div th:if="${currentWeek.getSortedTasks().isEmpty()}" class="NoTaskPlaceholder">
+            <p>Don´t be lazy! Choose priority, deadline and create your first task!</p>
+            <img th:if="${user.pussyMeter == 0}" src="/img/cat_todo_placeholder_pussyMeter1.png">
+            <img th:if="${user.pussyMeter == 1}" src="/img/cat_todo_placeholder_pussyMeter2.png">
+            <img th:if="${user.pussyMeter == 2}" src="/img/cat_todo_placeholder_pussyMeter3.png">
         </div>
     </main>
 
@@ -57,22 +66,26 @@
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
             <div class="stars">
-                <button onclick="setPriority(4)" type="submit" name="priority" value="4" data-umami-event="setPriority" data-umami-event-priority="4">
+                <button onclick="setPriority(4)" type="submit" name="priority" value="4" data-umami-event="setPriority"
+                        data-umami-event-priority="4">
                     <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-04.png">
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-04.png">
                     <img th:if="${user.pussyMeter == 2}" src="/img/skull_icon-05.png">
                 </button>
-                <button onclick="setPriority(3)" type="submit" name="priority" value="3" data-umami-event="setPriority" data-umami-event-priority="3">
+                <button onclick="setPriority(3)" type="submit" name="priority" value="3" data-umami-event="setPriority"
+                        data-umami-event-priority="3">
                     <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-03.png">
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-03.png">
                     <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-03.png">
                 </button>
-                <button onclick="setPriority(2)" type="submit" name="priority" value="2" data-umami-event="setPriority" data-umami-event-priority="2">
+                <button onclick="setPriority(2)" type="submit" name="priority" value="2" data-umami-event="setPriority"
+                        data-umami-event-priority="2">
                     <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-02.png">
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-02.png">
                     <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-02.png">
                 </button>
-                <button onclick="setPriority(1)" type="submit" name="priority" value="1" data-umami-event="setPriority" data-umami-event-priority="1">
+                <button onclick="setPriority(1)" type="submit" name="priority" value="1" data-umami-event="setPriority"
+                        data-umami-event-priority="1">
                     <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-01.png">
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-01.png">
                     <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-01.png">
@@ -84,7 +97,8 @@
             </label>
 
             <div class="addTask">
-                <input type="text" placeholder="new task" name="description" id="add" required autofocus autocomplete="off">
+                <input type="text" placeholder="new task" name="description" id="add" required autofocus
+                       autocomplete="off">
                 <img onclick="toggleDueDate()" src="/img/Kalendar_Icon-02.png" alt="due date">
             </div>
         </form>
@@ -105,7 +119,7 @@
             progressbar.style.width = weekProgress + "%";
         }
 
-         function handleSubmit(event) {
+        function handleSubmit(event) {
             event.preventDefault();
 
             const form = event.target;
@@ -168,7 +182,7 @@
 
         function edit(task) {
             document.querySelector("#add").focus();
-            
+
             const main = document.querySelector("main");
             registerCancel(main);
 
@@ -208,77 +222,76 @@
             }
         }
 
-         function setPriority(priority) {
-             document.querySelector("button[name='priority']").value = priority;
+        function setPriority(priority) {
+            document.querySelector("button[name='priority']").value = priority;
 
-             const buttons = document.querySelectorAll("footer .stars button");
-             buttons.forEach(button => {
-                 if (button.value == priority) {
-                     button.classList.add("active");
-                 } else {
-                     button.classList.remove("active");
-                 }
-             });
-         }
+            const buttons = document.querySelectorAll("footer .stars button");
+            buttons.forEach(button => {
+                if (button.value == priority) {
+                    button.classList.add("active");
+                } else {
+                    button.classList.remove("active");
+                }
+            });
+        }
 
-         function initiPhoneHack() {
-             window.visualViewport.addEventListener('resize', handleKeyboard);
-             document.addEventListener('focusin', handleKeyboard);
-             document.addEventListener('focusout', handleKeyboard);
+        function initiPhoneHack() {
+            window.visualViewport.addEventListener('resize', handleKeyboard);
+            document.addEventListener('focusin', handleKeyboard);
+            document.addEventListener('focusout', handleKeyboard);
 
-             function handleKeyboard() {
-                 window.scrollY > 0 ? adjustSafeAreaInset(0) : adjustSafeAreaInset();
-             }
+            function handleKeyboard() {
+                window.scrollY > 0 ? adjustSafeAreaInset(0) : adjustSafeAreaInset();
+            }
 
-             function adjustSafeAreaInset(value = 'env(safe-area-inset-bottom)') {
-                 document.querySelector("footer").style.paddingBottom = value;
-             }
-         }
+            function adjustSafeAreaInset(value = 'env(safe-area-inset-bottom)') {
+                document.querySelector("footer").style.paddingBottom = value;
+            }
+        }
 
-         function toggleDropdown() {
-             let dropdown = document.querySelector(".dropdown-content");
-             const main = document.querySelector("main");
-             const line1 = document.querySelector(".line1");
-             const line2 = document.querySelector(".line2");
-             const line3 = document.querySelector(".line3");
+        function adjustSafeAreaInset(value = 'env(safe-area-inset-bottom)') {
+            document.querySelector("footer").style.paddingBottom = value;
+        }
 
-             registerCancel(main);
+        function toggleDropdown() {
+            let dropdown = document.querySelector(".dropdown-content");
+            const main = document.querySelector("main");
+            const img = document.querySelector(".dropbtn img");
 
-             if (dropdown.style.display === "block") {
-                 dropdown.style.display = "none";
-                 line1.style.transform = "rotate(0)";
-                 line2.style.transform = "scaleY(1)";
-                 line3.style.transform = "rotate(0)";
-             } else {
-                 dropdown.style.display = "block";
-                 line1.style.transform = "rotate(40deg)";
-                 line2.style.transform = "scaleY(0)";
-                 line3.style.transform = "rotate(-40deg)";
-             }
+            registerCancel(main);
 
-             function registerCancel(event) {
-                 event.addEventListener("click", function () {
-                     cancelMenu();
-                 }, {once: true});
+            if (dropdown.style.display === "block") {
+                dropdown.style.display = "none";
+                img.src = "/img/todoz_menu_icon-31.png";
+                img.alt = "open menu";
+            } else {
+                dropdown.style.display = "block";
+                img.src = "/img/todoz_menu_icon-30.png";
+                img.alt = "close menu";
+            }
 
-                 window.onkeydown = function (event) {
-                     if (event.key === "Escape") {
-                         cancelMenu();
-                     }
-                 }
+            function registerCancel(event) {
+                event.addEventListener("click", function () {
+                    cancelMenu();
+                }, {once: true});
 
-                 function cancelMenu() {
-                     dropdown.style.display = "none";
-                     line1.style.transform = "rotate(0)";
-                     line2.style.transform = "scaleY(1)";
-                     line3.style.transform = "rotate(0)";
-                 }
-             }
-         }
+                window.onkeydown = function (event) {
+                    if (event.key === "Escape") {
+                        cancelMenu();
+                    }
+                }
 
-         function logout() {
-             document.querySelector('#logoutForm').submit();
-         }
+                function cancelMenu() {
+                    dropdown.style.display = "none";
+                    img.src = "/img/todoz_menu_icon-31.png";
+                    img.alt = "open menu";
+                }
+            }
+        }
+
+        function logout() {
+            document.querySelector('#logoutForm').submit();
+        }
     </script>
 
 </section>
