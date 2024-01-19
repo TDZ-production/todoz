@@ -65,6 +65,16 @@
         <form method="post" th:action="@{/tasks/add}">
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
+            <label class="dateTime hidden">
+                <input type="date" name="maybeDueDate" id="date">
+            </label>
+
+            <div class="addTask">
+                <input type="text" placeholder="new task" name="description" id="add" required autofocus
+                       autocomplete="off">
+                <img onclick="toggleDueDate()" src="/img/Kalendar_Icon-02.png" alt="due date">
+            </div>
+
             <div class="stars">
                 <button onclick="setPriority(4)" type="submit" name="priority" value="4" data-umami-event="setPriority"
                         data-umami-event-priority="4">
@@ -90,16 +100,6 @@
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-01.png">
                     <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-01.png">
                 </button>
-            </div>
-
-            <label class="dateTime hidden">
-                <input type="date" name="maybeDueDate" id="date">
-            </label>
-
-            <div class="addTask">
-                <input type="text" placeholder="new task" name="description" id="add" required autofocus
-                       autocomplete="off">
-                <img onclick="toggleDueDate()" src="/img/Kalendar_Icon-02.png" alt="due date">
             </div>
         </form>
     </footer>
