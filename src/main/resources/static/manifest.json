@@ -1,4 +1,13 @@
 {
+    "display": "standalone",
+    "start_url": "/",
+    "background_color": "#FFF4C2",
+    "theme_color": "#FFF4C2",
+    "name": "todoz*",
+    "short_name": "todoz*",
+    "description": "do your task or else!",
+    "orientation": "portrait",
+
     "icons": [
       {
         "src": "/icons/iconx192.png",

@@ -15,6 +15,36 @@ body {
     color: #333;
 }
 
+.app {
+    margin: 0 auto;
+    max-width: 28rem;
+    min-height: 28rem;
+    height: 99.98vh; /* older browsers */
+    height: 99.98dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: #FCFAEE;
+    text-align: center;
+}
+
+.app.login {
+    background: #FFF4C2;
+}
+
+.app.register {
+    background: #FFF0F6;
+}
+
+.app.pussyMeter {
+    background: #FFC9C9;
+}
+
+.app main {
+    flex-grow: 1;
+    overflow: auto;
+}
+
 a {
     text-decoration: none;
     color: #b78300;
@@ -171,35 +201,6 @@ main > form button {
 .fade {
     opacity: 0.4;
     filter: blur(1px);
-}
-
-.app {
-    margin: 0 auto;
-    max-width: 28rem;
-    min-height: 28rem;
-    height: 99.98dvh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    background-color: #FCFAEE;
-    text-align: center;
-}
-
-.app.login {
-    background: #FFF4C2;
-}
-
-.app.register {
-    background: #FFF0F6;
-}
-
-.app.pussyMeter {
-    background: #FFC9C9;
-}
-
-.app main {
-    flex-grow: 1;
-    overflow: auto;
 }
 
 .note {

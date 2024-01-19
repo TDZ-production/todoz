@@ -26,10 +26,11 @@
             <p th:if="${passwordReset} == true">Password reset successful</p>
 
             <label>
-                <input type="text" name="username" placeholder="email">
+                <input type="text" name="username" placeholder="email" autofocus required autocapitalize="none">
             </label>
+
             <label class="password">
-                <input type="password" name="password" id="password" placeholder="password">
+                <input type="password" name="password" id="password" placeholder="password" required>
                 <img src="/img/eye_icon_todo-03.png" id="showPassword" onclick="togglePasswordVisibility()" alt="hide icon">
             </label>
 

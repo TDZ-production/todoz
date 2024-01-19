@@ -23,12 +23,14 @@
         <form th:action="|/register|" method="post">
             <p th:if="${userExists} == true">User with this email exists</p>
             <label>
-                <input name="username" type="text" placeholder="email" >
+                <input name="username" type="email" placeholder="email" required autofocus autocapitalize="none">
             </label>
+
             <label class="password">
-                <input name="password" type="password" id="password" placeholder="password">
+                <input name="password" type="password" id="password" placeholder="password" required>
                 <img src="/img/eye_icon_todo-03.png" id="showPassword" onclick="togglePasswordVisibility()" alt="hide icon">
             </label>
+
             <label class="slideContainer">
                 <p id="pussyLabel">Neutral</p>
                 <input type="range" name="pussyMeter" step="1" max="2" class="slider" id="myRange" oninput="updateTitle()">
