@@ -27,29 +27,12 @@ public class NotificationService {
     }
 
     public String getMorningNotification(User user) {
-        Map<List<Task>, Integer> mapTaskAndTypeTask = getTasks();
-
-        List<Task> tasks = mapTaskAndTypeTask
-                .keySet()
-                .stream()
-                .findFirst()
-                .orElse(null);
-
-        Integer typeTask = mapTaskAndTypeTask
-                .values()
-                .stream()
-                .findFirst()
-                .orElse(null);
-
-        if (tasks == null || typeTask == null){
-            throw new RuntimeException("no tasks or no type tasks");
-        }
 
         int pussyMeter = user.getPussyMeter();
         boolean notificationSingleTask = user.isNotificationSingleTask();
 
         List<Notification> notifications = notificationRepo.
-                findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask("morning", pussyMeter, notificationSingleTask, typeTask);
+                findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask("morning", pussyMeter, notificationSingleTask, getTypeTask());
 
         if(notifications.isEmpty()){
             throw new RuntimeException("There is no notification for that case");
@@ -57,11 +40,60 @@ public class NotificationService {
 
         Notification notification = getRandomNotification(notifications);
 
-        return getJsonNotification(tasks, notification,  notificationSingleTask);
+        return getJsonNotification(getTasks(), notification,  notificationSingleTask);
     }
 
+    public String getNoonNotification(User user) {
+        List<Notification> notifications = notificationRepo.
+                findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask("morning", user.getPussyMeter(), user.isNotificationSingleTask(), getTypeTask());
 
-    public Map<List<Task>, Integer> getTasks() {
+        if(notifications.isEmpty()){
+            throw new RuntimeException("There is no notification for that case");
+        }
+
+        Notification notification = getRandomNotification(notifications);
+
+        return getJsonNotification(getTasks(), notification,  user.isNotificationSingleTask());
+
+    }
+
+        public int getTypeTask() {
+            Map<List<Task>, Integer> mapTaskAndTypeTask = getListTasksAndTypeTask();
+
+            Integer typeTask = mapTaskAndTypeTask
+                    .values()
+                    .stream()
+                    .findFirst()
+                    .orElse(null);
+
+            if (typeTask == null){
+                throw new RuntimeException("no type task for the notification");
+            }
+
+            //logic so that it doesn't show messages if there is no task or is 1 task but notificationSingleTask is false which means that they want three messages
+
+            return typeTask;
+        }
+
+        public List<Task> getTasks() {
+            Map<List<Task>, Integer> mapTaskAndTypeTask = getListTasksAndTypeTask();
+
+            List<Task> tasks = mapTaskAndTypeTask
+                    .keySet()
+                    .stream()
+                    .findFirst()
+                    .orElse(null);
+
+            if (tasks == null){
+                throw new RuntimeException("no tasks");
+            }
+
+            return tasks;
+        }
+
+
+
+        public Map<List<Task>, Integer> getListTasksAndTypeTask() {
         List<Task> tasks = taskRepo.findAll();
 
         /** tasks for today */
