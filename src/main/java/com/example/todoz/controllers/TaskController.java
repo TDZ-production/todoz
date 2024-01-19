@@ -8,7 +8,6 @@ import com.example.todoz.services.TaskService;
 import com.example.todoz.services.UserService;
 import com.example.todoz.services.WeekService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,17 +26,16 @@ public class TaskController {
     public String add(Task task, LocalDate maybeDueDate, Principal principal) {
         task.digestDueDate(maybeDueDate, getWeek(principal));
         task.setUser(getUser(principal));
-
         taskService.save(task);
 
         return "redirect:/";
     }
 
     @PostMapping("check/{id}")
-    @ResponseBody
-    public ResponseEntity<Void> checkTask(@PathVariable Long id, @RequestParam boolean done, Principal principal) {
-        taskService.checkedTask(id, userService.findByUsername(principal.getName()).orElseThrow(RuntimeException::new), done);
-        return ResponseEntity.ok().build();
+    public String checkTask(@PathVariable Long id, @RequestParam boolean done, Principal principal) {
+        taskService.checkedTask(id, getUser(principal), done);
+
+        return "redirect:/";
     }
 
     @PostMapping("{id}")
