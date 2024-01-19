@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.mockito.Mockito.*;
 
@@ -41,14 +42,21 @@ public class WeekReviewTesting {
     @WithMockUser(username = "TestUser")
     public void WeekReview_CanAddTask_True() throws Exception {
         // arrange
-        Task task = new Task();
-        task.setDescription("TestTask");
-        task.setDueDate(LocalDateTime.now().plusWeeks(1));
+        Task longTermTask = new Task();
+        longTermTask.setDescription("LongTermTask");
+        longTermTask.setDueDate(LocalDateTime.now().plusWeeks(1));
+
+        Task previuosTask = new Task();
+        previuosTask.setDescription("previuosTask");
+        previuosTask.setDone(true);
+
+        Week previuosWeek = new Week();
+        previuosWeek.getTasks().add(previuosTask);
 
         when(taskService.findUpcomingTasks(any(User.class), anyInt(), anyInt()))
-                .thenReturn(List.of(task));
+                .thenReturn(List.of(longTermTask));
         when(weekService.findPreviousWeek(any(User.class)))
-                .thenReturn(Optional.of(new Week()));
+                .thenReturn(Optional.of(previuosWeek));
         when(weekService.findCurrentWeek(any(User.class)))
                 .thenReturn(Optional.empty());
 
@@ -59,7 +67,8 @@ public class WeekReviewTesting {
         ResultActions resultActions = mockMvc.perform(get("/").principal(principal))
                 .andExpect(status().isOk())
                 .andExpect(view().name("weekReview"))
-                .andExpect(model().attributeExists("user", "previousWeek", "upcomingTasks"));
+                .andExpect(model().attributeExists("user", "previousWeek", "upcomingTasks"))
+                .andDo(print());
 
     }
 }
