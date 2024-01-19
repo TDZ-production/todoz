@@ -75,19 +75,20 @@ public class NotificationService {
         List<Task> filteredTasks = tasks.stream()
                 .filter(t -> !t.isDone() &&
                         (("Today".equals(t.getRemainingDays())) ||
-                                (("Yesterday".equals(t.getRemainingDays()) ||  "Tomorrow".equals(t.getRemainingDays())) && t.getPriority() == 4)))
+                                ("Yesterday".equals(t.getRemainingDays()) && t.getPriority() == 4)))
                 .sorted(Comparator.comparing(Task::getPriority))
                 .toList();
 
 
-        if(tasksToday.size() > 3){
+        if(tasksToday.size() > 5){
             return new HashMap<>(){{put(tasksToday, 1);}};
-        } else if (!tasksToday.isEmpty()) {
-            return new HashMap<>(){{put(filteredTasks, 1);}};
         }else if(!filteredTasks.isEmpty()){
-            return new HashMap<>(){{put(filteredTasks, 1);}};
-        }else{ //no tasks
+            if(filteredTasks.size() >1 ){
+                return new HashMap<>(){{put(filteredTasks, 1);}};
+            }
             return new HashMap<>(){{put(filteredTasks, 2);}};
+        }else{ //no tasks
+            return new HashMap<>(){{put(filteredTasks, 3);}};
 
         }
     }
