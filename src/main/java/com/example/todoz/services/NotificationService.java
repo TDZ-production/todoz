@@ -28,11 +28,9 @@ public class NotificationService {
 
     public String getMorningNotification(User user) {
 
-        int pussyMeter = user.getPussyMeter();
-        boolean notificationSingleTask = user.isNotificationSingleTask();
 
         List<Notification> notifications = notificationRepo.
-                findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask("morning", pussyMeter, notificationSingleTask, getTypeTask());
+                findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask("morning", user.getPussyMeter(), user.isNotificationSingleTask(), getTypeTask());
 
         if(notifications.isEmpty()){
             throw new RuntimeException("There is no notification for that case");
@@ -40,14 +38,27 @@ public class NotificationService {
 
         Notification notification = getRandomNotification(notifications);
 
-        return getJsonNotification(getTasks(), notification,  notificationSingleTask);
+        return getJsonNotification(getTasks(), notification,  user.isNotificationSingleTask());
     }
 
     public String getNoonNotification(User user) {
-        List<Notification> notifications = notificationRepo.
-                findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask("morning", user.getPussyMeter(), user.isNotificationSingleTask(), getTypeTask());
+        int typeTask = getTypeTask();
+        boolean notificationSingleTask = user.isNotificationSingleTask();
+        List<Notification> notifications = null;
 
-        if(notifications.isEmpty()){
+        /** No notifications for 0 tasks, it returns an empty task */
+        if(typeTask == 3){
+            List<Notification> noNotification = null;
+        } else if (typeTask == 2 && !notificationSingleTask){ /** there is no notifications for that case, so we change three tasks to one task (false to true)*/
+            notifications = notificationRepo.
+                    findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask("noon", user.getPussyMeter(),true, getTypeTask());
+        }else{
+            notifications = notificationRepo.
+                    findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask("noon", user.getPussyMeter(), user.isNotificationSingleTask(), getTypeTask());
+        }
+
+
+        if(notifications == null){
             throw new RuntimeException("There is no notification for that case");
         }
 
@@ -69,9 +80,7 @@ public class NotificationService {
             if (typeTask == null){
                 throw new RuntimeException("no type task for the notification");
             }
-
-            //logic so that it doesn't show messages if there is no task or is 1 task but notificationSingleTask is false which means that they want three messages
-
+            
             return typeTask;
         }
 
@@ -90,7 +99,6 @@ public class NotificationService {
 
             return tasks;
         }
-
 
 
         public Map<List<Task>, Integer> getListTasksAndTypeTask() {
