@@ -33,6 +33,14 @@ label {
     margin: 1rem 2rem;
 }
 
+.alignRight {
+    text-align: right;
+}
+
+form p {
+    margin: 0 2rem;
+}
+
 header {
     position: relative;
     padding: 1rem 0;
@@ -148,7 +156,7 @@ h1.pussyHeader {
 }
 
 main > form button {
-    margin-top: 2rem;
+    margin-top: 4rem;
 }
 
 .hidden {
