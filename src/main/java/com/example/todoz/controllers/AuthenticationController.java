@@ -1,11 +1,11 @@
 package com.example.todoz.controllers;
 
 import com.example.todoz.dtos.RegisterDTO;
+import com.example.todoz.prtoken.PasswordResetToken;
 import com.example.todoz.services.EmailService;
 import com.example.todoz.models.User;
 import com.example.todoz.prtoken.PRTService;
 import com.example.todoz.services.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -56,8 +56,7 @@ public class AuthenticationController {
             ra.addFlashAttribute("userExists", true);
 
             return "redirect:/register";
-        }
-        else {
+        } else {
             userService.createAndSave(registerDTO.username(), passwordEncoder.encode(registerDTO.password()), registerDTO.pussyMeter());
 
             return "redirect:/login";
@@ -87,24 +86,19 @@ public class AuthenticationController {
 
     @GetMapping("/validateToken")
     public String showNewPassword(@RequestParam(required = false) String token, RedirectAttributes ra) {
-        if (token == null) {
+        Optional<PasswordResetToken> optToken = pRTService.findByToken(token);
+
+        if (token == null || token.isEmpty() || optToken.isEmpty()) {
             ra.addFlashAttribute("tokenNotFound", true);
             return "redirect:/resetPassword";
-        }
-        try {
-            ra.addFlashAttribute("userId", pRTService.findUserByToken(token).getId());
-        }
-        catch (EntityNotFoundException e) {
-            ra.addFlashAttribute("tokenNotFound", true);
-            return "redirect:/resetPassword";
-        }
-        catch (RuntimeException e) {
+        } else if (!pRTService.validateToken(optToken.get())) {
             ra.addFlashAttribute("tokenExpired", true);
             pRTService.deleteByToken(token);
             return "redirect:/resetPassword";
+        } else {
+            ra.addFlashAttribute("userId", optToken.get().getId());
+            return "redirect:/newPassword";
         }
-
-        return "redirect:/newPassword";
     }
 
     @GetMapping("/newPassword")

@@ -30,17 +30,8 @@ public class PRTService {
         return LocalDateTime.now().isBefore(token.getExpirationTime());
     }
 
-    public User findUserByToken(String token) {
-        Optional<PasswordResetToken> optToken = repo.findByToken(token);
-
-        if (optToken.isEmpty()) {
-            throw new EntityNotFoundException();
-        }
-        else if (!validateToken(optToken.get())) {
-            throw new RuntimeException();
-        }
-
-        return optToken.get().getUser();
+    public Optional<PasswordResetToken> findByToken(String token) {
+        return repo.findByToken(token);
     }
 
     @Transactional
