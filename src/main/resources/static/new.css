@@ -24,7 +24,7 @@ body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    background-color: white;
+    background-color: #FCFAEE;
     text-align: center;
 }
 
