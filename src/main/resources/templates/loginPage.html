@@ -27,8 +27,9 @@
             <label>
                 <input type="text" name="username" placeholder="email or username">
             </label>
-            <label>
-                <input type="password" name="password" placeholder="password">
+            <label class="password">
+                <input type="password" name="password" id="password" placeholder="password">
+                <img src="/img/eye_icon_todo-03.png" id="showPassword" onclick="togglePasswordVisibility()" alt="hide icon">
             </label>
 
             <button class="cta" type="submit" value="Log In">&gt;&gt;</button>
@@ -55,6 +56,20 @@
         }
         else if (counter % 4 === 3) {
             note.innerText = "OMG, sign-up already!"
+        }
+    }
+
+    function togglePasswordVisibility() {
+        const password = document.querySelector("#password");
+        const img = document.querySelector("#showPassword")
+
+        if (password.type === "password") {
+            password.type = "text";
+            img.src = "/img/eye_icon_todo-02.png"
+        }
+        else {
+            password.type = "password";
+            img.src = "/img/eye_icon_todo-03.png"
         }
     }
 </script>

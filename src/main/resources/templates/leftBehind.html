@@ -28,7 +28,7 @@
             <span th:classappend="|prio${task.getPriority()}|"></span>
             <p th:text="*{description}"></p>
             <form method="post" th:action="|/tasks/re-add/${task.id}|">
-                <button><img class="icon-unchecked" src="/img/todoz_weekReviewIcon+-02.png" alt="re-add"></button>
+                <button class="img"><img class="icon-unchecked" src="/img/todoz_weekReviewIcon+-02.png" alt="re-add"></button>
             </form>
         </div>
 
