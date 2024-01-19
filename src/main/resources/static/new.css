@@ -494,6 +494,21 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     cursor: pointer;
 }
 
+.NoTaskPlaceholder{
+    margin: 4.5rem;
+    opacity: 0.6;
+}
+
+.NoTaskPlaceholder img{
+    width: 12.5rem;
+    height: auto;
+}
+
+.NoTaskPlaceholder p {
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
 .password {
     position: relative;
 }
@@ -503,6 +518,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     right: 1rem;
     top: 50%;
     transform: translateY(-50%);
+
 }
 
 @media (min-width: 460px) {

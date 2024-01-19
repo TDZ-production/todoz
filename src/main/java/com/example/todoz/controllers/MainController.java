@@ -90,6 +90,7 @@ public class MainController {
     public String showLongTerm(Model model, Principal principal) {
         model.addAttribute("longTerm",
                 taskService.findLongTermTasks(getUser(principal), DateManager.formattedCurrentWeek()));
+        model.addAttribute("user",getUser(principal));
         return "longTerm";
     }
 
@@ -98,6 +99,7 @@ public class MainController {
         List<Task> leftBehind = taskService.findLeftBehind(getUser(principal), getWeek(principal), DateManager.formattedCurrentWeek());
 
         model.addAttribute("leftBehind", leftBehind);
+        model.addAttribute("user",getUser(principal));
         return "leftBehind";
     }
 
