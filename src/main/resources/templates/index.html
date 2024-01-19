@@ -84,7 +84,7 @@
             </label>
 
             <div class="addTask">
-                <input type="text" placeholder="new task" name="description" id="add" required>
+                <input type="text" placeholder="new task" name="description" id="add" required autofocus autocomplete="off">
                 <img onclick="toggleDueDate()" src="/img/Kalendar_Icon-02.png" alt="due date">
             </div>
         </form>
@@ -222,12 +222,14 @@
          }
 
          function initiPhoneHack() {
-             document.querySelector("#add").addEventListener('focusin', () => {
-                 adjustSafeAreaInset(0);
-             });
-             document.addEventListener('focusout', () => {
-                 adjustSafeAreaInset();
-             });
+             window.visualViewport.addEventListener('resize', handleKeyboard);
+             document.addEventListener('focusin', handleKeyboard);
+             document.addEventListener('focusout', handleKeyboard);
+
+             function handleKeyboard() {
+                 window.scrollY > 0 ? adjustSafeAreaInset(0) : adjustSafeAreaInset();
+             }
+
              function adjustSafeAreaInset(value = 'env(safe-area-inset-bottom)') {
                  document.querySelector("footer").style.paddingBottom = value;
              }

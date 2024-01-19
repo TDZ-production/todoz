@@ -25,10 +25,10 @@
             <p th:if="${param.logout}">You have been logged out.</p>
 
             <label>
-                <input type="text" name="username" placeholder="email or username">
+                <input type="text" name="username" placeholder="email or username" autofocus required autocapitalize="none">
             </label>
             <label>
-                <input type="password" name="password" placeholder="password">
+                <input type="password" name="password" placeholder="password" required>
             </label>
 
             <button class="cta" type="submit" value="Log In">&gt;&gt;</button>
