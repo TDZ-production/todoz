@@ -38,7 +38,6 @@ public class MainController {
 
             model.addAttribute("previousWeek", previousWeek);
             model.addAttribute("upcomingTasks", upcomingTasks);
-            model.addAttribute("howManyTasks", previousWeek.getNumberOfNotDoneTasks() + upcomingTasks.size());
             return "weekReview";
         }
         else if(currentWeek.isEmpty()) {
@@ -59,11 +58,15 @@ public class MainController {
     }
 
     @PostMapping("/startNewWeek")
-    public String startNewWeek(Principal principal, @RequestParam("tasks") List<Long> delegatedTasks) {
+    public String startNewWeek(Principal principal, @RequestParam(value = "taskId", required = false) List<Long> taskIds) {
         Week week = new Week(getUser(principal));
-        delegatedTasks.stream()
-                        .map(taskId -> taskService.findTaskByIdAndUserId(taskId, getUser(principal)))
-                        .forEach(task -> task.setWeek(week));
+
+        if (taskIds != null && !taskIds.isEmpty()){
+            taskIds.stream()
+                    .map(taskId -> taskService.findTaskByIdAndUserId(taskId, getUser(principal)))
+                    .forEach(task -> task.setWeek(week));
+        }
+
         weekService.save(week);
         return "redirect:/";
     }
@@ -119,8 +122,8 @@ public class MainController {
     }
 
     @PostMapping("/test")
-    public String receiveArray(@RequestParam("numbers") List<Integer> numbers, Model model) {
-        if (numbers.size() > 1){
+    public String receiveArray(@RequestParam(value = "numbers", required = false) List<Integer> numbers, Model model) {
+        if (numbers != null && !numbers.isEmpty()){
             model.addAttribute("numbers", numbers);
             return "testPositive";
         }

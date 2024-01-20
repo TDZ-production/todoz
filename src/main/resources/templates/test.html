@@ -8,21 +8,29 @@
     <form method="post">
         <label>
             1
-            <input type="checkbox" value="1" name="numbers">
+            <input type="checkbox" class="toDelegate" onclick="updateButton()" value="1" name="numbers">
         </label>
         <label>
             2
-            <input type="checkbox" value="2" name="numbers">
+            <input type="checkbox" class="toDelegate" onclick="updateButton()" value="2" name="numbers">
         </label>
         <label>
             3
-            <input type="checkbox" value="3" name="numbers">
+            <input type="checkbox" class="toDelegate" onclick="updateButton()" value="3" name="numbers">
         </label>
         <label>
             4
-            <input type="checkbox" value="4" name="numbers">
+            <input type="checkbox" class="toDelegate" onclick="updateButton()" value="4" name="numbers">
         </label>
-        <button type="submit">SUBMIT</button>
+        <button type="submit" id="submitButton">SUBMIT</button>
     </form>
+
+    <script>
+        function updateButton() {
+            const checkedTasks = document.querySelectorAll(".toDelegate:checked");
+            document.getElementById("submitButton")
+                .textContent = `Start week with ${checkedTasks.length} task${checkedTasks.length === 1 ? '' : 's'}`;
+        }
+    </script>
 </body>
 </html>
