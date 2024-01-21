@@ -34,7 +34,7 @@
             <p style="margin-top:0.5rem">
                 <img style="height: 4.7rem" th:src="${previousWeek.getCatImage()}" alt="">
             </p>
-            <p class="weekNote">Select tasks you want in week <span th:text="|${previousWeek.nextWeekNumber()}|" />. You can look back on&nbsp;your&nbsp;week and&nbsp;retrospect; and&nbsp;keep your&nbsp;week clean and&nbsp;focused! Woo-hoo! <span th:if="${upcomingTasks.size() > 0}">Planned&nbsp;tasks are already selected.</span></p>
+            <p class="weekNote">Select tasks you want in week <span th:text="|${previousWeek.nextWeekNumber()}|" />.<br/>You can look back on&nbsp;your&nbsp;week and&nbsp;retrospect. Keep your&nbsp;week clean and&nbsp;focused! Woo-hoo! <span th:if="${upcomingTasks.size() > 0}">Planned&nbsp;tasks are already selected.</span></p>
         </div>
 
         <form th:action="@{/startNewWeek}" th:method="post" id="form">
