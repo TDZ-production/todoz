@@ -67,7 +67,7 @@ label {
     text-align: right;
 }
 
-form p {
+form > p {
     margin: 0 2rem;
 }
 
