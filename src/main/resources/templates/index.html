@@ -54,7 +54,7 @@
         </div>
 
         <div th:if="${currentWeek.getSortedTasks().isEmpty()}" class="NoTaskPlaceholder">
-            <p>Don´t be lazy! Choose priority, deadline and create your first task!</p>
+            <p>Howdy partner! Ready&nbsp;to create your&nbsp;first&nbsp;task?<br>Save the task by picking&nbsp;a&nbsp;priority, to&nbsp;keep things organised!</p>
             <img th:if="${user.pussyMeter == 0}" src="/img/cat_todo_placeholder_pussyMeter1.png">
             <img th:if="${user.pussyMeter == 1}" src="/img/cat_todo_placeholder_pussyMeter2.png">
             <img th:if="${user.pussyMeter == 2}" src="/img/cat_todo_placeholder_pussyMeter3.png">
