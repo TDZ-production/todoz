@@ -337,10 +337,6 @@ footer input, .stars button {
     line-height: 1.666;
 }
 
-.weekSummary img {
-    height: 3.5rem;
-}
-
 .weekSummary .weekNote {
     border-bottom: 1px solid #dddad7;
     margin-top: 2rem;

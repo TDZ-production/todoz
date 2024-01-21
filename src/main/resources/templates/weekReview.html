@@ -32,9 +32,7 @@
             <h2>tasks done</h2>
             <p th:text="|Well you managed to survive through that week with ${previousWeek.getDonePercentage()}% of finished tasks... Not bad, not bad!|"></p>
             <p style="margin-top:0.5rem">
-                <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-04.png">
-                <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-04.png">
-                <img th:if="${user.pussyMeter == 2}" src="/img/skull_icon-05.png">
+                <img style="height: 4.7rem" th:src="${previousWeek.getCatImage()}" alt="">
             </p>
             <p class="weekNote">Select tasks you want in week <span th:text="|${previousWeek.nextWeekNumber()}|" />. You can look back on&nbsp;your&nbsp;week and&nbsp;retrospect; and&nbsp;keep your&nbsp;week clean and&nbsp;focused! Woo-hoo! <span th:if="${upcomingTasks.size() > 0}">Planned&nbsp;tasks are already selected.</span></p>
         </div>
