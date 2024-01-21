@@ -65,16 +65,18 @@
                 </label>
             </div>
             <p class="awesome">Hey, did you know this app is in pre-alpha?<br />You're such a&nbsp;trend setter!</p>
-            <button class="startWeek" type="submit" th:text="|Start your week with ${upcomingTasks.size()} tasks|" data-umami-event="startNewWeek"></button>
+            <button class="startWeek" type="submit" data-umami-event="startNewWeek">Start your week</button>
         </form>
         <img src="/img/stickman1.png" class="stickman" alt="">
     </main>
 
     <script>
+        updateButton();
+
         function updateButton() {
             const checkedTasks = document.querySelectorAll(".toDelegate:checked");
             document.querySelector(".startWeek")
-                .textContent = `Start new week with ${checkedTasks.length} task${checkedTasks.length === 1 ? '' : 's'}`;
+                .textContent = `Start week with ${checkedTasks.length} task${checkedTasks.length === 1 ? '' : 's'}`;
         }
 
         ((tasks) => {
