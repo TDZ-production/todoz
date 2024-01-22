@@ -2,6 +2,7 @@ package com.example.todoz.services;
 
 import com.example.todoz.models.User;
 import com.example.todoz.repos.UserRepo;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -45,5 +46,20 @@ public class UserService implements UserDetailsService {
 
     public void save(User user) {
         userRepo.save(user);
+    }
+
+    public Optional<User> findById(Long userId) {
+        return userRepo.findById(userId);
+    }
+
+    public void createAndSave(String username, String password, Integer pussyMeter) {
+        User user = new User(username, password, pussyMeter);
+        save(user);
+    }
+
+    public void updatePassword(Long userId, String password) {
+        User user = findById(userId).orElseThrow(EntityNotFoundException::new);
+        user.setPassword(password);
+        save(user);
     }
 }
