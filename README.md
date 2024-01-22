@@ -21,7 +21,7 @@ We as TDZ team want Todoz* to be as much FUN and SIMPLE to use as posible, so co
 ## Become Todoz* Tester!
 
 Currently our app is in free and public pre-Alpha stage that you can already try after clicking on this **[link!](https://todoz.gfapp.eu/)**
-We want Todoz* to become something that is pleasent and induitive to use, so we are open to any critisism and FeedBack! You can wrote your anonymus feedback in the app itself or you can join our **[Discord]()** community where we share our production site and post current updates!
+We want Todoz* to become something that is pleasent and induitive to use, so we are open to any critisism and FeedBack! You can wrote your anonymus feedback in the app itself or you can join our **[Discord](https://discord.gg/cP9Xa5TcuX)** community where we share our production site and post current updates!
 ## Future Plans
 We are planning to make Todoz* available to be **self-hosted**. So anyone can host the their own to-do for free, if they wanted to!
 
