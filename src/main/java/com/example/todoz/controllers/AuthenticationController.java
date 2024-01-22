@@ -128,4 +128,12 @@ public class AuthenticationController {
     private String passwordResetEmailLink(HttpServletRequest request, String token) {
         return "https://" + request.getServerName() + request.getContextPath() + "/validateToken?token=" + token;
     }
+
+    public boolean validatePassword(String password) {
+        return !password.isBlank() && !password.contains(" ") && password.length() >= 5;
+    }
+
+    public boolean validateUsername(String username) {
+        return !username.isBlank() && !username.contains(" ") && username.length() >= 3;
+    }
 }
