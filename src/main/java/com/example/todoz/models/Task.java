@@ -47,13 +47,6 @@ public class Task {
         }
     }
 
-    public void setDueDate(LocalDateTime dueDate) {
-        if(dueDate != null) {
-            this.dueDate = dueDate;
-            this.dueDateWeekNumber = DateManager.formatWeek(dueDate);
-        }
-    }
-
     /**
      * Formats dueDate to dd.MM.yyyy
      *
