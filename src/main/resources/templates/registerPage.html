@@ -23,7 +23,7 @@
 
         <form th:action="|/register|" method="post">
             <p th:if="${userExists} == true">User with this email exists</p>
-            <p th:if="${usernameWrong} == true">Invalid input!</p>
+            <p th:if="${invalidCredentials} == true">Invalid credentials!</p>
             <p id="placeholder"></p>
             <label>
                 <input name="username" type="text" id="email" placeholder="email" required autofocus
@@ -86,18 +86,29 @@
         let password = document.querySelector("#password").value;
         let email = document.querySelector("#email").value;
         let placeholder = document.querySelector("#placeholder");
-        const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        const validRegex = /^(?=.{1,64}@)[A-Za-z0-9_-]+(\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,})$/;
         const range = document.querySelector("#myRange").value;
         const MINIMAL_PASSWORD_LENGTH = 5;
 
         if (!email.match(validRegex)) {
-            if (range === 2) {
-                placeholder.innerHTML = "An EMAIL!";
+            if (range == 2) {
+                placeholder.innerHTML = "Really? This is an email?";
+            } else if (range == 1) {
+                placeholder.innerHTML = "Invalid email address"
+            } else {
+                placeholder.innerHTML = "Oops! Mind checking the email again?"
             }
-            return false;
 
+            return false;
         } else if (password.length < MINIMAL_PASSWORD_LENGTH) {
-            placeholder.innerHTML = `Too short! At least ${MINIMAL_PASSWORD_LENGTH} characters!`;
+            if (range == 2) {
+                placeholder.innerHTML = `This short?! You can do better.`;
+            } else if (range == 1) {
+                placeholder.innerHTML = `At least ${MINIMAL_PASSWORD_LENGTH} characters long password!`;
+            } else {
+                placeholder.innerHTML = `Password should be ${MINIMAL_PASSWORD_LENGTH} characters or longer. Give it another go.`;
+            }
+
             return false;
         } else {
             return true;

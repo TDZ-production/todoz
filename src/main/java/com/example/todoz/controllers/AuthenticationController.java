@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import static com.example.todoz.models.User.MINIMAL_PASSWORD_LENGTH;
 
@@ -54,6 +55,10 @@ public class AuthenticationController {
 
         if (optUSer.isPresent()) {
             ra.addFlashAttribute("userExists", true);
+
+            return "redirect:/register";
+        } else if (!validUsername(registerDTO.username()) || validPassword(registerDTO.password())) {
+            ra.addFlashAttribute("invalidCredentials", true);
 
             return "redirect:/register";
         } else {
@@ -129,11 +134,14 @@ public class AuthenticationController {
         return "https://" + request.getServerName() + request.getContextPath() + "/validateToken?token=" + token;
     }
 
-    public boolean validatePassword(String password) {
-        return !password.isBlank() && !password.contains(" ") && password.length() >= 5;
+    public boolean validPassword(String password) {
+        return password.length() >= MINIMAL_PASSWORD_LENGTH;
     }
 
-    public boolean validateUsername(String username) {
-        return !username.isBlank() && !username.contains(" ") && username.length() >= 3;
+    public boolean validUsername(String username) {
+        String emailRegEx = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+        return Pattern.compile(emailRegEx)
+                .matcher(username)
+                .matches();
     }
 }
