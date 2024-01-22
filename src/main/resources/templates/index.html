@@ -243,8 +243,12 @@
             function handleKeyboard() {
                 requestAnimationFrame(() => {
                     window.scrollY > 0 ? adjustSafeAreaInset(0) : adjustSafeAreaInset();
-                    setTimeout(() => {document.querySelector(".stars").scrollIntoView({behavior: "smooth"});}, 400);
-                    setTimeout(() => {document.querySelector(".stars").scrollIntoView({behavior: "smooth"});}, 800);
+
+                    [400, 800].forEach((ms) => {
+                        setTimeout(() => {
+                            document.querySelector(".stars").scrollIntoView({behavior: "smooth"});
+                        }, ms);
+                    })
                 });
             }
 
