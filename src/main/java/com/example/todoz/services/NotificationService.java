@@ -45,11 +45,11 @@ public class NotificationService {
         int typeTask = getTypeTask();
         boolean notificationSingleTask = user.isNotificationSingleTask();
         List<Notification> notifications = null;
+        Notification notification = null;
 
         /** No notifications for 0 tasks, it returns an empty task */
         if(typeTask == 3){
-            List<Notification> noNotification = null;
-        } else if (typeTask == 2 && !notificationSingleTask){ /** there is no notifications for that case, so we change three tasks to one task (false to true)*/
+        } else if (typeTask == 2 && !notificationSingleTask){ /** type 2 it will always show one task */
             notifications = notificationRepo.
                     findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask("noon", user.getPussyMeter(),true, getTypeTask());
         }else{
@@ -57,12 +57,9 @@ public class NotificationService {
                     findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask("noon", user.getPussyMeter(), user.isNotificationSingleTask(), getTypeTask());
         }
 
-
-        if(notifications == null){
-            throw new RuntimeException("There is no notification for that case");
+        if(notifications != null){
+            notification = getRandomNotification(notifications);
         }
-
-        Notification notification = getRandomNotification(notifications);
 
         return getJsonNotification(getTasks(), notification,  user.isNotificationSingleTask());
 
@@ -139,30 +136,32 @@ public class NotificationService {
 
         public String getJsonNotification(List<Task> tasks, Notification notification, boolean notificationSingleTask){
 
-        NotificationDTO notificationDTO;
+            NotificationDTO notificationDTO = null;
 
-            if(notificationSingleTask){
-                notificationDTO = new NotificationDTO(
-                    String.format(notification.getTitle(), tasks.size()),
-                    String.format(notification.getDescription(), tasks.get(0).getDescription()));
+            if(notification != null) {
+                if (notificationSingleTask) {
+                    notificationDTO = new NotificationDTO(
+                            String.format(notification.getTitle(), tasks.size()),
+                            String.format(notification.getDescription(), tasks.get(0).getDescription()));
 
-            }else{
-                String threeTasksString =tasks.subList(0,3).stream()
-                        .map(task -> "- " + task.getDescription() + " \n")
-                        .collect(Collectors.joining());
+                } else {
+                    String threeTasksString = tasks.subList(0, 3).stream()
+                            .map(task -> "- " + task.getDescription() + " \n")
+                            .collect(Collectors.joining());
 
 
-                notificationDTO = new NotificationDTO(
-                        String.format(notification.getTitle(), tasks.size()),
-                        String.format(notification.getDescription(), threeTasksString));
+                    notificationDTO = new NotificationDTO(
+                            String.format(notification.getTitle(), tasks.size()),
+                            String.format(notification.getDescription(), threeTasksString));
 
-        }
+                }
+            }
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            return objectMapper.writeValueAsString(notificationDTO);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+                return objectMapper.writeValueAsString(notificationDTO);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
     }
 }
