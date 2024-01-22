@@ -30,8 +30,8 @@ public class TaskController {
         task.digestDueDate(maybeDueDate, getWeek(principal));
         task.setUser(getUser(principal));
         taskService.save(task);
-        if (task.getDueDateWeekNumber() > DateManager.formattedCurrentWeek()) {
-            ra.addFlashAttribute("longtermTask", true);
+        if (task.getDueDate() != null && task.getDueDateWeekNumber() > DateManager.formattedCurrentWeek()) {
+            ra.addFlashAttribute("longTermTask", true);
             ra.addFlashAttribute("taskDueWeek", (task.getDueDateWeekNumber() % 100));
         }
 

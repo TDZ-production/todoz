@@ -54,7 +54,8 @@
         </div>
 
         <div th:if="${currentWeek.getSortedTasks().isEmpty()}" class="NoTaskPlaceholder">
-            <p>Howdy partner! Ready&nbsp;to create your&nbsp;first&nbsp;task?<br>Save the task by picking&nbsp;a&nbsp;priority, to&nbsp;keep things organised!</p>
+            <p>Howdy partner! Ready to create your first task?<br>Save the task by picking a priority, to keep things
+                organised!</p>
             <img th:if="${user.pussyMeter == 0}" src="/img/cat_todo_placeholder_pussyMeter1.png">
             <img th:if="${user.pussyMeter == 1}" src="/img/cat_todo_placeholder_pussyMeter2.png">
             <img th:if="${user.pussyMeter == 2}" src="/img/cat_todo_placeholder_pussyMeter3.png">
@@ -62,9 +63,9 @@
     </main>
 
     <footer>
+        <p th:if="${longTermTask} == true" id="fadeoutMessage" th:text="|Task added to week ${taskDueWeek}|"></p>
         <form method="post" th:action="@{/tasks/add}">
             <button type="submit" name="priority" value="4" class="hidden"></button>
-            <p th:if="${longtermTask} == true" th:text="|Task added to week ${taskDueWeek}|"></p>
 
             <label class="dateTime hidden">
                 <input type="date" name="maybeDueDate" id="date">
@@ -111,6 +112,7 @@
         initiPhoneHack();
 
         setInterval(updateWeekProgressbar, 3600);
+        setTimeout(fadeout, 3000);
 
         function updateWeekProgressbar() {
             const progressbar = document.querySelector("#week-progressbar");
@@ -235,45 +237,39 @@
                 }
             });
         }
-             const buttons = document.querySelectorAll("footer .stars button");
-             buttons.forEach(button => {
-                 if (button.value == priority) {
-                     button.classList.add("active");
-                 } else {
-                     button.classList.remove("active");
-                 }
-             });
 
-             // Adding fadeout message functionality
-             const fadeoutMessage = document.getElementById('fadeoutMessage');
+        const buttons = document.querySelectorAll("footer .stars button");
+        buttons.forEach(button => {
+            if (button.value == priority) {
+                button.classList.add("active");
+            } else {
+                button.classList.remove("active");
+            }
+        });
 
-             // Display the message
-             fadeoutMessage.style.display = 'block';
+        function fadeout() {
+            const fadeoutMessage = document.querySelector("#fadeoutMessage");
+            if (fadeoutMessage !== null) {
+                fadeoutMessage.style.transition = "opacity 1s ease-out";
+                fadeoutMessage.style.opacity = 0;
+                setTimeout(() => {
+                    fadeoutMessage.style.zIndex = -1
+                }, 1000);
+            }
+        }
 
-             // Reset opacity to 1 in case it's already faded
-             fadeoutMessage.style.opacity = 1;
+        function initiPhoneHack() {
+            document.querySelector("#add").addEventListener('focusin', () => {
+                adjustSafeAreaInset(0);
+            });
+            document.addEventListener('focusout', () => {
+                adjustSafeAreaInset();
+            });
 
-             // Set a timeout to fade out the message after 3 seconds
-             setTimeout(function () {
-                 fadeoutMessage.style.opacity = 0;
-             }, 3000);
-
-             // Set a timeout to hide the message after the fadeout animation
-             setTimeout(function () {
-                 fadeoutMessage.style.display = 'none';
-             }, 3500);
-
-         function initiPhoneHack() {
-             document.querySelector("#add").addEventListener('focusin', () => {
-                 adjustSafeAreaInset(0);
-             });
-             document.addEventListener('focusout', () => {
-                 adjustSafeAreaInset();
-             });
-             function adjustSafeAreaInset(value = 'env(safe-area-inset-bottom)') {
-                 document.querySelector("footer").style.paddingBottom = value;
-             }
-         }
+            function adjustSafeAreaInset(value = 'env(safe-area-inset-bottom)') {
+                document.querySelector("footer").style.paddingBottom = value;
+            }
+        }
 
         function adjustSafeAreaInset(value = 'env(safe-area-inset-bottom)') {
             document.querySelector("footer").style.paddingBottom = value;

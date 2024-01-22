@@ -288,6 +288,7 @@ main > p:last-child {
 }
 
 footer {
+    position: relative;
     background: #fff0c1;
     border-top: 2px solid #333;
     padding-bottom: env(safe-area-inset-bottom);
@@ -503,7 +504,14 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     right: 1rem;
     top: 50%;
     transform: translateY(-50%);
+}
 
+#fadeoutMessage {
+    position: absolute;
+    top: -2rem;
+    color: #b78300;
+    left: 26%;
+    font-size: 1.1rem;
 }
 
 @media (min-width: 460px) {
