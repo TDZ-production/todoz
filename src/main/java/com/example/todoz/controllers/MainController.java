@@ -59,14 +59,19 @@ public class MainController {
     @PostMapping("/startNewWeek")
     public String startNewWeek(Principal principal, @RequestParam(value = "taskId", required = false) List<Long> taskIds) {
         Week week = new Week(getUser(principal));
+        weekService.save(week);
 
         if (taskIds != null && !taskIds.isEmpty()){
             taskIds.stream()
                     .map(taskId -> taskService.findTaskByIdAndUserId(taskId, getUser(principal)))
-                    .forEach(task -> task.setWeek(week));
+                    .forEach(task -> {
+                        if (task.isDone()) {
+                            taskService.save(task.cloneTask(week));
+                        } else {
+                            task.setWeek(week);
+                        }
+                    });
         }
-
-        weekService.save(week);
         return "redirect:/";
     }
 
@@ -108,7 +113,7 @@ public class MainController {
 
     @PostMapping("/checked/{id}")
     public String checkedTask(@PathVariable Long id, @RequestParam boolean done, Principal principal) {
-        taskService.checkedTask(id, done, getUser(principal));
+        taskService.checkedTask(id, getUser(principal), done);
         return "redirect:/";
     }
 

@@ -7,7 +7,6 @@ import com.example.todoz.models.Week;
 import com.example.todoz.repos.TaskRepo;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.util.Comparator;
 import java.util.List;
 
@@ -21,15 +20,6 @@ public class TaskService {
 
     public void save(Task task) {
         taskRepo.save(task);
-    }
-
-    public Long getRemainingDays(Task task) {
-        if (task.getDueDate() == null) {
-            throw new RuntimeException("Inputted Task must have and DueDate assigned.");
-        } else {
-            Duration duration = Duration.between(task.getCreatedAt(), task.getDueDate());
-            return duration.toDays();
-        }
     }
 
     public List<Task> findTasksForThisWeek(User user) {
@@ -47,7 +37,7 @@ public class TaskService {
                 .toList();
     }
 
-    public void checkedTask(Long taskId, boolean done, User user) {
+    public void checkedTask(Long taskId, User user, boolean done) {
         Task task = taskRepo.findByIdAndUserId(taskId, user.getId())
                 .orElseThrow(() -> new RuntimeException(String.format("Task not found with id: %d, %s", taskId, user)));
         task.setDone(done);

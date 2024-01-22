@@ -50,11 +50,4 @@ public class Week {
                 .filter(t -> !t.isDone())
                 .count();
     }
-
-    public List<Task> getNotDoneTasks() {
-        return this.tasks
-                .stream()
-                .filter(t -> !t.isDone())
-                .collect(Collectors.toList());
-    }
 }

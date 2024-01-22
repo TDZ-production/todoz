@@ -130,4 +130,12 @@ public class Task {
             setDueDate(maybeDueDate.atTime(23, 59, 59));
         }
     }
+
+    public Task cloneTask(Week week) {
+        Task task =new Task();
+        task.setDescription(this.description);
+        task.setUser(this.user);
+        task.setWeek(week);
+        return task;
+    }
 }
