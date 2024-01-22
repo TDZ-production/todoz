@@ -15,6 +15,36 @@ body {
     color: #333;
 }
 
+.app {
+    margin: 0 auto;
+    max-width: 28rem;
+    min-height: 28rem;
+    height: 99.98vh; /* older browsers */
+    height: 99.98dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: #FCFAEE;
+    text-align: center;
+}
+
+.app.login {
+    background: #FFF4C2;
+}
+
+.app.register {
+    background: #FFF0F6;
+}
+
+.app.pussyMeter {
+    background: #FFC9C9;
+}
+
+.app main {
+    flex-grow: 1;
+    overflow: auto;
+}
+
 a {
     text-decoration: none;
     color: #b78300;
@@ -31,6 +61,14 @@ p {
 label {
     display: block;
     margin: 1rem 2rem;
+}
+
+.alignRight {
+    text-align: right;
+}
+
+form > p {
+    margin: 0 2rem;
 }
 
 header {
@@ -148,7 +186,7 @@ h1.pussyHeader {
 }
 
 main > form button {
-    margin-top: 2rem;
+    margin-top: 4rem;
 }
 
 .hidden {
@@ -163,35 +201,6 @@ main > form button {
 .fade {
     opacity: 0.4;
     filter: blur(1px);
-}
-
-.app {
-    margin: 0 auto;
-    max-width: 28rem;
-    min-height: 28rem;
-    height: 99.98dvh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    background-color: #FCFAEE;
-    text-align: center;
-}
-
-.app.login {
-    background: #FFF4C2;
-}
-
-.app.register {
-    background: #FFF0F6;
-}
-
-.app.pussyMeter {
-    background: #FFC9C9;
-}
-
-.app main {
-    flex-grow: 1;
-    overflow: auto;
 }
 
 .note {
@@ -260,7 +269,7 @@ main > form button {
 }
 
 .prio3 {
-    background: #f6ed75;
+    background: #f5e48d;
 }
 .prio4 {
     background: #ffb692;
@@ -280,6 +289,7 @@ main > p:last-child {
 
 footer {
     background: #fff0c1;
+    border-top: 2px solid #333;
     padding-bottom: env(safe-area-inset-bottom);
 }
 
@@ -326,10 +336,6 @@ footer input, .stars button {
 .weekSummary p, .week-review .awesome {
     padding: 1rem 2rem;
     line-height: 1.666;
-}
-
-.weekSummary img {
-    height: 3.5rem;
 }
 
 .weekSummary .weekNote {
@@ -474,7 +480,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 }
 
 .NoTaskPlaceholder{
-    margin: 4.5rem;
+    margin: 4.5rem 2rem;
     opacity: 0.6;
 }
 

@@ -38,7 +38,8 @@
     </header>
 
     <main>
-        <div th:unless="${currentWeek.getSortedTasks().isEmpty()}" class="task" th:each="task : ${currentWeek.getSortedTasks()}" th:object="${task}"
+        <div th:unless="${currentWeek.getSortedTasks().isEmpty()}" class="task"
+             th:each="task : ${currentWeek.getSortedTasks()}" th:object="${task}"
              th:data-priority="*{priority}" th:data-id="*{id}" th:data-done="*{done}">
             <span th:classappend="|prio${task.getPriority()}|"></span>
             <p th:text="*{description}"></p>
@@ -52,17 +53,27 @@
             </form>
         </div>
 
-    <div th:if="${currentWeek.getSortedTasks().isEmpty()}" class="NoTaskPlaceholder">
-        <p>Don´t be lazy! Choose priority, deadline and create your first task!</p>
-        <img th:if="${user.pussyMeter == 0}" src="/img/cat_todo_placeholder_pussyMeter1.png">
-        <img th:if="${user.pussyMeter == 1}" src="/img/cat_todo_placeholder_pussyMeter2.png">
-        <img th:if="${user.pussyMeter == 2}" src="/img/cat_todo_placeholder_pussyMeter3.png">
-    </div>
+        <div th:if="${currentWeek.getSortedTasks().isEmpty()}" class="NoTaskPlaceholder">
+            <p>Howdy partner! Ready&nbsp;to create your&nbsp;first&nbsp;task?<br>Save the task by picking&nbsp;a&nbsp;priority, to&nbsp;keep things organised!</p>
+            <img th:if="${user.pussyMeter == 0}" src="/img/cat_todo_placeholder_pussyMeter1.png">
+            <img th:if="${user.pussyMeter == 1}" src="/img/cat_todo_placeholder_pussyMeter2.png">
+            <img th:if="${user.pussyMeter == 2}" src="/img/cat_todo_placeholder_pussyMeter3.png">
+        </div>
     </main>
 
     <footer>
         <form method="post" th:action="@{/tasks/add}">
             <button type="submit" name="priority" value="4" class="hidden"></button>
+
+            <label class="dateTime hidden">
+                <input type="date" name="maybeDueDate" id="date">
+            </label>
+
+            <div class="addTask">
+                <input type="text" placeholder="new task" name="description" id="add" required autofocus
+                       autocomplete="off">
+                <img onclick="toggleDueDate()" src="/img/Kalendar_Icon-02.png" alt="due date">
+            </div>
 
             <div class="stars">
                 <button onclick="setPriority(4)" type="submit" name="priority" value="4" data-umami-event="setPriority"
@@ -89,15 +100,6 @@
                     <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-01.png">
                     <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-01.png">
                 </button>
-            </div>
-
-            <label class="dateTime hidden">
-                <input type="date" name="maybeDueDate" id="date">
-            </label>
-
-            <div class="addTask">
-                <input type="text" placeholder="new task" name="description" id="add" required>
-                <img onclick="toggleDueDate()" src="/img/Kalendar_Icon-02.png" alt="due date">
             </div>
         </form>
     </footer>
@@ -234,16 +236,21 @@
         }
 
         function initiPhoneHack() {
-            document.querySelector("#add").addEventListener('focusin', () => {
-                adjustSafeAreaInset(0);
-            });
-            document.addEventListener('focusout', () => {
-                adjustSafeAreaInset();
-            });
+            window.visualViewport.addEventListener('resize', handleKeyboard);
+            document.addEventListener('focusin', handleKeyboard);
+            document.addEventListener('focusout', handleKeyboard);
+
+            function handleKeyboard() {
+                window.scrollY > 0 ? adjustSafeAreaInset(0) : adjustSafeAreaInset();
+            }
 
             function adjustSafeAreaInset(value = 'env(safe-area-inset-bottom)') {
                 document.querySelector("footer").style.paddingBottom = value;
             }
+        }
+
+        function adjustSafeAreaInset(value = 'env(safe-area-inset-bottom)') {
+            document.querySelector("footer").style.paddingBottom = value;
         }
 
         function toggleDropdown() {
