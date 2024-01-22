@@ -1,6 +1,6 @@
 
-# Todoz* ![Logo](/Images/Logo.png)
-
+# Todoz*
+![Logo](/Images/Logo.png)
 
 Todoz* is a to-do project designed to help you get things done in a way and manner you prefer! It's a weekly to-do planner (weeks run from Sunday to Saturday) that will charm you with its funky and cute design, making you more productive with the assistance of useful notifications featuring descriptions that change based on your chosen *pussymeter* level.
 
