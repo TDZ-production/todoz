@@ -136,16 +136,17 @@ button.ctm {
 .stars {
     display: flex;
     flex-direction: row-reverse;
-    border-top: 2px solid;
-    border-bottom: 2px solid #333;
+    border-top: .1rem solid color(srgb 0.9137 0.8588 0.6863);
+    border-bottom: .1rem solid color(srgb 0.9137 0.8588 0.6863);
 }
 
 .stars button {
     flex-grow: 1;
+    background: color(srgb 0.985 0.9195 0.7141);
 }
 
 .stars button + button {
-    border-right: 2px solid #333;
+    border-right: 2px solid color(srgb 0.9137 0.8588 0.6863);
 }
 
 h1 {
@@ -210,7 +211,12 @@ main > form button {
 
 .addTask {
     display: flex;
-    padding: 0.8rem 0.5rem;
+    padding: 0.4rem 0.5rem;
+    background: #fcfcf6;
+}
+
+#add {
+    border: none;
 }
 
 .task {
@@ -311,13 +317,12 @@ footer input, .stars button {
 }
 
 .stars button {
-    background: #fcfcf6;
     padding-bottom: 0;
 }
 
 .stars > :nth-child(1):hover, .stars > :nth-child(1).active { background: #ffb692 }
 
-.stars > :nth-child(2):hover, .stars > :nth-child(2).active { background: #fff0c1 }
+.stars > :nth-child(2):hover, .stars > :nth-child(2).active { background: #f5e48d }
 
 .stars > :nth-child(3):hover, .stars > :nth-child(3).active { background: #c3eab5 }
 
