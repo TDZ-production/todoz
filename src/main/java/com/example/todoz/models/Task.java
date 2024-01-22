@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
+import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 
 @Entity
@@ -36,6 +37,10 @@ public class Task {
 
     public Task() {
         this.createdAt = LocalDateTime.now();
+    }
+
+    public long getMaturity() {
+        return ChronoUnit.DAYS.between(this.createdAt, DateManager.now());
     }
 
     // ☠️
