@@ -26,12 +26,12 @@
             <p th:if="${invalidCredentials} == true">Invalid credentials!</p>
             <p id="placeholder"></p>
             <label>
-                <input name="username" type="text" id="email" placeholder="email" required autofocus
+                <input name="username" type="text" id="email" placeholder="email" autofocus
                        autocapitalize="none">
             </label>
 
             <label class="password">
-                <input name="password" type="password" id="password" placeholder="password" required>
+                <input name="password" type="password" id="password" placeholder="password">
                 <img src="/img/eye_icon_todo-03.png" id="showPassword" onclick="togglePasswordVisibility()"
                      alt="hide icon">
             </label>
@@ -102,11 +102,11 @@
             return false;
         } else if (password.length < MINIMAL_PASSWORD_LENGTH) {
             if (range == 2) {
-                placeholder.innerHTML = `This short?! You can do better.`;
+                placeholder.innerHTML = `This short?! Thought You could do better...`;
             } else if (range == 1) {
-                placeholder.innerHTML = `At least ${MINIMAL_PASSWORD_LENGTH} characters long password!`;
+                placeholder.innerHTML = `Invalid password! ${MINIMAL_PASSWORD_LENGTH}+ characters.`;
             } else {
-                placeholder.innerHTML = `Password should be ${MINIMAL_PASSWORD_LENGTH} characters or longer. Give it another go.`;
+                placeholder.innerHTML = `${MINIMAL_PASSWORD_LENGTH} characters or more. Try again champ!`;
             }
 
             return false;

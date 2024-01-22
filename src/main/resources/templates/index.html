@@ -54,8 +54,7 @@
         </div>
 
         <div th:if="${currentWeek.getSortedTasks().isEmpty()}" class="NoTaskPlaceholder">
-            <p>Howdy partner! Ready to create your first task?<br>Save the task by picking a priority, to keep things
-                organised!</p>
+            <p>Howdy partner! Ready to create your first task?<br>Save the task by picking a priority, to keep things organised!</p>
             <img th:if="${user.pussyMeter == 0}" src="/img/cat_todo_placeholder_pussyMeter1.png">
             <img th:if="${user.pussyMeter == 1}" src="/img/cat_todo_placeholder_pussyMeter2.png">
             <img th:if="${user.pussyMeter == 2}" src="/img/cat_todo_placeholder_pussyMeter3.png">
@@ -63,7 +62,7 @@
     </main>
 
     <footer>
-        <p th:if="${longTermTask} == true" id="fadeoutMessage" th:text="|Task added to week ${taskDueWeek}|"></p>
+        <p th:if="${longTermTask} == true" id="fadeoutMessage">Task added to "Planned"</p>
         <form method="post" th:action="@{/tasks/add}">
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
