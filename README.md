@@ -1,31 +1,29 @@
-![Logo](/Images/Logo.png)
 
-# Todoz*
+# Todoz* ![Logo](/Images/Logo.png)
 
 
-Todoz* is to-do projekt that will help you get things done in a way and manner you like! It's Weekly to-do planner (weeks are form sunday to sunday!) that will charm you with its funky and cute design, make you more productive by useful Notifications with descriptions that changes personality by your choosen *pussymeter* level.
+Todoz* is a to-do project designed to help you get things done in a way and manner you prefer! It's a weekly to-do planner (weeks run from Sunday to Saturday) that will charm you with its funky and cute design, making you more productive with the assistance of useful notifications featuring descriptions that change based on your chosen *pussymeter* level.
 
 ![Showcase](/Images/Showcase.png)
 
 #
 
-**Use our PussyMeter to personalizate your to-do!**
+**Use our PussyMeter to personalize your to-do list!**
 
-Do you prefer more gental approach! *TodoZlatíčko* will be your kind friend.
+Do you prefer a more gentle approach? *TodoZlatíčko* will be your kind friend.
 
-Want something causual? *TodoZápisník* is at your service!
+Want something casual? *TodoZápisník* is at your service!
 
-Need a kick in the ass, to do something? *TodoZ*rd* will be your personal productivity bully.
+Need a kick in the ass to do something? *TodoZ*rd* will be your personal productivity bully.
 
-We as TDZ team want Todoz* to be as much FUN and SIMPLE to use as posible, so could get rit of boredome that leats to procrastination!
+We, the TDZ team, want Todoz* to be as much FUN and SIMPLE to use as possible, to get rid of boredom that leads to procrastination!
 
-## Become Todoz* Tester!
+## Become a Todoz* Tester!
 
-Currently our app is in free and public pre-Alpha stage that you can already try after clicking on this **[link!](https://todoz.gfapp.eu/)**
-We want Todoz* to become something that is pleasent and induitive to use, so we are open to any critisism and FeedBack! You can wrote your anonymus feedback in the app itself or you can join our **[Discord](https://discord.gg/cP9Xa5TcuX)** community where we share our production site and post current updates!
+Currently, our app is in the free and public pre-Alpha stage, and you can already try it by clicking on this **[link!](https://todoz.gfapp.eu/)** We want Todoz* to become something pleasant and intuitive to use, so we welcome any criticism and feedback! You can provide anonymous feedback within the app or join our **[Discord](https://discord.gg/cP9Xa5TcuX)** community, where we share our production site and post current updates!
 ## Future Plans
-We are planning to make Todoz* available to be **self-hosted**. So anyone can host the their own to-do for free, if they wanted to!
+We are planning to make Todoz* available for **self-hosting** so that anyone can host their own to-do list for free if they wish!
 
-![Discord](/Images/Discord.png)
+![Discrod](/Images/Discrod.png)
 
 
