@@ -26,22 +26,7 @@ public class NotificationService {
         this.taskRepo = taskRepo;
     }
 
-    public String getMorningNotification(User user) {
-
-
-        List<Notification> notifications = notificationRepo.
-                findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask("morning", user.getPussyMeter(), user.isNotificationSingleTask(), getTypeTask());
-
-        if(notifications.isEmpty()){
-            throw new RuntimeException("There is no notification for that case");
-        }
-
-        Notification notification = getRandomNotification(notifications);
-
-        return getJsonNotification(getTasks(), notification,  user.isNotificationSingleTask());
-    }
-
-    public String getNoonNotification(User user) {
+    public Notification getNotification(User user, String timeSlot){
         int typeTask = getTypeTask();
         boolean notificationSingleTask = user.isNotificationSingleTask();
         List<Notification> notifications = null;
@@ -51,17 +36,26 @@ public class NotificationService {
         if(typeTask == 3){
         } else if (typeTask == 2 && !notificationSingleTask){ /** type 2 it will always show one task */
             notifications = notificationRepo.
-                    findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask("noon", user.getPussyMeter(),true, getTypeTask());
+                    findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask(timeSlot, user.getPussyMeter(),true, getTypeTask());
         }else{
             notifications = notificationRepo.
-                    findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask("noon", user.getPussyMeter(), user.isNotificationSingleTask(), getTypeTask());
+                    findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask(timeSlot, user.getPussyMeter(), user.isNotificationSingleTask(), getTypeTask());
         }
 
         if(notifications != null){
             notification = getRandomNotification(notifications);
         }
+        return notification;
+    }
+    public String getMorningNotification(User user) {
 
-        return getJsonNotification(getTasks(), notification,  user.isNotificationSingleTask());
+        return getJsonNotification(getTasks(), getNotification(user, "morning"),  user.isNotificationSingleTask());
+    }
+
+    public String getNoonNotification(User user) {
+
+        return getJsonNotification(getTasks(), getNotification(user, "noon"),  user.isNotificationSingleTask());
+
 
     }
 
