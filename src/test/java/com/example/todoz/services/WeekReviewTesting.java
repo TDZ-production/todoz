@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -40,18 +41,23 @@ public class WeekReviewTesting {
 
     @Test
     @WithMockUser(username = "TestUser")
-    public void WeekReview_CanAddTask_True() throws Exception {
+    public void WeekReview_ViewHasAddedTasks_True() throws Exception {
         // arrange
         Task longTermTask = new Task();
         longTermTask.setDescription("LongTermTask");
         longTermTask.setDueDate(LocalDateTime.now().plusWeeks(1));
 
-        Task previuosTask = new Task();
-        previuosTask.setDescription("previuosTask");
-        previuosTask.setDone(true);
+        Task doneTask = new Task();
+        doneTask.setDescription("doneTask");
+        doneTask.setDone(true);
+
+        Task notDoneTask = new Task();
+        notDoneTask.setDescription("notDoneTask");
+        notDoneTask.setDone(false);
 
         Week previuosWeek = new Week();
-        previuosWeek.getTasks().add(previuosTask);
+        previuosWeek.getTasks().add(doneTask);
+        previuosWeek.getTasks().add(notDoneTask);
 
         when(taskService.findUpcomingTasks(any(User.class), anyInt(), anyInt()))
                 .thenReturn(List.of(longTermTask));
@@ -67,8 +73,11 @@ public class WeekReviewTesting {
         ResultActions resultActions = mockMvc.perform(get("/").principal(principal))
                 .andExpect(status().isOk())
                 .andExpect(view().name("weekReview"))
-                .andExpect(model().attributeExists("user", "previousWeek", "upcomingTasks"))
-                .andDo(print());
+                .andExpect(model().attributeExists("user", "previousWeek", "upcomingTasks"));
 
+        //assert
+        resultActions.andExpect(content().string(containsString("<p class=\"taskText\">notDoneTask</p>")));
+        resultActions.andExpect(content().string(containsString("<p class=\"taskText\">doneTask</p>")));
+        resultActions.andExpect(content().string(containsString("<p class=\"taskText\">LongTermTask</p>")));
     }
 }

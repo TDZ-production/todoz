@@ -108,6 +108,7 @@ public class RegisterAndLoginTestingChrome {
         assertEquals(webUrl + "/register", page.url());
     }
 
+    @Test
     @Order(5)
     public void RegisterWithBlankPassword() {
         page.navigate(webUrl + "/register");
