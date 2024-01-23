@@ -130,16 +130,16 @@ public class UserCaseTestingChromeSeparate {
         //act
         actions.RegisterAndLogin(page, webUrl);
         //create new task
-        page.type("#createTask-input", "testTask");
+        page.type("#add", "testTask");
         page.click(".stars button[value='" + 1 + "']");
         //choosing task to edit
         page.navigate(webUrl + "/");
         page.click(taskBeforeEditLocator);
         //deleting previous text
-        page.dblclick("#createTask-input");
+        page.dblclick("#add");
         page.keyboard().press("Backspace");
         //editing priority
-        page.type("#createTask-input", "editTaskPriority");
+        page.type("#add", "editTaskPriority");
         page.click(".stars button[value='" + newPriority + "']");
         page.waitForTimeout(3000);
         //assert
@@ -156,15 +156,15 @@ public class UserCaseTestingChromeSeparate {
         //act
         actions.RegisterAndLogin(page, webUrl);
         //create new task
-        page.type("#createTask-input", "testTask");
+        page.type("#add", "testTask");
         page.click(".stars button[value='" + 1 + "']");
         //choosing task to edit
         page.click(taskBeforeEditLocator);
         //deleting previous text
-        page.dblclick("#createTask-input");
+        page.dblclick("#add");
         page.keyboard().press("Backspace");
         //editing previous description
-        page.type("#createTask-input", "editTaskDescription");
+        page.type("#add", "editTaskDescription");
         page.click(".stars button[value='" + newPriority + "']");
         page.waitForTimeout(3000);
         //assert
@@ -183,15 +183,15 @@ public class UserCaseTestingChromeSeparate {
         //act
         actions.RegisterAndLogin(page, webUrl);
         //create new task
-        page.type("#createTask-input", "testTask");
+        page.type("#add", "testTask");
         page.click(".stars button[value='" + 1 + "']");
         //choosing task to edit
         page.click(taskBeforeEditLocator);
         //deleting previous text
-        page.dblclick("#createTask-input");
+        page.dblclick("#add");
         page.keyboard().press("Backspace");
         //editing dueDate
-        page.type("#createTask-input", "editTaskDueDate");
+        page.type("#add", "editTaskDueDate");
         page.click("#calendar_icon");
         page.fill("#date", nextTwoDays.toString());
         page.click(".stars button[value='" + newPriority + "']");

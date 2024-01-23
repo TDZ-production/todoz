@@ -51,7 +51,6 @@ public class UserCaseTestingChromeWhole {
     public void userCreateNoDueDateTask() {
         //act
         actions.RegisterAndLogin(page, webUrl);
-        page.waitForTimeout(2000);
         actions.createFourNoDueDateTasks(page);
         //assert
         for (int i = 1; i <= 4; i++) {
@@ -128,10 +127,10 @@ public class UserCaseTestingChromeWhole {
         page.navigate(webUrl + "/");
         page.click(taskBeforeEditLocator);
         //deleting previous text
-        page.dblclick("#createTask-input");
+        page.dblclick("#add");
         page.keyboard().press("Backspace");
         //editing priority
-        page.type("#createTask-input", "editTaskPriority");
+        page.type("#add", "editTaskPriority");
         page.click(".stars button[value='" + newPriority + "']");
         page.waitForTimeout(3000);
         //assert
@@ -149,10 +148,10 @@ public class UserCaseTestingChromeWhole {
         //choosing task to edit
         page.click(taskBeforeEditLocator);
         //deleting previous text
-        page.dblclick("#createTask-input");
+        page.dblclick("#add");
         page.keyboard().press("Backspace");
         //editing previous description
-        page.type("#createTask-input", "editTaskDescription");
+        page.type("#add", "editTaskDescription");
         page.click(".stars button[value='" + newPriority + "']");
         page.waitForTimeout(3000);
         //assert
@@ -172,10 +171,10 @@ public class UserCaseTestingChromeWhole {
         //choosing task to edit
         page.click(taskBeforeEditLocator);
         //deleting previous text
-        page.dblclick("#createTask-input");
+        page.dblclick("#add");
         page.keyboard().press("Backspace");
         //editing dueDate
-        page.type("#createTask-input", "editTaskDueDate");
+        page.type("#add", "editTaskDueDate");
         page.click("#calendar_icon");
         page.fill("#date", nextTwoDays.toString());
         page.click(".stars button[value='" + newPriority + "']");
