@@ -253,7 +253,15 @@
             document.addEventListener('focusout', handleKeyboard);
 
             function handleKeyboard() {
-                window.scrollY > 0 ? adjustSafeAreaInset(0) : adjustSafeAreaInset();
+                requestAnimationFrame(() => {
+                    window.scrollY > 0 ? adjustSafeAreaInset(0) : adjustSafeAreaInset();
+
+                    [400, 800].forEach((ms) => {
+                        setTimeout(() => {
+                            document.querySelector(".stars").scrollIntoView({behavior: "smooth"});
+                        }, ms);
+                    })
+                });
             }
 
             function adjustSafeAreaInset(value = 'env(safe-area-inset-bottom)') {
