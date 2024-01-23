@@ -22,7 +22,7 @@ public class MainController {
     private final TaskService taskService;
     private final WeekService weekService;
 
-    @GetMapping
+    @GetMapping("/")
     public String showIndex(Model model, Principal principal) {
         Optional<Week> currentWeek = weekService.findCurrentWeek(getUser(principal));
         Optional<Week> optPreviousWeek = weekService.findPreviousWeek(getUser(principal));
