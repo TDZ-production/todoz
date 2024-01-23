@@ -524,13 +524,13 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 #fadeoutMessage {
     position: absolute;
     top: -4rem;
-    color: #b78300;
+    color: green;
     left: 20%;
     font-size: 1.1rem;
-    border: 1px solid #b78300;
+    border: 1px solid green;
     border-radius: .3rem;
-    background-color: #fff0c1;
-    padding: .8rem;
+    background-color: #c3eab5;
+    padding: .666rem;
     transition: opacity 1s ease-out;
 }
 
