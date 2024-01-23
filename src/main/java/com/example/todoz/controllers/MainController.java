@@ -4,6 +4,7 @@ import com.example.todoz.models.*;
 import com.example.todoz.services.TaskService;
 import com.example.todoz.services.UserService;
 import com.example.todoz.services.WeekService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -91,6 +92,7 @@ public class MainController {
     public String showLongTerm(Model model, Principal principal) {
         model.addAttribute("longTerm",
                 taskService.findLongTermTasks(getUser(principal), DateManager.formattedCurrentWeek()));
+        model.addAttribute("user",getUser(principal));
         return "longTerm";
     }
 
@@ -99,11 +101,12 @@ public class MainController {
         List<Task> leftBehind = taskService.findLeftBehind(getUser(principal), getWeek(principal), DateManager.formattedCurrentWeek());
 
         model.addAttribute("leftBehind", leftBehind);
+        model.addAttribute("user",getUser(principal));
         return "leftBehind";
     }
 
     private User getUser(Principal principal) {
-        return userService.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
+        return userService.findByUsername(principal.getName()).orElseThrow(EntityNotFoundException::new);
     }
 
     private Week getWeek(Principal principal) {

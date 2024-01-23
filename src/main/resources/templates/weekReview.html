@@ -32,11 +32,9 @@
             <h2>tasks done</h2>
             <p th:text="|Well you managed to survive through that week with ${previousWeek.getDonePercentage()}% of finished tasks... Not bad, not bad!|"></p>
             <p style="margin-top:0.5rem">
-                <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-04.png">
-                <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-04.png">
-                <img th:if="${user.pussyMeter == 2}" src="/img/skull_icon-05.png">
+                <img style="height: 4.7rem" th:src="${previousWeek.getCatImage()}" alt="">
             </p>
-            <p class="weekNote">Select tasks you want in week <span th:text="|${previousWeek.nextWeekNumber()}|" />. This&nbsp;is&nbsp;to help&nbsp;you look back on&nbsp;your&nbsp;week and&nbsp;retrospect; and&nbsp;to&nbsp;keep your&nbsp;week clean and&nbsp;focused! Woo-hoo! <span th:if="${upcomingTasks.size() > 0}">Planned&nbsp;tasks are already selected.</span></p>
+            <p class="weekNote">Select tasks you want in week <span th:text="|${previousWeek.nextWeekNumber()}|" />.<br/>You can look back on&nbsp;your&nbsp;week and&nbsp;retrospect. Keep your&nbsp;week clean and&nbsp;focused! Woo-hoo! <span th:if="${upcomingTasks.size() > 0}">Planned&nbsp;tasks are already selected.</span></p>
         </div>
 
         <form th:action="@{/startNewWeek}" th:method="post" id="form">
@@ -64,24 +62,26 @@
                     <span class="weekIcon" th:style="'color: green'">added</span>
                 </label>
             </div>
-            <p class="awesome">Hey, did you know that this app is in alpha?<br />You're awesome for being here!</p>
-            <button class="startWeek" type="submit" th:text="|Start your week with ${upcomingTasks.size()} tasks|" data-umami-event="startNewWeek"></button>
+            <p class="awesome">Hey, did you know this app is in pre-alpha?<br />You're such a&nbsp;trend setter!</p>
+            <button class="startWeek" type="submit" data-umami-event="startNewWeek">Start your week</button>
         </form>
-        <img src="/img/stickman0.png" class="stickman" alt="">
+        <img src="/img/stickman1.png" class="stickman" alt="">
     </main>
 
     <script>
+        updateButton();
+
         function updateButton() {
             const checkedTasks = document.querySelectorAll(".toDelegate:checked");
             document.querySelector(".startWeek")
-                .textContent = `Start new week with ${checkedTasks.length} task${checkedTasks.length === 1 ? '' : 's'}`;
+                .textContent = `Start week with ${checkedTasks.length} task${checkedTasks.length === 1 ? '' : 's'}`;
         }
 
         ((tasks) => {
             tasks.forEach(task =>
                 task.addEventListener("click", (event) =>
                     event.target.tagName === "P" &&
-                        task.querySelector(".checkboxContainer").dispatchEvent(new Event("click"))
+                        task.querySelector(".checkboxContainer").dispatchEvent(new MouseEvent("click"))
                 )
             );
         })(document.querySelectorAll(".task"));

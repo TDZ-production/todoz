@@ -15,6 +15,36 @@ body {
     color: #333;
 }
 
+.app {
+    margin: 0 auto;
+    max-width: 28rem;
+    min-height: 24rem;
+    height: 99.98vh; /* older browsers */
+    height: 99.98dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: #FCFAEE;
+    text-align: center;
+}
+
+.app.login {
+    background: #FFF4C2;
+}
+
+.app.register {
+    background: #FFF0F6;
+}
+
+.app.pussyMeter {
+    background: #FFC9C9;
+}
+
+.app main {
+    flex-grow: 1;
+    overflow: auto;
+}
+
 a {
     text-decoration: none;
     color: #b78300;
@@ -31,6 +61,14 @@ p {
 label {
     display: block;
     margin: 1rem 2rem;
+}
+
+.alignRight {
+    text-align: right;
+}
+
+form > p {
+    margin: 0 2rem;
 }
 
 header {
@@ -64,7 +102,7 @@ input {
 input, button {
     font: inherit;
     border: 2px solid #333;
-    background: #fff;
+    background: #fcfcf6;
     border-radius: .5rem;
     padding: .8rem;
 }
@@ -91,23 +129,24 @@ button.cta {
 
 
 button.ctm {
-    background: #fff;
+    background: #fcfcf6;
     min-width: 6rem;
 }
 
 .stars {
     display: flex;
     flex-direction: row-reverse;
-    border-top: 2px solid;
-    border-bottom: 2px solid #333;
+    border-top: .1rem solid color(srgb 0.9137 0.8588 0.6863);
+    border-bottom: .1rem solid color(srgb 0.9137 0.8588 0.6863);
 }
 
 .stars button {
     flex-grow: 1;
+    background: color(srgb 0.985 0.9195 0.7141);
 }
 
 .stars button + button {
-    border-right: 2px solid #333;
+    border-right: 2px solid color(srgb 0.9137 0.8588 0.6863);
 }
 
 h1 {
@@ -140,9 +179,15 @@ header a, header div {
 header a {
     padding: 1rem;
 }
+header.pussyBack {
+    background: rgb(255, 201, 201);
+}
+h1.pussyHeader {
+    margin-top: 1em;
+}
 
 main > form button {
-    margin-top: 2rem;
+    margin-top: 4rem;
 }
 
 .hidden {
@@ -159,35 +204,6 @@ main > form button {
     filter: blur(1px);
 }
 
-.app {
-    margin: 0 auto;
-    max-width: 28rem;
-    min-height: 28rem;
-    height: 99.98dvh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    background-color: white;
-    text-align: center;
-}
-
-.app.login {
-    background: #FFF4C2;
-}
-
-.app.register {
-    background: #FFF0F6;
-}
-
-.app.pussyMeter {
-    background: #FFC9C9;
-}
-
-.app main {
-    flex-grow: 1;
-    overflow: auto;
-}
-
 .note {
     opacity: 0.5;
     margin-bottom: 3rem;
@@ -195,7 +211,18 @@ main > form button {
 
 .addTask {
     display: flex;
-    padding: 0.8rem 0.5rem;
+    padding: 0.4rem 0.5rem;
+    background: #FCFAEE;
+}
+
+.addTask:focus-within {
+    background: #fcfcf6;
+}
+
+#add {
+    border: none;
+    outline: none;
+    background: transparent;
 }
 
 .task {
@@ -216,6 +243,10 @@ main > form button {
 
 .task form {
     align-self: center;
+}
+
+.dateTime {
+    border-bottom: .1rem solid color(srgb 0.9137 0.8588 0.6863);
 }
 
 .task .due {
@@ -254,7 +285,7 @@ main > form button {
 }
 
 .prio3 {
-    background: #fff0c1;
+    background: #f5e48d;
 }
 .prio4 {
     background: #ffb692;
@@ -274,6 +305,7 @@ main > p:last-child {
 
 footer {
     background: #fff0c1;
+    border-top: 2px solid #333;
     padding-bottom: env(safe-area-inset-bottom);
 }
 
@@ -295,13 +327,12 @@ footer input, .stars button {
 }
 
 .stars button {
-    background: #ffff;
     padding-bottom: 0;
 }
 
 .stars > :nth-child(1):hover, .stars > :nth-child(1).active { background: #ffb692 }
 
-.stars > :nth-child(2):hover, .stars > :nth-child(2).active { background: #fff0c1 }
+.stars > :nth-child(2):hover, .stars > :nth-child(2).active { background: #f5e48d }
 
 .stars > :nth-child(3):hover, .stars > :nth-child(3).active { background: #c3eab5 }
 
@@ -320,10 +351,6 @@ footer input, .stars button {
 .weekSummary p, .week-review .awesome {
     padding: 1rem 2rem;
     line-height: 1.666;
-}
-
-.weekSummary img {
-    height: 3.5rem;
 }
 
 .weekSummary .weekNote {
@@ -370,7 +397,7 @@ button.startWeek {
     width:20px;
     height:20px;
     border-radius:50%;
-    background-color:#ffffff;
+    background-color:#fcfcf6;
 }
 
 #week-progressbar {
@@ -382,36 +409,15 @@ button.startWeek {
 }
 
 .dropbtn {
-    height: 3.25rem;
-    width: 3rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     border: none;
-    padding : .9rem .5rem;
+    padding : .5rem;
     margin-left: .666rem;
     background-color: #fff0c1;
+    height: 3.25rem;
 }
 
-.line {
-    height: 4px;
-    width: 100%;
-    border-radius: 10px;
-    background: #b78300;
-}
-
-.line1 {
-    transform-origin: 0 0;
-    transition: transform 0.4s ease-in-out;
-}
-
-.line2 {
-    transition: transform 0.2s ease-in-out;
-}
-
-.line3 {
-    transform-origin: 0 100%;
-    transition: transform 0.4s ease-in-out;
+.dropbtn img {
+    height: 2rem;
 }
 
 .dropdown {
@@ -456,8 +462,8 @@ button.startWeek {
 .task:has(.toDelegate:checked) {
     background: #ebffe7;
 }
-.task:has(.cross) {
-    background: #ffffff;
+.task:has(.cross), .task:has(input[value="true"]) {
+    background: #fcfcf6;
 }
 
 span.weekIcon, input.toDelegate {
@@ -499,6 +505,33 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     margin-bottom: 1.5rem;
 }
 
+
+.NoTaskPlaceholder{
+    margin: 4.5rem 2rem;
+    opacity: 0.6;
+}
+
+.NoTaskPlaceholder img{
+    width: 12.5rem;
+    height: auto;
+}
+
+.NoTaskPlaceholder p {
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.password {
+    position: relative;
+}
+
+#showPassword {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+
+}
 
 @media (min-width: 460px) {
     .app {
