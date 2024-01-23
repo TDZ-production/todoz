@@ -36,10 +36,10 @@ public class NotificationService {
         if(typeTask == 3){
         } else if (typeTask == 2 && !notificationSingleTask){ /** type 2 it will always show one task */
             notifications = notificationRepo.
-                    findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask(timeSlot, user.getPussyMeter(),true, getTypeTask());
+                    findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask(timeSlot, user.getPussyMeter(),true, typeTask);
         }else{
             notifications = notificationRepo.
-                    findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask(timeSlot, user.getPussyMeter(), user.isNotificationSingleTask(), getTypeTask());
+                    findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask(timeSlot, user.getPussyMeter(), notificationSingleTask, typeTask);
         }
 
         if(notifications != null){
