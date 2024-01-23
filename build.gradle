@@ -28,6 +28,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'com.microsoft.playwright:playwright:1.15.1'
+    implementation 'org.springframework.boot:spring-boot-starter-mail:3.2.1'
 }
 
 tasks.named('test') {

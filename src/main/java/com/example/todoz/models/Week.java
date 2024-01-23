@@ -55,11 +55,37 @@ public class Week {
          return this.weekNumber % 100;
     }
 
-    public Long getDonePercentage() {
-        long count = this.getTasks()
+    public String getCatImage() {
+        WeekQuality quality = this.getWeekQuality();
+
+        return switch (quality) {
+            case ACTIVE -> "/img/cat_todo_placeholder_pussyMeter2.png";
+            case LAZY -> "/img/cat_todo_placeholder_pussyMeter3.png";
+            default -> "/img/cat_todo_placeholder_pussyMeter1.png";
+        };
+    }
+    public WeekQuality getWeekQuality() {
+        long doneCount = this.getDoneCount();
+        long donePercentage = this.getDonePercentage();
+
+        if (doneCount > 9) {
+            return WeekQuality.ACTIVE;
+        } else if (doneCount < 3 && donePercentage < 30) {
+            return WeekQuality.LAZY;
+        } else {
+            return WeekQuality.NEUTRAL;
+        }
+    }
+    public long getDonePercentage() {
+        long count = this.getDoneCount();
+
+        return Math.round((double) count / this.getTasks().size() * 100);
+    }
+
+    public long getDoneCount() {
+        return this.getTasks()
                 .stream()
                 .filter(Task::isDone)
                 .count();
-        return Math.round((double) count / this.getTasks().size() * 100);
     }
 }
