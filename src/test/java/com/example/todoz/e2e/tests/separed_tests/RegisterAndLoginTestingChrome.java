@@ -47,7 +47,7 @@ public class RegisterAndLoginTestingChrome {
     public void RegisterWithNewUser() {
         page.navigate(webUrl + "/register");
 
-        page.type("input[name=username]", "testUser");
+        page.type("input[name=username]", "test@User");
         page.type("input[name=password]", "testPassword");
         page.click("button[type=submit]");
 
@@ -59,13 +59,13 @@ public class RegisterAndLoginTestingChrome {
     public void RegisterWithAlreadyCreateUsername() {
         page.navigate(webUrl + "/register");
 
-        page.type("input[name=username]", "testUser");
+        page.type("input[name=username]", "test@email.com");
         page.type("input[name=password]", "testPassword");
         page.click("button[type=submit]");
 
         page.navigate(webUrl + "/register");
 
-        page.type("input[name=username]", "testUser");
+        page.type("input[name=username]", "test@email.com");
         page.type("input[name=password]", "testPassword");
         page.click("button[type=submit]");
 
@@ -77,7 +77,7 @@ public class RegisterAndLoginTestingChrome {
     public void RegisterWithLowerThanFiveCharactersPassword() {
         page.navigate(webUrl + "/register");
 
-        page.type("input[name=username]", "testUser");
+        page.type("input[name=username]", "test@email.com");
         page.type("input[name=password]", "1234");
         page.click("button[type=submit]");
 
@@ -89,7 +89,7 @@ public class RegisterAndLoginTestingChrome {
     public void LoginWithNotRegisteredUser() {
         page.navigate(webUrl + "/login");
 
-        page.type("input[name=username]", "testUser");
+        page.type("input[name=username]", "test@email.com");
         page.type("input[name=password]", "testPassword");
         page.click("button[type=submit]");
 
@@ -101,20 +101,8 @@ public class RegisterAndLoginTestingChrome {
     public void RegisterWithBlankUserName() {
         page.navigate(webUrl + "/register");
 
-        page.type("input[name=username]", "    ");
+        page.type("input[name=username]", "  @  ");
         page.type("input[name=password]", "testPassword");
-        page.click("button[type=submit]");
-
-        assertEquals(webUrl + "/register", page.url());
-    }
-
-    @Test
-    @Order(5)
-    public void RegisterWithBlankPassword() {
-        page.navigate(webUrl + "/register");
-
-        page.type("input[name=username]", "testUser");
-        page.type("input[name=password]", "          ");
         page.click("button[type=submit]");
 
         assertEquals(webUrl + "/register", page.url());
@@ -122,11 +110,11 @@ public class RegisterAndLoginTestingChrome {
 
     @Test
     @Order(6)
-    public void RegisterWithLowerThanThreeCharactersUserName() {
+    public void RegisterWithBlankPassword() {
         page.navigate(webUrl + "/register");
 
-        page.type("input[name=username]", "12");
-        page.type("input[name=password]", "testPassword");
+        page.type("input[name=username]", "testU@ser");
+        page.type("input[name=password]", "          ");
         page.click("button[type=submit]");
 
         assertEquals(webUrl + "/register", page.url());
