@@ -46,7 +46,11 @@
     </main>
 </section>
 
-<script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const MINIMAL_PASSWORD_LENGTH_JS = /*[[@{${minimal_password_length}}]]*/ 0;
+    /*]]>*/
+
     function updateTitle() {
         const range = document.querySelector("#range");
         const title = document.querySelector("#title");
@@ -87,7 +91,6 @@
         let placeholder = document.querySelector("#placeholder");
         const validRegex = /^(?=.{1,64}@)[A-Za-z0-9_-]+(\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,})$/;
         const range = document.querySelector("#range").value;
-        const MINIMAL_PASSWORD_LENGTH = 5;
 
         if (!email.match(validRegex)) {
             if (range == 2) {
@@ -99,13 +102,13 @@
             }
 
             return false;
-        } else if (password.length < MINIMAL_PASSWORD_LENGTH) {
+        } else if (password.length < MINIMAL_PASSWORD_LENGTH_JS) {
             if (range == 2) {
                 placeholder.innerHTML = `This short?! That's what she said!`;
             } else if (range == 1) {
-                placeholder.innerHTML = `Invalid password! ${MINIMAL_PASSWORD_LENGTH}+ characters.`;
+                placeholder.innerHTML = `Invalid password! ${MINIMAL_PASSWORD_LENGTH_JS}+ characters.`;
             } else {
-                placeholder.innerHTML = `${MINIMAL_PASSWORD_LENGTH} characters or more. Try again champ!`;
+                placeholder.innerHTML = `${MINIMAL_PASSWORD_LENGTH_JS} characters or more. Try again champ!`;
             }
 
             return false;
