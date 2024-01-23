@@ -239,6 +239,10 @@ main > form button {
     align-self: center;
 }
 
+.dateTime {
+    border-bottom: .1rem solid color(srgb 0.9137 0.8588 0.6863);
+}
+
 .task .due {
     white-space: nowrap;
     color: #919191;
