@@ -48,7 +48,7 @@
 
 <script th:inline="javascript">
     /*<![CDATA[*/
-    const MINIMAL_PASSWORD_LENGTH_JS = /*[[@{${minimal_password_length}}]]*/ 0;
+    const MINIMAL_PASSWORD_LENGTH = /*[[@{${minimalPasswordLength}}]]*/ 0;
     /*]]>*/
 
     function updateTitle() {
@@ -102,13 +102,13 @@
             }
 
             return false;
-        } else if (password.length < MINIMAL_PASSWORD_LENGTH_JS) {
+        } else if (password.length < MINIMAL_PASSWORD_LENGTH) {
             if (range == 2) {
                 placeholder.innerHTML = `This short?! That's what she said!`;
             } else if (range == 1) {
-                placeholder.innerHTML = `Invalid password! ${MINIMAL_PASSWORD_LENGTH_JS}+ characters.`;
+                placeholder.innerHTML = `Invalid password! ${MINIMAL_PASSWORD_LENGTH}+ characters.`;
             } else {
-                placeholder.innerHTML = `${MINIMAL_PASSWORD_LENGTH_JS} characters or more. Try again champ!`;
+                placeholder.innerHTML = `${MINIMAL_PASSWORD_LENGTH} characters or more. Try again champ!`;
             }
 
             return false;

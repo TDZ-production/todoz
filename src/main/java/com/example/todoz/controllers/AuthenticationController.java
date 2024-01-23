@@ -47,7 +47,7 @@ public class AuthenticationController {
 
     @GetMapping("/register")
     public String showRegisterPage(Model model) {
-        model.addAttribute("minimal_password_length", MINIMAL_PASSWORD_LENGTH);
+        model.addAttribute("minimalPasswordLength", MINIMAL_PASSWORD_LENGTH);
         return "registerPage";
     }
 
