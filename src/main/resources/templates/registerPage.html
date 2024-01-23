@@ -26,8 +26,7 @@
             <p th:if="${invalidCredentials} == true">Invalid credentials!</p>
             <p id="placeholder"></p>
             <label>
-                <input name="username" type="text" id="email" placeholder="email" autofocus
-                       autocapitalize="none">
+                <input name="username" type="text" id="email" placeholder="email" autofocus autocapitalize="none">
             </label>
 
             <label class="password">
@@ -38,7 +37,7 @@
 
             <label class="slideContainer">
                 <p id="pussyLabel">Neutral</p>
-                <input type="range" name="pussyMeter" step="1" max="2" class="slider" id="myRange"
+                <input type="range" name="pussyMeter" step="1" max="2" class="slider" id="range"
                        oninput="updateTitle()">
             </label>
             <button class="cta" type="submit">Sign-up</button>
@@ -49,7 +48,7 @@
 
 <script>
     function updateTitle() {
-        const range = document.querySelector("#myRange");
+        const range = document.querySelector("#range");
         const title = document.querySelector("#title");
         const subtitle = document.querySelector("#title + p");
         const pussyLabel = document.querySelector("#pussyLabel");
@@ -87,7 +86,7 @@
         let email = document.querySelector("#email").value;
         let placeholder = document.querySelector("#placeholder");
         const validRegex = /^(?=.{1,64}@)[A-Za-z0-9_-]+(\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,})$/;
-        const range = document.querySelector("#myRange").value;
+        const range = document.querySelector("#range").value;
         const MINIMAL_PASSWORD_LENGTH = 5;
 
         if (!email.match(validRegex)) {

@@ -516,6 +516,11 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     border-radius: .3rem;
     background-color: #fff0c1;
     padding: .8rem;
+    transition: opacity 1s ease-out;
+}
+
+#fadeoutMessage.fade-out {
+    opacity: 0;
 }
 
 @media (min-width: 460px) {

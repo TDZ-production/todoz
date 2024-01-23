@@ -54,7 +54,7 @@
         </div>
 
         <div th:if="${currentWeek.getSortedTasks().isEmpty()}" class="NoTaskPlaceholder">
-            <p>Howdy partner! Ready to create your first task?<br>Save the task by picking a priority, to keep things organised!</p>
+            <p>Howdy partner! Ready&nbsp;to create your&nbsp;first&nbsp;task?<br>Save the task by picking&nbsp;a&nbsp;priority, to&nbsp;keep things organised!</p>
             <img th:if="${user.pussyMeter == 0}" src="/img/cat_todo_placeholder_pussyMeter1.png">
             <img th:if="${user.pussyMeter == 1}" src="/img/cat_todo_placeholder_pussyMeter2.png">
             <img th:if="${user.pussyMeter == 2}" src="/img/cat_todo_placeholder_pussyMeter3.png">
@@ -111,7 +111,11 @@
         initiPhoneHack();
 
         setInterval(updateWeekProgressbar, 3600);
-        setTimeout(fadeout, 3000);
+
+        const el = document.querySelector("#fadeoutMessage");
+        if (el) {
+            setTimeout(() => fadeout(el), 3000);
+        }
 
         function updateWeekProgressbar() {
             const progressbar = document.querySelector("#week-progressbar");
@@ -246,32 +250,27 @@
             }
         });
 
-        function fadeout() {
-            const fadeoutMessage = document.querySelector("#fadeoutMessage");
-            if (fadeoutMessage !== null) {
-                fadeoutMessage.style.transition = "opacity 1s ease-out";
-                fadeoutMessage.style.opacity = 0;
+        function fadeout(el) {
+            if (el !== null) {
+                el.classList.add("fade-out");
                 setTimeout(() => {
-                    fadeoutMessage.style.zIndex = -1
+                    el.remove();
                 }, 1000);
             }
         }
 
         function initiPhoneHack() {
-            document.querySelector("#add").addEventListener('focusin', () => {
-                adjustSafeAreaInset(0);
-            });
-            document.addEventListener('focusout', () => {
-                adjustSafeAreaInset();
-            });
+            window.visualViewport.addEventListener('resize', handleKeyboard);
+            document.addEventListener('focusin', handleKeyboard);
+            document.addEventListener('focusout', handleKeyboard);
+
+            function handleKeyboard() {
+                window.scrollY > 0 ? adjustSafeAreaInset(0) : adjustSafeAreaInset();
+            }
 
             function adjustSafeAreaInset(value = 'env(safe-area-inset-bottom)') {
                 document.querySelector("footer").style.paddingBottom = value;
             }
-        }
-
-        function adjustSafeAreaInset(value = 'env(safe-area-inset-bottom)') {
-            document.querySelector("footer").style.paddingBottom = value;
         }
 
         function toggleDropdown() {

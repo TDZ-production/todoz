@@ -57,7 +57,7 @@ public class AuthenticationController {
             ra.addFlashAttribute("userExists", true);
 
             return "redirect:/register";
-        } else if (!isValidUsername(registerDTO.username()) || isValidPassword(registerDTO.password())) {
+        } else if (!isValidUsername(registerDTO.username()) || !isValidPassword(registerDTO.password())) {
             ra.addFlashAttribute("invalidCredentials", true);
 
             return "redirect:/register";
