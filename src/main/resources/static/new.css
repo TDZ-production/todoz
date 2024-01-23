@@ -212,11 +212,16 @@ main > form button {
 .addTask {
     display: flex;
     padding: 0.4rem 0.5rem;
+    background: #FCFAEE;
+}
+
+.addTask:focus-within {
     background: #fcfcf6;
 }
 
 #add {
     border: none;
+    outline: none;
 }
 
 .task {
