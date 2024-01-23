@@ -109,7 +109,7 @@
     <script>
         updateWeekProgressbar();
         initTaskEditListener();
-        initiPhoneHack();
+        initPhoneHack();
         expandMatureTasks();
 
         setInterval(updateWeekProgressbar, 3600);
@@ -253,25 +253,7 @@
             });
         }
 
-        const buttons = document.querySelectorAll("footer .stars button");
-        buttons.forEach(button => {
-            if (button.value == priority) {
-                button.classList.add("active");
-            } else {
-                button.classList.remove("active");
-            }
-        });
-
-        function fadeout(el) {
-            if (el !== null) {
-                el.classList.add("fade-out");
-                setTimeout(() => {
-                    el.remove();
-                }, 1000);
-            }
-        }
-
-        function initiPhoneHack() {
+        function initPhoneHack() {
             window.visualViewport.addEventListener('resize', handleKeyboard);
             document.addEventListener('focusin', handleKeyboard);
             document.addEventListener('focusout', handleKeyboard);
@@ -287,11 +269,16 @@
                     })
                 });
             }
-
-            function adjustSafeAreaInset(value = 'env(safe-area-inset-bottom)') {
-                document.querySelector("footer").style.paddingBottom = value;
-            }
         }
+
+            function fadeout(el) {
+                if (el !== null) {
+                    el.classList.add("fade-out");
+                    setTimeout(() => {
+                        el.remove();
+                    }, 1000);
+                }
+            }
 
         function toggleDropdown() {
             let dropdown = document.querySelector(".dropdown-content");
