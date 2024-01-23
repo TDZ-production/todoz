@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
+import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 
 @Entity
@@ -36,6 +37,10 @@ public class Task {
 
     public Task() {
         this.createdAt = LocalDateTime.now();
+    }
+
+    public long getMaturity() {
+        return ChronoUnit.DAYS.between(this.createdAt, DateManager.now());
     }
 
     // ☠️
@@ -101,18 +106,24 @@ public class Task {
         return this;
     }
 
-    public void digestDueDate(LocalDate maybeDueDate, Week currentWeek) {
-        if (maybeDueDate == null) {
+    public void digestDueDate(LocalDate dueDate, Week currentWeek) {
+        if (dueDate == null) {
             setDueDate(null);
+            this.dueDateWeekNumber = null;
         } else {
-            setDueDate(maybeDueDate.atTime(23, 59, 59));
+            setDueDate(dueDate.atTime(23, 59, 59));
+            //TODO: get rid of dueDateWeekNumber, it's duplication of state, that's fragile!
+            this.dueDateWeekNumber = DateManager.formatWeek(dueDate);
         }
 
-        if (maybeDueDate != null && DateManager.formatWeek(maybeDueDate) > DateManager.formattedCurrentWeek()) {
+        // if dueDate is in the future, set week to null
+        if (dueDate != null && DateManager.formatWeek(dueDate) > DateManager.formattedCurrentWeek()) {
             setWeek(null);
         } else {
             setWeek(currentWeek);
         }
+
+
     }
 
     public Task copy(Week week) {
