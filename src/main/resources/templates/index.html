@@ -46,6 +46,7 @@
             <span th:classappend="|prio${task.getPriority()}|"></span>
             <p th:text="*{description}"></p>
             <span class="due" th:text="*{getRemainingDays()}" th:data-duedate="*{dueDateDate}"></span>
+
             <form onsubmit="handleSubmit(event)" th:action="|/tasks/check/*{id}|" th:method="POST">
                 <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
                 <button class="img" th:type="submit">
