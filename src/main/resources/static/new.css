@@ -222,6 +222,7 @@ main > form button {
 #add {
     border: none;
     outline: none;
+    background: transparent;
 }
 
 .task {
