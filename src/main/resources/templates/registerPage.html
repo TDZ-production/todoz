@@ -91,9 +91,9 @@
 
         if (!email.match(validRegex)) {
             if (range == 2) {
-                placeholder.innerHTML = "Really? This is an email?";
+                placeholder.innerHTML = "Is this an email or did you just vomit?";
             } else if (range == 1) {
-                placeholder.innerHTML = "Invalid email address"
+                placeholder.innerHTML = "Invalid email address."
             } else {
                 placeholder.innerHTML = "Oops! Mind checking the email again?"
             }
@@ -101,7 +101,7 @@
             return false;
         } else if (password.length < MINIMAL_PASSWORD_LENGTH) {
             if (range == 2) {
-                placeholder.innerHTML = `This short?! Thought You could do better...`;
+                placeholder.innerHTML = `This short?! That's what she said!`;
             } else if (range == 1) {
                 placeholder.innerHTML = `Invalid password! ${MINIMAL_PASSWORD_LENGTH}+ characters.`;
             } else {
