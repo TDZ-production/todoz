@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 public class WeekReviewTesting {
 
 
@@ -34,6 +34,8 @@ public class WeekReviewTesting {
     private WeekService weekService;
     @MockBean
     private TaskService taskService;
+    @MockBean
+    private UserService userService;
     @Autowired
     public WeekReviewTesting(MockMvc mockMvc) {
         this.mockMvc = mockMvc;
@@ -43,6 +45,8 @@ public class WeekReviewTesting {
     @WithMockUser(username = "TestUser")
     public void WeekReview_ViewHasAddedTasks_True() throws Exception {
         // arrange
+        Optional<User> testUser = Optional.of(new User("TestUser", "password", 1));
+
         Task longTermTask = new Task();
         longTermTask.setDescription("LongTermTask");
         longTermTask.setDueDate(LocalDateTime.now().plusWeeks(1));
@@ -65,6 +69,8 @@ public class WeekReviewTesting {
                 .thenReturn(Optional.of(previuosWeek));
         when(weekService.findCurrentWeek(any(User.class)))
                 .thenReturn(Optional.empty());
+        when(userService.findByUsername(anyString()))
+                .thenReturn(testUser);
 
         Principal principal = mock(Principal.class);
         when(principal.getName()).thenReturn("TestUser");
