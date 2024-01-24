@@ -20,10 +20,10 @@
 <section class="app home">
     <header>
                 <div class="dropdown">
-                    <button class="dropbtn" onclick="toggleDropdownOrFilter(false)">
+                    <button class="dropbtn" onclick="toggleDropdown('content','/img/eye_icon_todo-03.png', '/img/eye_icon_todo-02.png')">
                         <img src="/img/todoz_menu_icon-31.png" alt="open menu">
                     </button>
-                    <div class="dropdown-content">
+                    <div class="dropdown-content" id="content">
                         <a href="/longTerm">Planned</a>
                         <a href="/leftBehind">Left behind</a>
                         <a href="/pussyMeter">Pussy meter</a>
@@ -34,14 +34,11 @@
                     </div>
                 </div>
         <div class="dropdown">
-            <button class="dropbtn" id="drop" onclick="toggleDropdownOrFilter(true)">
+            <button class="dropbtn" onclick="toggleDropdown('filter','/img/eye_icon_todo-03.png', '/img/eye_icon_todo-02.png')">
                 <img src="/img/eye_icon_todo-03.png" alt="open menu">
             </button>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="filter">
                 <a href="/longTerm">Planned</a>
-                <a href="/leftBehind">Left behind</a>
-                <a href="/pussyMeter">Pussy meter</a>
-                <a href="/feedback">Feedback</a>
             </div>
         </div>
         <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>
@@ -287,42 +284,41 @@
             document.querySelector("footer").style.paddingBottom = value;
         }
 
-        function toggleDropdownOrFilter(isFilter) {
-            let dropdown = document.querySelector(".dropdown-content");
+        function toggleDropdown(dropdownClassName, imgSrcOpen, imgSrcClose) {
+            const dropdown = document.querySelector("#" + dropdownClassName);
             const main = document.querySelector("main");
-            const img = document.querySelector(".dropbtn img");
+            const img = document.querySelector("#" + dropdownClassName + " img");
 
             registerCancel(main);
 
             if (dropdown.style.display === "block") {
                 dropdown.style.display = "none";
-                img.src = isFilter ? "/img/eye_icon_todo-03.png" : "/img/todoz_menu_icon-31.png";
+                img.src = imgSrcOpen;
                 img.alt = "open menu";
             } else {
                 dropdown.style.display = "block";
-                img.src = isFilter ? "/img/eye_icon_todo-02.png" : "/img/todoz_menu_icon-30.png";
+                img.src = imgSrcClose;
                 img.alt = "close menu";
             }
 
             function registerCancel(event) {
                 event.addEventListener("click", function () {
                     cancelMenu();
-                }, {once: true});
+                }, { once: true });
 
                 window.onkeydown = function (event) {
                     if (event.key === "Escape") {
                         cancelMenu();
                     }
-                }
+                };
+            }
 
-                function cancelMenu() {
-                    dropdown.style.display = "none";
-                    img.src = isFilter ? "/img/eye_icon_todo-03.png" : "/img/todoz_menu_icon-31.png";
-                    img.alt = "open menu";
-                }
+            function cancelMenu() {
+                dropdown.style.display = "none";
+                img.src = imgSrcOpen;
+                img.alt = "open menu";
             }
         }
-
         function logout() {
             document.querySelector('#logoutForm').submit();
         }
