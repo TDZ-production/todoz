@@ -410,11 +410,19 @@ button.startWeek {
 
 .dropbtn {
     border: none;
-    padding : .5rem;
-    margin-left: .666rem;
     background-color: #fff0c1;
     height: 3.25rem;
+    padding : .5rem;
 }
+
+#drop-icon{
+    margin-left: .666rem;
+}
+
+#filter-icon{
+    margin-right: .666rem;
+}
+
 
 .dropbtn img {
     height: 2rem;
@@ -434,6 +442,14 @@ button.startWeek {
     box-shadow: 0 .3rem .4rem 0 rgba(255, 180, 180, 0.3);
 }
 
+#filter{
+    background-color: #c7e9fb;
+    left: -5.3rem;
+}
+
+#filter a:hover{
+    background-color: #97ceec;
+}
 .dropdown-content a {
     color: black;
     padding: .75rem 1rem;

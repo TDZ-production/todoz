@@ -19,22 +19,22 @@
 <body>
 <section class="app home">
     <header>
-                <div class="dropdown">
-                    <button class="dropbtn" onclick="toggleDropdown('content','/img/eye_icon_todo-03.png', '/img/eye_icon_todo-02.png')">
-                        <img src="/img/todoz_menu_icon-31.png" alt="open menu">
-                    </button>
-                    <div class="dropdown-content" id="content">
-                        <a href="/longTerm">Planned</a>
-                        <a href="/leftBehind">Left behind</a>
-                        <a href="/pussyMeter">Pussy meter</a>
-                        <a href="/feedback">Feedback</a>
-                        <form method="post" id="logoutForm" th:action="|/logout|">
-                            <a id="logout" onclick="logout()">Log out</a>
-                        </form>
-                    </div>
-                </div>
         <div class="dropdown">
-            <button class="dropbtn" onclick="toggleDropdown('filter','/img/eye_icon_todo-03.png', '/img/eye_icon_todo-02.png')">
+            <button class="dropbtn" id="drop-icon" onclick="toggleDropdown('content','/img/eye_icon_todo-03.png', '/img/eye_icon_todo-02.png')">
+                <img src="/img/todoz_menu_icon-31.png" alt="open menu">
+            </button>
+            <div class="dropdown-content" id="content">
+                <a href="/longTerm">Planned</a>
+                <a href="/leftBehind">Left behind</a>
+                <a href="/pussyMeter">Pussy meter</a>
+                <a href="/feedback">Feedback</a>
+                <form method="post" id="logoutForm" th:action="|/logout|">
+                    <a id="logout" onclick="logout()">Log out</a>
+                </form>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn" id="filter-icon" onclick="toggleDropdown('filter','/img/eye_icon_todo-03.png', '/img/eye_icon_todo-02.png')">
                 <img src="/img/eye_icon_todo-03.png" alt="open menu">
             </button>
             <div class="dropdown-content" id="filter">
