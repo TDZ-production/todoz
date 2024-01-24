@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 
 import java.util.Optional;
 
-@Controller
+@Repository
 public interface UserSubscriptionRepo extends ListCrudRepository<UserSubscription, Long> {
 
     Optional<UserSubscription> findByAuthKey(String auth);
