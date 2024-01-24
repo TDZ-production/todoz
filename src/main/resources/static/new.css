@@ -493,18 +493,6 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 #logout {
     cursor: pointer;
 }
-.NoTaskPlaceholder{
-    margin: 4.5rem;
-    opacity: 0.6;
-}
-.NoTaskPlaceholder img{
-    width: 200px;
-    height: auto;
-}
-.NoTaskPlaceholder p {
-    margin-bottom: 1.5rem;
-}
-
 
 .NoTaskPlaceholder{
     margin: 4.5rem 2rem;
