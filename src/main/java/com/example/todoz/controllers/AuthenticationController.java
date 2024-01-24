@@ -109,7 +109,9 @@ public class AuthenticationController {
     }
 
     @GetMapping("/newPassword")
-    public String showNewPassword() {
+    public String showNewPassword(Model model) {
+        model.addAttribute("minimalPasswordLength", MINIMAL_PASSWORD_LENGTH);
+
         return "newPassword";
     }
 
@@ -118,10 +120,13 @@ public class AuthenticationController {
         if (!password.equals(confirmation)) {
             ra.addFlashAttribute("doesNotMatch", true);
             ra.addFlashAttribute("userId", userId);
+
             return "redirect:/newPassword";
         } else if (password.length() < MINIMAL_PASSWORD_LENGTH) {
             ra.addFlashAttribute("invalid", true);
+            ra.addFlashAttribute("minimalPasswordLength" , MINIMAL_PASSWORD_LENGTH);
             ra.addFlashAttribute("userId", userId);
+
             return "redirect:/newPassword";
         }
 
