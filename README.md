@@ -1,4 +1,3 @@
-
 # Todoz*
 ![Logo](/Images/Logo.png)
 
@@ -20,9 +19,9 @@ We, the TDZ team, want Todoz* to be as much FUN and SIMPLE to use as possible, t
 
 ## Become a Todoz* Tester!
 
-Currently, our app is in the free and public pre-Alpha stage, and you can already try it by clicking on this **[link!](https://todoz.gfapp.eu/)** We want Todoz* to become something pleasant and intuitive to use, so we welcome any criticism and feedback! You can provide anonymous feedback within the app or join our **[Discord](https://discord.gg/cP9Xa5TcuX)** community, where we share our production site and post current updates!
+Currently, our app is in the free and public pre-Alpha stage, and you can already try it by clicking on this **[link!](https://todoz.app/)** We want Todoz* to become something pleasant and intuitive to use, so we welcome any criticism! You can provide anonymous feedback within the app or join our **[Discord](https://discord.gg/cP9Xa5TcuX)** community, where we share our production site and post current updates!
 ## Future Plans
-We are planning to make Todoz* available for **self-hosting** so that anyone can host their own to-do list for free if they wish!
+We are planning to make Todoz* available for **self-hosting** so that anyone can manage their own to-do list for free if they wish!
 
 ![Discrod](/Images/Discrod.png)
 
