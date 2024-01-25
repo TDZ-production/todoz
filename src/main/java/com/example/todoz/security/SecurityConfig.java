@@ -19,6 +19,7 @@ public class SecurityConfig {
                         .permitAll()
                         .anyRequest()
                         .authenticated())
+                // TODO: resolve this, it's there only because of /subscribe
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(form -> form.loginPage("/login")
                         .successForwardUrl("/")
