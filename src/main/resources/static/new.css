@@ -3,6 +3,25 @@
     src: url("webfonts/Virgil.woff2");
 }
 
+:root {
+    --main-bg-color: #FCFAEE;
+    --font-color: #333;
+    --light-font-color: #919191;
+    --main-color: #fff0c1;
+    --pussy-color: #FFF0F6;
+    --link-color: #b78300;
+    --input-color: #fcfcf6;
+    --pink-stickit-color: #FFC9C9;
+    --pink-stickit-hover: #ffb4b4;
+    --pink-stickit-shadow: #996A6A;
+    --border-color: #e9dbaf;
+    --prio1-color: #c7e9fb;
+    --prio2-color: #c3eab5;
+    --prio3-color: #f5e48d;
+    --prio4-color: #ffb692;
+    --add-task-color: #ebffe7;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -12,7 +31,7 @@ body {
     padding: 0;
     font-family: virgil, sans-serif;
     background-color: #ededed;
-    color: #333;
+    color: var(--font-color);
 }
 
 .app {
@@ -24,20 +43,16 @@ body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    background-color: #FCFAEE;
+    background-color: var(--main-bg-color);
     text-align: center;
 }
 
 .app.login {
-    background: #FFF4C2;
+    background: var(--main-color);
 }
 
-.app.register {
-    background: #FFF0F6;
-}
-
-.app.pussyMeter {
-    background: #FFC9C9;
+.app.register, .app.pussyMeter, header.pussyBack {
+    background: var(--pussy-color);
 }
 
 .app main {
@@ -47,7 +62,7 @@ body {
 
 a {
     text-decoration: none;
-    color: #b78300;
+    color: var(--link-color);
 }
 
 p, h1, h2, h3, h4, h5 {
@@ -74,7 +89,7 @@ form > p {
 header {
     position: relative;
     padding: 1rem 0;
-    background: #fff0c1;
+    background: var(--main-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -101,8 +116,8 @@ input {
 
 input, button {
     font: inherit;
-    border: 2px solid #333;
-    background: #fcfcf6;
+    border: 2px solid var(--font-color);
+    background: var(--input-color);
     border-radius: .5rem;
     padding: .8rem;
 }
@@ -123,30 +138,23 @@ button {
 }
 
 button.cta {
-    background: #FFC9C9;
-    min-width: 6rem;
-}
-
-
-button.ctm {
-    background: #fcfcf6;
+    background: var(--pink-stickit-color);
     min-width: 6rem;
 }
 
 .stars {
     display: flex;
     flex-direction: row-reverse;
-    border-top: .1rem solid color(srgb 0.9137 0.8588 0.6863);
-    border-bottom: .1rem solid color(srgb 0.9137 0.8588 0.6863);
+    border-top: .1rem solid var(--border-color);
 }
 
 .stars button {
     flex-grow: 1;
-    background: color(srgb 0.985 0.9195 0.7141);
+    background: var(--main-color);
 }
 
 .stars button + button {
-    border-right: 2px solid color(srgb 0.9137 0.8588 0.6863);
+    border-right: 2px solid var(--border-color);
 }
 
 h1 {
@@ -160,7 +168,7 @@ h2 {
 .reviewTitle {
     font-size: 1.2rem;
     margin-top: 2rem;
-    color: #919191;
+    color: var(--light-font-color);
 }
 
 header h2 {
@@ -179,9 +187,7 @@ header a, header div {
 header a {
     padding: 1rem;
 }
-header.pussyBack {
-    background: rgb(255, 201, 201);
-}
+
 h1.pussyHeader {
     margin-top: 1em;
 }
@@ -212,11 +218,11 @@ main > form button {
 .addTask {
     display: flex;
     padding: 0.4rem 0.5rem;
-    background: #FCFAEE;
+    background: var(--main-bg-color);
 }
 
 .addTask:focus-within {
-    background: #fcfcf6;
+    background: var(--input-color);
 }
 
 #add {
@@ -227,7 +233,7 @@ main > form button {
 
 .task {
     display: flex;
-    border-bottom: 1px solid #dddad7;
+    border-bottom: 1px solid var(--border-color);
     padding-left: .5rem;
     position: relative;
 }
@@ -246,12 +252,12 @@ main > form button {
 }
 
 .dateTime {
-    border-bottom: .1rem solid color(srgb 0.9137 0.8588 0.6863);
+    border-bottom: .1rem solid var(--border-color);
 }
 
 .task .due {
     white-space: nowrap;
-    color: #919191;
+    color: var(--light-font-color);
     align-self: center;
     padding: 1rem .5rem;
 }
@@ -277,18 +283,18 @@ main > form button {
 }
 
 .prio1 {
-    background: #c7e9fb;
+    background: var(--prio1-color);
 }
 
 .prio2 {
-    background: #c3eab5;
+    background: var(--prio2-color);
 }
 
 .prio3 {
-    background: #f5e48d;
+    background: var(--prio3-color);
 }
 .prio4 {
-    background: #ffb692;
+    background: var(--prio4-color);
 }
 
 img {
@@ -304,8 +310,8 @@ main > p:last-child {
 }
 
 footer {
-    background: #fff0c1;
-    border-top: 2px solid #333;
+    background: var(--main-color);
+    border-top: 2px solid var(--font-color);
     padding-bottom: env(safe-area-inset-bottom);
 }
 
@@ -330,13 +336,13 @@ footer input, .stars button {
     padding-bottom: 0;
 }
 
-.stars > :nth-child(1):hover, .stars > :nth-child(1).active { background: #ffb692 }
+.stars > :nth-child(1):hover, .stars > :nth-child(1).active { background: var(--prio4-color) }
 
-.stars > :nth-child(2):hover, .stars > :nth-child(2).active { background: #f5e48d }
+.stars > :nth-child(2):hover, .stars > :nth-child(2).active { background: var(--prio3-color) }
 
-.stars > :nth-child(3):hover, .stars > :nth-child(3).active { background: #c3eab5 }
+.stars > :nth-child(3):hover, .stars > :nth-child(3).active { background: var(--prio2-color) }
 
-.stars > :nth-child(4):hover, .stars > :nth-child(4).active { background: #c7e9fb }
+.stars > :nth-child(4):hover, .stars > :nth-child(4).active { background: var(--prio1-color) }
 
 
 .weekSummary h1 {
@@ -354,7 +360,7 @@ footer input, .stars button {
 }
 
 .weekSummary .weekNote {
-    border-bottom: 1px solid #dddad7;
+    border-bottom: 1px solid var(--border-color);
     margin-top: 2rem;
 }
 
@@ -362,12 +368,12 @@ footer input, .stars button {
     font-size: 86%;
     padding: 1rem;
     text-align: left;
-    color: #333;
+    color: var(--font-color);
     line-height: 1.666;
 }
 
 .app.week-review {
-    background: #FCFAEE;
+    background: var(--main-bg-color);
 }
 
 .week-review .task p {
@@ -375,7 +381,7 @@ footer input, .stars button {
 }
 
 button.startWeek {
-    background: #c3eab5;
+    background: var(--prio2-color);
     margin-bottom: 25vh;
     margin-top: 10vh;
 }
@@ -393,11 +399,11 @@ button.startWeek {
 }
 
 .slider::-webkit-slider-thumb {
-    -webkit-appearance:none;
-    width:20px;
-    height:20px;
-    border-radius:50%;
-    background-color:#fcfcf6;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--input-color);
 }
 
 #week-progressbar {
@@ -405,14 +411,14 @@ button.startWeek {
     z-index: 1;
     bottom: 0;
     height: 2px;
-    background-color: #333;
+    background-color: var(--font-color);
 }
 
 .dropbtn {
     border: none;
     padding : .5rem;
     margin-left: .666rem;
-    background-color: #fff0c1;
+    background-color: var(--main-color);
     height: 3.25rem;
 }
 
@@ -428,10 +434,10 @@ button.startWeek {
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #FFC9C9;
+    background-color: var(--pink-stickit-color);
     min-width: 9rem;
     z-index: 100;
-    box-shadow: 0 .3rem .4rem 0 rgba(255, 180, 180, 0.3);
+    box-shadow: 0 .1rem .2rem 0 var(--pink-stickit-shadow);
 }
 
 .dropdown-content a {
@@ -442,7 +448,7 @@ button.startWeek {
 }
 
 .dropdown-content a:hover {
-    background-color: #ffb4b4;
+    background-color: var(--pink-stickit-hover);
 }
 
 .taskStatus {
@@ -460,10 +466,10 @@ button.startWeek {
 }
 
 .task:has(.toDelegate:checked) {
-    background: #ebffe7;
+    background: var(--add-task-color);
 }
 .task:has(.cross), .task:has(input[value="true"]) {
-    background: #fcfcf6;
+    background: var(--input-color);
 }
 
 span.weekIcon, input.toDelegate {
