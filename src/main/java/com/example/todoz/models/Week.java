@@ -59,9 +59,9 @@ public class Week {
         WeekQuality quality = this.getWeekQuality();
 
         return switch (quality) {
-            case ACTIVE -> "/img/cat_todo_placeholder_pussyMeter2.png";
-            case LAZY -> "/img/cat_todo_placeholder_pussyMeter3.png";
-            default -> "/img/cat_todo_placeholder_pussyMeter1.png";
+            case ACTIVE -> "/img/cat_pm_1.png";
+            case LAZY -> "/img/cat_pm_2.png";
+            default -> "/img/cat_pm_0.png";
         };
     }
     public WeekQuality getWeekQuality() {

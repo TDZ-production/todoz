@@ -28,7 +28,7 @@
 
             <label class="password">
                 <input name="password" type="password" id="password" placeholder="password" required>
-                <img src="/img/eye_icon_todo-03.png" id="showPassword" onclick="togglePasswordVisibility()" alt="hide icon">
+                <img src="/img/eye_icon_closed.png" id="showPassword" onclick="togglePasswordVisibility()" alt="hide icon">
             </label>
 
             <label class="slideContainer">
@@ -69,11 +69,11 @@
 
         if (password.type === "password") {
             password.type = "text";
-            img.src = "/img/eye_icon_todo-02.png"
+            img.src = "/img/eye_icon_open.png"
         }
         else {
             password.type = "password";
-            img.src = "/img/eye_icon_todo-03.png"
+            img.src = "/img/eye_icon_closed.png"
         }
     }
 </script>
