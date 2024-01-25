@@ -117,6 +117,6 @@ public class RegisterAndLoginTestingChrome {
         page.type("input[name=password]", "          ");
         page.click("button[type=submit]");
 
-        assertEquals(webUrl + "/register", page.url());
+        assertEquals(webUrl + "/login", page.url());
     }
 }
