@@ -57,7 +57,7 @@
         </div>
 
         <div th:if="${currentWeek.getSortedTasks().isEmpty()}" class="NoTaskPlaceholder">
-            <p>Howdy partner! Ready&nbsp;to create your&nbsp;first&nbsp;task?<br>Save the task by picking&nbsp;a&nbsp;priority,
+            <p>Meow purrtner! Ready&nbsp;to create your&nbsp;first&nbsp;task?<br>Save the task by picking&nbsp;a&nbsp;priority,
                 to&nbsp;keep things organised!</p>
             <img th:src="|/img/cat_pm_${user.pussyMeter}.png|" alt="cat">
         </div>
@@ -269,9 +269,11 @@
         function toggleDropdown() {
             let dropdown = document.querySelector(".dropdown-content");
             const main = document.querySelector("main");
+            const footer = document.querySelector("footer");
             const img = document.querySelector(".dropbtn img");
 
             registerCancel(main);
+            registerCancel(footer);
 
             if (dropdown.style.display === "block") {
                 dropdown.style.display = "none";
@@ -296,7 +298,7 @@
 
                 function cancelMenu() {
                     dropdown.style.display = "none";
-                    img.src = "/img/menu_icon_open";
+                    img.src = "/img/menu_icon_open.png";
                     img.alt = "open menu";
                 }
             }
