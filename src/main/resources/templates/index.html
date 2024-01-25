@@ -36,15 +36,16 @@
         </div>
         <div class="dropdown">
             <button class="dropbtn" id="filter-icon"
-                    onclick="toggleDropdown('filter', 'filter-icon','/img/eye_icon_todo-03.png', '/img/eye_icon_todo-02.png')">
+                    onclick="toggleDropdown('task-slider', 'filter-icon','/img/eye_icon_todo-03.png', '/img/eye_icon_todo-02.png')">
                 <img src="/img/eye_icon_todo-03.png" alt="open menu">
             </button>
-            <div class="dropdown-content" id="filter">
-                <a href="/longTerm">Planned</a>
+            <div class="dropdown-content" id="task-slider">
+                <button onclick="showTasks('notDone')">not done</button>
+                <button onclick="showTasks('tomorrow')">tomorrow</button>
+                <button onclick="showTasks('current')">current</button>
             </div>
-        </div>
-        <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>
-        <div id="week-progressbar"></div>
+            <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>
+            <div id="week-progressbar"></div>
     </header>
 
     <main>
@@ -165,6 +166,15 @@
                 const task = form.closest(".task");
                 task.dataset.done = task.dataset.done === "true" ? "false" : "true";
             });
+        }
+
+        function showTasks() {
+            let priority = document.getAttribute('data-priority');
+            let id = document.getAttribute('data-id');
+            let done = document.getAttribute('data-done');
+            let maturity = document.getAttribute('data-maturity');
+
+
         }
 
         function toggleDueDate(state) {
