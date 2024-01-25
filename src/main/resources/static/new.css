@@ -442,14 +442,12 @@ button.startWeek {
     box-shadow: 0 .3rem .4rem 0 rgba(255, 180, 180, 0.3);
 }
 
-#filter{
+#task-slider{
     background-color: #c7e9fb;
-    left: -5.3rem;
+    left: -7.3rem;
+    width: 100%;
 }
 
-#filter a:hover{
-    background-color: #97ceec;
-}
 .dropdown-content a {
     color: black;
     padding: .75rem 1rem;

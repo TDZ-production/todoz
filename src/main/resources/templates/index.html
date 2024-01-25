@@ -34,29 +34,28 @@
                 </form>
             </div>
         </div>
+        <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>
+        <div id="week-progressbar"></div>
         <div class="dropdown">
             <button class="dropbtn" id="filter-icon"
                     onclick="toggleDropdown('task-slider', 'filter-icon','/img/eye_icon_todo-03.png', '/img/eye_icon_todo-02.png')">
                 <img src="/img/eye_icon_todo-03.png" alt="open menu">
             </button>
             <div class="dropdown-content" id="task-slider">
-                <button onclick="showTasks('notDone')">not done</button>
-                <button onclick="showTasks('tomorrow')">tomorrow</button>
-                <button onclick="showTasks('current')">current</button>
+                <input id="range-filter" type="range" step="1" th:max="3" value="0" oninput="filterTasks()">
             </div>
-            <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>
-            <div id="week-progressbar"></div>
+        </div>
     </header>
 
     <main>
         <div th:unless="${currentWeek.getSortedTasks().isEmpty()}" class="task"
              th:each="task : ${currentWeek.getSortedTasks()}" th:object="${task}"
              th:data-priority="*{priority}" th:data-id="*{id}" th:data-done="*{done}"
-             th:data-maturity="*{getMaturity()}">
+             th:data-maturity="*{getMaturity()}" th:data-duedate="*{dueDateDate}">
 
             <span th:classappend="|prio${task.getPriority()}|"></span>
             <p th:text="*{description}"></p>
-            <span class="due" th:text="*{getRemainingDays()}" th:data-duedate="*{dueDateDate}"></span>
+            <span class="due" th:text="*{getRemainingDays()}"></span>
 
             <form onsubmit="handleSubmit(event)" th:action="|/tasks/check/*{id}|" th:method="POST">
                 <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
@@ -127,6 +126,11 @@
 
         setInterval(updateWeekProgressbar, 3600);
 
+        if (localStorage.filter) {
+            document.querySelector('#range-filter').value = localStorage.filter;
+            filterTasks();
+        }
+
         function updateWeekProgressbar() {
             const progressbar = document.querySelector("#week-progressbar");
             const now = new Date();
@@ -168,13 +172,45 @@
             });
         }
 
-        function showTasks() {
-            let priority = document.getAttribute('data-priority');
-            let id = document.getAttribute('data-id');
-            let done = document.getAttribute('data-done');
-            let maturity = document.getAttribute('data-maturity');
+        function filterTasks() {
+            const tasks = document.querySelectorAll('.task');
+            const rangeValue = document.querySelector('#range-filter').value;
+
+            localStorage.filter = rangeValue;
+
+            const date = new Date();
+
+            const today = date.toISOString().slice(0,10);
+
+            date.setDate(date.getDate() + 1);
+            const tomorrow = date.toISOString().slice(0,10);
+
+            tasks.forEach(task => task.style.display = "");
 
 
+            if (rangeValue > 0) {
+                tasks.forEach((task) => {
+                    if (task.dataset.done == "true") {
+                        task.style.display = "none";
+                    }
+                })
+            }
+
+            if (rangeValue == 2) {
+                tasks.forEach(task => {
+                    if (task.dataset.duedate > today) {
+                        task.style.display = "none";
+                    }
+                })
+            }
+
+            if (rangeValue == 3) {
+                tasks.forEach(task => {
+                    if (task.dataset.duedate != tomorrow) {
+                        task.style.display = "none";
+                    }
+                })
+            }
         }
 
         function toggleDueDate(state) {
@@ -222,7 +258,7 @@
             registerCancel(main);
 
             const description = task.querySelector("p").innerText;
-            const dueDate = task.querySelector(".due").dataset.duedate;
+            const dueDate = task.dataset.duedate;
             const priority = task.dataset.priority;
 
             const form = document.querySelector("footer form");
