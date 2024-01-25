@@ -20,7 +20,8 @@
 <section class="app home">
     <header>
         <div class="dropdown">
-            <button class="dropbtn" id="drop-icon" onclick="toggleDropdown('content','/img/eye_icon_todo-03.png', '/img/eye_icon_todo-02.png')">
+            <button class="dropbtn" id="drop-icon"
+                    onclick="toggleDropdown('content', 'drop-icon', 'img/todoz_menu_icon-31.png', 'img/todoz_menu_icon-30.png')">
                 <img src="/img/todoz_menu_icon-31.png" alt="open menu">
             </button>
             <div class="dropdown-content" id="content">
@@ -34,7 +35,8 @@
             </div>
         </div>
         <div class="dropdown">
-            <button class="dropbtn" id="filter-icon" onclick="toggleDropdown('filter','/img/eye_icon_todo-03.png', '/img/eye_icon_todo-02.png')">
+            <button class="dropbtn" id="filter-icon"
+                    onclick="toggleDropdown('filter', 'filter-icon','/img/eye_icon_todo-03.png', '/img/eye_icon_todo-02.png')">
                 <img src="/img/eye_icon_todo-03.png" alt="open menu">
             </button>
             <div class="dropdown-content" id="filter">
@@ -284,10 +286,10 @@
             document.querySelector("footer").style.paddingBottom = value;
         }
 
-        function toggleDropdown(dropdownClassName, imgSrcOpen, imgSrcClose) {
+        function toggleDropdown(dropdownClassName, iconClassName, imgSrcOpen, imgSrcClose) {
             const dropdown = document.querySelector("#" + dropdownClassName);
             const main = document.querySelector("main");
-            const img = document.querySelector("#" + dropdownClassName + " img");
+            const img = document.querySelector("#" + iconClassName + " img");
 
             registerCancel(main);
 
@@ -304,7 +306,7 @@
             function registerCancel(event) {
                 event.addEventListener("click", function () {
                     cancelMenu();
-                }, { once: true });
+                }, {once: true});
 
                 window.onkeydown = function (event) {
                     if (event.key === "Escape") {
@@ -319,6 +321,7 @@
                 img.alt = "open menu";
             }
         }
+
         function logout() {
             document.querySelector('#logoutForm').submit();
         }
