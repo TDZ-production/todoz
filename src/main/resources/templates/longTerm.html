@@ -29,14 +29,11 @@
             <span class="due" th:text="|*{getDueDateDayOfWeek()} *{getDueDateFormat()}|"></span>
         </div>
 
-    <div th:if="${longTerm.isEmpty()}" class="NoTaskPlaceholder">
-        <p>Here will be all your planned tasks... <br> in the meantime enjoy this bouncing bush...</p>
-        <img th:if="${user.pussyMeter == 0}" src="/img/cat_todo_placeholder_pussyMeter1.png">
-        <img th:if="${user.pussyMeter == 1}" src="/img/cat_todo_placeholder_pussyMeter2.png">
-        <img th:if="${user.pussyMeter == 2}" src="/img/cat_todo_placeholder_pussyMeter3.png">
-    </div>
+        <div th:if="${longTerm.isEmpty()}" class="NoTaskPlaceholder">
+            <p>Here will be all your planned tasks... <br> in the meantime enjoy this bouncing bush...</p>
+            <img th:src="|/img/cat_pm_${user.pussyMeter}.png|" alt="cat">
+        </div>
     </main>
-
 </section>
 </body>
 </html>
