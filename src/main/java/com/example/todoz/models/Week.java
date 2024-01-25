@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class Week {
     private User user;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "week")
     //@OrderBy("done, priority DESC, dueDate ASC")
-    private List<Task> tasks = List.of();
+    private List<Task> tasks = new ArrayList<>();
 
     private final static int WEEKS_IN_YEAR = 52;
 
