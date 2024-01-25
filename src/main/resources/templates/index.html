@@ -21,7 +21,7 @@
     <header>
         <div class="dropdown">
             <button class="dropbtn" onclick="toggleDropdown()">
-                <img src="/img/menu_icon_open.png" alt="open menu">
+                <img src="/img/menu_icon_open.svg" alt="open menu">
             </button>
             <div class="dropdown-content">
                 <a href="/longTerm">Planned</a>
@@ -50,8 +50,8 @@
             <form onsubmit="handleSubmit(event)" th:action="|/tasks/check/*{id}|" th:method="POST">
                 <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
                 <button class="img" th:type="submit">
-                    <img class="isdone" src="/img/checkbox_checked.png" alt="mark as not done"/>
-                    <img class="notdone" src="/img/checkbox_unchecked.png" alt="mark as done"/>
+                    <img class="isdone" src="/img/checkbox_checked.svg" alt="mark as not done"/>
+                    <img class="notdone" src="/img/checkbox_unchecked.svg" alt="mark as done"/>
                 </button>
             </form>
         </div>
@@ -59,7 +59,7 @@
         <div th:if="${currentWeek.getSortedTasks().isEmpty()}" class="NoTaskPlaceholder">
             <p>Howdy partner! Ready&nbsp;to create your&nbsp;first&nbsp;task?<br>Save the task by picking&nbsp;a&nbsp;priority,
                 to&nbsp;keep things organised!</p>
-            <img th:src="|/img/cat_pm_${user.pussyMeter}.png|" alt="cat">
+            <img th:src="|/img/cat_pm_${user.pussyMeter}.svg|" alt="cat">
         </div>
     </main>
 
@@ -74,25 +74,25 @@
             <div class="addTask">
                 <input type="text" placeholder="new task" name="description" id="add" required autofocus
                        autocomplete="off">
-                <img onclick="toggleDueDate()" src="/img/calendar_icon.png" alt="due date" id="calendar_icon">
+                <img onclick="toggleDueDate()" src="/img/calendar_icon.svg" alt="due date" id="calendar_icon">
             </div>
 
             <div class="stars">
                 <button onclick="setPriority(4)" type="submit" name="priority" value="4" data-umami-event="setPriority"
                         data-umami-event-priority="4">
-                    <img th:src="|/img/prio_4_pm_${user.pussyMeter}.png|" alt="priority 4">
+                    <img th:src="|/img/prio4_pm_${user.pussyMeter}.svg|" alt="priority 4">
                 </button>
                 <button onclick="setPriority(3)" type="submit" name="priority" value="3" data-umami-event="setPriority"
                         data-umami-event-priority="3">
-                    <img th:src="|/img/prio_3_pm_${user.pussyMeter}.png|" alt="priority 3">
+                    <img th:src="|/img/prio3_pm_${user.pussyMeter}.svg|" alt="priority 3">
                 </button>
                 <button onclick="setPriority(2)" type="submit" name="priority" value="2" data-umami-event="setPriority"
                         data-umami-event-priority="2">
-                    <img th:src="|/img/prio_2_pm_${user.pussyMeter}.png|" alt="priority 2">
+                    <img th:src="|/img/prio2_pm_${user.pussyMeter}.svg|" alt="priority 2">
                 </button>
                 <button onclick="setPriority(1)" type="submit" name="priority" value="1" data-umami-event="setPriority"
                         data-umami-event-priority="1">
-                    <img th:src="|/img/prio_1_pm_${user.pussyMeter}.png|" alt="priority 1">
+                    <img th:src="|/img/prio1_pm_${user.pussyMeter}.svg|" alt="priority 1">
                 </button>
             </div>
         </form>
@@ -275,11 +275,11 @@
 
             if (dropdown.style.display === "block") {
                 dropdown.style.display = "none";
-                img.src = "/img/menu_icon_open.png";
+                img.src = "/img/menu_icon_open.svg";
                 img.alt = "open menu";
             } else {
                 dropdown.style.display = "block";
-                img.src = "/img/menu_icon_close.png";
+                img.src = "/img/menu_icon_close.svg";
                 img.alt = "close menu";
             }
 
