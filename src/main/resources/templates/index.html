@@ -64,6 +64,7 @@
     </main>
 
     <footer>
+        <p th:if="${longTermTask} == true" id="fadeoutMessage">Task added to "Planned"</p>
         <form method="post" th:action="@{/tasks/add}">
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
@@ -101,10 +102,15 @@
     <script>
         updateWeekProgressbar();
         initTaskEditListener();
-        initiPhoneHack();
+        initPhoneHack();
         expandMatureTasks();
 
         setInterval(updateWeekProgressbar, 3600);
+
+        const el = document.querySelector("#fadeoutMessage");
+        if (el) {
+            setTimeout(() => fadeout(el), 3000);
+        }
 
         function updateWeekProgressbar() {
             const progressbar = document.querySelector("#week-progressbar");
@@ -240,7 +246,7 @@
             });
         }
 
-        function initiPhoneHack() {
+        function initPhoneHack() {
             window.visualViewport.addEventListener('resize', handleKeyboard);
             document.addEventListener('focusin', handleKeyboard);
             document.addEventListener('focusout', handleKeyboard);
@@ -262,8 +268,13 @@
             }
         }
 
-        function adjustSafeAreaInset(value = 'env(safe-area-inset-bottom)') {
-            document.querySelector("footer").style.paddingBottom = value;
+        function fadeout(el) {
+            if (el !== null) {
+                el.classList.add("fade-out");
+                setTimeout(() => {
+                    el.remove();
+                }, 1000);
+            }
         }
 
         function toggleDropdown() {
