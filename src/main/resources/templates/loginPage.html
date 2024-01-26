@@ -31,7 +31,7 @@
 
             <label class="password">
                 <input type="password" name="password" id="password" placeholder="password" required>
-                <img src="/img/eye_icon_closed.png" id="showPassword" onclick="togglePasswordVisibility()" alt="hide icon">
+                <img src="/img/eye_icon_closed.svg" id="showPassword" onclick="togglePasswordVisibility()" alt="hide icon">
             </label>
 
             <p class="alignRight"><a th:href="@{/resetPassword}">Forgot password?</a></p>
@@ -68,11 +68,11 @@
 
         if (password.type === "password") {
             password.type = "text";
-            img.src = "/img/eye_icon_open.png"
+            img.src = "/img/eye_icon_open.svg"
         }
         else {
             password.type = "password";
-            img.src = "/img/eye_icon_closed.png"
+            img.src = "/img/eye_icon_closed.svg"
         }
     }
 </script>

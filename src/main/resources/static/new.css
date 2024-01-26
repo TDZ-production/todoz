@@ -271,7 +271,7 @@ main > form button {
 }
 
 .task button {
-    padding: 1rem;
+    padding: 0.5rem;
     padding-left: 0.5rem;
 }
 
@@ -299,7 +299,7 @@ main > form button {
 }
 
 img {
-    height: 1.2rem;
+    height: 1.7rem;
 }
 
 form + p {
@@ -460,7 +460,7 @@ button.startWeek {
 }
 
 .checkboxContainer {
-    padding: 0.5rem;
+    padding: 0.25rem;
     margin: 0;
     align-self: center;
     cursor: pointer;
@@ -532,7 +532,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 
 
 .icon-unchecked {
-    height: 2rem;
+    height: 3rem;
 }
 
 .left-behind .task button {
@@ -550,7 +550,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 }
 
 .NoTaskPlaceholder img{
-    width: 12.5rem;
+    width: 20.5rem;
     height: auto;
 }
 
@@ -585,6 +585,10 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 
 #fadeoutMessage.fade-out {
     opacity: 0;
+}
+
+.taskStatus img{
+    fill: #919191;
 }
 
 @media (min-width: 460px) {
