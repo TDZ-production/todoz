@@ -460,6 +460,47 @@ button.startWeek {
     position: relative;
 }
 
+.intro {
+    margin-top: 3rem;
+}
+
+#form {
+    margin-top: 4rem;
+}
+
+textarea {
+    width: 21rem;
+    height: 5rem;
+    border: 2px solid #333;
+    font: inherit;
+    border-radius: .5rem;
+}
+
+#received {
+    padding: .8rem;
+    color: darkgreen;
+}
+
+#formButton {
+    margin-top: 0;
+    background: #C3EDCE;
+}
+
+.discord {
+    margin: 2rem 5rem;
+    cursor: pointer;
+    padding: .625rem;
+    text-align: center;
+    border: 2px solid #333;
+    border-radius: .5rem;
+    width: 15rem;
+    background: #d9d9ff
+}
+
+.discord img {
+    margin: 1rem 1rem 0;
+}
+
 .task:has(.toDelegate:checked) {
     background: #ebffe7;
 }
