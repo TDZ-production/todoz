@@ -3,7 +3,6 @@ package com.example.todoz.services;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.Security;
-import java.time.LocalTime;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
@@ -11,18 +10,15 @@ import java.util.concurrent.ExecutionException;
 import com.example.todoz.models.User;
 import com.example.todoz.models.UserSubscription;
 import jakarta.annotation.PostConstruct;
-import lombok.Getter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.jose4j.lang.JoseException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import nl.martijndwars.webpush.Notification;
 import nl.martijndwars.webpush.PushService;
 import nl.martijndwars.webpush.Subscription;
 
 @Service
-@Getter
 public class NotificationService {
 
     @Value("${vapid.public.key}")
@@ -31,11 +27,9 @@ public class NotificationService {
     private String privateKey;
 
     private PushService pushService;
-    private final MessageService messageService;
     private final UserSubscriptionService userSubscriptionService;
 
-    public NotificationService(MessageService messageService, UserSubscriptionService userSubscriptionService) {
-        this.messageService = messageService;
+    public NotificationService(UserSubscriptionService userSubscriptionService) {
         this.userSubscriptionService = userSubscriptionService;
     }
 
@@ -67,24 +61,4 @@ public class NotificationService {
         }
     }
 
-//    @Scheduled(cron = "0 30 8 * * *")
-    @Scheduled(fixedRate = 10000)
-    public void sendMorningNotifications() {
-
-
-        userSubscriptionService.getAll().forEach(userSub ->
-            sendNotification(userSub, messageService.getMorningNotification(userSub.getUser())));
-
-        System.out.println("The message was sent" + LocalTime.now());
-    }
-
-    @Scheduled(cron = "0 00 12 * * *")
-    public void sendNoonNotifications() {
-
-
-        userSubscriptionService.getAll().forEach(userSub ->
-                sendNotification(userSub, messageService.getNoonNotification(userSub.getUser())));
-
-        System.out.println("The message was sent" + LocalTime.now());
-    }
 }
