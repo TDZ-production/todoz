@@ -9,6 +9,7 @@ import com.example.todoz.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import static com.example.todoz.models.User.MINIMAL_PASSWORD_LENGTH;
 
@@ -44,7 +46,8 @@ public class AuthenticationController {
     }
 
     @GetMapping("/register")
-    public String showRegisterPage() {
+    public String showRegisterPage(Model model) {
+        model.addAttribute("minimalPasswordLength", MINIMAL_PASSWORD_LENGTH);
         return "registerPage";
     }
 
@@ -54,6 +57,10 @@ public class AuthenticationController {
 
         if (optUSer.isPresent()) {
             ra.addFlashAttribute("userExists", true);
+
+            return "redirect:/register";
+        } else if (!isValidUsername(registerDTO.username()) || !isValidPassword(registerDTO.password())) {
+            ra.addFlashAttribute("invalidCredentials", true);
 
             return "redirect:/register";
         } else {
@@ -102,7 +109,9 @@ public class AuthenticationController {
     }
 
     @GetMapping("/newPassword")
-    public String showNewPassword() {
+    public String showNewPassword(Model model) {
+        model.addAttribute("minimalPasswordLength", MINIMAL_PASSWORD_LENGTH);
+
         return "newPassword";
     }
 
@@ -111,10 +120,13 @@ public class AuthenticationController {
         if (!password.equals(confirmation)) {
             ra.addFlashAttribute("doesNotMatch", true);
             ra.addFlashAttribute("userId", userId);
+
             return "redirect:/newPassword";
         } else if (password.length() < MINIMAL_PASSWORD_LENGTH) {
             ra.addFlashAttribute("invalid", true);
+            ra.addFlashAttribute("minimalPasswordLength" , MINIMAL_PASSWORD_LENGTH);
             ra.addFlashAttribute("userId", userId);
+
             return "redirect:/newPassword";
         }
 
@@ -127,5 +139,16 @@ public class AuthenticationController {
 
     private String passwordResetEmailLink(HttpServletRequest request, String token) {
         return "https://" + request.getServerName() + request.getContextPath() + "/validateToken?token=" + token;
+    }
+
+    public boolean isValidPassword(String password) {
+        return password.length() >= MINIMAL_PASSWORD_LENGTH;
+    }
+
+    public boolean isValidUsername(String username) {
+        String emailRegEx = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+        return Pattern.compile(emailRegEx)
+                .matcher(username)
+                .matches();
     }
 }

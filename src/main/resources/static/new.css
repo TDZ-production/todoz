@@ -4,6 +4,7 @@
 }
 
 :root {
+    --body-bg-color: #ededed;
     --main-bg-color: #FCFAEE;
     --font-color: #333;
     --light-font-color: #919191;
@@ -30,7 +31,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: virgil, sans-serif;
-    background-color: #ededed;
+    background-color: var(--body-bg-color);
     color: var(--font-color);
 }
 
@@ -312,6 +313,7 @@ main > p:last-child {
 footer {
     background: var(--main-color);
     border-top: 2px solid var(--font-color);
+    position: relative;
     padding-bottom: env(safe-area-inset-bottom);
 }
 
@@ -566,7 +568,23 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     right: 1rem;
     top: 50%;
     transform: translateY(-50%);
+}
 
+#fadeoutMessage {
+    position: absolute;
+    top: -4rem;
+    color: green;
+    left: 20%;
+    font-size: 1.1rem;
+    border: 1px solid green;
+    border-radius: .3rem;
+    background-color: #c3eab5;
+    padding: .666rem;
+    transition: opacity 1s ease-out;
+}
+
+#fadeoutMessage.fade-out {
+    opacity: 0;
 }
 
 @media (min-width: 460px) {
