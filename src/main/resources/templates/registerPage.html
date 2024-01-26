@@ -8,7 +8,8 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <script async src="https://umami.petabyte.farm/script.js" data-website-id="0076ce35-dec8-4042-ba76-0dc4b52922b0"></script>
+    <script async src="https://umami.petabyte.farm/script.js"
+            data-website-id="0076ce35-dec8-4042-ba76-0dc4b52922b0"></script>
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="icon" type="image/png" sizes="32x32" href="/icons/iconx32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/touch-icon.png">
@@ -22,18 +23,21 @@
 
         <form th:action="|/register|" method="post">
             <p th:if="${userExists} == true">User with this email exists</p>
+            <p th:if="${invalidCredentials} == true">Invalid credentials!</p>
+            <p id="placeholder"></p>
             <label>
-                <input name="username" type="email" placeholder="email" required autofocus autocapitalize="none">
+                <input name="username" type="text" id="email" placeholder="email" autofocus autocapitalize="none">
             </label>
 
             <label class="password">
-                <input name="password" type="password" id="password" placeholder="password" required>
+                <input name="password" type="password" id="password" placeholder="password">
                 <img src="/img/eye_icon_closed.svg" id="showPassword" onclick="togglePasswordVisibility()" alt="hide icon">
             </label>
 
             <label class="slideContainer">
                 <p id="pussyLabel">Neutral</p>
-                <input type="range" name="pussyMeter" step="1" max="2" class="slider" id="myRange" oninput="updateTitle()">
+                <input type="range" name="pussyMeter" step="1" max="2" class="slider" id="range"
+                       oninput="updateTitle()">
             </label>
             <button class="cta" type="submit">Sign-up</button>
         </form>
@@ -41,18 +45,22 @@
     </main>
 </section>
 
-<script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const MINIMAL_PASSWORD_LENGTH = /*[[@{${minimalPasswordLength}}]]*/ 0;
+    /*]]>*/
+
     function updateTitle() {
-        const range = document.querySelector("#myRange");
+        const range = document.querySelector("#range");
         const title = document.querySelector("#title");
         const subtitle = document.querySelector("#title + p");
         const pussyLabel = document.querySelector("#pussyLabel");
 
-        if(range.value == 0) {
+        if (range.value == 0) {
             title.innerText = "ToDoZlatíčko";
             subtitle.innerText = "Register yourself fam";
             pussyLabel.innerText = "Friendly";
-        } else if(range.value == 1) {
+        } else if (range.value == 1) {
             title.innerText = "ToDoZápisník";
             subtitle.innerText = "Register your account";
             pussyLabel.innerText = "Neutral";
@@ -70,12 +78,49 @@
         if (password.type === "password") {
             password.type = "text";
             img.src = "/img/eye_icon_open.svg"
-        }
-        else {
+        } else {
             password.type = "password";
             img.src = "/img/eye_icon_closed.svg"
         }
     }
+
+    function validCredentials() {
+        let password = document.querySelector("#password").value;
+        let email = document.querySelector("#email").value;
+        let placeholder = document.querySelector("#placeholder");
+        const validRegex = /^(?=.{1,64}@)[A-Za-z0-9_-]+(\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,})$/;
+        const range = document.querySelector("#range").value;
+
+        if (!email.match(validRegex)) {
+            if (range == 2) {
+                placeholder.innerHTML = "Is this an email or did you just vomit?";
+            } else if (range == 1) {
+                placeholder.innerHTML = "Invalid email address."
+            } else {
+                placeholder.innerHTML = "Oops! Mind checking the email again?"
+            }
+
+            return false;
+        } else if (password.length < MINIMAL_PASSWORD_LENGTH) {
+            if (range == 2) {
+                placeholder.innerHTML = `Too short! That's what she said!`;
+            } else if (range == 1) {
+                placeholder.innerHTML = `Invalid password! ${MINIMAL_PASSWORD_LENGTH}+ characters.`;
+            } else {
+                placeholder.innerHTML = `${MINIMAL_PASSWORD_LENGTH} characters or more. Try again champ!`;
+            }
+
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    document.addEventListener("submit", function (event) {
+        if (!validCredentials()) {
+            event.preventDefault();
+        }
+    });
 </script>
 </body>
 </html>
