@@ -104,7 +104,7 @@
             return false;
         } else if (password.length < MINIMAL_PASSWORD_LENGTH) {
             if (range == 2) {
-                placeholder.innerHTML = `This short?! That's what she said!`;
+                placeholder.innerHTML = `Too short! That's what she said!`;
             } else if (range == 1) {
                 placeholder.innerHTML = `Invalid password! ${MINIMAL_PASSWORD_LENGTH}+ characters.`;
             } else {
