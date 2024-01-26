@@ -1,9 +1,7 @@
 package com.example.todoz.controllers;
 
 import com.example.todoz.models.*;
-import com.example.todoz.services.TaskService;
-import com.example.todoz.services.UserService;
-import com.example.todoz.services.WeekService;
+import com.example.todoz.services.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,6 +19,7 @@ public class MainController {
     private final UserService userService;
     private final TaskService taskService;
     private final WeekService weekService;
+    private final NotificationService notificationService;
 
     @GetMapping
     public String showIndex(Model model, Principal principal) {
@@ -35,6 +34,7 @@ public class MainController {
             model.addAttribute("user", getUser(principal));
             model.addAttribute("previousWeek", previousWeek);
             model.addAttribute("upcomingTasks", upcomingTasks);
+            model.addAttribute("publicKey", notificationService.getPublicKey());
 
             return "weekReview";
         } else if (currentWeek.isEmpty()) {

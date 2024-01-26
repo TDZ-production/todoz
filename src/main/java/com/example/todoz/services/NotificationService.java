@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutionException;
 import com.example.todoz.models.User;
 import com.example.todoz.models.UserSubscription;
 import jakarta.annotation.PostConstruct;
+import lombok.Getter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.jose4j.lang.JoseException;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +20,7 @@ import nl.martijndwars.webpush.PushService;
 import nl.martijndwars.webpush.Subscription;
 
 @Service
+@Getter
 public class NotificationService {
 
     @Value("${vapid.public.key}")
@@ -45,8 +47,8 @@ public class NotificationService {
 
         Optional<UserSubscription> maybeUserSub = userSubscriptionService.findByAuth(subscription.keys.auth);
 
-        if(maybeUserSub.isEmpty()){
-            UserSubscription userSubscription =  new UserSubscription(subscription, user);
+        if (maybeUserSub.isEmpty()) {
+            UserSubscription userSubscription = new UserSubscription(subscription, user);
             userSubscriptionService.save(userSubscription);
         }
     }
