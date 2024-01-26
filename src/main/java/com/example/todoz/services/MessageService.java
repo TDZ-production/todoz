@@ -1,90 +1,161 @@
 package com.example.todoz.services;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.security.Security;
-import java.time.LocalTime;
-import java.util.Optional;
-import java.util.concurrent.ExecutionException;
-
-
+import com.example.todoz.dtos.NotificationDTO;
+import com.example.todoz.models.Notification;
+import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
-import com.example.todoz.models.UserSubscription;
-import jakarta.annotation.PostConstruct;
-import lombok.Getter;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.jose4j.lang.JoseException;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
+import com.example.todoz.repos.NotificationRepo;
+import com.example.todoz.repos.TaskRepo;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
-import nl.martijndwars.webpush.Notification;
-import nl.martijndwars.webpush.PushService;
-import nl.martijndwars.webpush.Subscription;
+
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
-@Getter
 public class MessageService {
 
-    @Value("${vapid.public.key}")
-    private String publicKey;
-    @Value("${vapid.private.key}")
-    private String privateKey;
+    private final NotificationRepo notificationRepo;
+    private final TaskRepo taskRepo;
 
-    private PushService pushService;
-    private final NotificationService notificationService;
-    private final UserSubscriptionService userSubscriptionService;
 
-    public MessageService(NotificationService notificationService, UserSubscriptionService userSubscriptionService) {
-        this.notificationService = notificationService;
-        this.userSubscriptionService = userSubscriptionService;
+    public MessageService(NotificationRepo notificationRepo, TaskRepo taskRepo) {
+        this.notificationRepo = notificationRepo;
+        this.taskRepo = taskRepo;
     }
 
+    public Notification getNotification(User user, String timeSlot){
+        int typeTask = getTypeTask();
+        boolean notificationSingleTask = user.isNotificationSingleTask();
+        List<Notification> notifications = null;
+        Notification notification = null;
 
-    @PostConstruct
-    private void init() throws GeneralSecurityException {
-        Security.addProvider(new BouncyCastleProvider());
-        pushService = new PushService(publicKey, privateKey);
+        /** No notifications for 0 tasks, it returns an empty task */
+        if(typeTask == 3){
+        } else if (typeTask == 2 && !notificationSingleTask){ /** type 2 it will always show one task */
+            notifications = notificationRepo.
+                    findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask(timeSlot, user.getPussyMeter(),true, typeTask);
+        }else{
+            notifications = notificationRepo.
+                    findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask(timeSlot, user.getPussyMeter(), notificationSingleTask, typeTask);
+        }
+
+        if(notifications != null){
+            notification = getRandomNotification(notifications);
+        }
+        return notification;
+    }
+    public String getMorningNotification(User user) {
+
+        return getJsonNotification(getTasks(), getNotification(user, "morning"),  user.isNotificationSingleTask());
     }
 
-    public void subscribe(Subscription subscription, User user) {
-        System.out.println("Subscribed to " + subscription.endpoint);
+    public String getNoonNotification(User user) {
 
-        Optional<UserSubscription> maybeUserSub = userSubscriptionService.findByAuth(subscription.keys.auth);
+        return getJsonNotification(getTasks(), getNotification(user, "noon"),  user.isNotificationSingleTask());
 
-        if(maybeUserSub.isEmpty()){
-            UserSubscription userSubscription =  new UserSubscription(subscription, user);
-            userSubscriptionService.save(userSubscription);
+
+    }
+
+        public int getTypeTask() {
+            Map<List<Task>, Integer> mapTaskAndTypeTask = getListTasksAndTypeTask();
+
+            Integer typeTask = mapTaskAndTypeTask
+                    .values()
+                    .stream()
+                    .findFirst()
+                    .orElse(null);
+
+            if (typeTask == null){
+                throw new RuntimeException("no type task for the notification");
+            }
+            return typeTask;
+        }
+
+        public List<Task> getTasks() {
+            Map<List<Task>, Integer> mapTaskAndTypeTask = getListTasksAndTypeTask();
+
+            List<Task> tasks = mapTaskAndTypeTask
+                    .keySet()
+                    .stream()
+                    .findFirst()
+                    .orElse(null);
+
+            if (tasks == null){
+                throw new RuntimeException("no tasks");
+            }
+            return tasks;
+        }
+
+
+        public Map<List<Task>, Integer> getListTasksAndTypeTask() {
+        List<Task> tasks = taskRepo.findAll();
+
+        /** tasks for today */
+        List<Task> tasksToday =tasks.stream().
+                filter(t -> !t.isDone())
+                .filter(t -> t.getRemainingDays() == "Today")
+                .sorted(Comparator.comparing(Task::getPriority).reversed())
+                .collect(Collectors.toList());
+
+        /** tasks for today, tomorrow and yesterday */
+        List<Task> filteredTasks = tasks.stream()
+                .filter(t -> !t.isDone() &&
+                        (("Today".equals(t.getRemainingDays())) ||
+                                ("Yesterday".equals(t.getRemainingDays()) && t.getPriority() == 4)))
+                .sorted(Comparator.comparing(Task::getPriority))
+                .toList();
+
+
+        if(tasksToday.size() > 5){
+            return new HashMap<>(){{put(tasksToday, 1);}};
+        }else if(!filteredTasks.isEmpty()){
+            if(filteredTasks.size() >1 ){
+                return new HashMap<>(){{put(filteredTasks, 1);}};
+            }
+            return new HashMap<>(){{put(filteredTasks, 2);}};
+        }else{ //no tasks
+            return new HashMap<>(){{put(filteredTasks, 3);}};
+
         }
     }
 
-    public void sendNotification(UserSubscription userSubscription, String messageJson) {
-        try {
-            Subscription subscription = new Subscription(userSubscription.getEndpoint(), new Subscription.Keys(userSubscription.getP256dhKey(), userSubscription.getAuthKey()));
-            pushService.send(new Notification(subscription, messageJson));
-        } catch (GeneralSecurityException | IOException | JoseException | ExecutionException
-                 | InterruptedException e) {
-            e.printStackTrace();
-        }
+    public Notification getRandomNotification(List<Notification> notifications){
+        Random random = new Random();
+        return notifications.get(random.nextInt(notifications.size()));
     }
 
-    @Scheduled(cron = "0 30 8 * * *")
-//    @Scheduled(fixedRate = 10000)
-    public void sendMorningNotifications() {
+
+        public String getJsonNotification(List<Task> tasks, Notification notification, boolean notificationSingleTask){
+
+            NotificationDTO notificationDTO = null;
+
+            if(notification != null) {
+                if (notificationSingleTask) {
+                    notificationDTO = new NotificationDTO(
+                            String.format(notification.getTitle(), tasks.size()),
+                            String.format(notification.getDescription(), tasks.get(0).getDescription()));
+
+                } else {
+                    String threeTasksString = tasks.subList(0, 3).stream()
+                            .map(task -> "- " + task.getDescription() + " \n")
+                            .collect(Collectors.joining());
 
 
-        userSubscriptionService.getAll().forEach(userSub ->
-            sendNotification(userSub, notificationService.getMorningNotification(userSub.getUser())));
+                    notificationDTO = new NotificationDTO(
+                            String.format(notification.getTitle(), tasks.size()),
+                            String.format(notification.getDescription(), threeTasksString));
 
-        System.out.println("The message was sent" + LocalTime.now());
-    }
+                }
+            }
 
-    @Scheduled(cron = "0 00 12 * * *")
-    public void sendNoonNotifications() {
-
-
-        userSubscriptionService.getAll().forEach(userSub ->
-                sendNotification(userSub, notificationService.getNoonNotification(userSub.getUser())));
-
-        System.out.println("The message was sent" + LocalTime.now());
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+                return objectMapper.writeValueAsString(notificationDTO);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
     }
 }
