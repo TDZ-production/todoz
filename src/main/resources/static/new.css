@@ -334,6 +334,10 @@ footer input, .stars button {
     padding: .5rem .5rem;
 }
 
+#upcomingFooter {
+    display: none;
+}
+
 .stars button {
     padding-bottom: 0;
 }

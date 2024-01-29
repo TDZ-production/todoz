@@ -37,18 +37,17 @@
         </div>
     </main>
 
-    <footer>
+    <footer id="upcomingFooter">
         <form method="post" th:action="@{/tasks/add}">
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
-            <label class="dateTime hidden">
+            <label>
                 <input type="date" name="maybeDueDate" id="date">
             </label>
 
             <div class="addTask">
                 <input type="text" placeholder="new task" name="description" id="add" required autofocus
                        autocomplete="off">
-                <img onclick="toggleDueDate()" src="/img/calendar_icon.svg" alt="due date" id="calendar_icon">
             </div>
 
             <div class="stars">
@@ -75,32 +74,6 @@
 <script>
     initTaskEditListener();
 
-    function toggleDueDate(state) {
-        const CLASS = "hidden";
-        const date = document.querySelector("#date");
-        const dateLabel = document.querySelector(".dateTime")
-        const classList = dateLabel.classList;
-
-        if (state === undefined) {
-            classList.toggle(CLASS);
-            if (!classList.contains(CLASS)) {
-                dateLabel.dispatchEvent(new Event("click"));
-                if (document.activeElement !== date) {
-                    date.focus();
-                    date.showPicker();
-                }
-            } else {
-                document.querySelector("#add").focus();
-            }
-            date.value = "";
-        } else if (state === true) {
-            classList.remove(CLASS);
-        } else {
-            classList.add(CLASS);
-            date.value = "";
-        }
-    }
-
     function initTaskEditListener() {
         document.querySelector("main").addEventListener("click", function (event) {
             if (event.target.tagName !== "P") return;
@@ -114,6 +87,7 @@
     }
 
     function edit(task) {
+        document.querySelector("#upcomingFooter").style.display = "block";
         document.querySelector("#add").focus();
 
         const main = document.querySelector("main");
@@ -126,15 +100,9 @@
         const form = document.querySelector("footer form");
         setPriority(priority);
 
-        form.action = "/tasks/" + task.dataset.id;
+        form.action = "/tasks/upcoming/" + task.dataset.id;
         form.querySelector("input[name='description']").value = description;
         form.querySelector("input[name='maybeDueDate']").value = dueDate;
-
-        if (dueDate) {
-            toggleDueDate(true);
-        } else {
-            toggleDueDate(false);
-        }
 
         function registerCancel(el) {
             el.classList.add("fade");
