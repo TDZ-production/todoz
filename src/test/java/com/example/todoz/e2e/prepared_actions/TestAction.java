@@ -11,7 +11,7 @@ public class TestAction {
 
     public void RegisterAndLogin(Page page, String webUrl) {
 
-        String username = String.format("testUser%s@mail.com", new Random().nextInt());
+        String username = CreateRandomUserMail();
 
         //Register action
         page.navigate(webUrl + "/register");
@@ -26,6 +26,10 @@ public class TestAction {
         page.type("input[name=username]", username);
         page.type("input[name=password]", "testPassword");
         page.click("button[type=submit]");
+    }
+
+    public String CreateRandomUserMail(){
+        return String.format("testUser%s@mail.com", new Random().nextInt());
     }
 
     public void createFourNoDueDateTasks(Page page) {
