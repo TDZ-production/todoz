@@ -18,8 +18,11 @@ jobs:
         ports:
           - 3306
         env:
+          MYSQL_USER: root
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: todoz
+          MYSQL_HOST: 127.0.0.1
+
 
     steps:
       - name: Checkout code
