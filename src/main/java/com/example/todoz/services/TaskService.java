@@ -51,6 +51,10 @@ public class TaskService {
     public List<Task> findLeftBehind(User user, Week week, Integer currentWeek) {
         return taskRepo.findAllByUserIdAndDoneIsFalseAndWeekIdLessThanOrWeekIdNullAndUserIdAndDoneIsFalseAndDueDateWeekNumberLessThanEqual(user.getId(), week.getId(), user.getId(), currentWeek);
     }
+
+    public void delete(Long id) {
+        taskRepo.deleteById(id);
+    }
 }
 
 

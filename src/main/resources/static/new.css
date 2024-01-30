@@ -59,6 +59,7 @@ body {
 .app main {
     flex-grow: 1;
     overflow: auto;
+    flex-direction: column;
 }
 
 a {
@@ -237,6 +238,8 @@ main > form button {
     border-bottom: 1px solid var(--border-color);
     padding-left: .5rem;
     position: relative;
+    scroll-snap-align: start;
+    min-width: 100%;
 }
 
 .task[data-done=true] img.notdone { display: none; }
@@ -589,6 +592,30 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 
 .taskStatus img{
     fill: #919191;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    overflow: scroll;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.container::-webkit-scrollbar {
+    display: none;
+}
+
+.delete {
+    border-bottom: 1px solid var(--border-color);
+}
+
+#deleteButton {
+    border: none;
+    background: #ff3939;
+    border-radius: 0;
+    padding: 1rem;
 }
 
 @media (min-width: 460px) {

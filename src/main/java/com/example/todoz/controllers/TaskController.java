@@ -60,6 +60,13 @@ public class TaskController {
         return "redirect:/leftBehind";
     }
 
+    @PostMapping("delete/{id}")
+    public String delete(@PathVariable Long id) {
+        taskService.delete(id);
+
+        return "redirect:/";
+    }
+
     private User getUser(Principal principal) {
         return userService.findByUsername(principal.getName()).orElseThrow(EntityNotFoundException::new);
     }
