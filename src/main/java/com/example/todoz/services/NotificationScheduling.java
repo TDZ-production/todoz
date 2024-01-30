@@ -1,22 +1,19 @@
 package com.example.todoz.services;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
 
 @Service
+@RequiredArgsConstructor
 public class NotificationScheduling {
 
     private final NotificationService notificationService;
     private final UserSubscriptionService userSubscriptionService;
     private final MessageService messageService;
 
-    public NotificationScheduling(NotificationService notificationService, UserSubscriptionService userSubscriptionService, MessageService messageService) {
-        this.notificationService = notificationService;
-        this.userSubscriptionService = userSubscriptionService;
-        this.messageService = messageService;
-    }
 
     //    @Scheduled(cron = "0 30 8 * * *")
     @Scheduled(fixedRate = 10000)

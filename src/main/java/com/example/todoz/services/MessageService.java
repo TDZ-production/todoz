@@ -5,157 +5,76 @@ import com.example.todoz.models.Notification;
 import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
 import com.example.todoz.repos.NotificationRepo;
-import com.example.todoz.repos.TaskRepo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class MessageService {
 
     private final NotificationRepo notificationRepo;
-    private final TaskRepo taskRepo;
 
 
-    public MessageService(NotificationRepo notificationRepo, TaskRepo taskRepo) {
+    public MessageService(NotificationRepo notificationRepo) {
         this.notificationRepo = notificationRepo;
-        this.taskRepo = taskRepo;
     }
 
-    public Notification getNotification(User user, String timeSlot){
-        int typeTask = getTypeTask();
-        boolean notificationSingleTask = user.isNotificationSingleTask();
-        List<Notification> notifications = null;
-        Notification notification = null;
+    public Notification getNotification(User user, String timeSlot) {
+        return getRandomNotification(notificationRepo.
+                findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask(
+                        timeSlot,
+                        user.getPussyMeter(),
+                        true,
+                        getTypeTask(user)));
 
-        /** No notifications for 0 tasks, it returns an empty task */
-        if(typeTask == 3){
-        } else if (typeTask == 2 && !notificationSingleTask){ /** type 2 it will always show one task */
-            notifications = notificationRepo.
-                    findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask(timeSlot, user.getPussyMeter(),true, typeTask);
-        }else{
-            notifications = notificationRepo.
-                    findAllByTimeSlotAndPussyMeterAndNotificationSingleTaskAndTypeTask(timeSlot, user.getPussyMeter(), notificationSingleTask, typeTask);
-        }
-
-        if(notifications != null){
-            notification = getRandomNotification(notifications);
-        }
-        return notification;
     }
+
     public String getMorningNotification(User user) {
-
-        return getJsonNotification(getTasks(), getNotification(user, "morning"),  user.isNotificationSingleTask());
+        return getJsonNotification(getTasks(user), getNotification(user, "morning"));
     }
 
-    public String getNoonNotification(User user) {
 
-        return getJsonNotification(getTasks(), getNotification(user, "noon"),  user.isNotificationSingleTask());
+    public int getTypeTask(User user) {
+        List<Task> tasksToday = getTasks(user);
 
-
-    }
-
-        public int getTypeTask() {
-            Map<List<Task>, Integer> mapTaskAndTypeTask = getListTasksAndTypeTask();
-
-            Integer typeTask = mapTaskAndTypeTask
-                    .values()
-                    .stream()
-                    .findFirst()
-                    .orElse(null);
-
-            if (typeTask == null){
-                throw new RuntimeException("no type task for the notification");
-            }
-            return typeTask;
-        }
-
-        public List<Task> getTasks() {
-            Map<List<Task>, Integer> mapTaskAndTypeTask = getListTasksAndTypeTask();
-
-            List<Task> tasks = mapTaskAndTypeTask
-                    .keySet()
-                    .stream()
-                    .findFirst()
-                    .orElse(null);
-
-            if (tasks == null){
-                throw new RuntimeException("no tasks");
-            }
-            return tasks;
-        }
-
-
-        public Map<List<Task>, Integer> getListTasksAndTypeTask() {
-        List<Task> tasks = taskRepo.findAll();
-
-        /** tasks for today */
-        List<Task> tasksToday =tasks.stream().
-                filter(t -> !t.isDone())
-                .filter(t -> t.getRemainingDays() == "Today")
-                .sorted(Comparator.comparing(Task::getPriority).reversed())
-                .collect(Collectors.toList());
-
-        /** tasks for today, tomorrow and yesterday */
-        List<Task> filteredTasks = tasks.stream()
-                .filter(t -> !t.isDone() &&
-                        (("Today".equals(t.getRemainingDays())) ||
-                                ("Yesterday".equals(t.getRemainingDays()) && t.getPriority() == 4)))
-                .sorted(Comparator.comparing(Task::getPriority))
-                .toList();
-
-
-        if(tasksToday.size() > 5){
-            return new HashMap<>(){{put(tasksToday, 1);}};
-        }else if(!filteredTasks.isEmpty()){
-            if(filteredTasks.size() >1 ){
-                return new HashMap<>(){{put(filteredTasks, 1);}};
-            }
-            return new HashMap<>(){{put(filteredTasks, 2);}};
-        }else{ //no tasks
-            return new HashMap<>(){{put(filteredTasks, 3);}};
-
+        if (tasksToday.size() > 1) {
+            return 1;
+        } else if (tasksToday.size() == 1) {
+            return 2;
+        } else {
+            return 3;
         }
     }
 
-    public Notification getRandomNotification(List<Notification> notifications){
+    public List<Task> getTasks(User user) {
+        return user.getCurrentTasks();
+    }
+
+    public Notification getRandomNotification(List<Notification> notifications) {
         Random random = new Random();
         return notifications.get(random.nextInt(notifications.size()));
     }
 
 
-        public String getJsonNotification(List<Task> tasks, Notification notification, boolean notificationSingleTask){
+    public String getJsonNotification(List<Task> tasks, Notification notification) {
 
-            NotificationDTO notificationDTO = null;
+        NotificationDTO notificationDTO = null;
 
-            if(notification != null) {
-                if (notificationSingleTask) {
-                    notificationDTO = new NotificationDTO(
-                            String.format(notification.getTitle(), tasks.size()),
-                            String.format(notification.getDescription(), tasks.get(0).getDescription()));
+        if (notification != null && !tasks.isEmpty()) {
+            notificationDTO = new NotificationDTO(
+                    String.format(notification.getTitle(), tasks.size()),
+                    String.format(notification.getDescription(), tasks.get(0).getDescription()));
 
-                } else {
-                    String threeTasksString = tasks.subList(0, 3).stream()
-                            .map(task -> "- " + task.getDescription() + " \n")
-                            .collect(Collectors.joining());
+        }
 
-
-                    notificationDTO = new NotificationDTO(
-                            String.format(notification.getTitle(), tasks.size()),
-                            String.format(notification.getDescription(), threeTasksString));
-
-                }
-            }
-
-            ObjectMapper objectMapper = new ObjectMapper();
-            try {
-                return objectMapper.writeValueAsString(notificationDTO);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writeValueAsString(notificationDTO);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

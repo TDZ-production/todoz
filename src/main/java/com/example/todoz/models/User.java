@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -26,7 +27,8 @@ public class User {
     @ManyToMany
     private Set<Role> roles;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Week> week;
+    @OrderBy("id DESC")
+    private List<Week> weeks;
     @OneToMany(mappedBy = "user")
     List<Task> tasks;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -35,6 +37,22 @@ public class User {
     private List<UserSubscription> userSubscription;
     public static final int MINIMAL_PASSWORD_LENGTH = 5;
 
+
+//    public List<Task> getCurrentTasks() {
+//        return getLastWeek().getSortedTasks();
+//    }
+//    public Week getLastWeek() {
+//        return weeks.get(0);
+//    }
+
+//    public List<Task> getCurrentTasks() {
+//        return List.of(new Task(...));
+//    }
+//
+//
+//    public Optional<Task> getTopTask() {
+//        return getCurrentTasks().get(0);
+//    }
     public User(String username, String password, Integer pussyMeter) {
         this.username = username;
         this.password = password;
