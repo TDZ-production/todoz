@@ -44,9 +44,10 @@ jobs:
         ports:
           - 3306
         env:
-          API_URI: http://localhost:3306/
+          MYSQL_USER: root
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: todoz
+          MYSQL_HOST: 127.0.0.1
 
     steps:
       - name: Checkout code
@@ -68,7 +69,8 @@ jobs:
           done
 
       - name: Start application
-        run: ./gradlew bootRun -Dspring.datasource.url=jdbc:mysql://localhost:3306/todoz -Dspring.datasource.username=root -Dspring.datasource.password=password
+        run: ./gradlew bootRun -Dspring.datasource.url=jdbc:mysql://${MYSQL_HOST}:3306/todoz -Dspring.datasource.username=${MYSQL_USER} -Dspring.datasource.password=${MYSQL_ROOT_PASSWORD}
+
 
       - name: Wait for the application to start
         run: sleep 30
