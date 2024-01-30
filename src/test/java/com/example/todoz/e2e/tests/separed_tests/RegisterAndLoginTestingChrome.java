@@ -45,9 +45,10 @@ public class RegisterAndLoginTestingChrome {
     @Test
     @Order(1)
     public void RegisterWithNewUser() {
+        String username = actions.CreateRandomUserMail();
         page.navigate(webUrl + "/register");
 
-        page.type("input[name=username]", "test@User");
+        page.type("input[name=username]", username);
         page.type("input[name=password]", "testPassword");
         page.click("button[type=submit]");
 
@@ -57,15 +58,16 @@ public class RegisterAndLoginTestingChrome {
     @Test
     @Order(2)
     public void RegisterWithAlreadyCreateUsername() {
+        String username = actions.CreateRandomUserMail();
         page.navigate(webUrl + "/register");
 
-        page.type("input[name=username]", "test@email.com");
+        page.type("input[name=username]", username);
         page.type("input[name=password]", "testPassword");
         page.click("button[type=submit]");
 
         page.navigate(webUrl + "/register");
 
-        page.type("input[name=username]", "test@email.com");
+        page.type("input[name=username]", username);
         page.type("input[name=password]", "testPassword");
         page.click("button[type=submit]");
 
@@ -75,9 +77,10 @@ public class RegisterAndLoginTestingChrome {
     @Test
     @Order(3)
     public void RegisterWithLowerThanFiveCharactersPassword() {
+        String username = actions.CreateRandomUserMail();
         page.navigate(webUrl + "/register");
 
-        page.type("input[name=username]", "test@email.com");
+        page.type("input[name=username]", username);
         page.type("input[name=password]", "1234");
         page.click("button[type=submit]");
 
@@ -87,13 +90,14 @@ public class RegisterAndLoginTestingChrome {
     @Test
     @Order(4)
     public void LoginWithNotRegisteredUser() {
+        String username = actions.CreateRandomUserMail();
         page.navigate(webUrl + "/login");
 
-        page.type("input[name=username]", "test@email.com");
+        page.type("input[name=username]", username);
         page.type("input[name=password]", "testPassword");
         page.click("button[type=submit]");
 
-        assertEquals(webUrl + "/login", page.url());
+        assertEquals(webUrl + "/login?error", page.url());
     }
 
     @Test
@@ -111,9 +115,10 @@ public class RegisterAndLoginTestingChrome {
     @Test
     @Order(6)
     public void RegisterWithBlankPassword() {
+        String username = actions.CreateRandomUserMail();
         page.navigate(webUrl + "/register");
 
-        page.type("input[name=username]", "testU@ser");
+        page.type("input[name=username]", username);
         page.type("input[name=password]", "          ");
         page.click("button[type=submit]");
 
