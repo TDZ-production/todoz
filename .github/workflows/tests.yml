@@ -14,15 +14,12 @@ jobs:
 
     services:
       mariadb:
-        image: mariadb:latest
+        image: mysql:8.0
         ports:
           - 3306
         env:
-          MYSQL_USER: root
-          MYSQL_PASSWORD: password
-          MYSQL_DATABASE: todoz
           MYSQL_ROOT_PASSWORD: password
-        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
+          MYSQL_DATABASE: todoz
 
     steps:
       - name: Checkout code
@@ -41,6 +38,15 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        ports:
+          - 3306
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: todoz
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -51,8 +57,17 @@ jobs:
           distribution: 'adopt'
           java-version: '20'
 
-      - name: Start the application
-        run: ./gradlew bootRun
+      - name: Wait for MySQL to be ready
+        run: |
+          sleep 15
+          until nc -z -v -w30 localhost 3306
+          do
+            echo "Waiting for MySQL to be ready..."
+            sleep 5
+          done
+
+      - name: Start application
+        run: ./gradlew bootRun -Dspring.datasource.url=jdbc:mysql://localhost:3306/todoz -Dspring.datasource.username=root -Dspring.datasource.password=password
 
       - name: Wait for the application to start
         run: sleep 30
@@ -65,4 +80,3 @@ jobs:
 
       - name: Run WeekReview Tests
         run: ./gradlew test --tests com.example.todoz.services:WeekReviewTesting
-
