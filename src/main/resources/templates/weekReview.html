@@ -42,7 +42,7 @@
 
         <form th:action="@{/startNewWeek}" th:method="post" id="form">
 
-            <div class="task" th:each="task : ${upcomingTasks}">
+            <div class="task" th:each="task : ${upcomingTasks}" th:data-done="${task.done}">
                 <span th:classappend="|prio${task.getPriority()}|"></span>
                 <span class="taskStatus"> <img src="/img/week_review_clock.svg"></span>
                 <p class="taskText" th:text="${task.getDescription()}"></p>
@@ -55,7 +55,7 @@
                 </label>
             </div>
 
-            <div class="task" th:each="task : ${previousWeek.getSortedTasks()}">
+            <div class="task" th:each="task : ${previousWeek.getSortedTasks()}" th:data-done="${task.done}">
                 <span th:classappend="|prio${task.getPriority()}|"></span>
                 <span class="taskStatus" th:if="${task.isDone()}"><img
                         src="/img/week_review_check.svg"></span>
@@ -98,7 +98,7 @@
 
         document.addEventListener("submit", function() {
             const leftBehindInput = document.querySelector("#leftBehind");
-            const leftBehind = document.querySelectorAll(".toDelegate:not(:checked)");
+            const leftBehind = document.querySelectorAll(".toDelegate:not(:checked)[th\\:data-done='false']");
 
             leftBehindInput.value = Array.from(leftBehind).map(c => c.value);
         });
