@@ -54,7 +54,7 @@ jobs:
         run: cat src/test/resources/application-test.properties
 
       - name: Wait for the application to start
-        run: sleep 30
+        run: sleep 60
 
       - name: Run RegisterAndLogin Tests
         run: ./gradlew test --tests com.example.todoz.e2e.tests.separed_tests:RegisterAndLoginTestingChrome
