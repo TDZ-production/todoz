@@ -12,18 +12,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    services:
-      mysql:
-        image: mysql:8.0
-        ports:
-          - 3306
-        env:
-          MYSQL_USER: root
-          MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: todoz
-          MYSQL_HOST: 127.0.0.1
-
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -42,15 +30,10 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      mysql:
-        image: mysql:8.0
+      h2:
+        image: h2database/h2:latest
         ports:
-          - 3306
-        env:
-          MYSQL_USER: root
-          MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: todoz
-          MYSQL_HOST: 127.0.0.1
+          - 1521:1521
 
     steps:
       - name: Checkout code
@@ -62,17 +45,8 @@ jobs:
           distribution: 'adopt'
           java-version: '20'
 
-      - name: Wait for MySQL to be ready
-        run: |
-          sleep 15
-          until nc -z -v -w30 localhost 3306
-          do
-            echo "Waiting for MySQL to be ready..."
-            sleep 5
-          done
-
-      - name: Start application
-        run: ./gradlew bootRun -Dspring.datasource.url=jdbc:mysql://${MYSQL_HOST}:3306/todoz -Dspring.datasource.username=${MYSQL_USER} -Dspring.datasource.password=${MYSQL_ROOT_PASSWORD}
+      - name: Start application with H2
+        run: ./gradlew ./gradlew bootRun -Dspring.datasource.url=jdbc:h2:mem:testdb -Dspring.datasource.driver-class-name=org.h2.Driver -Dspring.datasource.username=sa -Dspring.datasource.password=password
 
 
       - name: Wait for the application to start
