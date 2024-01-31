@@ -12,6 +12,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - spring:
+          datasource:
+            url: jdbc:h2:mem:testdb
+            driver-class-name: org.h2.Driver
+            username: sa
+            password: password
+          h2:
+            console:
+              enabled: true
+          jpa:
+            hibernate:
+              ddl-auto: update
+
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Setup JDK 20
