@@ -3,8 +3,8 @@ package com.example.todoz.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -15,7 +15,8 @@ import java.util.List;
 @Setter
 @Table(name = "weeks", indexes = @Index(columnList = "weekNumber, user_id", unique = true))
 public class Week {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
     private Integer weekNumber;
     @ManyToOne
@@ -30,6 +31,7 @@ public class Week {
         this();
         this.user = user;
     }
+
     public Week() {
         this.weekNumber = DateManager.formattedCurrentWeek();
     }
@@ -38,7 +40,7 @@ public class Week {
         LocalDateTime now = LocalDateTime.now();
 
         tasks.sort(
-                 Comparator.comparing(Task::isDone).reversed()
+                Comparator.comparing(Task::isDone).reversed()
                         .thenComparing(Task::getPriority).reversed()
                         .thenComparing(t -> t.getDueDate() == null ? now.plusDays(1) : t.getDueDate()).reversed()
                         .thenComparing(Task::getId).reversed()
@@ -46,9 +48,11 @@ public class Week {
 
         return tasks;
     }
+
     public List<Task> getTasksForNotification() {
         return getSortedTasks().stream()
-                .filter(t -> t.getDueDate() == null || t.getDueDate().equals(DateManager.now()))
+                .filter(t -> !t.isDone())
+                .filter(t -> t.getDueDate() == null || t.getDueDate().toLocalDate().equals(LocalDate.now()))
                 .toList();
     }
 
@@ -57,7 +61,7 @@ public class Week {
     }
 
     public int getWeekNumberNumber() {
-         return this.weekNumber % 100;
+        return this.weekNumber % 100;
     }
 
     public String getCatImage() {
@@ -69,6 +73,7 @@ public class Week {
             default -> "/img/cat_todo_placeholder_pussyMeter1.png";
         };
     }
+
     public WeekQuality getWeekQuality() {
         long doneCount = this.getDoneCount();
         long donePercentage = this.getDonePercentage();
@@ -81,6 +86,7 @@ public class Week {
             return WeekQuality.NEUTRAL;
         }
     }
+
     public long getDonePercentage() {
         long count = this.getDoneCount();
 

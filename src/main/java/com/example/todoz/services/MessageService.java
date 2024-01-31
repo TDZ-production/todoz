@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -74,14 +75,30 @@ public class MessageService {
 
             if (!tasks.isEmpty()) {
 
-                var json = """
-                        {
-                          "title": "Wassup mf!",
-                          "body": "First task is:
-                           %s"
-                        }
-                        """;
-                return String.format(json, tasks.get(0).getDescription());
+                List<Task> tasksToday = tasks.stream()
+                        .filter(t -> t != null && t.getDueDate() != null && t.getDueDate().toLocalDate().equals(LocalDate.now()))
+                        .toList();
+
+                if (!tasksToday.isEmpty()) {
+                    var json = """
+                            {
+                              "title": "Wassup mf!",
+                              "body": "First task is:
+                               %s
+                               %d tasks are due today"
+                            }
+                            """;
+                    return String.format(json, tasks.get(0).getDescription(), tasksToday.size());
+                } else {
+                    var json = """
+                            {
+                              "title": "Wassup mf!",
+                              "body": "First task is:
+                               %s"
+                            }
+                            """;
+                    return String.format(json, tasks.get(0).getDescription());
+                }
             }
         }
         return null;
