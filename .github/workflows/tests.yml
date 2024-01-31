@@ -12,45 +12,45 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    services:
-      mysql:
-        image: mysql:8.0
-        ports:
-          - 3306
-        env:
-          MYSQL_USER: root
-          MYSQL_PASSWORD: password
-          MYSQL_DATABASE: todoz
-          MYSQL_HOST: 127.0.0.1
+#    services:
+#      mysql:
+#        image: mysql:8.0
+#        ports:
+#          - 3306
+#        env:
+#          MYSQL_USER: root
+#          MYSQL_PASSWORD: password
+#          MYSQL_DATABASE: todoz
+#          MYSQL_HOST: 127.0.0.1
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Setup JDK 20
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '20'
-
-      - name: Build Gradle
-        run: ./gradlew build
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#
+#      - name: Setup JDK 20
+#        uses: actions/setup-java@v2
+#        with:
+#          distribution: 'adopt'
+#          java-version: '20'
+#
+#      - name: Build Gradle
+#        run: ./gradlew build
 
   tests:
     needs: build
     runs-on: ubuntu-latest
 
-    services:
-      mysql:
-        image: mysql:8.0
-        ports:
-          - 3306
-        env:
-            MYSQL_ROOT_PASSWORD: password
-            MYSQL_USER: root
-            MYSQL_PASSWORD: password
-            MYSQL_DATABASE: todoz
-            MYSQL_HOST: 127.0.0.1
+#    services:
+#      mysql:
+#        image: mysql:8.0
+#        ports:
+#          - 3306
+#        env:
+#            MYSQL_ROOT_PASSWORD: password
+#            MYSQL_USER: root
+#            MYSQL_PASSWORD: password
+#            MYSQL_DATABASE: todoz
+#            MYSQL_HOST: 127.0.0.1
 
     steps:
       - name: Checkout code
