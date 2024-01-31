@@ -12,17 +12,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-#    services:
-#      mysql:
-#        image: mysql:8.0
-#        ports:
-#          - 3306
-#        env:
-#          MYSQL_USER: root
-#          MYSQL_PASSWORD: password
-#          MYSQL_DATABASE: todoz
-#          MYSQL_HOST: 127.0.0.1
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -40,40 +29,24 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
 
-#    services:
-#      mysql:
-#        image: mysql:8.0
-#        ports:
-#          - 3306
-#        env:
-#            MYSQL_ROOT_PASSWORD: password
-#            MYSQL_USER: root
-#            MYSQL_PASSWORD: password
-#            MYSQL_DATABASE: todoz
-#            MYSQL_HOST: 127.0.0.1
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up JDK 20
+      - name: Setup JDK 20
         uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
           java-version: '20'
 
-      - name: Start application with SQL and test profile
+      - name: Build Gradle
         run: ./gradlew bootRun -Dspring.profiles.active=test
 
-
-      - name: Wait for the application to start
-        run: sleep 30
-
       - name: Run RegisterAndLogin Tests
-        run: ./gradlew test --tests com.example.todoz.e2e.tests.separed_tests:RegisterAndLoginTestingChrome
+        run: ./gradlew test com.example.todoz.e2e.tests.separed_tests:RegisterAndLoginTestingChrome
 
       - name: Run UserCase Tests
-        run: ./gradlew test --tests com.example.todoz.e2e.tests.whole_project_tests:UserCaseTestingChromeWhole
+        run: ./gradlew test  com.example.todoz.e2e.tests.whole_project_tests:UserCaseTestingChromeWhole
 
       - name: Run WeekReview Tests
-        run: ./gradlew test --tests com.example.todoz.services:WeekReviewTesting
+        run: ./gradlew test  com.example.todoz.services:WeekReviewTesting
