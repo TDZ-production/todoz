@@ -21,7 +21,7 @@
     <header>
         <div class="dropdown">
             <button class="dropbtn" onclick="toggleDropdown()">
-                <img src="/img/todoz_menu_icon-31.png" alt="open menu">
+                <img src="/img/menu_icon_open.png" alt="open menu">
             </button>
             <div class="dropdown-content">
                 <a href="/longTerm">Planned</a>
@@ -40,7 +40,8 @@
     <main>
         <div th:unless="${currentWeek.getSortedTasks().isEmpty()}" class="task"
              th:each="task : ${currentWeek.getSortedTasks()}" th:object="${task}"
-             th:data-priority="*{priority}" th:data-id="*{id}" th:data-done="*{done}" th:data-maturity="*{getMaturity()}">
+             th:data-priority="*{priority}" th:data-id="*{id}" th:data-done="*{done}"
+             th:data-maturity="*{getMaturity()}">
 
             <span th:classappend="|prio${task.getPriority()}|"></span>
             <p th:text="*{description}"></p>
@@ -49,17 +50,16 @@
             <form onsubmit="handleSubmit(event)" th:action="|/tasks/check/*{id}|" th:method="POST">
                 <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
                 <button class="img" th:type="submit">
-                    <img class="isdone" src="/img/vector_img_checkedbox.png" alt="mark as not done"/>
-                    <img class="notdone" src="/img/vector_img_checkbox.png" alt="mark as done"/>
+                    <img class="isdone" src="/img/checkbox_checked.png" alt="mark as not done"/>
+                    <img class="notdone" src="/img/checkbox_unchecked.png" alt="mark as done"/>
                 </button>
             </form>
         </div>
 
         <div th:if="${currentWeek.getSortedTasks().isEmpty()}" class="NoTaskPlaceholder">
-            <p>Howdy partner! Ready&nbsp;to create your&nbsp;first&nbsp;task?<br>Save the task by picking&nbsp;a&nbsp;priority, to&nbsp;keep things organised!</p>
-            <img th:if="${user.pussyMeter == 0}" src="/img/cat_todo_placeholder_pussyMeter1.png">
-            <img th:if="${user.pussyMeter == 1}" src="/img/cat_todo_placeholder_pussyMeter2.png">
-            <img th:if="${user.pussyMeter == 2}" src="/img/cat_todo_placeholder_pussyMeter3.png">
+            <p>Howdy partner! Ready&nbsp;to create your&nbsp;first&nbsp;task?<br>Save the task by picking&nbsp;a&nbsp;priority,
+                to&nbsp;keep things organised!</p>
+            <img th:src="|/img/cat_pm_${user.pussyMeter}.png|" alt="cat">
         </div>
     </main>
 
@@ -74,33 +74,25 @@
             <div class="addTask">
                 <input type="text" placeholder="new task" name="description" id="add" required autofocus
                        autocomplete="off">
-                <img onclick="toggleDueDate()" src="/img/Kalendar_Icon-02.png" alt="due date">
+                <img onclick="toggleDueDate()" src="/img/calendar_icon.png" alt="due date">
             </div>
 
             <div class="stars">
                 <button onclick="setPriority(4)" type="submit" name="priority" value="4" data-umami-event="setPriority"
                         data-umami-event-priority="4">
-                    <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-04.png">
-                    <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-04.png">
-                    <img th:if="${user.pussyMeter == 2}" src="/img/skull_icon-05.png">
+                    <img th:src="|/img/prio_4_pm_${user.pussyMeter}.png|" alt="priority 4">
                 </button>
                 <button onclick="setPriority(3)" type="submit" name="priority" value="3" data-umami-event="setPriority"
                         data-umami-event-priority="3">
-                    <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-03.png">
-                    <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-03.png">
-                    <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-03.png">
+                    <img th:src="|/img/prio_3_pm_${user.pussyMeter}.png|" alt="priority 3">
                 </button>
                 <button onclick="setPriority(2)" type="submit" name="priority" value="2" data-umami-event="setPriority"
                         data-umami-event-priority="2">
-                    <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-02.png">
-                    <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-02.png">
-                    <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-02.png">
+                    <img th:src="|/img/prio_2_pm_${user.pussyMeter}.png|" alt="priority 2">
                 </button>
                 <button onclick="setPriority(1)" type="submit" name="priority" value="1" data-umami-event="setPriority"
                         data-umami-event-priority="1">
-                    <img th:if="${user.pussyMeter == 0}" src="/img/star_icon-family-01.png">
-                    <img th:if="${user.pussyMeter == 1}" src="/img/Fire_Icon-01.png">
-                    <img th:if="${user.pussyMeter == 2}" src="/img/mark_icon-aggressive-01.png">
+                    <img th:src="|/img/prio_1_pm_${user.pussyMeter}.png|" alt="priority 1">
                 </button>
             </div>
         </form>
@@ -283,11 +275,11 @@
 
             if (dropdown.style.display === "block") {
                 dropdown.style.display = "none";
-                img.src = "/img/todoz_menu_icon-31.png";
+                img.src = "/img/menu_icon_open.png";
                 img.alt = "open menu";
             } else {
                 dropdown.style.display = "block";
-                img.src = "/img/todoz_menu_icon-30.png";
+                img.src = "/img/menu_icon_close.png";
                 img.alt = "close menu";
             }
 
@@ -304,7 +296,7 @@
 
                 function cancelMenu() {
                     dropdown.style.display = "none";
-                    img.src = "/img/todoz_menu_icon-31.png";
+                    img.src = "/img/menu_icon_open";
                     img.alt = "open menu";
                 }
             }
