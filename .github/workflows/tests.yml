@@ -50,6 +50,9 @@ jobs:
       - name: Start application with H2 and test profile
         run: ./gradlew bootRun -Dspring.profiles.active=test
 
+      - name: Display Contents of application-test.properties
+        run: cat src/test/resources/application-test.properties
+
       - name: Wait for the application to start
         run: sleep 30
 
