@@ -22,18 +22,6 @@ jobs:
           distribution: 'adopt'
           java-version: '20'
 
-      - name: Configure H2 for Build
-        run: |
-          echo "spring:
-            datasource:
-              url: jdbc:h2:mem:testdb
-              driver-class-name: org.h2.Driver
-              username: sa
-              password: password
-            h2:
-              console:
-                enabled: true" > src/main/resources/application.yml
-
       - name: Build Gradle
         run: ./gradlew build
 
@@ -59,7 +47,7 @@ jobs:
           distribution: 'adopt'
           java-version: '20'
 
-      - name: Start application with H2
+      - name: Start application with H2 and test profile
         run: ./gradlew bootRun -Dspring.profiles.active=test
 
       - name: Wait for the application to start
