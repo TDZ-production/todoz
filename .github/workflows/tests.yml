@@ -12,6 +12,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        ports:
+          - 3306
+        env:
+          MYSQL_USER: root
+          MYSQL_PASSWORD: password
+          MYSQL_DATABASE: todoz
+          MYSQL_HOST: 127.0.0.1
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -30,12 +41,15 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      h2:
-        console:
-          enabled: true
-        image: h2database/h2:latest
+      mysql:
+        image: mysql:8.0
         ports:
-          - 1521:1521
+          - 3306
+        env:
+          MYSQL_USER: root
+          MYSQL_PASSWORD: password
+          MYSQL_DATABASE: todoz
+          MYSQL_HOST: 127.0.0.1
 
     steps:
       - name: Checkout code
@@ -47,14 +61,29 @@ jobs:
           distribution: 'adopt'
           java-version: '20'
 
-      - name: Start application with H2 and test profile
-        run: ./gradlew bootRun -Dspring.profiles.active=test
+      - name: Wait for MySQL to be ready
+        run: |
+          sleep 15
+          until nc -z -v -w30 localhost 3306
+          do
+            echo "Waiting for MySQL to be ready..."
+            sleep 5
+          done
 
-      - name: Display Contents of application-test.properties
-        run: cat src/test/resources/application-test.properties
+      - name: Set MySQL environment variables for tests
+        run: |
+          echo "mysql.host=localhost" >> $GITHUB_ENV
+          echo "mysql.port=3306" >> $GITHUB_ENV
+          echo "mysql.user=root" >> $GITHUB_ENV
+          echo "mysql.password=password" >> $GITHUB_ENV
+          echo "mysql.database=todoz" >> $GITHUB_ENV
+
+      - name: Start application with SQL and test profile
+        run: ./gradlew bootRun -Dspring.profiles.active=test -DMYSQL_HOST=localhost -DMYSQL_PORT=3306 -DMYSQL_DATABASE=todoz -DMYSQL_USER=root -DMYSQL_PASSWORD=password
+
 
       - name: Wait for the application to start
-        run: sleep 60
+        run: sleep 30
 
       - name: Run RegisterAndLogin Tests
         run: ./gradlew test --tests com.example.todoz.e2e.tests.separed_tests:RegisterAndLoginTestingChrome
