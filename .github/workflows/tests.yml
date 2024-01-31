@@ -20,15 +20,11 @@ jobs:
           distribution: 'adopt'
           java-version: '20'
       - name: Build Gradle
-        run: ./gradlew bootRun -Dspring.profiles.active=test
+        run: gradle bootRun -Dspring.profiles.active=test
 
   tests:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Run RegisterAndLogin Tests
-        run: gradle test --tests com.example.todoz.e2e.tests.separed_tests:RegisterAndLoginTestingChrome
-      - name: Run UserCase Tests
-        run: gradle test --tests com.example.todoz.e2e.tests.whole_project_tests:UserCaseTestingChromeWh
-      - name: Run WeekReview Tests
-        run: gradle test --tests com.example.todoz.services:WeekReviewTest
+      - name: Run  Tests
+        run: gradle test

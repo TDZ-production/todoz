@@ -4,6 +4,10 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.4'
 }
 
+bootRun {
+    systemProperties = System.properties
+}
+
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
