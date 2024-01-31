@@ -32,6 +32,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'com.microsoft.playwright:playwright:1.15.1'
     implementation 'org.springframework.boot:spring-boot-starter-mail:3.2.1'
+    testImplementation 'com.h2database:h2'
 }
 
 tasks.named('test') {
