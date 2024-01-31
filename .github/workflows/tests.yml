@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build:
+  buildAndTest:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -20,11 +20,8 @@ jobs:
           distribution: 'adopt'
           java-version: '20'
       - name: Build Gradle
-        run: gradle bootRun -Dspring.profiles.active=test
-
-  tests:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
+        run: gradle bootRun -Dspring.profiles.active=test &
+      - name: Wait for the application to start
+        run: sleep 10
       - name: Run  Tests
         run: gradle test
