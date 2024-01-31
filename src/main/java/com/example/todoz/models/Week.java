@@ -30,12 +30,6 @@ public class Week {
         this();
         this.user = user;
     }
-
-    @Transactional
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
     public Week() {
         this.weekNumber = DateManager.formattedCurrentWeek();
     }

@@ -27,28 +27,14 @@ public class NotificationScheduling {
     @Scheduled(fixedRate = 10000)
     public void sendMorningNotifications() {
 
-        System.out.println("The message was sent" + DateManager.now());
         userSubscriptionService.getAll().forEach(userSub -> {
             String notification = messageService.getNotification(userSub.getUser());
-            if(notification != null){
+            if (notification != null) {
                 notificationService.sendNotification(userSub, notification);
             }
         });
 
-
-//        userSubscriptionService.getAll().forEach(userSub -> {
-//            Optional<Week> optWeek = weekService.findCurrentWeek(userSub.getUser());
-//
-//            if (optWeek.isPresent()) {
-//                Week week = optWeek.get();
-//                List<Task> tasks = week.getTasksForNotification();
-//
-//                if (!tasks.isEmpty()) {
-//                    notificationService.sendNotification(userSub, "JSON");
-//                }
-//
-//            }
-//        });
+        System.out.println("The message was sent" + DateManager.now());
     }
 
 //    @Scheduled(cron = "0 00 12 * * *")

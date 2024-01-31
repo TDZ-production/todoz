@@ -69,7 +69,6 @@ public class MessageService {
 
         if (optWeek.isPresent()) {
             Week week = optWeek.get();
-            week.getTasks().size();
 
             List<Task> tasks = week.getTasksForNotification();
 
@@ -82,7 +81,7 @@ public class MessageService {
                            %s"
                         }
                         """;
-                return String.format(json, tasks.get(0));
+                return String.format(json, tasks.get(0).getDescription());
             }
         }
         return null;
