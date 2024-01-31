@@ -22,6 +22,18 @@ jobs:
           distribution: 'adopt'
           java-version: '20'
 
+      - name: Configure H2 for Build
+        run: |
+          echo "spring:
+            datasource:
+              url: jdbc:h2:mem:testdb
+              driver-class-name: org.h2.Driver
+              username: sa
+              password: password
+            h2:
+              console:
+                enabled: true" > src/main/resources/application.yml
+
       - name: Build Gradle
         run: ./gradlew build
 
@@ -31,6 +43,8 @@ jobs:
 
     services:
       h2:
+        console:
+          enabled: true
         image: h2database/h2:latest
         ports:
           - 1521:1521
@@ -46,8 +60,7 @@ jobs:
           java-version: '20'
 
       - name: Start application with H2
-        run: ./gradlew ./gradlew bootRun -Dspring.datasource.url=jdbc:h2:mem:testdb -Dspring.datasource.driver-class-name=org.h2.Driver -Dspring.datasource.username=sa -Dspring.datasource.password=password
-
+        run: ./gradlew bootRun -Dspring.datasource.url=jdbc:h2:mem:testdb -Dspring.datasource.driver-class-name=org.h2.Driver -Dspring.datasource.username=sa -Dspring.datasource.password=password
 
       - name: Wait for the application to start
         run: sleep 30
