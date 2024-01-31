@@ -61,25 +61,8 @@ jobs:
           distribution: 'adopt'
           java-version: '20'
 
-      - name: Wait for MySQL to be ready
-        run: |
-          sleep 15
-          until nc -z -v -w30 localhost 3306
-          do
-            echo "Waiting for MySQL to be ready..."
-            sleep 5
-          done
-
-      - name: Set MySQL environment variables for tests
-        run: |
-          echo "mysql.host=localhost" >> $GITHUB_ENV
-          echo "mysql.port=3306" >> $GITHUB_ENV
-          echo "mysql.user=root" >> $GITHUB_ENV
-          echo "mysql.password=password" >> $GITHUB_ENV
-          echo "mysql.database=todoz" >> $GITHUB_ENV
-
       - name: Start application with SQL and test profile
-        run: ./gradlew bootRun -Dspring.profiles.active=test -DMYSQL_HOST=localhost -DMYSQL_PORT=3306 -DMYSQL_DATABASE=todoz -DMYSQL_USER=root -DMYSQL_PASSWORD=password
+        run: ./gradlew bootRun -Dspring.profiles.active=test
 
 
       - name: Wait for the application to start
