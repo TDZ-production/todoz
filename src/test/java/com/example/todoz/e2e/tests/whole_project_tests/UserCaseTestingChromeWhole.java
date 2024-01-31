@@ -32,7 +32,7 @@ public class UserCaseTestingChromeWhole {
     @BeforeAll
     public static void setUp() {
         try {
-            browser = Playwright.create().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
+            browser = Playwright.create().chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
             BrowserContext context = browser.newContext();
             page = context.newPage();
         } catch (Exception e) {
