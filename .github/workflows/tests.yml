@@ -11,42 +11,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
       - name: Setup JDK 20
         uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
           java-version: '20'
-
       - name: Build Gradle
         run: ./gradlew bootRun -Dspring.profiles.active=test
 
   tests:
     needs: build
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Setup JDK 20
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '20'
-
-      - name: Build Gradle
-        run: ./gradlew bootRun -Dspring.profiles.active=test
-
-      - name: Run RegisterAndLogin Tests
-        run: ./gradlew test com.example.todoz.e2e.tests.separed_tests:RegisterAndLoginTestingChrome
-
-      - name: Run UserCase Tests
-        run: ./gradlew test  com.example.todoz.e2e.tests.whole_project_tests:UserCaseTestingChromeWhole
-
-      - name: Run WeekReview Tests
-        run: ./gradlew test  com.example.todoz.services:WeekReviewTesting
+      - name: Run Tests
+        run: ./gradlew test
