@@ -34,7 +34,7 @@ jobs:
           java-version: '20'
 
       - name: Build Gradle
-        run: ./gradlew build
+        run: ./gradlew bootRun -Dspring.profiles.active=test
 
   tests:
     needs: build
