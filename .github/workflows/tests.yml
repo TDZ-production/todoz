@@ -60,7 +60,7 @@ jobs:
           java-version: '20'
 
       - name: Start application with H2
-        run: ./gradlew bootRun -Dspring.datasource.url=jdbc:h2:mem:testdb -Dspring.datasource.driver-class-name=org.h2.Driver -Dspring.datasource.username=sa -Dspring.datasource.password=password
+        run: ./gradlew bootRun -Dspring.profiles.active=test
 
       - name: Wait for the application to start
         run: sleep 30
