@@ -21,11 +21,11 @@ jobs:
           distribution: 'adopt'
           java-version: '20'
       - name: Build Gradle
-        run: ./gradlew bootRun -Dspring.profiles.active=test
+        run: gradle bootRun -Dspring.profiles.active=test
 
   tests:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Run Tests
-        run: ./gradlew build
+        run: gradle build
