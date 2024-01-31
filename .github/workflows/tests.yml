@@ -22,6 +22,6 @@ jobs:
       - name: Build Gradle
         run: gradle bootRun -Dspring.profiles.active=test &
       - name: Wait for the application to start
-        run: sleep 30
+        run: sleep 60
       - name: Run  Tests
         run: gradle test
