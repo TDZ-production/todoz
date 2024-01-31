@@ -1,10 +1,9 @@
 package com.example.todoz.services;
 
+import com.example.todoz.models.DateManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalTime;
 
 @Service
 @RequiredArgsConstructor
@@ -14,16 +13,42 @@ public class NotificationScheduling {
     private final UserSubscriptionService userSubscriptionService;
     private final MessageService messageService;
 
+//    @Scheduled(fixedRate = 10000)
+//    public void sendMorningNotifications() {
+//
+//        System.out.println("The message was sent" + LocalTime.now());
+//
+//        userSubscriptionService.getAll().forEach(userSub ->
+//                notificationService.sendNotification(userSub, messageService.getNotification(userSub.getUser())));
+//
+//    }
 
     //    @Scheduled(cron = "0 30 8 * * *")
     @Scheduled(fixedRate = 10000)
     public void sendMorningNotifications() {
 
-        System.out.println("The message was sent" + LocalTime.now());
+        System.out.println("The message was sent" + DateManager.now());
+        userSubscriptionService.getAll().forEach(userSub -> {
+            String notification = messageService.getNotification(userSub.getUser());
+            if(notification != null){
+                notificationService.sendNotification(userSub, notification);
+            }
+        });
 
-        userSubscriptionService.getAll().forEach(userSub ->
-                notificationService.sendNotification(userSub, messageService.getMorningNotification(userSub.getUser())));
 
+//        userSubscriptionService.getAll().forEach(userSub -> {
+//            Optional<Week> optWeek = weekService.findCurrentWeek(userSub.getUser());
+//
+//            if (optWeek.isPresent()) {
+//                Week week = optWeek.get();
+//                List<Task> tasks = week.getTasksForNotification();
+//
+//                if (!tasks.isEmpty()) {
+//                    notificationService.sendNotification(userSub, "JSON");
+//                }
+//
+//            }
+//        });
     }
 
 //    @Scheduled(cron = "0 00 12 * * *")
