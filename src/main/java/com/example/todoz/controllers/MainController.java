@@ -34,7 +34,6 @@ public class MainController {
             model.addAttribute("user", getUser(principal));
             model.addAttribute("previousWeek", previousWeek);
             model.addAttribute("upcomingTasks", upcomingTasks);
-            model.addAttribute("publicKey", notificationService.getPublicKey());
 
             return "weekReview";
         } else if (currentWeek.isEmpty()) {
@@ -47,6 +46,7 @@ public class MainController {
         }
 
         model.addAttribute("user", getUser(principal));
+        model.addAttribute("publicKey", notificationService.getPublicKey());
 
         return "index";
     }
@@ -89,7 +89,7 @@ public class MainController {
     public String showLongTerm(Model model, Principal principal) {
         model.addAttribute("longTerm",
                 taskService.findLongTermTasks(getUser(principal), DateManager.formattedCurrentWeek()));
-        model.addAttribute("user",getUser(principal));
+        model.addAttribute("user", getUser(principal));
         return "longTerm";
     }
 
@@ -98,7 +98,7 @@ public class MainController {
         List<Task> leftBehind = taskService.findLeftBehind(getUser(principal), getWeek(principal), DateManager.formattedCurrentWeek());
 
         model.addAttribute("leftBehind", leftBehind);
-        model.addAttribute("user",getUser(principal));
+        model.addAttribute("user", getUser(principal));
         return "leftBehind";
     }
 
