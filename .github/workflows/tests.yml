@@ -25,7 +25,7 @@ jobs:
 
       - name: Build and Test
         run: |
-          ./gradlew clean build
+          gradle clean build
           java -jar build/libs/todoz-0.0.1-SNAPSHOT.jar --spring.config.location=file:./src/main/resources/application-test.properties &
           sleep 60s
-          ./gradlew test
+          gradle test
