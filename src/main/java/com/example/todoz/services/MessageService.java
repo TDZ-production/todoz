@@ -79,13 +79,20 @@ public class MessageService {
                         .filter(t -> t != null && t.getDueDate() != null && t.getDueDate().toLocalDate().equals(LocalDate.now()))
                         .toList();
 
+                if (tasksToday.size() == 1) {
+                    var json = """
+                            {
+                              "title": "Wassup mf!",
+                              "body": "First task is: \\n %s \\n %d tasks is due today"
+                            }
+                            """;
+                    return String.format(json, tasks.get(0).getDescription(), tasksToday.size());
+                }
                 if (!tasksToday.isEmpty()) {
                     var json = """
                             {
                               "title": "Wassup mf!",
-                              "body": "First task is:
-                               %s
-                               %d tasks are due today"
+                              "body": "First task is: \\n %s \\n %d tasks are due today"
                             }
                             """;
                     return String.format(json, tasks.get(0).getDescription(), tasksToday.size());
@@ -93,8 +100,7 @@ public class MessageService {
                     var json = """
                             {
                               "title": "Wassup mf!",
-                              "body": "First task is:
-                               %s"
+                              "body": "First task is: \\n %s "
                             }
                             """;
                     return String.format(json, tasks.get(0).getDescription());
