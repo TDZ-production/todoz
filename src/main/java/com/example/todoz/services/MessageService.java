@@ -79,35 +79,22 @@ public class MessageService {
                         .filter(t -> t != null && t.getDueDate() != null && t.getDueDate().toLocalDate().equals(LocalDate.now()))
                         .toList();
 
-                if (tasksToday.size() == 1) {
-                    var json = """
-                            {
-                              "title": "Wassup mf!",
-                              "body": "First task is: \\n %s \\n %d tasks is due today"
-                            }
-                            """;
-                    return String.format(json, tasks.get(0).getDescription(), tasksToday.size());
-                }
-                if (!tasksToday.isEmpty()) {
-                    var json = """
-                            {
-                              "title": "Wassup mf!",
-                              "body": "First task is: \\n %s \\n %d tasks are due today"
-                            }
-                            """;
-                    return String.format(json, tasks.get(0).getDescription(), tasksToday.size());
-                } else {
-                    var json = """
-                            {
-                              "title": "Wassup mf!",
-                              "body": "First task is: \\n %s "
-                            }
-                            """;
-                    return String.format(json, tasks.get(0).getDescription());
-                }
+                String title = "Wassup mf!";
+                String body = getString(tasksToday, tasks);
+                return String.format("{ \"title\": \"%s\", \"body\": \"%s\" }", title, body);
             }
         }
         return null;
+    }
+
+    private static String getString(List<Task> tasksToday, List<Task> tasks) {
+        String body = "First task is: \\n";
+        if (!tasksToday.isEmpty()) {
+            body += tasks.get(0).getDescription() + "\\n" + tasksToday.size() + (tasksToday.size() == 1 ? " task is " : " tasks are ") + "due today";
+        } else {
+            body += tasks.get(0).getDescription();
+        }
+        return body;
     }
 
 

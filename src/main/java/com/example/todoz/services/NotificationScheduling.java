@@ -13,18 +13,7 @@ public class NotificationScheduling {
     private final UserSubscriptionService userSubscriptionService;
     private final MessageService messageService;
 
-//    @Scheduled(fixedRate = 10000)
-//    public void sendMorningNotifications() {
-//
-//        System.out.println("The message was sent" + LocalTime.now());
-//
-//        userSubscriptionService.getAll().forEach(userSub ->
-//                notificationService.sendNotification(userSub, messageService.getNotification(userSub.getUser())));
-//
-//    }
-
-    //    @Scheduled(cron = "0 30 8 * * *")
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(cron = "0 30 8 * * *")
     public void sendMorningNotifications() {
 
         userSubscriptionService.getAll().forEach(userSub -> {
