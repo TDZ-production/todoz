@@ -21,8 +21,8 @@
     <header>
         <div class="dropdown">
             <button class="dropbtn" id="drop-icon"
-                    onclick="toggleDropdown('content', 'drop-icon', 'img/todoz_menu_icon-31.png', 'img/todoz_menu_icon-30.png')">
-                <img src="/img/todoz_menu_icon-31.png" alt="open menu">
+                    onclick="toggleDropdown('content', 'drop-icon', 'img/menu_icon_open.svg', 'img/menu_icon_close.svg')">
+                <img src='img/menu_icon_open.svg' alt="open menu">
             </button>
             <div class="dropdown-content" id="content">
                 <a href="/longTerm">Planned</a>
@@ -38,8 +38,8 @@
         <div id="week-progressbar"></div>
         <div class="dropdown">
             <button class="dropbtn" id="filter-icon"
-                    onclick="toggleDropdown('task-slider', 'filter-icon','/img/eye_icon_todo-03.png', '/img/eye_icon_todo-02.png')">
-                <img src="/img/eye_icon_todo-03.png" alt="open menu">
+                    onclick="toggleDropdown('task-slider', 'filter-icon','img/eye_icon_open.svg', 'img/eye_icon_closed.svg')">
+                <img src='img/eye_icon_open.svg' alt="open menu">
             </button>
             <div class="dropdown-content" id="task-slider">
                 <input id="range-filter" type="range" step="1" th:max="3" value="0" oninput="filterTasks()">
