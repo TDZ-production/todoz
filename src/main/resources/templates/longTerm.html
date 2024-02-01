@@ -23,20 +23,118 @@
     </header>
 
     <main>
-        <div th:unless="${longTerm.isEmpty()}" class="task" th:each="task : ${longTerm}" th:object="${task}">
+        <div th:unless="${longTerm.isEmpty()}" class="task" th:each="task : ${longTerm}" th:object="${task}"
+             th:data-priority="*{priority}" th:data-id="*{id}">
             <span th:classappend="|prio${task.getPriority()}|"></span>
             <p th:text="*{getDescription()}"></p>
-            <span class="due" th:text="|*{getDueDateDayOfWeek()} *{getDueDateFormat()}|"></span>
+            <span class="due" th:text="|*{getDueDateDayOfWeek()} *{getDueDateFormat()}|"
+                  th:data-duedate="*{dueDateDate}"></span>
         </div>
 
-    <div th:if="${longTerm.isEmpty()}" class="NoTaskPlaceholder">
-        <p>Here will be all your planned tasks... <br> in the meantime enjoy this bouncing bush...</p>
-        <img th:if="${user.pussyMeter == 0}" src="/img/cat_todo_placeholder_pussyMeter1.png">
-        <img th:if="${user.pussyMeter == 1}" src="/img/cat_todo_placeholder_pussyMeter2.png">
-        <img th:if="${user.pussyMeter == 2}" src="/img/cat_todo_placeholder_pussyMeter3.png">
-    </div>
+        <div th:if="${longTerm.isEmpty()}" class="NoTaskPlaceholder">
+            <p>Here will be all your planned tasks... <br> in the meantime enjoy this ball...</p>
+            <img th:src="|/img/cat_pm_${user.pussyMeter}.svg|" alt="cat">
+        </div>
     </main>
 
+    <footer id="upcomingFooter">
+        <form method="post" th:action="@{/tasks/add}">
+            <button type="submit" name="priority" value="4" class="hidden"></button>
+
+            <label>
+                <input type="date" name="maybeDueDate" id="date">
+            </label>
+
+            <div class="addTask">
+                <input type="text" placeholder="new task" name="description" id="add" required autofocus
+                       autocomplete="off">
+            </div>
+
+            <div class="stars">
+                <button onclick="setPriority(4)" type="submit" name="priority" value="4" data-umami-event="setPriority"
+                        data-umami-event-priority="4">
+                    <img th:src="|/img/prio4_pm_${user.pussyMeter}.svg|" alt="priority 4">
+                </button>
+                <button onclick="setPriority(3)" type="submit" name="priority" value="3" data-umami-event="setPriority"
+                        data-umami-event-priority="3">
+                    <img th:src="|/img/prio3_pm_${user.pussyMeter}.svg|" alt="priority 3">
+                </button>
+                <button onclick="setPriority(2)" type="submit" name="priority" value="2" data-umami-event="setPriority"
+                        data-umami-event-priority="2">
+                    <img th:src="|/img/prio2_pm_${user.pussyMeter}.svg|" alt="priority 2">
+                </button>
+                <button onclick="setPriority(1)" type="submit" name="priority" value="1" data-umami-event="setPriority"
+                        data-umami-event-priority="1">
+                    <img th:src="|/img/prio1_pm_${user.pussyMeter}.svg|" alt="priority 1">
+                </button>
+            </div>
+        </form>
+    </footer>
 </section>
+<script>
+    initTaskEditListener();
+
+    function initTaskEditListener() {
+        document.querySelector("main").addEventListener("click", function (event) {
+            if (event.target.tagName !== "P") return;
+
+            let task = event.target.closest(".task");
+
+            if (!task) return;
+
+            edit(task);
+        });
+    }
+
+    function edit(task) {
+        document.querySelector("#upcomingFooter").style.display = "block";
+        document.querySelector("#add").focus();
+
+        const main = document.querySelector("main");
+        registerCancel(main);
+
+        const description = task.querySelector("p").innerText;
+        const dueDate = task.querySelector(".due").dataset.duedate;
+        const priority = task.dataset.priority;
+
+        const form = document.querySelector("footer form");
+        setPriority(priority);
+
+        form.action = "/tasks/upcoming/" + task.dataset.id;
+        form.querySelector("input[name='description']").value = description;
+        form.querySelector("input[name='maybeDueDate']").value = dueDate;
+
+        function registerCancel(el) {
+            el.classList.add("fade");
+
+            el.addEventListener("click", function () {
+                cancelEdit();
+            }, {once: true});
+
+            window.onkeydown = function (event) {
+                if (event.key === "Escape") {
+                    cancelEdit();
+                }
+            }
+
+            function cancelEdit() {
+                location.reload();
+            }
+        }
+    }
+
+    function setPriority(priority) {
+        document.querySelector("button[name='priority']").value = priority;
+
+        const buttons = document.querySelectorAll("footer .stars button");
+        buttons.forEach(button => {
+            if (button.value == priority) {
+                button.classList.add("active");
+            } else {
+                button.classList.remove("active");
+            }
+        });
+    }
+</script>
 </body>
 </html>

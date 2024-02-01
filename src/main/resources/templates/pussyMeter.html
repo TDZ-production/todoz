@@ -25,21 +25,21 @@
 
         <form th:action="@{/changeMeter}" method="post" th:object="${user}">
             <div class="pussySliderIcons">
-                <img src="/img/star_icon-family-03.png" id="starIcon">
-                <img src="/img/Fire_Icon-02.png" id="fireIcon">
-                <img src="/img/skull_icon-05.png" id="skullIcon">
+                <img src="/img/prio4_pm_0.svg" id="starIcon">
+                <img src="/img/prio4_pm_1.svg" id="fireIcon">
+                <img src="/img/prio4_pm_2.svg" id="skullIcon">
             </div>
             <label class="slideContainer">
                 <span id="pussyLabel"></span>
-                <input type="range" step="1" max="2" class="slider" id="myRange" name="pussyMeter" th:field="*{pussyMeter}">
+                <input type="range" step="1" max="2" class="slider" id="pussySlider" name="pussyMeter" th:field="*{pussyMeter}">
             </label>
-            <button class="ctm" type="submit">&gt;&gt;</button>
+            <button class="cta" type="submit">&gt;&gt;</button>
         </form>
     </main>
 </section>
 </body>
 <script>
-    const slider = document.getElementById("myRange");
+    const slider = document.getElementById("pussySlider");
     const output = document.getElementById("pussyLabel");
     const starIcon = document.getElementById("starIcon");
     const fireIcon = document.getElementById("fireIcon");

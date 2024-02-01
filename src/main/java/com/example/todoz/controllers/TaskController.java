@@ -1,6 +1,7 @@
 package com.example.todoz.controllers;
 
 import com.example.todoz.dtos.TaskUpdateDTO;
+import com.example.todoz.models.DateManager;
 import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
 import com.example.todoz.models.Week;
@@ -11,6 +12,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -24,10 +26,13 @@ public class TaskController {
     private final WeekService weekService;
 
     @PostMapping("add")
-    public String add(Task task, LocalDate maybeDueDate, Principal principal) {
+    public String add(Task task, LocalDate maybeDueDate, Principal principal, RedirectAttributes ra) {
         task.digestDueDate(maybeDueDate, getWeek(principal));
         task.setUser(getUser(principal));
         taskService.save(task);
+        if (task.getDueDate() != null && task.getDueDateWeekNumber() > DateManager.formattedCurrentWeek()) {
+            ra.addFlashAttribute("longTermTask", true);
+        }
 
         return "redirect:/";
     }
@@ -44,6 +49,13 @@ public class TaskController {
         taskService.update(id, taskUpdate, getUser(principal), getWeek(principal));
 
         return "redirect:/";
+    }
+
+    @PostMapping("upcoming/{id}")
+    public String upcomingUpdate(@PathVariable Long id, TaskUpdateDTO taskUpdate, Principal principal) {
+        taskService.update(id, taskUpdate, getUser(principal), getWeek(principal));
+
+        return "redirect:/longTerm";
     }
 
     @PostMapping("re-add/{id}")
