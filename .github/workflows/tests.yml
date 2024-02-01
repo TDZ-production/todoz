@@ -10,18 +10,22 @@ on:
 
 jobs:
   buildAndTest:
+    timeout-minutes: 5
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
       - name: Setup JDK 20
         uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
           java-version: '20'
-      - name: Build Gradle
-        run: gradle bootRun -Dspring.profiles.active=test
-      - name: Wait for the application to start
-        run: sleep 60
-      - name: Run  Tests
-        run: gradle test -Dspring.profiles.active=test
+
+      - name: Build and Test
+        run: |
+          gradle clean build
+          java -jar build/libs/your-app.jar --spring.config.location=file:./src/main/resources/application-test.properties &
+          sleep 60s
+          gradle test
