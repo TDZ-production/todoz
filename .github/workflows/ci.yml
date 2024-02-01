@@ -23,8 +23,10 @@ jobs:
           distribution: 'adopt'
           java-version: '20'
 
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v3
+
       - name: Build and Test
         run: |
-          export GRADLE_OPTS='-Dorg.gradle.debug=true'
           gradle bootRun -Dspring.profiles.active=test &
           gradle test
