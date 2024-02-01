@@ -27,7 +27,7 @@
             <div th:class="year"><h2 th:text="${year}"></h2></div>
 
             <div th:each="week : ${longTerm.get(year).keySet().stream().sorted().toList()}">
-                <div th:class="week"><h3 th:text="${week}"></h3></div>
+                <div th:class="week"><h2 th:text="|Week ${week}|"></h2></div>
 
                 <div class="task" th:each="task : ${longTerm.get(year).get(week)}" th:object="${task}"
                      th:data-priority="*{priority}" th:data-id="*{id}">

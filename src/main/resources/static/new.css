@@ -232,7 +232,7 @@ main > form button {
     background: transparent;
 }
 
-.task {
+.task, .year, .week {
     display: flex;
     border-bottom: 1px solid var(--border-color);
     padding-left: .5rem;
@@ -296,6 +296,22 @@ main > form button {
 }
 .prio4 {
     background: var(--prio4-color);
+}
+
+.year, .week {
+    justify-content: center;
+}
+
+.year h2, .week h2 {
+    padding: 1rem .5rem;
+}
+
+.year {
+    background-color: var(--prio4-color);
+}
+
+.week {
+    background-color: var(--prio1-color);
 }
 
 img {
