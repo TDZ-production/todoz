@@ -59,7 +59,6 @@ body {
 .app main {
     flex-grow: 1;
     overflow: auto;
-    flex-direction: column;
 }
 
 a {
@@ -249,6 +248,7 @@ main > form button {
     flex-grow: 1;
     text-align: left;
     padding: 1rem .5rem;
+    line-height: 1.6rem;
 }
 
 .task form {
@@ -275,7 +275,6 @@ main > form button {
 
 .task button {
     padding: 0.5rem;
-    padding-left: 0.5rem;
 }
 
 .prio1, .prio2, .prio3, .prio4 {
@@ -598,7 +597,6 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     display: flex;
     flex-direction: row;
     overflow: scroll;
-    scroll-snap-type: x mandatory;
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
@@ -609,13 +607,18 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 
 .delete {
     border-bottom: 1px solid var(--border-color);
+    background: var(--prio4-color);
 }
 
 #deleteButton {
     border: none;
-    background: #ff3939;
+    background: none;
     border-radius: 0;
-    padding: 1rem;
+    padding: 1rem 1.5rem;
+}
+
+#deleteButton img {
+    display: block;
 }
 
 @media (min-width: 460px) {
