@@ -100,6 +100,11 @@
     </footer>
 
     <script th:inline="javascript">
+
+        /*<![CDATA[*/
+        const publicKeyBase64 =  /*[[@{${publicKey}}]]*/ 0;
+        /*]]>*/
+
         updateWeekProgressbar();
         initTaskEditListener();
         initPhoneHack();
@@ -335,27 +340,26 @@
             return outputArray;
         }
 
-        const publicKeyBase64 = /*[(${publicKey})]*/ 0;
         const serverKey = urlB64ToUint8Array(publicKeyBase64);
 
 
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/service-worker.js')
-                .then(function(registration) {
+                .then(function (registration) {
                     console.log('Service Worker registered successfully:', registration);
                     return registration;
                 })
                 .catch((error) => {
                     console.error('Error registering Service Worker:', error);
                 })
-                .then(function(registration) {
+                .then(function (registration) {
 
                     return registration.pushManager.subscribe({
                         userVisibleOnly: true,
                         applicationServerKey: serverKey,
                     });
                 })
-                .then(function(subscription) {
+                .then(function (subscription) {
                     console.log('Push Subscription successful:', subscription);
 
                     fetch('/subscribe', {
@@ -366,12 +370,11 @@
                         body: JSON.stringify(subscription),
                     });
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     console.error('Error setting up Service Worker:', error);
                 });
         }
     </script>
-
 </section>
 </body>
 </html>
