@@ -60,9 +60,9 @@ public class TaskController {
         return "redirect:/leftBehind";
     }
 
-    @PostMapping("delete/{id}")
-    public String delete(@PathVariable Long id) {
-        taskService.delete(id);
+    @PostMapping("leaveBehind/{id}")
+    public String leaveBehind(@PathVariable Long id, Principal principal) {
+        taskService.leaveBehind(id, getUser(principal));
 
         return "redirect:/";
     }

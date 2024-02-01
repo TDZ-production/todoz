@@ -52,8 +52,9 @@ public class TaskService {
         return taskRepo.findAllByUserIdAndDoneIsFalseAndWeekIdLessThanOrWeekIdNullAndUserIdAndDoneIsFalseAndDueDateWeekNumberLessThanEqual(user.getId(), week.getId(), user.getId(), currentWeek);
     }
 
-    public void delete(Long id) {
-        taskRepo.deleteById(id);
+    public void leaveBehind(Long id, User user) {
+        Task task = findTaskByIdAndUserId(id,user);
+        task.setWeek(null);
     }
 }
 

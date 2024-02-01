@@ -58,7 +58,7 @@
                 </form>
             </div>
 
-            <form class="delete" th:method="post" th:action="|/tasks/delete/${task.id}|">
+            <form class="delete" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
                 <input type="hidden" name="id" th:value="${task.id}">
                 <button id="deleteButton"><img src="/img/delete_icon.svg" alt="delete icon"></button>
             </form>
