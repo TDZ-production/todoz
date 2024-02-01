@@ -91,7 +91,7 @@ public class MainController {
     @GetMapping("longTerm")
     public String showLongTerm(Model model, Principal principal) {
         model.addAttribute("longTerm",
-                taskService.findLongTermTasks(getUser(principal), DateManager.formattedCurrentWeek()));
+                taskService.sortTasksByYearAndWeek(taskService.findLongTermTasks(getUser(principal), DateManager.formattedCurrentWeek())));
         model.addAttribute("user",getUser(principal));
         return "longTerm";
     }
