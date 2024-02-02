@@ -24,10 +24,10 @@
 
     <main>
         <div th:unless="${longTerm.isEmpty()}" th:each="year : ${longTerm.keySet().stream().sorted().toList()}">
-            <div th:class="year"><h2 th:text="${year}"></h2></div>
+            <div class="year"><p th:text="${year}"></p></div>
 
             <div th:each="week : ${longTerm.get(year).keySet().stream().sorted().toList()}">
-                <div th:class="week"><h2 th:text="|Week ${week}|"></h2></div>
+                <div class="week"><p th:text="|Week ${week == 53 ? 1 : week}|"></p></div>
 
                 <div class="task" th:each="task : ${longTerm.get(year).get(week)}" th:object="${task}"
                      th:data-priority="*{priority}" th:data-id="*{id}">
@@ -38,6 +38,10 @@
                 </div>
 
             </div>
+        </div>
+
+        <div th:unless="${longTerm.isEmpty()}" class="longTermPlaceholder">
+            <p>The future is only<br> in your hands...</p>
         </div>
 
         <div th:if="${longTerm.isEmpty()}" class="NoTaskPlaceholder">

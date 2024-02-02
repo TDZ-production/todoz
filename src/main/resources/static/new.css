@@ -232,7 +232,7 @@ main > form button {
     background: transparent;
 }
 
-.task, .year, .week {
+.task, .week, .year {
     display: flex;
     border-bottom: 1px solid var(--border-color);
     padding-left: .5rem;
@@ -298,20 +298,23 @@ main > form button {
     background: var(--prio4-color);
 }
 
-.year, .week {
-    justify-content: center;
-}
-
-.year h2, .week h2 {
+.week p, .year p {
     padding: 1rem .5rem;
 }
 
-.year {
-    background-color: var(--prio4-color);
+.week {
+    justify-content: center;
+    color: var(--pink-stickit-shadow);
 }
 
-.week {
-    background-color: var(--prio1-color);
+:first-child > .year {
+    display: none;
+}
+
+.year {
+    justify-content: flex-start;
+    background-color: var(--pink-stickit-color);
+    color: var(--pink-stickit-shadow);
 }
 
 img {
@@ -564,7 +567,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     cursor: pointer;
 }
 
-.NoTaskPlaceholder{
+.NoTaskPlaceholder, .longTermPlaceholder {
     margin: 4.5rem 2rem;
     opacity: 0.6;
 }
