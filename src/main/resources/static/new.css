@@ -251,6 +251,7 @@ main > form button {
     flex-grow: 1;
     text-align: left;
     padding: 1rem .5rem;
+    line-height: 1.6;
 }
 
 .task form {
