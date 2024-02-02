@@ -24,7 +24,7 @@
                 <img src="/img/menu_icon_open.svg" alt="open menu">
             </button>
             <div class="dropdown-content">
-                <a href="/longTerm">Planned</a>
+                <a href="/planned">Planned</a>
                 <a href="/leftBehind">Left behind</a>
                 <a href="/pussyMeter">Pussy meter</a>
                 <a href="/feedback">Feedback</a>
@@ -38,21 +38,27 @@
     </header>
 
     <main>
-        <div th:unless="${currentWeek.getSortedTasks().isEmpty()}" class="task"
-             th:each="task : ${currentWeek.getSortedTasks()}" th:object="${task}"
-             th:data-priority="*{priority}" th:data-id="*{id}" th:data-done="*{done}"
-             th:data-maturity="*{getMaturity()}">
+        <div class="taskContainer" th:unless="${currentWeek.getSortedTasks().isEmpty()}"
+             th:each="task : ${currentWeek.getSortedTasks()}">
+            <div class="task" th:object="${task}" th:data-priority="*{priority}" th:data-id="*{id}"
+                 th:data-done="*{done}" th:data-maturity="*{getMaturity()}">
 
-            <span th:classappend="|prio${task.getPriority()}|"></span>
-            <p th:text="*{description}"></p>
-            <span class="due" th:text="*{getRemainingDays()}" th:data-duedate="*{dueDateDate}"></span>
+                <span th:classappend="|prio${task.getPriority()}|"></span>
+                <p th:text="*{description}"></p>
+                <span class="due" th:text="*{getRemainingDays()}" th:data-duedate="*{dueDateDate}"></span>
 
-            <form onsubmit="handleSubmit(event)" th:action="|/tasks/check/*{id}|" th:method="POST">
-                <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
-                <button class="img" th:type="submit">
-                    <img class="isdone" src="/img/checkbox_checked.svg" alt="mark as not done"/>
-                    <img class="notdone" src="/img/checkbox_unchecked.svg" alt="mark as done"/>
-                </button>
+                <form onsubmit="handleSubmit(event)" th:action="|/tasks/check/*{id}|" th:method="POST">
+                    <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
+                    <button class="img" th:type="submit">
+                        <img class="isdone" src="/img/checkbox_checked.svg" alt="mark as not done"/>
+                        <img class="notdone" src="/img/checkbox_unchecked.svg" alt="mark as done"/>
+                    </button>
+                </form>
+            </div>
+
+            <form class="delete" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
+                <input type="hidden" name="id" th:value="${task.id}">
+                <button id="deleteButton"><img src="/img/leaveBehind_icon.svg" alt="delete icon"></button>
             </form>
         </div>
 
@@ -64,7 +70,8 @@
     </main>
 
     <footer>
-        <p th:if="${longTermTask} == true" id="fadeoutMessage">Task added to "Planned"</p>
+        <p th:if="${plannedTask} == true" class="fadeoutMessage" id="planned">Task added to "Planned"</p>
+        <p th:if="${leftBehindTask} == true" class="fadeoutMessage" id="leftBehind">Task added to "Left Behind"</p>
         <form method="post" th:action="@{/tasks/add}">
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
@@ -114,7 +121,7 @@
 
         setInterval(updateWeekProgressbar, 60 * 60 * 1000);
 
-        const el = document.querySelector("#fadeoutMessage");
+        const el = document.querySelector(".fadeoutMessage");
         if (el) {
             setTimeout(() => fadeout(el), 3000);
         }

@@ -89,7 +89,7 @@ public class UserCaseTestingChromeWhole {
         int priority = 4;
         //act
         actions.createDueDateTask(page, nextWeek.toString(), priority, "nextWeek");
-        page.navigate(webUrl + "/longTerm");
+        page.navigate(webUrl + "/planned");
         page.waitForTimeout(2000);
         //assert
         assertEquals(expectedDateFormat, page.innerText(taskLocator));
@@ -109,7 +109,7 @@ public class UserCaseTestingChromeWhole {
         //act
         page.navigate(webUrl + "/");
         actions.createDueDateTask(page, nextTwoWeeks.toString(), priority, "nextTwoWeeks");
-        page.navigate(webUrl + "/longTerm");
+        page.navigate(webUrl + "/planned");
         page.waitForTimeout(2000);
         //assert
         assertEquals(expectedDateFormat, page.innerText(taskLocator));

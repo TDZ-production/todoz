@@ -96,12 +96,12 @@ public class MainController {
         return "redirect:/";
     }
 
-    @GetMapping("longTerm")
-    public String showLongTerm(Model model, Principal principal) {
-        model.addAttribute("longTerm",
-                taskService.sortTasksByYearAndWeek(taskService.findLongTermTasks(getUser(principal), DateManager.formattedCurrentWeek())));
+    @GetMapping("planned")
+    public String showPlanned(Model model, Principal principal) {
+        model.addAttribute("planned",
+                taskService.sortTasksByYearAndWeek(taskService.findPlannedTasks(getUser(principal), DateManager.formattedCurrentWeek())));
         model.addAttribute("user", getUser(principal));
-        return "longTerm";
+        return "planned";
     }
 
     @GetMapping("leftBehind")

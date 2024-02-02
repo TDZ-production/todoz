@@ -1,7 +1,6 @@
 package com.example.todoz.prtoken;
 
 import com.example.todoz.models.User;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

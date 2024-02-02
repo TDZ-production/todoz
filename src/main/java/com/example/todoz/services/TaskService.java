@@ -5,6 +5,7 @@ import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
 import com.example.todoz.models.Week;
 import com.example.todoz.repos.TaskRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class TaskService {
         return taskRepo.findAllByUserIdAndDueDateWeekNumberGreaterThanAndDueDateWeekNumberLessThanEqualOrderByDueDate(user.getId(), previousWeekNumber, currentWeekNumber);
     }
 
-    public List<Task> findLongTermTasks(User user, Integer currentWeek) {
+    public List<Task> findPlannedTasks(User user, Integer currentWeek) {
         return taskRepo.findAllByUserIdAndDueDateWeekNumberGreaterThanOrderByDueDate(user.getId(), currentWeek);
     }
 
@@ -79,6 +80,18 @@ public class TaskService {
         task.setWeek(week);
         task.setLeftBehind(null);
         save(task);
+    }
+
+    public void leaveBehind(Long id, User user) {
+        Task task = findTaskByIdAndUserId(id,user);
+        task.setWeek(null);
+        task.setLeftBehind(DateManager.now().toLocalDate());
+        save(task);
+    }
+
+    @Transactional
+    public void deleteTask(Long id, User user) {
+        taskRepo.deleteByIdAndUserId(id, user.getId());
     }
 }
 
