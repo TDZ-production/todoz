@@ -121,6 +121,7 @@ input, button {
     background: var(--input-color);
     border-radius: .5rem;
     padding: .8rem;
+    color: inherit;
 }
 
 button, label {
@@ -198,9 +199,13 @@ main > form button {
 }
 
 .hidden {
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    z-index: -100;
+    opacity: 0;
     position: absolute;
-    left: -9999px;
-    top: -9999px;
     width: 0;
     height: 0;
     overflow: hidden;
@@ -256,7 +261,22 @@ main > form button {
 }
 
 .dateTime {
+    display: flex;
     border-bottom: .1rem solid var(--border-color);
+    background-color: var(--main-color);
+    gap: .5rem;
+    padding: .5rem;
+}
+
+.dateTime > * {
+    flex-grow: 1;
+    flex-basis: 80px;
+    font-size: 82%;
+    padding: .8rem .2rem;
+}
+
+.dateTime .active {
+    background: var(--pink-stickit-color);
 }
 
 .task .due {
@@ -316,7 +336,6 @@ footer {
     background: var(--main-color);
     border-top: 2px solid var(--font-color);
     position: relative;
-    padding-bottom: env(safe-area-inset-bottom);
 }
 
 footer img {
@@ -624,6 +643,25 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 
 #deleteButton img {
     display: block;
+}
+
+@media (max-width: 459px) {
+    header {
+        position: fixed;
+        z-index: 8;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 1rem 0;
+        padding-top: calc(1rem - env(safe-area-inset-bottom)/2);
+        height: 5rem;
+        height: calc(5rem - env(safe-area-inset-bottom)/2);
+    }
+
+    header + main {
+        margin-top: 5rem;
+        margin-top: calc(5rem - env(safe-area-inset-bottom)/2);
+    }
 }
 
 @media (min-width: 460px) {

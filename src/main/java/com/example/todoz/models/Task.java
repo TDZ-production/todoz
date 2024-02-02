@@ -28,6 +28,7 @@ public class Task {
     private Integer priority;
     private LocalDateTime createdAt;
     private LocalDateTime dueDate;
+    private LocalDate leftBehind;
     private Integer dueDateWeekNumber;
     private boolean done;
     @ManyToOne

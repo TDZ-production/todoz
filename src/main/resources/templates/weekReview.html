@@ -42,7 +42,7 @@
 
         <form th:action="@{/startNewWeek}" th:method="post" id="form">
 
-            <div class="task" th:each="task : ${upcomingTasks}">
+            <div class="task" th:each="task : ${upcomingTasks}" th:data-done="${task.done}">
                 <span th:classappend="|prio${task.getPriority()}|"></span>
                 <span class="taskStatus"> <img src="/img/week_review_clock.svg"></span>
                 <p class="taskText" th:text="${task.getDescription()}"></p>
@@ -55,7 +55,7 @@
                 </label>
             </div>
 
-            <div class="task" th:each="task : ${previousWeek.getSortedTasks()}">
+            <div class="task" th:each="task : ${previousWeek.getSortedTasks()}" th:data-done="${task.done}">
                 <span th:classappend="|prio${task.getPriority()}|"></span>
                 <span class="taskStatus" th:if="${task.isDone()}"><img
                         src="/img/week_review_check.svg"></span>
@@ -71,6 +71,7 @@
             </div>
 
             <p class="awesome">Hey, did you know this app is in pre-alpha?<br/>You're such a&nbsp;trend setter!</p>
+            <input type="hidden" id="leftBehindInput" name="leftBehinds">
             <button class="startWeek" type="submit" data-umami-event="startNewWeek">Start your week</button>
 
         </form>
@@ -94,6 +95,13 @@
                 )
             );
         })(document.querySelectorAll(".task"));
+
+        document.addEventListener("submit", function() {
+            const leftBehindInput = document.querySelector("#leftBehindInput");
+            const leftBehinds = document.querySelectorAll(".toDelegate:not(:checked)");
+
+            leftBehindInput.value = Array.from(leftBehinds).map(c => c.value);
+        });
     </script>
 </section>
 </body>
