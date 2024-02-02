@@ -51,6 +51,13 @@ public class TaskController {
         return "redirect:/";
     }
 
+    @PostMapping("upcoming/{id}")
+    public String upcomingUpdate(@PathVariable Long id, TaskUpdateDTO taskUpdate, Principal principal) {
+        taskService.update(id, taskUpdate, getUser(principal), getWeek(principal));
+
+        return "redirect:/longTerm";
+    }
+
     @PostMapping("re-add/{id}")
     public String reAdd(@PathVariable Long id, Principal principal) {
         Task task = taskService.findTaskByIdAndUserId(id, getUser(principal));

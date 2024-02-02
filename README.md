@@ -13,7 +13,7 @@ Do you prefer a more gentle approach? *TodoZlatíčko* will be your kind friend.
 
 Want something casual? *TodoZápisník* is at your service!
 
-Need a kick in the ass to do something? *TodoZ*rd* will be your personal productivity bully.
+Need a kick in the ass to do something? *TodoZmrd* will be your personal productivity bully.
 
 We, the TDZ team, want Todoz* to be as much FUN and SIMPLE to use as possible, to get rid of boredom that leads to procrastination!
 
@@ -23,6 +23,6 @@ Currently, our app is in the free and public pre-Alpha stage, and you can alread
 ## Future Plans
 We are planning to make Todoz* available for **self-hosting** so that anyone can manage their own to-do list for free if they wish!
 
-![Discrod](/Images/Discrod.png)
+![Discord](/Images/Discord.png)
 
 
