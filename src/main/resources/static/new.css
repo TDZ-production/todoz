@@ -281,6 +281,7 @@ main > form button {
     color: var(--light-font-color);
     align-self: center;
     padding: 1rem .5rem;
+    padding-right: .25rem;
 }
 .due {
     margin-right: 0;
@@ -291,7 +292,8 @@ main > form button {
 }
 
 .task button {
-    padding: 0.5rem;
+    padding: .5rem;
+    padding-right: .8rem;
 }
 
 .prio1, .prio2, .prio3, .prio4 {
