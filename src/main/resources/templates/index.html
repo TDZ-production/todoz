@@ -41,8 +41,11 @@
                     onclick="toggleDropdown('task-slider', 'filter-icon','img/eye_icon_open.svg', 'img/eye_icon_closed.svg')">
                 <img src='img/eye_icon_open.svg' alt="open menu">
             </button>
-            <div class="dropdown-content" id="task-slider">
-                <input id="range-filter" type="range" step="1" th:max="3" value="0" oninput="filterTasks()">
+            <div class="button-group" id="task-buttons">
+                <button id="btn-all" onclick="filterTasks('all')">All</button>
+                <button id="btn-current" onclick="filterTasks('current')">Current</button>
+                <button id="btn-done" onclick="filterTasks('done')">Done</button>
+                <button id="btn-tomorrow" onclick="filterTasks('tomorrow')">Tomorrow</button>
             </div>
         </div>
     </header>
@@ -117,10 +120,8 @@
 
         setInterval(updateWeekProgressbar, 3600);
 
-
         if (localStorage.filter) {
-            document.querySelector('#range-filter').value = localStorage.filter;
-            filterTasks();
+            filterTasks(localStorage.filter);
         }
 
         const el = document.querySelector("#fadeoutMessage");
@@ -169,32 +170,22 @@
             });
         }
 
-        function filterTasks() {
+        function filterTasks(filter) {
             const tasks = document.querySelectorAll('.task');
-            const rangeValue = document.querySelector('#range-filter').value;
 
-            localStorage.filter = rangeValue;
+            localStorage.filter = filter;
 
             const date = new Date();
 
-            const today = date.toISOString().slice(0,10);
+            const today = date.toISOString().slice(0, 10);
 
             date.setDate(date.getDate() + 1);
-            const tomorrow = date.toISOString().slice(0,10);
+            const tomorrow = date.toISOString().slice(0, 10);
 
             tasks.forEach(task => task.style.display = "");
 
 
-            //filters are accumulating, not done, current + not done, tommorow + not done
-            /**if:
-             * range == 0 it shows all tasks
-             * range == 1 it shows not done
-             * range == 2 it shows for today and without due date --> current
-             * range == 3 it shows for tomorrow**/
-
-            //display none hides the thing
-
-            if (rangeValue > 0) {
+            if (filter == 'done') {
                 tasks.forEach((task) => {
                     if (task.dataset.done == "true") {
                         task.style.display = "none";
@@ -202,7 +193,7 @@
                 })
             }
 
-            if (rangeValue == 2) {
+            if (filter == 'current') {
                 tasks.forEach(task => {
                     if (task.dataset.duedate < today) {
                         task.style.display = "none";
@@ -210,7 +201,7 @@
                 })
             }
 
-            if (rangeValue == 3) {
+            if (filter == 'tomorrow') {
                 tasks.forEach(task => {
                     if (task.dataset.duedate != tomorrow) {
                         task.style.display = "none";
