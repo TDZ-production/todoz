@@ -37,6 +37,9 @@ public class TaskService {
         tasks.forEach(task -> {
                     Integer year = task.getDueDate().getYear();
                     Integer week = DateManager.getWeekNumber(task.getDueDate());
+                    if (task.getDueDate().getMonthValue() == 12 && week == 1) {
+                        week = week + Week.WEEKS_IN_YEAR;
+                    }
                     if (!result.containsKey(year)) {
                         result.put(year, new HashMap<>());
                     }

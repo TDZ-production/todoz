@@ -60,7 +60,7 @@ public class Task {
      */
     public String getDueDateFormat() {
         if (dueDate != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.");
             return dueDate.format(formatter);
         } else {
             return null;

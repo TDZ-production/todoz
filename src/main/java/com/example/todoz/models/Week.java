@@ -24,7 +24,7 @@ public class Week {
     //@OrderBy("done, priority DESC, dueDate ASC")
     private List<Task> tasks = new ArrayList<>();
 
-    private final static int WEEKS_IN_YEAR = 52;
+    public final static int WEEKS_IN_YEAR = 52;
 
     public Week(User user) {
         this();
