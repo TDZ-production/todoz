@@ -1,7 +1,7 @@
 package com.example.todoz.controllers;
 
 import com.example.todoz.dtos.TaskUpdateDTO;
-import com.example.todoz.models.DateManager;
+import com.example.todoz.services.DateManager;
 import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
 import com.example.todoz.models.Week;

@@ -7,7 +7,10 @@ import com.example.todoz.models.Week;
 import com.example.todoz.repos.TaskRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TaskService {
@@ -27,6 +30,25 @@ public class TaskService {
 
     public List<Task> findLongTermTasks(User user, Integer currentWeek) {
         return taskRepo.findAllByUserIdAndDueDateWeekNumberGreaterThanOrderByDueDate(user.getId(), currentWeek);
+    }
+
+    public Map<Integer, Map<Integer, List<Task>>> sortTasksByYearAndWeek(List<Task> tasks) {
+        Map<Integer, Map<Integer, List<Task>>> result = new HashMap<>();
+        tasks.forEach(task -> {
+                    Integer year = task.getDueDate().getYear();
+                    Integer week = DateManager.getWeekNumber(task.getDueDate());
+                    if (task.getDueDate().getMonthValue() == 12 && week == 1) {
+                        week = week + Week.WEEKS_IN_YEAR;
+                    }
+                    if (!result.containsKey(year)) {
+                        result.put(year, new HashMap<>());
+                    }
+                    if (!result.get(year).containsKey(week)) {
+                        result.get(year).put(week, new ArrayList<>());
+                    }
+                    result.get(year).get(week).add(task);
+                });
+        return result;
     }
 
     public void checkedTask(Long taskId, User user, boolean done) {
