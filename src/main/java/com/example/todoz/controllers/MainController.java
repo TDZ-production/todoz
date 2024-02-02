@@ -1,6 +1,7 @@
 package com.example.todoz.controllers;
 
 import com.example.todoz.models.*;
+import com.example.todoz.services.DateManager;
 import com.example.todoz.services.TaskService;
 import com.example.todoz.services.UserService;
 import com.example.todoz.services.WeekService;
@@ -11,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -99,7 +99,7 @@ public class MainController {
     @GetMapping("longTerm")
     public String showLongTerm(Model model, Principal principal) {
         model.addAttribute("longTerm",
-                taskService.findLongTermTasks(getUser(principal), DateManager.formattedCurrentWeek()));
+                taskService.sortTasksByYearAndWeek(taskService.findLongTermTasks(getUser(principal), DateManager.formattedCurrentWeek())));
         model.addAttribute("user", getUser(principal));
         return "longTerm";
     }
