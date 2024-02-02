@@ -1,6 +1,7 @@
 package com.example.todoz.models;
 
 import com.example.todoz.dtos.TaskUpdateDTO;
+import com.example.todoz.services.DateManager;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -60,7 +61,7 @@ public class Task {
      */
     public String getDueDateFormat() {
         if (dueDate != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.");
             return dueDate.format(formatter);
         } else {
             return null;
@@ -114,11 +115,11 @@ public class Task {
         } else {
             setDueDate(dueDate.atTime(23, 59, 59));
             //TODO: get rid of dueDateWeekNumber, it's duplication of state, that's fragile!
-            this.dueDateWeekNumber = DateManager.formatWeek(dueDate);
+            this.dueDateWeekNumber = DateManager.getPrefixedWeek(dueDate);
         }
 
         // if dueDate is in the future, set week to null
-        if (dueDate != null && DateManager.formatWeek(dueDate) > DateManager.formattedCurrentWeek()) {
+        if (dueDate != null && DateManager.getPrefixedWeek(dueDate) > DateManager.formattedCurrentWeek()) {
             setWeek(null);
         } else {
             setWeek(currentWeek);

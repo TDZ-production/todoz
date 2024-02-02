@@ -1,6 +1,5 @@
 package com.example.todoz.services;
 
-import com.example.todoz.models.DateManager;
 import com.example.todoz.models.User;
 import com.example.todoz.models.Week;
 import com.example.todoz.repos.WeekRepo;

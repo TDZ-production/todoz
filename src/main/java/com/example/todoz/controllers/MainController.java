@@ -1,6 +1,7 @@
 package com.example.todoz.controllers;
 
 import com.example.todoz.models.*;
+import com.example.todoz.services.DateManager;
 import com.example.todoz.services.TaskService;
 import com.example.todoz.services.UserService;
 import com.example.todoz.services.WeekService;
@@ -98,7 +99,7 @@ public class MainController {
     @GetMapping("planned")
     public String showPlanned(Model model, Principal principal) {
         model.addAttribute("planned",
-                taskService.findPlannedTasks(getUser(principal), DateManager.formattedCurrentWeek()));
+                taskService.sortTasksByYearAndWeek(taskService.findPlannedTasks(getUser(principal), DateManager.formattedCurrentWeek())));
         model.addAttribute("user", getUser(principal));
         return "planned";
     }

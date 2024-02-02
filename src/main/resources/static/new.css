@@ -237,7 +237,7 @@ main > form button {
     background: transparent;
 }
 
-.task {
+.task, .week, .year {
     display: flex;
     border-bottom: 1px solid var(--border-color);
     padding-left: .5rem;
@@ -253,7 +253,7 @@ main > form button {
     flex-grow: 1;
     text-align: left;
     padding: 1rem .5rem;
-    line-height: 1.6rem;
+    line-height: 1.6;
 }
 
 .task form {
@@ -284,6 +284,7 @@ main > form button {
     color: var(--light-font-color);
     align-self: center;
     padding: 1rem .5rem;
+    padding-right: .3rem;
 }
 .due {
     margin-right: 0;
@@ -294,7 +295,8 @@ main > form button {
 }
 
 .task button {
-    padding: 0.5rem;
+    padding: .5rem;
+    padding-right: .8rem;
 }
 
 .prio1, .prio2, .prio3, .prio4 {
@@ -318,6 +320,25 @@ main > form button {
 }
 .prio4 {
     background: var(--prio4-color);
+}
+
+.week p, .year p {
+    padding: 1rem .5rem;
+}
+
+.week {
+    justify-content: center;
+    color: var(--pink-stickit-shadow);
+}
+
+:first-child > .year {
+    display: none;
+}
+
+.year {
+    justify-content: flex-start;
+    background-color: var(--pink-stickit-color);
+    color: var(--pink-stickit-shadow);
 }
 
 img {
@@ -569,7 +590,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     cursor: pointer;
 }
 
-.NoTaskPlaceholder{
+.NoTaskPlaceholder, .plannedPlaceholder {
     margin: 4.5rem 2rem;
     opacity: 0.6;
 }
