@@ -18,7 +18,7 @@ public class DateManager {
      * @return YYYYww
      */
     public static Integer getPrefixedWeek(TemporalAccessor date) {
-        return getYearOfNextOrSameSaturday(date) * 100 + date.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
+        return getYearOfNextOrSameSaturday(date) * 100 + getWeekNumber(date);
     }
 
     public static Integer getWeekNumber(TemporalAccessor date) {
