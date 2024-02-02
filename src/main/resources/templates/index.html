@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>TodoZ-main</title>
-    <link rel="stylesheet" href="/new.css">
+    <link rel="stylesheet" href="/new.css?1">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="mobile-web-app-capable" content="yes">
@@ -68,9 +68,16 @@
         <form method="post" th:action="@{/tasks/add}">
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
-            <label class="dateTime hidden">
-                <input type="date" name="maybeDueDate" id="date">
-            </label>
+            <div class="dateTime hidden">
+                <input type="button" onclick="dueNextWeek()" value="next week" />
+                <input type="button" onclick="dueThisWeek()" value="this week" />
+                <input type="button" onclick="dueTomorrow()" value="tomorrow" />
+                <input class="date-caption" type="button" onclick="showCalendar()" value="…" />
+
+                <label class="dateTime hidden">
+                    <input type="date" name="maybeDueDate" id="date">
+                </label>
+            </div>
 
             <div class="addTask">
                 <input type="text" placeholder="new task" name="description" id="add" required autofocus
@@ -105,11 +112,33 @@
         initPhoneHack();
         expandMatureTasks();
 
-        setInterval(updateWeekProgressbar, 3600);
+        setInterval(updateWeekProgressbar, 60 * 60 * 1000);
 
         const el = document.querySelector("#fadeoutMessage");
         if (el) {
             setTimeout(() => fadeout(el), 3000);
+        }
+
+        document.querySelector("#date").addEventListener("input", function () {
+            const dateEl = document.querySelector("#date");
+            const captionEl = document.querySelector(".date-caption");
+            let value = "…";
+
+            captionEl.classList.remove("active");
+
+            if (dateEl.value !== "") {
+                value = dateEl.valueAsDate.toLocaleDateString("en-GB", {
+                    weekday: 'short',
+                    day: 'numeric'
+                });
+
+                captionEl.classList.add("active");
+            }
+
+            captionEl.value = value;
+        });
+        function focusAdd() {
+            document.querySelector("#add").focus();
         }
 
         function updateWeekProgressbar() {
@@ -153,29 +182,32 @@
             });
         }
 
-        function toggleDueDate(state) {
-            const CLASS = "hidden";
+        function showCalendar() {
             const date = document.querySelector("#date");
-            const dateLabel = document.querySelector(".dateTime")
-            const classList = dateLabel.classList;
+            const dateLabel = document.querySelector("label.dateTime")
 
-            if (state === undefined) {
+            dateLabel.dispatchEvent(new Event("click"));
+            if (document.activeElement !== date) {
+                date.focus();
+                date.showPicker();
+            }
+        }
+
+        function toggleDueDate(forceShow) {
+            const CLASS = "hidden";
+            const dateWrapper = document.querySelector("div.dateTime")
+            const classList = dateWrapper.classList;
+
+            focusAdd();
+
+            if (forceShow === undefined) {
                 classList.toggle(CLASS);
-                if (!classList.contains(CLASS)) {
-                    dateLabel.dispatchEvent(new Event("click"));
-                    if (document.activeElement !== date) {
-                        date.focus();
-                        date.showPicker();
-                    }
-                } else {
-                    document.querySelector("#add").focus();
-                }
-                date.value = "";
-            } else if (state === true) {
+                due(null);
+            } else if (forceShow === true) {
                 classList.remove(CLASS);
             } else {
                 classList.add(CLASS);
-                date.value = "";
+                due(null);
             }
         }
 
@@ -263,7 +295,7 @@
                 });
             }
 
-            function adjustSafeAreaInset(value = 'env(safe-area-inset-bottom)') {
+            function adjustSafeAreaInset(value = 'calc(env(safe-area-inset-bottom)/2)') {
                 document.querySelector("footer").style.paddingBottom = value;
             }
         }
@@ -317,6 +349,35 @@
 
         function logout() {
             document.querySelector('#logoutForm').submit();
+        }
+
+        function dueNextWeek() {
+            due(7);
+        }
+
+        function dueThisWeek() {
+            const days = [3, 3, 2, 2, 2, 1, 0][new Date().getDay()];
+            due(days);
+        }
+
+        function dueTomorrow() {
+            due(1);
+        }
+
+        function due(days) {
+            const dateEl = document.querySelector("#date");
+
+            focusAdd();
+
+            if (days === null) {
+                dateEl.value = "";
+            } else {
+                const date = new Date();
+                date.setDate(date.getDate() + days);
+                dateEl.valueAsDate = date;
+            }
+
+            dateEl.dispatchEvent(new Event("input"));
         }
     </script>
 
