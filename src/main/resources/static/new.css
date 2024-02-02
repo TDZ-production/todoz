@@ -281,7 +281,7 @@ main > form button {
     color: var(--light-font-color);
     align-self: center;
     padding: 1rem .5rem;
-    padding-right: .25rem;
+    padding-right: .3rem;
 }
 .due {
     margin-right: 0;
