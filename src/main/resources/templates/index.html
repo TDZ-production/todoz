@@ -187,10 +187,10 @@
 
             //filters are accumulating, not done, current + not done, tommorow + not done
             /**if:
-             * range == 0 it shows all tasks //works
-             * range == 1 it shows not done, the tasks that are true(done) are hidden //works
-             * range == 2 it shows for today and without due date --> current // works?
-             * range == 3 it shows for tomorrow**/  //works
+             * range == 0 it shows all tasks
+             * range == 1 it shows not done
+             * range == 2 it shows for today and without due date --> current
+             * range == 3 it shows for tomorrow**/
 
             //display none hides the thing
 
@@ -204,7 +204,7 @@
 
             if (rangeValue == 2) {
                 tasks.forEach(task => {
-                    if (task.dataset.duedate != today) {
+                    if (task.dataset.duedate < today) {
                         task.style.display = "none";
                     }
                 })
