@@ -34,7 +34,7 @@
             </div>
         </div>
         <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>
-        <div id="week-progressbar"></div>
+        <div class="week-progressbar"></div>
     </header>
 
     <main>
@@ -149,9 +149,13 @@
         }
 
         function updateWeekProgressbar() {
-            const progressbar = document.querySelector("#week-progressbar");
+            const progressbar = document.querySelector(".week-progressbar");
             const now = new Date();
-            const weekProgress = (now.getDay() / 7 + now.getHours() / 24 / 7) * 100;
+            const weekProgress = now.getDay() === 0 ? 100 : ((now.getDay() - 1) / 6 + now.getHours() / 24 / 6) * 100;
+
+            if (weekProgress === 100) {
+                progressbar.classList.add("sunday");
+            }
 
             progressbar.style.width = weekProgress + "%";
         }
