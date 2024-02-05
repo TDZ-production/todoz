@@ -20,12 +20,9 @@
 <section class="app home">
     <header>
         <div class="dropdown">
-            <button class="dropbtn" id="drop-icon"
-                    onclick="toggleDropdown('content', 'drop-icon', 'img/menu_icon_open.svg', 'img/menu_icon_close.svg')">
-                <img src='img/menu_icon_open.svg' alt="open menu">
+            <button class="dropbtn" onclick="toggleDropdown()">
+                <img src="/img/menu_icon_open.svg" alt="open menu">
             </button>
-            <div class="dropdown-content" id="content">
-                <a href="/longTerm">Planned</a>
             <div class="dropdown-content">
                 <a href="/planned">Planned</a>
                 <a href="/leftBehind">Left behind</a>
@@ -36,12 +33,11 @@
                 </form>
             </div>
         </div>
-        <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>
+<!--        <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>-->
         <div id="week-progressbar"></div>
-        <div class="dropdown">
-            <button class="dropbtn" id="filter-icon"
-                    onclick="toggleDropdown('task-slider', 'filter-icon','img/eye_icon_open.svg', 'img/eye_icon_closed.svg')">
-                <img src='img/eye_icon_open.svg' alt="open menu">
+        <div>
+            <button  onclick="dropdownFilter('task-buttons', 'filter-text')">
+                <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|" id="filter-text"></h2>
             </button>
             <div class="button-group" id="task-buttons">
                 <button id="btn-all" onclick="filterTasks('all')">All</button>
@@ -140,7 +136,7 @@
             filterTasks(localStorage.filter);
         }
 
-        const el = document.querySelector(".fadeoutMessage");
+        const el = document.querySelector("#fadeoutMessage");
         if (el) {
             setTimeout(() => fadeout(el), 3000);
         }
@@ -277,7 +273,6 @@
             }
         }
 
-
         function initTaskEditListener() {
             document.querySelector("main").addEventListener("click", function (event) {
                 if (event.target.tagName !== "P") return;
@@ -376,22 +371,35 @@
             }
         }
 
+        function dropdownFilter(buttonId, textSpanId) {
+            const dropdown = document.getElementById(buttonId);
+            const textSpan = document.getElementById(textSpanId);
+
+            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                dropdown.style.display = 'block';
+                textSpan.style.color = '#996A6A';
+            } else {
+                dropdown.style.display = 'none';
+                textSpan.style.color = '';
+            }
+        }
+
         function toggleDropdown(dropdownClassName, iconClassName, imgSrcOpen, imgSrcClose) {
             const dropdown = document.querySelector("#" + dropdownClassName);
             const main = document.querySelector("main");
             const footer = document.querySelector("footer");
-            const img = document.querySelector("#" + iconClassName + " img");
+            const img = document.querySelector(".dropbtn img");
 
             registerCancel(main);
             registerCancel(footer);
 
             if (dropdown.style.display === "block") {
                 dropdown.style.display = "none";
-                img.src = imgSrcOpen;
+                img.src = "/img/menu_icon_open.svg";
                 img.alt = "open menu";
             } else {
                 dropdown.style.display = "block";
-                img.src = imgSrcClose;
+                img.src = "/img/menu_icon_close.svg";
                 img.alt = "close menu";
             }
 
@@ -404,20 +412,19 @@
                     if (event.key === "Escape") {
                         cancelMenu();
                     }
-                };
-            }
+                }
 
-            function cancelMenu() {
-                dropdown.style.display = "none";
-                img.src = imgSrcOpen;
-                img.alt = "open menu";
+                function cancelMenu() {
+                    dropdown.style.display = "none";
+                    img.src = "/img/menu_icon_open.svg";
+                    img.alt = "open menu";
+                }
             }
         }
 
         function logout() {
             document.querySelector('#logoutForm').submit();
         }
-
         function dueNextWeek() {
             due(7);
         }
@@ -446,8 +453,50 @@
 
             dateEl.dispatchEvent(new Event("input"));
         }
-    </script>
 
+        function urlB64ToUint8Array(base64String) {
+            const padding = '='.repeat((4 - base64String.length % 4) % 4);
+            const base64 = (base64String + padding)
+                .replace(/\-/g, '+')
+                .replace(/_/g, '/');
+
+            const rawData = window.atob(base64);
+            const outputArray = new Uint8Array(rawData.length);
+
+            for (let i = 0; i < rawData.length; ++i) {
+                outputArray[i] = rawData.charCodeAt(i);
+            }
+
+            return outputArray;
+        }
+
+        const serverKey = urlB64ToUint8Array(publicKeyBase64);
+
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(function (registration) {
+                    return registration;
+                })
+                .then(function (registration) {
+
+                    return registration.pushManager.subscribe({
+                        userVisibleOnly: true,
+                        applicationServerKey: serverKey,
+                    });
+                })
+                .then(function (subscription) {
+
+                    fetch('/subscribe', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(subscription),
+                    });
+                })
+        }
+    </script>
 </section>
 </body>
 </html>
