@@ -69,7 +69,7 @@
 
             <form class="delete" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
                 <input type="hidden" name="id" th:value="${task.id}">
-                <button id="deleteButton"><img src="/img/leaveBehind_icon.svg" alt="delete icon"></button>
+                <button id="deleteButton" th:class="deleteImg"><img src="/img/leaveBehind_icon.svg" alt="delete icon"></button>
             </form>
         </div>
 
@@ -212,6 +212,9 @@
         function filterTasks(filter) {
             const tasks = document.querySelectorAll('.task');
 
+            const deleteImgs = document.querySelectorAll('.deleteImg img');
+            console.log(deleteImgs);
+
             localStorage.filter = filter;
 
             const date = new Date();
@@ -221,32 +224,38 @@
             date.setDate(date.getDate() + 1);
             const tomorrow = date.toISOString().slice(0, 10);
 
-            tasks.forEach(task => task.style.display = "");
+            tasks.forEach((task, index) => {
+                const deleteImg = deleteImgs[index];
 
+                if (filter == 'current' && task.dataset.duedate < today) {
+                    task.style.display = "none";
+                    deleteImg.style.display = "none";
+                }
 
-            if (filter == 'done') {
-                tasks.forEach((task) => {
-                    if (task.dataset.done == "true") {
-                        task.style.display = "none";
-                    }
-                })
-            }
+                if (filter == 'done' && task.dataset.done === "true") {
+                    task.style.display = "none";
+                    deleteImg.style.display = "none";
+                }
 
-            if (filter == 'current') {
-                tasks.forEach(task => {
-                    if (task.dataset.duedate < today) {
-                        task.style.display = "none";
-                    }
-                })
-            }
+                if (filter == 'tomorrow' && task.dataset.duedate != tomorrow) {
+                    task.style.display = "none";
+                    deleteImg.style.display = "none";
+                }
+            });
+            deleteImgs.forEach(img => {
 
-            if (filter == 'tomorrow') {
-                tasks.forEach(task => {
-                    if (task.dataset.duedate != tomorrow) {
-                        task.style.display = "none";
-                    }
-                })
-            }
+                if (filter == 'current') {
+                    img.style.display = "none";
+                }
+
+                if (filter == 'done' ) {
+                    img.style.display = "none";
+                }
+
+                if (filter == 'tomorrow' ) {
+                    img.style.display = "none";
+                }
+            });
         }
 
         function showCalendar() {
@@ -390,7 +399,7 @@
         }
 
         function toggleDropdown() {
-            const dropdown = document.querySelector("#" + dropdown-content);
+            let dropdown = document.querySelector(".dropdown-content");
             const main = document.querySelector("main");
             const footer = document.querySelector("footer");
             const img = document.querySelector(".dropbtn img");
@@ -426,6 +435,7 @@
                 }
             }
         }
+
 
         function logout() {
             document.querySelector('#logoutForm').submit();

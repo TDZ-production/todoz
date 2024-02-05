@@ -467,6 +467,7 @@ button.startWeek {
     border: none;
     padding : .5rem;
     margin-left: .666rem;
+    margin-left: .666rem;
     background-color: var(--main-color);
     height: 3.25rem;
 }
@@ -673,7 +674,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 }
 
 #deleteButton img {
-    display: block;
+    /*display: block;*/
     height: 3.5rem;
 }
 
