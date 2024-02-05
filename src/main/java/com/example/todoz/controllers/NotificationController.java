@@ -23,7 +23,6 @@ public class NotificationController {
 
     @PostMapping("/subscribe")
     public String subscribe(@RequestBody Subscription subscription, Principal principal) {
-        System.out.println("New subscription: " + subscription.keys.auth);
         notificationService.subscribe(subscription, getUser(principal));
         return "redirect:/";
     }

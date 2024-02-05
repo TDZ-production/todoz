@@ -23,7 +23,6 @@ public class User {
     private String username;
     private String password;
     private Integer pussyMeter = 1;
-    private boolean notificationSingleTask = true;
     @ManyToMany
     private Set<Role> roles;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

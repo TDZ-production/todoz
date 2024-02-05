@@ -13,7 +13,7 @@ public class NotificationScheduling {
     private final UserSubscriptionService userSubscriptionService;
     private final MessageService messageService;
 
-    @Scheduled(cron = "0 30 8 * * *")
+    @Scheduled(cron = "0 53 10 * * *")
     public void sendMorningNotifications() {
 
         userSubscriptionService.getAll().forEach(userSub -> {
@@ -25,14 +25,4 @@ public class NotificationScheduling {
 
         System.out.println("The message was sent" + DateManager.now());
     }
-
-//    @Scheduled(cron = "0 00 12 * * *")
-//    public void sendNoonNotifications() {
-//
-//
-//        userSubscriptionService.getAll().forEach(userSub ->
-//                notificationService.sendNotification(userSub, messageService.getNoonNotification(userSub.getUser())));
-//
-//        System.out.println("The message was sent" + LocalTime.now());
-//    }
 }
