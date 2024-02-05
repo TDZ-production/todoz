@@ -32,10 +32,6 @@ public class UserService implements UserDetailsService {
         else {
             User user = temp.get();
             Set<GrantedAuthority> authorities = Set.of(new SimpleGrantedAuthority("USER"));
-//                    user.getRoles()
-//                    .stream()
-//                    .map(r -> new SimpleGrantedAuthority(r.getName()))
-//                    .collect(Collectors.toSet());
             return new org.springframework.security.core.userdetails.User(username, user.getPassword(), authorities);
         }
     }
