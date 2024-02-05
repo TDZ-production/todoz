@@ -113,7 +113,12 @@
         </form>
     </footer>
 
-    <script>
+    <script th:inline="javascript">
+
+        /*<![CDATA[*/
+        const publicKeyBase64 =  /*[[@{${publicKey}}]]*/ 0;
+        /*]]>*/
+
         updateWeekProgressbar();
         initTaskEditListener();
         initPhoneHack();

@@ -1,6 +1,5 @@
 package com.example.todoz.services;
 
-import com.example.todoz.models.DateManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,7 @@ public class NotificationScheduling {
     private final UserSubscriptionService userSubscriptionService;
     private final MessageService messageService;
 
-    @Scheduled(cron = "0 53 10 * * *")
+    @Scheduled(cron = "0 30 8 * * *")
     public void sendMorningNotifications() {
 
         userSubscriptionService.getAll().forEach(userSub -> {
