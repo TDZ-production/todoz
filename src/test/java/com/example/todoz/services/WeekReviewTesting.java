@@ -47,9 +47,9 @@ public class WeekReviewTesting {
         // arrange
         Optional<User> testUser = Optional.of(new User("TestUser", "password", 1));
 
-        Task longTermTask = new Task();
-        longTermTask.setDescription("LongTermTask");
-        longTermTask.setDueDate(LocalDateTime.now().plusWeeks(1));
+        Task plannedTask = new Task();
+        plannedTask.setDescription("plannedTask");
+        plannedTask.setDueDate(LocalDateTime.now().plusWeeks(1));
 
         Task doneTask = new Task();
         doneTask.setDescription("doneTask");
@@ -64,7 +64,7 @@ public class WeekReviewTesting {
         previuosWeek.getTasks().add(notDoneTask);
 
         when(taskService.findUpcomingTasks(any(User.class), anyInt(), anyInt()))
-                .thenReturn(List.of(longTermTask));
+                .thenReturn(List.of(plannedTask));
         when(weekService.findPreviousWeek(any(User.class)))
                 .thenReturn(Optional.of(previuosWeek));
         when(weekService.findCurrentWeek(any(User.class)))
@@ -84,6 +84,6 @@ public class WeekReviewTesting {
         //assert
         resultActions.andExpect(content().string(containsString("<p class=\"taskText\">notDoneTask</p>")));
         resultActions.andExpect(content().string(containsString("<p class=\"taskText\">doneTask</p>")));
-        resultActions.andExpect(content().string(containsString("<p class=\"taskText\">LongTermTask</p>")));
+        resultActions.andExpect(content().string(containsString("<p class=\"taskText\">plannedTask</p>")));
     }
 }
