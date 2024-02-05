@@ -21,7 +21,5 @@ public class NotificationScheduling {
                 notificationService.sendNotification(userSub, notification);
             }
         });
-
-        System.out.println("The message was sent" + DateManager.now());
     }
 }

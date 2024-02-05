@@ -7,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -30,7 +28,7 @@ public class MessageService {
             if (!tasks.isEmpty()) {
 
                 List<Task> tasksToday = tasks.stream()
-                        .filter(t -> t != null && t.getDueDate() != null && t.getDueDate().toLocalDate().equals(LocalDate.now()))
+                        .filter(t -> t.getDueDate() != null)
                         .toList();
 
                 String title = "Wassup mf!";

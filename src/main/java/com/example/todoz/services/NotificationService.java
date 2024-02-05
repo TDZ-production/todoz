@@ -43,8 +43,6 @@ public class NotificationService {
     }
 
     public void subscribe(Subscription subscription, User user) {
-        System.out.println("Subscribed to " + subscription.endpoint);
-
         Optional<UserSubscription> maybeUserSub = userSubscriptionService.findByAuth(subscription.keys.auth);
 
         if (maybeUserSub.isEmpty()) {
@@ -62,5 +60,4 @@ public class NotificationService {
             e.printStackTrace();
         }
     }
-
 }

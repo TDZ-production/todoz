@@ -413,11 +413,7 @@
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/service-worker.js')
                 .then(function (registration) {
-                    console.log('Service Worker registered successfully:', registration);
                     return registration;
-                })
-                .catch((error) => {
-                    console.error('Error registering Service Worker:', error);
                 })
                 .then(function (registration) {
 
@@ -427,7 +423,6 @@
                     });
                 })
                 .then(function (subscription) {
-                    console.log('Push Subscription successful:', subscription);
 
                     fetch('/subscribe', {
                         method: 'POST',
@@ -437,9 +432,6 @@
                         body: JSON.stringify(subscription),
                     });
                 })
-                .catch(function (error) {
-                    console.error('Error setting up Service Worker:', error);
-                });
         }
     </script>
 </section>
