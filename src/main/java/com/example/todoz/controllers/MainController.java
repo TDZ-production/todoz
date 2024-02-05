@@ -99,7 +99,7 @@ public class MainController {
     @GetMapping("planned")
     public String showPlanned(Model model, Principal principal) {
         model.addAttribute("planned",
-                taskService.sortTasksByYearAndWeek(taskService.findPlannedTasks(getUser(principal), DateManager.formattedCurrentWeek())));
+                taskService.mapTasksByYearAndWeek(taskService.findPlannedTasks(getUser(principal), DateManager.formattedCurrentWeek())));
         model.addAttribute("user", getUser(principal));
         return "planned";
     }

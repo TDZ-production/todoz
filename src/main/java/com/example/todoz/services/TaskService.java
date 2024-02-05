@@ -33,7 +33,7 @@ public class TaskService {
         return taskRepo.findAllByUserIdAndDueDateAfterOrderByDueDate(user.getId(), DateManager.getNextSunday(currentWeek));
     }
 
-    public Map<Integer, Map<Integer, List<Task>>> sortTasksByYearAndWeek(List<Task> tasks) {
+    public Map<Integer, Map<Integer, List<Task>>> mapTasksByYearAndWeek(List<Task> tasks) {
         Map<Integer, Map<Integer, List<Task>>> result = new HashMap<>();
         tasks.forEach(task -> {
                     Integer year = task.getDueDate().getYear();
