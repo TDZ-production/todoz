@@ -121,6 +121,7 @@ input, button {
     background: var(--input-color);
     border-radius: .5rem;
     padding: .8rem;
+    color: inherit;
 }
 
 button, label {
@@ -199,9 +200,13 @@ main > form button {
 }
 
 .hidden {
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    z-index: -100;
+    opacity: 0;
     position: absolute;
-    left: -9999px;
-    top: -9999px;
     width: 0;
     height: 0;
     overflow: hidden;
@@ -233,11 +238,13 @@ main > form button {
     background: transparent;
 }
 
-.task {
+.task, .week, .year {
     display: flex;
     border-bottom: 1px solid var(--border-color);
     padding-left: .5rem;
     position: relative;
+    scroll-snap-align: start;
+    min-width: 100%;
 }
 
 .task[data-done=true] img.notdone {
@@ -252,6 +259,7 @@ main > form button {
     flex-grow: 1;
     text-align: left;
     padding: 1rem .5rem;
+    line-height: 1.6;
 }
 
 .task form {
@@ -259,7 +267,22 @@ main > form button {
 }
 
 .dateTime {
+    display: flex;
     border-bottom: .1rem solid var(--border-color);
+    background-color: var(--main-color);
+    gap: .5rem;
+    padding: .5rem;
+}
+
+.dateTime > * {
+    flex-grow: 1;
+    flex-basis: 80px;
+    font-size: 82%;
+    padding: .8rem .2rem;
+}
+
+.dateTime .active {
+    background: var(--pink-stickit-color);
 }
 
 .task .due {
@@ -267,6 +290,7 @@ main > form button {
     color: var(--light-font-color);
     align-self: center;
     padding: 1rem .5rem;
+    padding-right: .3rem;
 }
 
 .due {
@@ -278,8 +302,8 @@ main > form button {
 }
 
 .task button {
-    padding: 0.5rem;
-    padding-left: 0.5rem;
+    padding: .5rem;
+    padding-right: .8rem;
 }
 
 .prio1, .prio2, .prio3, .prio4 {
@@ -306,6 +330,25 @@ main > form button {
     background: var(--prio4-color);
 }
 
+.week p, .year p {
+    padding: 1rem .5rem;
+}
+
+.week {
+    justify-content: center;
+    color: var(--pink-stickit-shadow);
+}
+
+:first-child > .year {
+    display: none;
+}
+
+.year {
+    justify-content: flex-start;
+    background-color: var(--pink-stickit-color);
+    color: var(--pink-stickit-shadow);
+}
+
 img {
     height: 1.7rem;
 }
@@ -322,7 +365,6 @@ footer {
     background: var(--main-color);
     border-top: 2px solid var(--font-color);
     position: relative;
-    padding-bottom: env(safe-area-inset-bottom);
 }
 
 footer img {
@@ -342,7 +384,7 @@ footer input, .stars button {
     padding: .5rem .5rem;
 }
 
-#upcomingFooter {
+#plannedFooter {
     display: none;
 }
 
@@ -372,11 +414,13 @@ footer input, .stars button {
     margin-top: 1.5rem;
 }
 
+
 .weekSummary h2 {
     margin-top: 0;
     margin-bottom: 1.2rem;
     opacity: 1;
 }
+
 
 .weekSummary p, .week-review .awesome {
     padding: 1rem 2rem;
@@ -549,6 +593,7 @@ textarea {
     background: var(--add-task-color);
 }
 
+
 .task:has(.cross), .task:has(input[value="true"]) {
     background: var(--input-color);
 }
@@ -561,9 +606,11 @@ input.toDelegate + span.weekIcon {
     display: initial;
 }
 
+
 input.toDelegate:checked + span.weekIcon {
     display: none;
 }
+
 
 input.toDelegate:checked + span.weekIcon + span.weekIcon {
     display: initial;
@@ -584,6 +631,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 }
 
 .NoTaskPlaceholder {
+.NoTaskPlaceholder, .plannedPlaceholder {
     margin: 4.5rem 2rem;
     opacity: 0.6;
 }
@@ -609,25 +657,84 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     transform: translateY(-50%);
 }
 
-#fadeoutMessage {
+.fadeoutMessage {
     position: absolute;
     top: -4rem;
-    color: green;
-    left: 20%;
     font-size: 1.1rem;
-    border: 1px solid green;
     border-radius: .3rem;
-    background-color: #c3eab5;
     padding: .666rem;
     transition: opacity 1s ease-out;
 }
 
-#fadeoutMessage.fade-out {
+#planned {
+    color: green;
+    border: 1px solid green;
+    background-color: var(--prio2-color);
+    left: 20%;
+}
+
+#leftBehind {
+    color: #d7703d;
+    border: 1px solid #d7703d;
+    background-color: var(--pink-stickit-color);
+    left: 16%;
+}
+
+.fadeoutMessage.fade-out {
     opacity: 0;
 }
 
 .taskStatus img {
     fill: #919191;
+}
+
+.taskContainer {
+    display: flex;
+    flex-direction: row;
+    overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.taskContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.delete {
+    border-bottom: 1px solid var(--border-color);
+    background: var(--prio4-color);
+    display: flex;
+}
+
+#deleteButton {
+    border: none;
+    background: none;
+    border-radius: 0;
+    padding: 0 .5rem;
+}
+
+#deleteButton img {
+    display: block;
+    height: 3.5rem;
+}
+
+@media (max-width: 459px) {
+    header {
+        position: fixed;
+        z-index: 8;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 1rem 0;
+        padding-top: calc(1rem - env(safe-area-inset-bottom)/2);
+        height: 5rem;
+        height: calc(5rem - env(safe-area-inset-bottom)/2);
+    }
+
+    header + main {
+        margin-top: 5rem;
+        margin-top: calc(5rem - env(safe-area-inset-bottom)/2);
+    }
 }
 
 @media (min-width: 460px) {

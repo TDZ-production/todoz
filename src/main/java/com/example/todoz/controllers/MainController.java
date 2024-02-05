@@ -1,6 +1,7 @@
 package com.example.todoz.controllers;
 
 import com.example.todoz.models.*;
+import com.example.todoz.services.DateManager;
 import com.example.todoz.services.TaskService;
 import com.example.todoz.services.UserService;
 import com.example.todoz.services.WeekService;
@@ -54,7 +55,7 @@ public class MainController {
     }
 
     @PostMapping("/startNewWeek")
-    public String startNewWeek(Principal principal, @RequestParam(value = "taskIds", required = false) List<Long> taskIds) {
+    public String startNewWeek(Principal principal, @RequestParam(value = "taskIds", required = false) List<Long> taskIds, @RequestParam(value = "leftBehinds", required = false) List<Long> leftBehinds) {
         Week week = new Week(getUser(principal));
         weekService.save(week);
 
@@ -69,6 +70,14 @@ public class MainController {
                             weekService.save(week);
                         }
                     });
+        }
+
+        if (leftBehinds != null && !leftBehinds.isEmpty()) {
+            leftBehinds.stream()
+                    .map(leftID -> taskService.findTaskByIdAndUserId(leftID, getUser(principal)))
+                    .filter(t -> !t.isDone())
+                    .peek(t -> t.setLeftBehind(DateManager.now().toLocalDate()))
+                    .forEach(taskService::save);
         }
 
         return "redirect:/";
@@ -87,28 +96,24 @@ public class MainController {
         return "redirect:/";
     }
 
-    @GetMapping("longTerm")
-    public String showLongTerm(Model model, Principal principal) {
-        model.addAttribute("longTerm",
-                taskService.findLongTermTasks(getUser(principal), DateManager.formattedCurrentWeek()));
-        model.addAttribute("user",getUser(principal));
-        return "longTerm";
+    @GetMapping("planned")
+    public String showPlanned(Model model, Principal principal) {
+        model.addAttribute("planned",
+                taskService.sortTasksByYearAndWeek(taskService.findPlannedTasks(getUser(principal), DateManager.formattedCurrentWeek())));
+        model.addAttribute("user", getUser(principal));
+        return "planned";
     }
 
     @GetMapping("leftBehind")
     public String showLeftBehind(Model model, Principal principal) {
-        List<Task> leftBehind = taskService.findLeftBehind(getUser(principal), getWeek(principal), DateManager.formattedCurrentWeek());
+        List<Task> leftBehind = taskService.findLeftBehind(getUser(principal));
 
         model.addAttribute("leftBehind", leftBehind);
-        model.addAttribute("user",getUser(principal));
+        model.addAttribute("user", getUser(principal));
         return "leftBehind";
     }
 
     private User getUser(Principal principal) {
         return userService.findByUsername(principal.getName()).orElseThrow(EntityNotFoundException::new);
-    }
-
-    private Week getWeek(Principal principal) {
-        return weekService.getCurrentWeek(getUser(principal));
     }
 }

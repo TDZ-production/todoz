@@ -1,7 +1,7 @@
 package com.example.todoz.controllers;
 
 import com.example.todoz.dtos.TaskUpdateDTO;
-import com.example.todoz.models.DateManager;
+import com.example.todoz.services.DateManager;
 import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
 import com.example.todoz.models.Week;
@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.security.Principal;
 import java.time.LocalDate;
 
@@ -31,7 +33,7 @@ public class TaskController {
         task.setUser(getUser(principal));
         taskService.save(task);
         if (task.getDueDate() != null && task.getDueDateWeekNumber() > DateManager.formattedCurrentWeek()) {
-            ra.addFlashAttribute("longTermTask", true);
+            ra.addFlashAttribute("plannedTask", true);
         }
 
         return "redirect:/";
@@ -51,20 +53,34 @@ public class TaskController {
         return "redirect:/";
     }
 
-    @PostMapping("upcoming/{id}")
-    public String upcomingUpdate(@PathVariable Long id, TaskUpdateDTO taskUpdate, Principal principal) {
+    @PostMapping("planned/{id}")
+    public String plannedUpdate(@PathVariable Long id, TaskUpdateDTO taskUpdate, Principal principal) {
         taskService.update(id, taskUpdate, getUser(principal), getWeek(principal));
 
-        return "redirect:/longTerm";
+        return "redirect:/planned";
     }
 
     @PostMapping("re-add/{id}")
     public String reAdd(@PathVariable Long id, Principal principal) {
-        Task task = taskService.findTaskByIdAndUserId(id, getUser(principal));
-        task.setWeek(getWeek(principal));
-        taskService.save(task);
+        taskService.reAdd(id, getUser(principal), getWeek(principal));
 
         return "redirect:/leftBehind";
+    }
+
+    @PostMapping("leaveBehind/{id}")
+    public String leaveBehind(@PathVariable Long id, Principal principal, RedirectAttributes ra) {
+        taskService.leaveBehind(id, getUser(principal));
+        ra.addFlashAttribute("leftBehindTask", true);
+
+        return "redirect:/";
+    }
+
+    @PostMapping("delete/{id}")
+    public String deleteTask(@PathVariable Long id, Principal principal, @RequestHeader String referer) throws URISyntaxException {
+        taskService.deleteTask(id, getUser(principal));
+        String refererURI = new URI(referer).getPath();
+
+        return "redirect:" + refererURI;
     }
 
     private User getUser(Principal principal) {
