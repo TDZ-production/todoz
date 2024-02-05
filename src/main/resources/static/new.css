@@ -111,7 +111,7 @@ input {
     justify-content: center;
 }
 
-.slideContainer input {
+.slideContainer input{
     padding: 0;
 }
 
@@ -167,7 +167,6 @@ h1 {
 h2 {
     font-size: 1.2rem;
 }
-
 .reviewTitle {
     font-size: 1.2rem;
     margin-top: 2rem;
@@ -247,13 +246,8 @@ main > form button {
     min-width: 100%;
 }
 
-.task[data-done=true] img.notdone {
-    display: none;
-}
-
-.task[data-done=false] img.isdone {
-    display: none;
-}
+.task[data-done=true] img.notdone { display: none; }
+.task[data-done=false] img.isdone { display: none; }
 
 .task p {
     flex-grow: 1;
@@ -292,7 +286,6 @@ main > form button {
     padding: 1rem .5rem;
     padding-right: .3rem;
 }
-
 .due {
     margin-right: 0;
 }
@@ -325,7 +318,6 @@ main > form button {
 .prio3 {
     background: var(--prio3-color);
 }
-
 .prio4 {
     background: var(--prio4-color);
 }
@@ -376,7 +368,7 @@ footer label {
     padding: .5rem;
 }
 
-footer input + img {
+footer input + img  {
     margin-left: 0.5rem;
 }
 
@@ -392,36 +384,24 @@ footer input, .stars button {
     padding-bottom: 0;
 }
 
-.stars > :nth-child(1):hover, .stars > :nth-child(1).active {
-    background: var(--prio4-color)
-}
+.stars > :nth-child(1):hover, .stars > :nth-child(1).active { background: var(--prio4-color) }
 
-.stars > :nth-child(2):hover, .stars > :nth-child(2).active {
-    background: var(--prio3-color)
-}
+.stars > :nth-child(2):hover, .stars > :nth-child(2).active { background: var(--prio3-color) }
 
-.stars > :nth-child(3):hover, .stars > :nth-child(3).active {
-    background: var(--prio2-color)
-}
+.stars > :nth-child(3):hover, .stars > :nth-child(3).active { background: var(--prio2-color) }
 
-.stars > :nth-child(4):hover, .stars > :nth-child(4).active {
-    background: var(--prio1-color)
-}
+.stars > :nth-child(4):hover, .stars > :nth-child(4).active { background: var(--prio1-color) }
 
 
 .weekSummary h1 {
     font-size: 5rem;
     margin-top: 1.5rem;
 }
-
-
 .weekSummary h2 {
     margin-top: 0;
     margin-bottom: 1.2rem;
     opacity: 1;
 }
-
-
 .weekSummary p, .week-review .awesome {
     padding: 1rem 2rem;
     line-height: 1.666;
@@ -485,19 +465,11 @@ button.startWeek {
 
 .dropbtn {
     border: none;
+    padding : .5rem;
+    margin-left: .666rem;
     background-color: var(--main-color);
     height: 3.25rem;
-    padding: .5rem;
 }
-
-#drop-icon {
-    margin-left: .666rem;
-}
-
-#filter-icon {
-    margin-right: .666rem;
-}
-
 
 .dropbtn img {
     height: 2rem;
@@ -515,12 +487,6 @@ button.startWeek {
     min-width: 9rem;
     z-index: 100;
     box-shadow: 0 .1rem .2rem 0 var(--pink-stickit-shadow);
-}
-
-#task-slider {
-    background-color: #c7e9fb;
-    left: -7.3rem;
-    width: 100%;
 }
 
 .dropdown-content a {
@@ -592,8 +558,6 @@ textarea {
 .task:has(.toDelegate:checked) {
     background: var(--add-task-color);
 }
-
-
 .task:has(.cross), .task:has(input[value="true"]) {
     background: var(--input-color);
 }
@@ -605,13 +569,9 @@ span.weekIcon, input.toDelegate {
 input.toDelegate + span.weekIcon {
     display: initial;
 }
-
-
 input.toDelegate:checked + span.weekIcon {
     display: none;
 }
-
-
 input.toDelegate:checked + span.weekIcon + span.weekIcon {
     display: initial;
 }
@@ -630,13 +590,12 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     cursor: pointer;
 }
 
-.NoTaskPlaceholder {
 .NoTaskPlaceholder, .plannedPlaceholder {
     margin: 4.5rem 2rem;
     opacity: 0.6;
 }
 
-.NoTaskPlaceholder img {
+.NoTaskPlaceholder img{
     width: 20.5rem;
     height: auto;
 }
@@ -684,7 +643,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     opacity: 0;
 }
 
-.taskStatus img {
+.taskStatus img{
     fill: #919191;
 }
 

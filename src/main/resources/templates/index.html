@@ -124,7 +124,12 @@
         </form>
     </footer>
 
-    <script>
+    <script th:inline="javascript">
+
+        /*<![CDATA[*/
+        const publicKeyBase64 =  /*[[@{${publicKey}}]]*/ 0;
+        /*]]>*/
+
         updateWeekProgressbar();
         initTaskEditListener();
         initPhoneHack();
@@ -384,8 +389,8 @@
             }
         }
 
-        function toggleDropdown(dropdownClassName, iconClassName, imgSrcOpen, imgSrcClose) {
-            const dropdown = document.querySelector("#" + dropdownClassName);
+        function toggleDropdown() {
+            const dropdown = document.querySelector("#" + dropdown-content);
             const main = document.querySelector("main");
             const footer = document.querySelector("footer");
             const img = document.querySelector(".dropbtn img");
