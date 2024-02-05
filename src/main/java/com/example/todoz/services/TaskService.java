@@ -55,12 +55,7 @@ public class TaskService {
     public void checkedTask(Long taskId, User user, boolean done) {
         Task task = taskRepo.findByIdAndUserId(taskId, user.getId())
                 .orElseThrow(() -> new RuntimeException(String.format("Task not found with id: %d, %s", taskId, user)));
-        if(done) {
-            task.setDoneAt(DateManager.now());
-        } else {
-            task.setDoneAt(null);
-        }
-
+        task.setDoneAt(done ? DateManager.now() : null);
         taskRepo.save(task);
     }
 
