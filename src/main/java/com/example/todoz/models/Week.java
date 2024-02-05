@@ -89,4 +89,11 @@ public class Week {
                 .filter(Task::isDone)
                 .count();
     }
+
+    public List<Task> getDoneTasks() {
+        return this.getTasks()
+                .stream()
+                .filter(Task::isDone)
+                .toList();
+    }
 }

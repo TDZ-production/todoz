@@ -1,11 +1,13 @@
 package com.example.todoz.services;
 
+import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
 import com.example.todoz.models.Week;
 import com.example.todoz.repos.WeekRepo;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.time.DayOfWeek;
+import java.util.*;
 
 @Service
 public class WeekService {
@@ -37,5 +39,22 @@ public class WeekService {
 
     public Optional<Week> findPreviousWeek(User user) {
         return weekRepo.findTopByUserIdOrderByWeekNumberDesc(user.getId());
+    }
+
+    /**
+     * Maps a list of tasks to a map where the tasks are grouped by day of the week.
+     *
+     * @param  tasks  the list of tasks to be mapped
+     * @return        a map where the tasks are grouped by day of the week
+     */
+    public Map<DayOfWeek, List<Task>> mapDoneTasksByDayOfWeek(List<Task> tasks) {
+        Map<DayOfWeek, List<Task>> result = new HashMap();
+
+        for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
+            result.put(dayOfWeek, new ArrayList<>());
+        }
+        tasks.forEach(task -> result.get(task.getDoneAt().getDayOfWeek()).add(task));
+
+        return result;
     }
 }

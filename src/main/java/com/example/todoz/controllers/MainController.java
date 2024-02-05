@@ -35,6 +35,7 @@ public class MainController {
 
             model.addAttribute("user", getUser(principal));
             model.addAttribute("previousWeek", previousWeek);
+            model.addAttribute("graphData", weekService.mapDoneTasksByDayOfWeek(previousWeek.getDoneTasks()));
             model.addAttribute("upcomingTasks", upcomingTasks);
 
             return "weekReview";
