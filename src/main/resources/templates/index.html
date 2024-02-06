@@ -41,8 +41,8 @@
             </button>
             <div class="button-group" id="task-buttons">
                 <button id="btn-all" onclick="filterTasks('all')">All</button>
-                <button id="btn-current" onclick="filterTasks('current')">Current</button>
                 <button id="btn-done" onclick="filterTasks('done')">Done</button>
+                <button id="btn-current" onclick="filterTasks('current')">Current</button>
                 <button id="btn-tomorrow" onclick="filterTasks('tomorrow')">Tomorrow</button>
             </div>
         </div>
@@ -223,14 +223,21 @@
             const tomorrow = date.toISOString().slice(0, 10);
 
             tasks.forEach((task, index) => {
+                task.style.display = "";
+                deleteImgs[index].style.display = "";
+            });
+
+
+            tasks.forEach((task, index) => {
                 const deleteImg = deleteImgs[index];
 
-                if (filter == 'current' && task.dataset.duedate < today) {
+                if (filter == 'done' && task.dataset.done === "true") {
+
                     task.style.display = "none";
                     deleteImg.style.display = "none";
                 }
 
-                if (filter == 'done' && task.dataset.done === "true") {
+                if (filter == 'current' && task.dataset.duedate < today) {
                     task.style.display = "none";
                     deleteImg.style.display = "none";
                 }
