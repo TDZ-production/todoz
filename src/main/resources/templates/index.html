@@ -33,10 +33,10 @@
                 </form>
             </div>
         </div>
-<!--        <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>-->
+        <!--        <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>-->
         <div id="week-progressbar"></div>
         <div>
-            <button  onclick="dropdownFilter('task-buttons', 'filter-text')">
+            <button onclick="dropdownFilter('task-buttons', 'filter-text')">
                 <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|" id="filter-text"></h2>
             </button>
             <div class="button-group" id="task-buttons">
@@ -52,7 +52,7 @@
         <div class="taskContainer" th:unless="${currentWeek.getSortedTasks().isEmpty()}"
              th:each="task : ${currentWeek.getSortedTasks()}">
             <div class="task" th:object="${task}" th:data-priority="*{priority}" th:data-id="*{id}"
-                 th:data-done="*{done}" th:data-maturity="*{getMaturity()}">
+                 th:data-done="*{done}" th:data-maturity="*{getMaturity()}" th:data-duedate="*{dueDateDate}">
 
                 <span th:classappend="|prio${task.getPriority()}|"></span>
                 <p th:text="*{description}"></p>
@@ -69,7 +69,8 @@
 
             <form class="delete" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
                 <input type="hidden" name="id" th:value="${task.id}">
-                <button id="deleteButton" th:class="deleteImg"><img src="/img/leaveBehind_icon.svg" alt="delete icon"></button>
+                <button id="deleteButton" th:class="deleteImg"><img src="/img/leaveBehind_icon.svg" alt="delete icon">
+                </button>
             </form>
         </div>
 
@@ -87,10 +88,10 @@
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
             <div class="dateTime hidden">
-                <input type="button" onclick="dueNextWeek()" value="next week" />
-                <input type="button" onclick="dueThisWeek()" value="this week" />
-                <input type="button" onclick="dueTomorrow()" value="tomorrow" />
-                <input class="date-caption" type="button" onclick="showCalendar()" value="…" />
+                <input type="button" onclick="dueNextWeek()" value="next week"/>
+                <input type="button" onclick="dueThisWeek()" value="this week"/>
+                <input type="button" onclick="dueTomorrow()" value="tomorrow"/>
+                <input class="date-caption" type="button" onclick="showCalendar()" value="…"/>
 
                 <label class="dateTime hidden">
                     <input type="date" name="maybeDueDate" id="date">
@@ -164,6 +165,7 @@
 
             captionEl.value = value;
         });
+
         function focusAdd() {
             document.querySelector("#add").focus();
         }
@@ -230,19 +232,18 @@
 
             tasks.forEach((task, index) => {
                 const deleteImg = deleteImgs[index];
-
-                if (filter == 'done' && task.dataset.done === "true") {
+                if (filter === 'done' && task.dataset.done === "true") {
 
                     task.style.display = "none";
                     deleteImg.style.display = "none";
                 }
 
-                if (filter == 'current' && task.dataset.duedate < today) {
+                if (filter === 'current' && (task.dataset.duedate < today || task.dataset.done === "true")) {
                     task.style.display = "none";
                     deleteImg.style.display = "none";
                 }
 
-                if (filter == 'tomorrow' && task.dataset.duedate != tomorrow) {
+                if (filter === 'tomorrow' && (task.dataset.duedate !== tomorrow || task.dataset.done === "true")) {
                     task.style.display = "none";
                     deleteImg.style.display = "none";
                 }
@@ -431,6 +432,7 @@
         function logout() {
             document.querySelector('#logoutForm').submit();
         }
+
         function dueNextWeek() {
             due(7);
         }
@@ -460,48 +462,48 @@
             dateEl.dispatchEvent(new Event("input"));
         }
 
-        function urlB64ToUint8Array(base64String) {
-            const padding = '='.repeat((4 - base64String.length % 4) % 4);
-            const base64 = (base64String + padding)
-                .replace(/\-/g, '+')
-                .replace(/_/g, '/');
-
-            const rawData = window.atob(base64);
-            const outputArray = new Uint8Array(rawData.length);
-
-            for (let i = 0; i < rawData.length; ++i) {
-                outputArray[i] = rawData.charCodeAt(i);
-            }
-
-            return outputArray;
-        }
-
-        const serverKey = urlB64ToUint8Array(publicKeyBase64);
-
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/service-worker.js')
-                .then(function (registration) {
-                    return registration;
-                })
-                .then(function (registration) {
-
-                    return registration.pushManager.subscribe({
-                        userVisibleOnly: true,
-                        applicationServerKey: serverKey,
-                    });
-                })
-                .then(function (subscription) {
-
-                    fetch('/subscribe', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(subscription),
-                    });
-                })
-        }
+        // function urlB64ToUint8Array(base64String) {
+        //     const padding = '='.repeat((4 - base64String.length % 4) % 4);
+        //     const base64 = (base64String + padding)
+        //         .replace(/\-/g, '+')
+        //         .replace(/_/g, '/');
+        //
+        //     const rawData = window.atob(base64);
+        //     const outputArray = new Uint8Array(rawData.length);
+        //
+        //     for (let i = 0; i < rawData.length; ++i) {
+        //         outputArray[i] = rawData.charCodeAt(i);
+        //     }
+        //
+        //     return outputArray;
+        // }
+        //
+        // const serverKey = urlB64ToUint8Array(publicKeyBase64);
+        //
+        //
+        // if ('serviceWorker' in navigator) {
+        //     navigator.serviceWorker.register('/service-worker.js')
+        //         .then(function (registration) {
+        //             return registration;
+        //         })
+        //         .then(function (registration) {
+        //
+        //             return registration.pushManager.subscribe({
+        //                 userVisibleOnly: true,
+        //                 applicationServerKey: serverKey,
+        //             });
+        //         })
+        //         .then(function (subscription) {
+        //
+        //             fetch('/subscribe', {
+        //                 method: 'POST',
+        //                 headers: {
+        //                     'Content-Type': 'application/json',
+        //                 },
+        //                 body: JSON.stringify(subscription),
+        //             });
+        //         })
+        // }
     </script>
 </section>
 </body>
