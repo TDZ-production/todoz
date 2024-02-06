@@ -39,15 +39,15 @@
             <button id="button-week" onclick="dropdownFilter('task-buttons', 'filter-text')">
                 <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|" id="filter-text"></h2>
             </button>
-            <div id="task-buttons">
-                <button id="btn-all" onclick="filterTasks('all')">All</button>
-                <button id="btn-done" onclick="filterTasks('done')">Done</button>
-                <button id="btn-current" onclick="filterTasks('current')">Current</button>
-                <button id="btn-tomorrow" onclick="filterTasks('tomorrow')">Tomorrow</button>
-            </div>
         </div>
     </header>
 
+    <div id="task-buttons">
+        <button id="btn-all" onclick="filterTasks('all')">All</button>
+        <button id="btn-done" onclick="filterTasks('done')">Done</button>
+        <button id="btn-current" onclick="filterTasks('current')">Current</button>
+        <button id="btn-tomorrow" onclick="filterTasks('tomorrow')">Tomorrow</button>
+    </div>
     <main>
         <div class="taskContainer" th:unless="${currentWeek.getSortedTasks().isEmpty()}"
              th:each="task : ${currentWeek.getSortedTasks()}">
