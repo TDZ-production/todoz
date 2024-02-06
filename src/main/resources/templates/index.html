@@ -294,9 +294,9 @@
                 requestAnimationFrame(() => {
                     window.scrollY > 0 ? adjustSafeAreaInset(0) : adjustSafeAreaInset();
 
-                    [400, 800].forEach((ms) => {
+                    [2, 40, 400].forEach((ms) => {
                         setTimeout(() => {
-                            document.querySelector(".stars").scrollIntoView({behavior: "smooth"});
+                            document.querySelector(".stars").scrollIntoView({behavior: "instant"});
                         }, ms);
                     })
                 });
