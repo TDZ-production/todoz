@@ -668,7 +668,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 }
 
 .delete {
-    border-bottom: 1px solid var(--border-color);
+    /*border-bottom: 1px solid var(--border-color);*/
     background: var(--prio4-color);
     display: flex;
 }

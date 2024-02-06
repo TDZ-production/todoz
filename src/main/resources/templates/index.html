@@ -33,16 +33,15 @@
                 </form>
             </div>
         </div>
-        <!--        <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>-->
         <div id="week-progressbar"></div>
         <div>
-            <button id="button-week" onclick="dropdownFilter('task-buttons', 'filter-text')">
+            <button id="button-week" style="" onclick="dropdownFilter('task-buttons', 'filter-text')">
                 <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|" id="filter-text"></h2>
             </button>
         </div>
     </header>
 
-    <div id="task-buttons">
+    <div id="task-buttons" style="display: none;">
         <button id="btn-all" onclick="filterTasks('all')">All</button>
         <button id="btn-done" onclick="filterTasks('done')">Done</button>
         <button id="btn-current" onclick="filterTasks('current')">Current</button>
