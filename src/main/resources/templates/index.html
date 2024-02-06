@@ -211,9 +211,7 @@
 
         function filterTasks(filter) {
             const tasks = document.querySelectorAll('.task');
-
             const deleteImgs = document.querySelectorAll('.deleteImg img');
-            console.log(deleteImgs);
 
             localStorage.filter = filter;
 
@@ -240,20 +238,6 @@
                 if (filter == 'tomorrow' && task.dataset.duedate != tomorrow) {
                     task.style.display = "none";
                     deleteImg.style.display = "none";
-                }
-            });
-            deleteImgs.forEach(img => {
-
-                if (filter == 'current') {
-                    img.style.display = "none";
-                }
-
-                if (filter == 'done' ) {
-                    img.style.display = "none";
-                }
-
-                if (filter == 'tomorrow' ) {
-                    img.style.display = "none";
                 }
             });
         }
