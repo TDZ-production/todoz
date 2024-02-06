@@ -124,6 +124,13 @@ input, button {
     color: inherit;
 }
 
+#button-week{
+    border: none;
+    background: transparent;
+    padding: 2em;
+}
+
+
 button, label {
     cursor: pointer;
 }
@@ -182,7 +189,7 @@ header h2 {
 }
 
 header a, header div {
-    position: relative;
+    /*position: relative;*/
     z-index: 10;
 }
 
@@ -674,7 +681,6 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 }
 
 #deleteButton img {
-    /*display: block;*/
     height: 3.5rem;
 }
 
