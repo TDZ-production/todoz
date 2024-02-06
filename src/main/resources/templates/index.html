@@ -43,7 +43,7 @@
 
     <div id="task-buttons" style="display: none;">
         <button id="btn-all" onclick="filterTasks('all')">All</button>
-        <button id="btn-done" onclick="filterTasks('done')">Done</button>
+        <button id="btn-done" onclick="filterTasks('done')">Not done</button>
         <button id="btn-current" onclick="filterTasks('current')">Current</button>
         <button id="btn-tomorrow" onclick="filterTasks('tomorrow')">Tomorrow</button>
     </div>
@@ -461,48 +461,48 @@
             dateEl.dispatchEvent(new Event("input"));
         }
 
-        // function urlB64ToUint8Array(base64String) {
-        //     const padding = '='.repeat((4 - base64String.length % 4) % 4);
-        //     const base64 = (base64String + padding)
-        //         .replace(/\-/g, '+')
-        //         .replace(/_/g, '/');
-        //
-        //     const rawData = window.atob(base64);
-        //     const outputArray = new Uint8Array(rawData.length);
-        //
-        //     for (let i = 0; i < rawData.length; ++i) {
-        //         outputArray[i] = rawData.charCodeAt(i);
-        //     }
-        //
-        //     return outputArray;
-        // }
-        //
-        // const serverKey = urlB64ToUint8Array(publicKeyBase64);
-        //
-        //
-        // if ('serviceWorker' in navigator) {
-        //     navigator.serviceWorker.register('/service-worker.js')
-        //         .then(function (registration) {
-        //             return registration;
-        //         })
-        //         .then(function (registration) {
-        //
-        //             return registration.pushManager.subscribe({
-        //                 userVisibleOnly: true,
-        //                 applicationServerKey: serverKey,
-        //             });
-        //         })
-        //         .then(function (subscription) {
-        //
-        //             fetch('/subscribe', {
-        //                 method: 'POST',
-        //                 headers: {
-        //                     'Content-Type': 'application/json',
-        //                 },
-        //                 body: JSON.stringify(subscription),
-        //             });
-        //         })
-        // }
+        function urlB64ToUint8Array(base64String) {
+            const padding = '='.repeat((4 - base64String.length % 4) % 4);
+            const base64 = (base64String + padding)
+                .replace(/\-/g, '+')
+                .replace(/_/g, '/');
+
+            const rawData = window.atob(base64);
+            const outputArray = new Uint8Array(rawData.length);
+
+            for (let i = 0; i < rawData.length; ++i) {
+                outputArray[i] = rawData.charCodeAt(i);
+            }
+
+            return outputArray;
+        }
+
+        const serverKey = urlB64ToUint8Array(publicKeyBase64);
+
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(function (registration) {
+                    return registration;
+                })
+                .then(function (registration) {
+
+                    return registration.pushManager.subscribe({
+                        userVisibleOnly: true,
+                        applicationServerKey: serverKey,
+                    });
+                })
+                .then(function (subscription) {
+
+                    fetch('/subscribe', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(subscription),
+                    });
+                })
+        }
     </script>
 </section>
 </body>
