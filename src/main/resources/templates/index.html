@@ -126,10 +126,6 @@
 
     <script th:inline="javascript">
 
-        /*<![CDATA[*/
-        const publicKeyBase64 =  /*[[@{${publicKey}}]]*/ 0;
-        /*]]>*/
-
         updateWeekProgressbar();
         initTaskEditListener();
         initPhoneHack();
@@ -459,49 +455,6 @@
             }
 
             dateEl.dispatchEvent(new Event("input"));
-        }
-
-        function urlB64ToUint8Array(base64String) {
-            const padding = '='.repeat((4 - base64String.length % 4) % 4);
-            const base64 = (base64String + padding)
-                .replace(/\-/g, '+')
-                .replace(/_/g, '/');
-
-            const rawData = window.atob(base64);
-            const outputArray = new Uint8Array(rawData.length);
-
-            for (let i = 0; i < rawData.length; ++i) {
-                outputArray[i] = rawData.charCodeAt(i);
-            }
-
-            return outputArray;
-        }
-
-        const serverKey = urlB64ToUint8Array(publicKeyBase64);
-
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/service-worker.js')
-                .then(function (registration) {
-                    return registration;
-                })
-                .then(function (registration) {
-
-                    return registration.pushManager.subscribe({
-                        userVisibleOnly: true,
-                        applicationServerKey: serverKey,
-                    });
-                })
-                .then(function (subscription) {
-
-                    fetch('/subscribe', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(subscription),
-                    });
-                })
         }
     </script>
 </section>
