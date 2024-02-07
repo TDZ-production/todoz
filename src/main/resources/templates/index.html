@@ -224,21 +224,14 @@
                 deleteImgs[index].style.display = "";
             });
 
-
             tasks.forEach((task, index) => {
+
                 const deleteImg = deleteImgs[index];
-                if (filter === 'done' && task.dataset.done === "true") {
+                const taskDone = task.dataset.done === "true";
+                if (filter === 'done' && taskDone ||
+                    filter === 'current' && (task.dataset.duedate < today || taskDone) ||
+                    filter === 'tomorrow' && (task.dataset.duedate !== tomorrow || taskDone)) {
 
-                    task.style.display = "none";
-                    deleteImg.style.display = "none";
-                }
-
-                if (filter === 'current' && (task.dataset.duedate < today || task.dataset.done === "true")) {
-                    task.style.display = "none";
-                    deleteImg.style.display = "none";
-                }
-
-                if (filter === 'tomorrow' && (task.dataset.duedate !== tomorrow || task.dataset.done === "true")) {
                     task.style.display = "none";
                     deleteImg.style.display = "none";
                 }
