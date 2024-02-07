@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -31,7 +32,7 @@ public class UserCaseTestingChromeWhole {
     @BeforeAll
     public static void setUp() {
         try {
-            browser = Playwright.create().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
+            browser = Playwright.create().chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
             BrowserContext context = browser.newContext();
             page = context.newPage();
         } catch (Exception e) {

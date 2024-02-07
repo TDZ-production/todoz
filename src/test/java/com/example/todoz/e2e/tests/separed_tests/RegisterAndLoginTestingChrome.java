@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDate;
 
@@ -27,7 +28,7 @@ public class RegisterAndLoginTestingChrome {
     @BeforeEach
     public void setUp() {
         try {
-            browser = Playwright.create().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
+            browser = Playwright.create().chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
             BrowserContext context = browser.newContext();
             page = context.newPage();
         } catch (Exception e) {
@@ -45,9 +46,10 @@ public class RegisterAndLoginTestingChrome {
     @Test
     @Order(1)
     public void RegisterWithNewUser() {
+        String username = actions.CreateRandomUserMail();
         page.navigate(webUrl + "/register");
 
-        page.type("input[name=username]", "test@User");
+        page.type("input[name=username]", username);
         page.type("input[name=password]", "testPassword");
         page.click("button[type=submit]");
 
@@ -57,15 +59,16 @@ public class RegisterAndLoginTestingChrome {
     @Test
     @Order(2)
     public void RegisterWithAlreadyCreateUsername() {
+        String username = actions.CreateRandomUserMail();
         page.navigate(webUrl + "/register");
 
-        page.type("input[name=username]", "test@email.com");
+        page.type("input[name=username]", username);
         page.type("input[name=password]", "testPassword");
         page.click("button[type=submit]");
 
         page.navigate(webUrl + "/register");
 
-        page.type("input[name=username]", "test@email.com");
+        page.type("input[name=username]", username);
         page.type("input[name=password]", "testPassword");
         page.click("button[type=submit]");
 
@@ -75,9 +78,10 @@ public class RegisterAndLoginTestingChrome {
     @Test
     @Order(3)
     public void RegisterWithLowerThanFiveCharactersPassword() {
+        String username = actions.CreateRandomUserMail();
         page.navigate(webUrl + "/register");
 
-        page.type("input[name=username]", "test@email.com");
+        page.type("input[name=username]", username);
         page.type("input[name=password]", "1234");
         page.click("button[type=submit]");
 
@@ -87,13 +91,14 @@ public class RegisterAndLoginTestingChrome {
     @Test
     @Order(4)
     public void LoginWithNotRegisteredUser() {
+        String username = actions.CreateRandomUserMail();
         page.navigate(webUrl + "/login");
 
-        page.type("input[name=username]", "test@email.com");
+        page.type("input[name=username]", username);
         page.type("input[name=password]", "testPassword");
         page.click("button[type=submit]");
 
-        assertEquals(webUrl + "/login", page.url());
+        assertEquals(webUrl + "/login?error", page.url());
     }
 
     @Test
@@ -111,9 +116,10 @@ public class RegisterAndLoginTestingChrome {
     @Test
     @Order(6)
     public void RegisterWithBlankPassword() {
+        String username = actions.CreateRandomUserMail();
         page.navigate(webUrl + "/register");
 
-        page.type("input[name=username]", "testU@ser");
+        page.type("input[name=username]", username);
         page.type("input[name=password]", "          ");
         page.click("button[type=submit]");
 
