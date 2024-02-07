@@ -37,9 +37,9 @@
                               th:data-duedate="*{dueDateDate}"></span>
                     </div>
 
-                    <form class="delete" th:method="post" th:action="|/tasks/delete/${task.id}|">
+                    <form class="delete" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
                         <input type="hidden" name="id" th:value="${task.id}">
-                        <button id="deleteButton"><img src="/img/delete_icon.svg" alt="delete icon"></button>
+                        <button id="deleteButton"><img src="/img/leaveBehind_icon.svg" alt="delete"></button>
                     </form>
                 </div>
             </div>
@@ -118,7 +118,7 @@
         const form = document.querySelector("footer form");
         setPriority(priority);
 
-        form.action = "/tasks/planned/" + task.dataset.id;
+        form.action = "/tasks/" + task.dataset.id;
         form.querySelector("input[name='description']").value = description;
         form.querySelector("input[name='maybeDueDate']").value = dueDate;
 
