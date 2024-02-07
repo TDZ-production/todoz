@@ -20,7 +20,7 @@
 <section class="app home">
     <header>
         <div class="dropdown">
-            <button class="dropbtn" onclick="toggleDropdown()">
+            <button class="dropbtn" onclick="toggleDropdown('dropdownOptions')">
                 <img src="/img/menu_icon_open.svg" alt="open menu">
             </button>
             <div class="dropdown-content">
@@ -35,7 +35,7 @@
         </div>
         <div id="week-progressbar"></div>
         <div>
-            <button id="button-week" style="" onclick="dropdownFilter('task-buttons', 'filter-text')">
+            <button id="button-week" style="" onclick="toggleDropdown('buttonIdFilter')">
                 <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|" id="filter-text"></h2>
             </button>
         </div>
@@ -372,36 +372,37 @@
             }
         }
 
-        function dropdownFilter(buttonId, textSpanId) {
-            const dropdown = document.getElementById(buttonId);
-            const textSpan = document.getElementById(textSpanId);
+        function toggleDropdown(target) {
+            let dropdownOptions = document.querySelector(".dropdown-content");
+            const buttonIdFilter = document.querySelector("#task-buttons");
+            const textSpan = document.querySelector("#filter-text");
+            const img = document.querySelector(".dropbtn img");
 
-            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
-                dropdown.style.display = 'block';
-                textSpan.style.color = '#996A6A';
-            } else {
-                dropdown.style.display = 'none';
-                textSpan.style.color = '';
-            }
-        }
-
-        function toggleDropdown() {
-            let dropdown = document.querySelector(".dropdown-content");
             const main = document.querySelector("main");
             const footer = document.querySelector("footer");
-            const img = document.querySelector(".dropbtn img");
+
 
             registerCancel(main);
             registerCancel(footer);
 
-            if (dropdown.style.display === "block") {
-                dropdown.style.display = "none";
-                img.src = "/img/menu_icon_open.svg";
-                img.alt = "open menu";
-            } else {
-                dropdown.style.display = "block";
-                img.src = "/img/menu_icon_close.svg";
-                img.alt = "close menu";
+            if (target === 'dropdownOptions') {
+                dropdownOptions.style.display = (dropdownOptions.style.display === "block") ? "none" : "block";
+                img.src = (dropdownOptions.style.display === "block") ? "/img/menu_icon_close.svg" : "/img/menu_icon_open.svg";
+                img.alt = (dropdownOptions.style.display === "block") ? "close menu" : "open menu";
+
+                if (buttonIdFilter.style.display === 'block') {
+                    buttonIdFilter.style.display = 'none';
+                    textSpan.style.color = '';
+                }
+            } else if (target === 'buttonIdFilter') {
+                buttonIdFilter.style.display = (buttonIdFilter.style.display === 'block') ? "none" : "block";
+                textSpan.style.color = (buttonIdFilter.style.display === 'block') ? '#996A6A' : '';
+
+                if (dropdownOptions.style.display === "block") {
+                    dropdownOptions.style.display = "none";
+                    img.src = "/img/menu_icon_open.svg";
+                    img.alt = "open menu";
+                }
             }
 
             function registerCancel(event) {
@@ -416,7 +417,7 @@
                 }
 
                 function cancelMenu() {
-                    dropdown.style.display = "none";
+                    dropdownOptions.style.display = "none";
                     img.src = "/img/menu_icon_open.svg";
                     img.alt = "open menu";
                 }
