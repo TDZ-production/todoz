@@ -130,6 +130,11 @@ input, button {
     padding: 2em;
 }
 
+#filter-text{
+    width: 50%;
+    margin: auto;
+}
+
 #task-buttons {
     border: 2px solid black;
     padding: 20px 15px;
