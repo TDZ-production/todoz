@@ -245,10 +245,10 @@
 
             form.action = "/tasks/" + task.dataset.id;
             form.querySelector("input[name='description']").value = description;
-            form.querySelector("input[name='maybeDueDate']").value = dueDate;
 
             if (dueDate) {
                 toggleDueDate(true);
+                dueAt(dueDate);
             } else {
                 toggleDueDate(false);
             }
@@ -369,6 +369,11 @@
 
         function dueTomorrow() {
             due(1);
+        }
+
+        function dueAt(date) {
+            const days = Math.ceil((new Date(date) - new Date()) / (1000 * 60 * 60 * 24));
+            due(days);
         }
 
         function due(days) {
