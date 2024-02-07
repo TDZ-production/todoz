@@ -455,12 +455,16 @@ button.startWeek {
     background-color: var(--pink-stickit-color);
 }
 
-#week-progressbar {
+.week-progressbar {
     position: absolute;
     z-index: 1;
     bottom: 0;
     height: 2px;
     background-color: var(--font-color);
+}
+
+.week-progressbar.sunday {
+    background-color: var(--pink-stickit-color);
 }
 
 .dropbtn {
