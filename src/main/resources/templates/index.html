@@ -42,10 +42,10 @@
     </header>
 
     <div id="task-buttons" style="display: none;">
-        <button id="btn-all" onclick="filterTasks('all')">All</button>
-        <button id="btn-done" onclick="filterTasks('done')">Not done</button>
-        <button id="btn-current" onclick="filterTasks('current')">Current</button>
-        <button id="btn-tomorrow" onclick="filterTasks('tomorrow')">Tomorrow</button>
+        <button onclick="filterTasks('all')">All</button>
+        <button onclick="filterTasks('done')">Not done</button>
+        <button onclick="filterTasks('current')">Current</button>
+        <button onclick="filterTasks('tomorrow')">Tomorrow</button>
     </div>
     <main>
         <div class="taskContainer" th:unless="${currentWeek.getSortedTasks().isEmpty()}"
