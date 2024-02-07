@@ -21,7 +21,7 @@ public class User {
     private String username;
     private String password;
     private Integer pussyMeter = 1;
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Week> weeks;
     @OneToMany(mappedBy = "user")
