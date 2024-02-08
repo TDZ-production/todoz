@@ -19,7 +19,7 @@ public class DateManager {
         return getYearOfNextOrSameSaturday(date) * 100 + date.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
     }
 
-    public static Temporal now() {
+    public static LocalDateTime now() {
         return LocalDateTime.now();
     }
 

@@ -71,7 +71,7 @@
             </div>
 
             <p class="awesome">Hey, did you know this app is in pre-alpha?<br/>You're such a&nbsp;trend setter!</p>
-            <input type="hidden" id="leftBehind" name="leftBehinds">
+            <input type="hidden" id="leftBehindInput" name="leftBehinds">
             <button class="startWeek" type="submit" data-umami-event="startNewWeek">Start your week</button>
 
         </form>
@@ -97,10 +97,10 @@
         })(document.querySelectorAll(".task"));
 
         document.addEventListener("submit", function() {
-            const leftBehindInput = document.querySelector("#leftBehind");
-            const leftBehind = document.querySelectorAll(".toDelegate:not(:checked)[th\\:data-done='false']");
+            const leftBehindInput = document.querySelector("#leftBehindInput");
+            const leftBehinds = document.querySelectorAll(".toDelegate:not(:checked)");
 
-            leftBehindInput.value = Array.from(leftBehind).map(c => c.value);
+            leftBehindInput.value = Array.from(leftBehinds).map(c => c.value);
         });
     </script>
 </section>

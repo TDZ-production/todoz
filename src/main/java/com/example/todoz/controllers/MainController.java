@@ -75,7 +75,8 @@ public class MainController {
         if (leftBehinds != null && !leftBehinds.isEmpty()) {
             leftBehinds.stream()
                     .map(leftID -> taskService.findTaskByIdAndUserId(leftID, getUser(principal)))
-                    .peek(t -> t.setLeftBehind((LocalDateTime) DateManager.now()))
+                    .filter(t -> !t.isDone())
+                    .peek(t -> t.setLeftBehind(DateManager.now().toLocalDate()))
                     .forEach(taskService::save);
         }
 
