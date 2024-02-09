@@ -20,7 +20,7 @@
 <section class="app home">
     <header>
         <div class="dropdown">
-            <button class="dropbtn" onclick="toggleDropdown()">
+            <button class="dropbtn" onclick="toggleDropdown('dropdownOptions')">
                 <img src="/img/menu_icon_open.svg" alt="open menu">
             </button>
             <div class="dropdown-content">
@@ -33,15 +33,21 @@
                 </form>
             </div>
         </div>
-        <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>
+        <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|" id="filter-text" onclick="toggleDropdown('filters')"></h2>
         <div class="week-progressbar"></div>
     </header>
 
+    <div class="filters" style="display: none;">
+        <button onclick="filterTasks('all')">All</button>
+        <button onclick="filterTasks('not done')">Not done</button>
+        <button onclick="filterTasks('current')">Current</button>
+        <button onclick="filterTasks('tomorrow')">Tomorrow</button>
+    </div>
     <main>
         <div class="taskContainer" th:unless="${currentWeek.getSortedTasks().isEmpty()}"
              th:each="task : ${currentWeek.getSortedTasks()}">
             <div class="task" th:object="${task}" th:data-priority="*{priority}" th:data-id="*{id}"
-                 th:data-done="*{done}" th:data-maturity="*{getMaturity()}">
+                 th:data-done="*{done}" th:data-maturity="*{getMaturity()}" th:data-duedate="*{dueDateDate}">
 
                 <span th:classappend="|prio${task.getPriority()}|"></span>
                 <p th:text="*{description}"></p>
@@ -58,7 +64,8 @@
 
             <form class="delete" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
                 <input type="hidden" name="id" th:value="${task.id}">
-                <button id="deleteButton"><img src="/img/leaveBehind_icon.svg" alt="delete icon"></button>
+                <button th:class="deleteImg"><img src="/img/leaveBehind_icon.svg" alt="delete icon">
+                </button>
             </form>
         </div>
 
@@ -76,10 +83,10 @@
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
             <div class="dateTime hidden">
-                <input type="button" onclick="dueNextWeek()" value="next week" />
-                <input type="button" onclick="dueThisWeek()" value="this week" />
-                <input type="button" onclick="dueTomorrow()" value="tomorrow" />
-                <input class="date-caption" type="button" onclick="showCalendar()" value="…" />
+                <input type="button" onclick="dueNextWeek()" value="next week"/>
+                <input type="button" onclick="dueThisWeek()" value="this week"/>
+                <input type="button" onclick="dueTomorrow()" value="tomorrow"/>
+                <input class="date-caption" type="button" onclick="showCalendar()" value="…"/>
 
                 <label class="dateTime hidden">
                     <input type="date" name="maybeDueDate" id="date">
@@ -125,6 +132,25 @@
 
         setInterval(updateWeekProgressbar, 60 * 60 * 1000);
 
+        let popOverActive = false;
+
+        if (localStorage.getItem('filter')) {
+            filterTasks(localStorage.getItem('filter'));
+
+            const taskContainers = document.querySelectorAll('.taskContainer');
+            let allHidden = true;
+            taskContainers.forEach((taskContainer) => {
+                if (taskContainer.style.display !== 'none') {
+                    allHidden = false;
+                }
+            });
+
+            if (allHidden) {
+                localStorage.removeItem('filter');
+                filterTasks('all');
+            }
+        }
+
         const el = document.querySelector(".fadeoutMessage");
         if (el) {
             setTimeout(() => fadeout(el), 3000);
@@ -148,6 +174,7 @@
 
             captionEl.value = value;
         });
+
         function focusAdd() {
             document.querySelector("#add").focus();
         }
@@ -197,6 +224,45 @@
             });
         }
 
+        function filterTasks(filter) {
+            const tasks = document.querySelectorAll('.taskContainer');
+            const filterText = document.querySelector("#filter-text");
+
+            localStorage.setItem('filter', filter);
+
+            if (filter === 'all' ) {
+                localStorage.removeItem('filter');
+                if (filterText.dataset.text !== undefined) {
+                    filterText.innerText = filterText.dataset.text;
+                }
+            } else {
+                if (filterText.dataset.text === undefined) {
+                    filterText.dataset.text = filterText.innerText;
+                }
+                filterText.innerText = filter;
+            }
+
+            const date = new Date();
+
+            const today = date.toISOString().slice(0, 10);
+
+            date.setDate(date.getDate() + 1);
+            const tomorrow = date.toISOString().slice(0, 10);
+
+            tasks.forEach((task) => {
+                task.style.display = "";
+                const dataset = task.querySelector(".task").dataset;
+
+                const taskDone = dataset.done === "true";
+                if (filter === 'not done' && taskDone ||
+                    filter === 'current' && (dataset.duedate < today || taskDone) ||
+                    filter === 'tomorrow' && (dataset.duedate !== tomorrow || taskDone)) {
+
+                    task.style.display = "none";
+                }
+            });
+        }
+
         function showCalendar() {
             const date = document.querySelector("#date");
             const dateLabel = document.querySelector("label.dateTime")
@@ -239,6 +305,8 @@
         }
 
         function edit(task) {
+            if (popOverActive) return;
+
             document.querySelector("#add").focus();
 
             const main = document.querySelector("main");
@@ -324,27 +392,42 @@
             }
         }
 
-        function toggleDropdown() {
-            let dropdown = document.querySelector(".dropdown-content");
+        function toggleDropdown(target) {
+
+            popOverActive = !popOverActive;
+
+            let dropdownOptions = document.querySelector(".dropdown-content");
+            const filtersWrapper = document.querySelector(".filters");
+            const textSpan = document.querySelector("#filter-text");
+            const img = document.querySelector(".dropbtn img");
+
             const main = document.querySelector("main");
             const footer = document.querySelector("footer");
-            const img = document.querySelector(".dropbtn img");
+
 
             registerCancel(main);
             registerCancel(footer);
 
-            if (dropdown.style.display === "block") {
-                dropdown.style.display = "none";
-                img.src = "/img/menu_icon_open.svg";
-                img.alt = "open menu";
-            } else {
-                dropdown.style.display = "block";
-                img.src = "/img/menu_icon_close.svg";
-                img.alt = "close menu";
+            if (target === 'dropdownOptions') {
+                dropdownOptions.style.display = (dropdownOptions.style.display === "block") ? "none" : "block";
+                img.src = (dropdownOptions.style.display === "block") ? "/img/menu_icon_close.svg" : "/img/menu_icon_open.svg";
+                img.alt = (dropdownOptions.style.display === "block") ? "close menu" : "open menu";
+
+                if (filtersWrapper.style.display === 'flex') {
+                    filtersWrapper.style.display = 'none';
+                }
+            } else if (target === 'filters') {
+                filtersWrapper.style.display = (filtersWrapper.style.display === 'flex') ? "none" : "flex";
+
+                if (dropdownOptions.style.display === "block") {
+                    dropdownOptions.style.display = "none";
+                    img.src = "/img/menu_icon_open.svg";
+                    img.alt = "open menu";
+                }
             }
 
-            function registerCancel(event) {
-                event.addEventListener("click", function () {
+            function registerCancel(element) {
+                element.addEventListener("click", function () {
                     cancelMenu();
                 }, {once: true});
 
@@ -355,16 +438,20 @@
                 }
 
                 function cancelMenu() {
-                    dropdown.style.display = "none";
+                    popOverActive = false;
+                    dropdownOptions.style.display = "none";
+                    filtersWrapper.style.display = 'none';
                     img.src = "/img/menu_icon_open.svg";
                     img.alt = "open menu";
                 }
             }
         }
 
+
         function logout() {
             document.querySelector('#logoutForm').submit();
         }
+
         function dueNextWeek() {
             due(7);
         }
