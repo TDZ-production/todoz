@@ -34,7 +34,7 @@
             </div>
         </div>
         <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|"></h2>
-        <div id="week-progressbar"></div>
+        <div class="week-progressbar"></div>
     </header>
 
     <main>
@@ -113,7 +113,11 @@
         </form>
     </footer>
 
-    <script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const publicKeyBase64 =  /*[[@{${publicKey}}]]*/ 0;
+        /*]]>*/
+
         updateWeekProgressbar();
         initTaskEditListener();
         initPhoneHack();
@@ -149,9 +153,13 @@
         }
 
         function updateWeekProgressbar() {
-            const progressbar = document.querySelector("#week-progressbar");
+            const progressbar = document.querySelector(".week-progressbar");
             const now = new Date();
-            const weekProgress = (now.getDay() / 7 + now.getHours() / 24 / 7) * 100;
+            const weekProgress = now.getDay() === 0 ? 100 : ((now.getDay() - 1) / 6 + now.getHours() / 24 / 6) * 100;
+
+            if (weekProgress === 100) {
+                progressbar.classList.add("sunday");
+            }
 
             progressbar.style.width = weekProgress + "%";
         }
@@ -245,10 +253,10 @@
 
             form.action = "/tasks/" + task.dataset.id;
             form.querySelector("input[name='description']").value = description;
-            form.querySelector("input[name='maybeDueDate']").value = dueDate;
 
             if (dueDate) {
                 toggleDueDate(true);
+                dueAt(dueDate);
             } else {
                 toggleDueDate(false);
             }
@@ -357,7 +365,6 @@
         function logout() {
             document.querySelector('#logoutForm').submit();
         }
-
         function dueNextWeek() {
             due(7);
         }
@@ -369,6 +376,11 @@
 
         function dueTomorrow() {
             due(1);
+        }
+
+        function dueAt(date) {
+            const days = Math.ceil((new Date(date) - new Date()) / (1000 * 60 * 60 * 24));
+            due(days);
         }
 
         function due(days) {
@@ -386,8 +398,50 @@
 
             dateEl.dispatchEvent(new Event("input"));
         }
-    </script>
 
+        function urlB64ToUint8Array(base64String) {
+            const padding = '='.repeat((4 - base64String.length % 4) % 4);
+            const base64 = (base64String + padding)
+                .replace(/\-/g, '+')
+                .replace(/_/g, '/');
+
+            const rawData = window.atob(base64);
+            const outputArray = new Uint8Array(rawData.length);
+
+            for (let i = 0; i < rawData.length; ++i) {
+                outputArray[i] = rawData.charCodeAt(i);
+            }
+
+            return outputArray;
+        }
+
+        const serverKey = urlB64ToUint8Array(publicKeyBase64);
+
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(function (registration) {
+                    return registration;
+                })
+                .then(function (registration) {
+
+                    return registration.pushManager.subscribe({
+                        userVisibleOnly: true,
+                        applicationServerKey: serverKey,
+                    });
+                })
+                .then(function (subscription) {
+
+                    fetch('/subscribe', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(subscription),
+                    });
+                })
+        }
+    </script>
 </section>
 </body>
 </html>
