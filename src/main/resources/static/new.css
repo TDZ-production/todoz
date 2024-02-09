@@ -124,12 +124,6 @@ input, button {
     color: inherit;
 }
 
-#button-week {
-    border: none;
-    background: transparent;
-    padding: 2em;
-}
-
 #filter-text{
     width: 50%;
     margin: auto;
