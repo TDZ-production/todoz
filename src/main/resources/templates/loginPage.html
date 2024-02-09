@@ -38,9 +38,7 @@
             <button class="cta" type="submit" value="Log In">&gt;&gt;</button>
         </form>
         <p><a th:href="@{/register}">Sign-up</a></p>
-        <div class="discordLogin" onclick="redirectToDiscord()">
-            <p>Join our community</p><img src="/img/discord_icon.svg" alt="Discord">
-        </div>
+        <a class="discordLogin" target="_blank">Join our community<img src="/img/discord_icon.svg" alt="Discord"></a>
     </main>
 </section>
 <script>
@@ -77,11 +75,6 @@
             password.type = "password";
             img.src = "/img/eye_icon_closed.svg"
         }
-    }
-
-    function redirectToDiscord() {
-        let discordUrl = 'https://discord.gg/cP9Xa5TcuX';
-        window.open(discordUrl, '_blank');
     }
 </script>
 </body>
