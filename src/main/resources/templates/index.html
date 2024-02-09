@@ -24,7 +24,7 @@
                 <img src="/img/menu_icon_open.svg" alt="open menu">
             </button>
             <div class="dropdown-content">
-                <a href="/longTerm">Planned</a>
+                <a href="/planned">Planned</a>
                 <a href="/leftBehind">Left behind</a>
                 <a href="/pussyMeter">Pussy meter</a>
                 <a href="/feedback">Feedback</a>
@@ -58,7 +58,7 @@
 
             <form class="delete" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
                 <input type="hidden" name="id" th:value="${task.id}">
-                <button id="deleteButton"><img src="/img/delete_icon.svg" alt="delete icon"></button>
+                <button id="deleteButton"><img src="/img/leaveBehind_icon.svg" alt="delete icon"></button>
             </form>
         </div>
 
@@ -70,7 +70,8 @@
     </main>
 
     <footer>
-        <p th:if="${longTermTask} == true" id="fadeoutMessage">Task added to "Planned"</p>
+        <p th:if="${plannedTask} == true" class="fadeoutMessage" id="planned">Task added to "Planned"</p>
+        <p th:if="${leftBehindTask} == true" class="fadeoutMessage" id="leftBehind">Task added to "Left Behind"</p>
         <form method="post" th:action="@{/tasks/add}">
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
@@ -120,7 +121,7 @@
 
         setInterval(updateWeekProgressbar, 60 * 60 * 1000);
 
-        const el = document.querySelector("#fadeoutMessage");
+        const el = document.querySelector(".fadeoutMessage");
         if (el) {
             setTimeout(() => fadeout(el), 3000);
         }

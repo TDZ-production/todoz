@@ -1,6 +1,7 @@
 package com.example.todoz.services;
 
 import com.example.todoz.dtos.TaskUpdateDTO;
+import com.example.todoz.models.DateManager;
 import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
 import com.example.todoz.models.Week;
@@ -26,7 +27,7 @@ public class TaskService {
         return taskRepo.findAllByUserIdAndDueDateWeekNumberGreaterThanAndDueDateWeekNumberLessThanEqualOrderByDueDate(user.getId(), previousWeekNumber, currentWeekNumber);
     }
 
-    public List<Task> findLongTermTasks(User user, Integer currentWeek) {
+    public List<Task> findPlannedTasks(User user, Integer currentWeek) {
         return taskRepo.findAllByUserIdAndDueDateWeekNumberGreaterThanOrderByDueDate(user.getId(), currentWeek);
     }
 
@@ -63,6 +64,7 @@ public class TaskService {
     public void leaveBehind(Long id, User user) {
         Task task = findTaskByIdAndUserId(id,user);
         task.setWeek(null);
+        task.setLeftBehind(DateManager.now().toLocalDate());
         save(task);
     }
 

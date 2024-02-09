@@ -355,7 +355,7 @@ footer input, .stars button {
     padding: .5rem .5rem;
 }
 
-#upcomingFooter {
+#plannedFooter {
     display: none;
 }
 
@@ -595,20 +595,30 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     transform: translateY(-50%);
 }
 
-#fadeoutMessage {
+.fadeoutMessage {
     position: absolute;
     top: -4rem;
-    color: green;
-    left: 20%;
     font-size: 1.1rem;
-    border: 1px solid green;
     border-radius: .3rem;
-    background-color: #c3eab5;
     padding: .666rem;
     transition: opacity 1s ease-out;
 }
 
-#fadeoutMessage.fade-out {
+#planned {
+    color: green;
+    border: 1px solid green;
+    background-color: var(--prio2-color);
+    left: 20%;
+}
+
+#leftBehind {
+    color: #d7703d;
+    border: 1px solid #d7703d;
+    background-color: var(--pink-stickit-color);
+    left: 16%;
+}
+
+.fadeoutMessage.fade-out {
     opacity: 0;
 }
 
@@ -638,11 +648,12 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     border: none;
     background: none;
     border-radius: 0;
-    padding: 1rem 1.5rem;
+    padding: 0 .5rem;
 }
 
 #deleteButton img {
     display: block;
+    height: 3.5rem;
 }
 
 @media (max-width: 459px) {
