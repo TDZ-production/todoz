@@ -127,17 +127,24 @@ input, button {
 #filter-text{
     width: 50%;
     margin: auto;
+    text-transform: capitalize;
 }
 
-#task-buttons {
-    border: 2px solid black;
-    padding: 20px 15px;
+.filters {
+    border-bottom: 2px solid black;
     background: var(--pink-stickit-color);
-    width: 100%;
+    display: flex;
+    gap: .5rem;
+    padding: .5rem;
 }
 
+.filters > * {
+    font-size: 82%;
+    flex-grow: 1;
+    flex-basis: 80px;
+}
 
-#task-buttons button:hover {
+.filters button:hover {
     background: var(--pink-stickit-hover);
 }
 

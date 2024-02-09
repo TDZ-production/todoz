@@ -33,13 +33,13 @@
                 </form>
             </div>
         </div>
-        <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|" id="filter-text" onclick="toggleDropdown('buttonIdFilter')"></h2>
+        <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|" id="filter-text" onclick="toggleDropdown('filters')"></h2>
         <div class="week-progressbar"></div>
     </header>
 
-    <div id="task-buttons" style="display: none;">
+    <div class="filters" style="display: none;">
         <button onclick="filterTasks('all')">All</button>
-        <button onclick="filterTasks('done')">Not done</button>
+        <button onclick="filterTasks('not done')">Not done</button>
         <button onclick="filterTasks('current')">Current</button>
         <button onclick="filterTasks('tomorrow')">Tomorrow</button>
     </div>
@@ -132,6 +132,25 @@
 
         setInterval(updateWeekProgressbar, 60 * 60 * 1000);
 
+        let popOverActive = false;
+
+        if (localStorage.getItem('filter')) {
+            filterTasks(localStorage.getItem('filter'));
+
+            const taskContainers = document.querySelectorAll('.taskContainer');
+            let allHidden = true;
+            taskContainers.forEach((taskContainer) => {
+                if (taskContainer.style.display !== 'none') {
+                    allHidden = false;
+                }
+            });
+
+            if (allHidden) {
+                localStorage.removeItem('filter');
+                filterTasks('all');
+            }
+        }
+
         const el = document.querySelector(".fadeoutMessage");
         if (el) {
             setTimeout(() => fadeout(el), 3000);
@@ -206,8 +225,22 @@
         }
 
         function filterTasks(filter) {
-            const tasks = document.querySelectorAll('.task');
-            const deleteImgs = document.querySelectorAll('.deleteImg img');
+            const tasks = document.querySelectorAll('.taskContainer');
+            const filterText = document.querySelector("#filter-text");
+
+            localStorage.setItem('filter', filter);
+
+            if (filter === 'all' ) {
+                localStorage.removeItem('filter');
+                if (filterText.dataset.text !== undefined) {
+                    filterText.innerText = filterText.dataset.text;
+                }
+            } else {
+                if (filterText.dataset.text === undefined) {
+                    filterText.dataset.text = filterText.innerText;
+                }
+                filterText.innerText = filter;
+            }
 
             const date = new Date();
 
@@ -216,21 +249,16 @@
             date.setDate(date.getDate() + 1);
             const tomorrow = date.toISOString().slice(0, 10);
 
-            tasks.forEach((task, index) => {
+            tasks.forEach((task) => {
                 task.style.display = "";
-                deleteImgs[index].style.display = "";
-            });
+                const dataset = task.querySelector(".task").dataset;
 
-            tasks.forEach((task, index) => {
-
-                const deleteImg = deleteImgs[index];
-                const taskDone = task.dataset.done === "true";
-                if (filter === 'done' && taskDone ||
-                    filter === 'current' && (task.dataset.duedate < today || taskDone) ||
-                    filter === 'tomorrow' && (task.dataset.duedate !== tomorrow || taskDone)) {
+                const taskDone = dataset.done === "true";
+                if (filter === 'not done' && taskDone ||
+                    filter === 'current' && (dataset.duedate < today || taskDone) ||
+                    filter === 'tomorrow' && (dataset.duedate !== tomorrow || taskDone)) {
 
                     task.style.display = "none";
-                    deleteImg.style.display = "none";
                 }
             });
         }
@@ -277,6 +305,8 @@
         }
 
         function edit(task) {
+            if (popOverActive) return;
+
             document.querySelector("#add").focus();
 
             const main = document.querySelector("main");
@@ -363,8 +393,11 @@
         }
 
         function toggleDropdown(target) {
+
+            popOverActive = !popOverActive;
+
             let dropdownOptions = document.querySelector(".dropdown-content");
-            const buttonIdFilter = document.querySelector("#task-buttons");
+            const filtersWrapper = document.querySelector(".filters");
             const textSpan = document.querySelector("#filter-text");
             const img = document.querySelector(".dropbtn img");
 
@@ -380,13 +413,11 @@
                 img.src = (dropdownOptions.style.display === "block") ? "/img/menu_icon_close.svg" : "/img/menu_icon_open.svg";
                 img.alt = (dropdownOptions.style.display === "block") ? "close menu" : "open menu";
 
-                if (buttonIdFilter.style.display === 'block') {
-                    buttonIdFilter.style.display = 'none';
-                    textSpan.style.color = '';
+                if (filtersWrapper.style.display === 'flex') {
+                    filtersWrapper.style.display = 'none';
                 }
-            } else if (target === 'buttonIdFilter') {
-                buttonIdFilter.style.display = (buttonIdFilter.style.display === 'block') ? "none" : "block";
-                textSpan.style.color = (buttonIdFilter.style.display === 'block') ? '#996A6A' : '';
+            } else if (target === 'filters') {
+                filtersWrapper.style.display = (filtersWrapper.style.display === 'flex') ? "none" : "flex";
 
                 if (dropdownOptions.style.display === "block") {
                     dropdownOptions.style.display = "none";
@@ -395,8 +426,8 @@
                 }
             }
 
-            function registerCancel(event) {
-                event.addEventListener("click", function () {
+            function registerCancel(element) {
+                element.addEventListener("click", function () {
                     cancelMenu();
                 }, {once: true});
 
@@ -407,7 +438,9 @@
                 }
 
                 function cancelMenu() {
+                    popOverActive = false;
                     dropdownOptions.style.display = "none";
+                    filtersWrapper.style.display = 'none';
                     img.src = "/img/menu_icon_open.svg";
                     img.alt = "open menu";
                 }
