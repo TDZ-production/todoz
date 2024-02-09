@@ -32,7 +32,7 @@ public class TaskController {
         task.digestDueDate(maybeDueDate, getWeek(principal));
         task.setUser(getUser(principal));
         taskService.save(task);
-        if (task.getDueDate() != null && task.getDueDateWeekNumber() > DateManager.formattedCurrentWeek()) {
+        if (task.getDueDate() != null && DateManager.getPrefixedWeek(task.getDueDate()) > DateManager.formattedCurrentWeek()) {
             ra.addFlashAttribute("plannedTask", true);
         }
 

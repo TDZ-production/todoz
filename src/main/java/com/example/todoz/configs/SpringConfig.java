@@ -1,4 +1,4 @@
-package com.example.todoz.config;
+package com.example.todoz.configs;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;

@@ -29,9 +29,8 @@ public class Task {
     private Integer priority;
     private LocalDateTime createdAt;
     private LocalDateTime dueDate;
-    private LocalDate leftBehind;
-    private Integer dueDateWeekNumber;
-    private boolean done;
+    private LocalDateTime leftBehind;
+    private LocalDateTime doneAt;
     @ManyToOne
     private Week week;
     @ManyToOne
@@ -111,11 +110,8 @@ public class Task {
     public void digestDueDate(LocalDate dueDate, Week currentWeek) {
         if (dueDate == null) {
             setDueDate(null);
-            this.dueDateWeekNumber = null;
         } else {
             setDueDate(dueDate.atTime(23, 59, 59));
-            //TODO: get rid of dueDateWeekNumber, it's duplication of state, that's fragile!
-            this.dueDateWeekNumber = DateManager.getPrefixedWeek(dueDate);
         }
 
         // if dueDate is in the future, set week to null
@@ -123,9 +119,8 @@ public class Task {
             setWeek(null);
         } else {
             setWeek(currentWeek);
+
         }
-
-
     }
 
     public Task copy(Week week) {
@@ -135,5 +130,9 @@ public class Task {
         task.setPriority(this.priority);
         task.setWeek(week);
         return task;
+    }
+
+    public boolean isDone() {
+        return this.doneAt != null;
     }
 }
