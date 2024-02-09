@@ -585,7 +585,7 @@ textarea {
     background: #C3EDCE;
 }
 
-.discord {
+.discordFeedback {
     margin: 2rem 5rem;
     cursor: pointer;
     padding: .625rem;
@@ -596,8 +596,18 @@ textarea {
     background: #d9d9ff
 }
 
-.discord img {
+.discordFeedback img {
     margin: 1rem 1rem 0;
+}
+
+.discordLogin {
+    margin: 6rem 5.5rem 0;
+    cursor: pointer;
+    padding: 1rem;
+    display: flex;
+    width: 15rem;
+    justify-content: center;
+    color: var(--link-color);
 }
 
 .task:has(.toDelegate:checked) {
