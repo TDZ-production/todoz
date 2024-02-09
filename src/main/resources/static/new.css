@@ -495,12 +495,16 @@ button.startWeek {
     background-color: var(--pink-stickit-color);
 }
 
-#week-progressbar {
+.week-progressbar {
     position: absolute;
     z-index: 1;
     bottom: 0;
     height: 2px;
     background-color: var(--font-color);
+}
+
+.week-progressbar.sunday {
+    background-color: var(--pink-stickit-color);
 }
 
 .dropbtn {
@@ -707,14 +711,14 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     display: flex;
 }
 
-#deleteButton {
+.deleteImg {
     border: none;
     background: none;
     border-radius: 0;
     padding: 0 .5rem;
 }
 
-#deleteButton img {
+.deleteImg img {
     height: 3.5rem;
 }
 

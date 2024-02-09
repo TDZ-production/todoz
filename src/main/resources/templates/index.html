@@ -33,7 +33,7 @@
                 </form>
             </div>
         </div>
-        <div id="week-progressbar"></div>
+        <div class="week-progressbar"></div>
         <div>
             <button id="button-week" style="" onclick="toggleDropdown('buttonIdFilter')">
                 <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|" id="filter-text"></h2>
@@ -68,7 +68,7 @@
 
             <form class="delete" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
                 <input type="hidden" name="id" th:value="${task.id}">
-                <button id="deleteButton" th:class="deleteImg"><img src="/img/leaveBehind_icon.svg" alt="delete icon">
+                <button th:class="deleteImg"><img src="/img/leaveBehind_icon.svg" alt="delete icon">
                 </button>
             </form>
         </div>
@@ -125,6 +125,9 @@
     </footer>
 
     <script th:inline="javascript">
+        /*<![CDATA[*/
+        const publicKeyBase64 =  /*[[@{${publicKey}}]]*/ 0;
+        /*]]>*/
 
         updateWeekProgressbar();
         initTaskEditListener();
@@ -132,10 +135,6 @@
         expandMatureTasks();
 
         setInterval(updateWeekProgressbar, 60 * 60 * 1000);
-
-        if (localStorage.filter) {
-            filterTasks(localStorage.filter);
-        }
 
         const el = document.querySelector(".fadeoutMessage");
         if (el) {
@@ -166,9 +165,13 @@
         }
 
         function updateWeekProgressbar() {
-            const progressbar = document.querySelector("#week-progressbar");
+            const progressbar = document.querySelector(".week-progressbar");
             const now = new Date();
-            const weekProgress = (now.getDay() / 7 + now.getHours() / 24 / 7) * 100;
+            const weekProgress = now.getDay() === 0 ? 100 : ((now.getDay() - 1) / 6 + now.getHours() / 24 / 6) * 100;
+
+            if (weekProgress === 100) {
+                progressbar.classList.add("sunday");
+            }
 
             progressbar.style.width = weekProgress + "%";
         }
@@ -209,8 +212,6 @@
         function filterTasks(filter) {
             const tasks = document.querySelectorAll('.task');
             const deleteImgs = document.querySelectorAll('.deleteImg img');
-
-            localStorage.filter = filter;
 
             const date = new Date();
 
@@ -294,10 +295,10 @@
 
             form.action = "/tasks/" + task.dataset.id;
             form.querySelector("input[name='description']").value = description;
-            form.querySelector("input[name='maybeDueDate']").value = dueDate;
 
             if (dueDate) {
                 toggleDueDate(true);
+                dueAt(dueDate);
             } else {
                 toggleDueDate(false);
             }
@@ -435,6 +436,11 @@
             due(1);
         }
 
+        function dueAt(date) {
+            const days = Math.ceil((new Date(date) - new Date()) / (1000 * 60 * 60 * 24));
+            due(days);
+        }
+
         function due(days) {
             const dateEl = document.querySelector("#date");
 
@@ -449,6 +455,49 @@
             }
 
             dateEl.dispatchEvent(new Event("input"));
+        }
+
+        function urlB64ToUint8Array(base64String) {
+            const padding = '='.repeat((4 - base64String.length % 4) % 4);
+            const base64 = (base64String + padding)
+                .replace(/\-/g, '+')
+                .replace(/_/g, '/');
+
+            const rawData = window.atob(base64);
+            const outputArray = new Uint8Array(rawData.length);
+
+            for (let i = 0; i < rawData.length; ++i) {
+                outputArray[i] = rawData.charCodeAt(i);
+            }
+
+            return outputArray;
+        }
+
+        const serverKey = urlB64ToUint8Array(publicKeyBase64);
+
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(function (registration) {
+                    return registration;
+                })
+                .then(function (registration) {
+
+                    return registration.pushManager.subscribe({
+                        userVisibleOnly: true,
+                        applicationServerKey: serverKey,
+                    });
+                })
+                .then(function (subscription) {
+
+                    fetch('/subscribe', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(subscription),
+                    });
+                })
         }
     </script>
 </section>

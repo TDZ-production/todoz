@@ -1,7 +1,7 @@
 spring.datasource.url=jdbc:mysql://localhost/todoz?serverTimezone=UTC
 spring.datasource.username=root
 spring.datasource.password=password
-spring.jpa.hibernate.ddl-auto=update
+spring.jpa.hibernate.ddl-auto=none
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
 spring.logging.level.org.hibernate.SQL=debug
 spring.jpa.show-sql=true
@@ -18,5 +18,8 @@ spring.mail.username=
 spring.mail.password=
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
+
+vapid.public.key=
+vapid.private.key=
 
 server.servlet.session.timeout=315360000

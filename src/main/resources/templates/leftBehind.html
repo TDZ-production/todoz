@@ -37,7 +37,7 @@
 
             <form class="delete" th:method="post" th:action="|/tasks/delete/${task.id}|">
                 <input type="hidden" name="id" th:value="${task.id}">
-                <button id="deleteButton"><img src="/img/delete_icon.svg" alt="delete icon"></button>
+                <button class="deleteImg"><img src="/img/delete_icon.svg" alt="delete icon"></button>
             </form>
         </div>
 
