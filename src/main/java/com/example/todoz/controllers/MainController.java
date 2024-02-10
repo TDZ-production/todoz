@@ -12,8 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Controller
 @RequiredArgsConstructor
@@ -53,6 +56,32 @@ public class MainController {
         model.addAttribute("user", getUser(principal));
 
         return "index";
+    }
+    // Endpoint for testing the chart - delete before merge
+    @GetMapping("/test")
+    public String showTest(Model model, Principal principal) {
+        model.addAttribute("user", getUser(principal));
+        Optional<Week> currentWeek = weekService.findCurrentWeek(getUser(principal));
+        Optional<Week> optPreviousWeek = weekService.findPreviousWeek(getUser(principal));
+        Week previousWeek = optPreviousWeek.get();
+        System.out.println(taskService.findWeekdayReviews(getUser(principal)));
+
+        List<List<Double>> testList = new ArrayList<>();
+        Random random = new Random();
+        for (int i=0; i<7; i++) {
+            testList.add(new ArrayList<>());
+            for (int j=0; j<4; j++) {
+                testList.get(i).add(random.nextDouble());
+            }
+        }
+
+        List<Task> upcomingTasks = taskService
+                .findUpcomingTasks(getUser(principal), previousWeek.getWeekNumber(), DateManager.formattedCurrentWeek());
+        model.addAttribute("previousWeek", previousWeek);
+        model.addAttribute("graphData", testList);
+        model.addAttribute("weekDays", DayOfWeek.values());
+        model.addAttribute("upcomingTasks", upcomingTasks);
+        return "weekReview";
     }
 
     @PostMapping("/startNewWeek")
