@@ -26,11 +26,11 @@ public class TaskService {
     }
 
     public List<Task> findUpcomingTasks(User user, Integer previousWeekNumber, Integer currentWeekNumber) {
-        return taskRepo.findAllByUserIdAndDueDateWeekNumberGreaterThanAndDueDateWeekNumberLessThanEqualOrderByDueDate(user.getId(), previousWeekNumber, currentWeekNumber);
+        return taskRepo.findAllByUserIdAndDueDateBetweenOrderByDueDate(user.getId(), DateManager.getNextSunday(previousWeekNumber), DateManager.getNextSunday(currentWeekNumber));
     }
 
     public List<Task> findPlannedTasks(User user, Integer currentWeek) {
-        return taskRepo.findAllByUserIdAndDueDateWeekNumberGreaterThanOrderByDueDate(user.getId(), currentWeek);
+        return taskRepo.findAllByUserIdAndDueDateAfterOrderByDueDate(user.getId(), DateManager.getNextSunday(currentWeek));
     }
 
     public Map<Integer, Map<Integer, List<Task>>> sortTasksByYearAndWeek(List<Task> tasks) {
@@ -55,7 +55,7 @@ public class TaskService {
     public void checkedTask(Long taskId, User user, boolean done) {
         Task task = taskRepo.findByIdAndUserId(taskId, user.getId())
                 .orElseThrow(() -> new RuntimeException(String.format("Task not found with id: %d, %s", taskId, user)));
-        task.setDone(done);
+        task.setDoneAt(done ? DateManager.now() : null);
         taskRepo.save(task);
     }
 
@@ -85,7 +85,7 @@ public class TaskService {
     public void leaveBehind(Long id, User user) {
         Task task = findTaskByIdAndUserId(id,user);
         task.setWeek(null);
-        task.setLeftBehind(DateManager.now().toLocalDate());
+        task.setLeftBehind(DateManager.now());
         save(task);
     }
 

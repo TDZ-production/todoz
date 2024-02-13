@@ -1,10 +1,7 @@
 package com.example.todoz.controllers;
 
 import com.example.todoz.models.*;
-import com.example.todoz.services.DateManager;
-import com.example.todoz.services.TaskService;
-import com.example.todoz.services.UserService;
-import com.example.todoz.services.WeekService;
+import com.example.todoz.services.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -22,6 +19,7 @@ public class MainController {
     private final UserService userService;
     private final TaskService taskService;
     private final WeekService weekService;
+    private final NotificationService notificationService;
 
     @GetMapping
     public String showIndex(Model model, Principal principal) {
@@ -47,9 +45,8 @@ public class MainController {
             model.addAttribute("currentWeek", currentWeek.get());
         }
 
-        // TODO: resolve this
-        model.addAttribute("messages", null);
         model.addAttribute("user", getUser(principal));
+        model.addAttribute("publicKey", notificationService.getPublicKey());
 
         return "index";
     }
@@ -76,7 +73,7 @@ public class MainController {
             leftBehinds.stream()
                     .map(leftID -> taskService.findTaskByIdAndUserId(leftID, getUser(principal)))
                     .filter(t -> !t.isDone())
-                    .peek(t -> t.setLeftBehind(DateManager.now().toLocalDate()))
+                    .peek(t -> t.setLeftBehind(DateManager.now()))
                     .forEach(taskService::save);
         }
 

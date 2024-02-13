@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -15,7 +16,8 @@ import java.util.List;
 @Setter
 @Table(name = "weeks", indexes = @Index(columnList = "weekNumber, user_id", unique = true))
 public class Week {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
     private Integer weekNumber;
     @ManyToOne
@@ -48,12 +50,19 @@ public class Week {
         return tasks;
     }
 
+    public List<Task> getTasksForNotification() {
+        return getSortedTasks().stream()
+                .filter(t -> !t.isDone())
+                .filter(t -> t.getDueDate() == null || t.getDueDate().toLocalDate().equals(LocalDate.now()))
+                .toList();
+    }
+
     public int nextWeekNumber() {
         return (getWeekNumberNumber() % WEEKS_IN_YEAR) + 1;
     }
 
     public int getWeekNumberNumber() {
-         return this.weekNumber % 100;
+        return this.weekNumber % 100;
     }
 
     public String getCatImage() {
@@ -65,6 +74,7 @@ public class Week {
             default -> "/img/cat_pm_0.svg";
         };
     }
+
     public WeekQuality getWeekQuality() {
         long doneCount = this.getDoneCount();
         long donePercentage = this.getDonePercentage();
@@ -77,6 +87,7 @@ public class Week {
             return WeekQuality.NEUTRAL;
         }
     }
+
     public long getDonePercentage() {
         long count = this.getDoneCount();
 

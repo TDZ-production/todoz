@@ -18,11 +18,4 @@ public class Notification {
     private Long id;
     private String title;
     private String description;
-    private Long remainingDays;
-
-    public Notification(Long remainingDays, String title, String description) {
-        this.remainingDays = remainingDays;
-        this.title = title;
-        this.description = description;
-    }
 }

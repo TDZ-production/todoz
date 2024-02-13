@@ -32,7 +32,7 @@ public class TaskController {
         task.digestDueDate(maybeDueDate, getWeek(principal));
         task.setUser(getUser(principal));
         taskService.save(task);
-        if (task.getDueDate() != null && task.getDueDateWeekNumber() > DateManager.formattedCurrentWeek()) {
+        if (task.getDueDate() != null && DateManager.getPrefixedWeek(task.getDueDate()) > DateManager.formattedCurrentWeek()) {
             ra.addFlashAttribute("plannedTask", true);
         }
 
@@ -47,17 +47,11 @@ public class TaskController {
     }
 
     @PostMapping("{id}")
-    public String update(@PathVariable Long id, TaskUpdateDTO taskUpdate, Principal principal) {
+    public String update(@PathVariable Long id, TaskUpdateDTO taskUpdate, Principal principal, @RequestHeader String referer) throws URISyntaxException {
         taskService.update(id, taskUpdate, getUser(principal), getWeek(principal));
+        String refererURI = new URI(referer).getPath();
 
-        return "redirect:/";
-    }
-
-    @PostMapping("planned/{id}")
-    public String plannedUpdate(@PathVariable Long id, TaskUpdateDTO taskUpdate, Principal principal) {
-        taskService.update(id, taskUpdate, getUser(principal), getWeek(principal));
-
-        return "redirect:/planned";
+        return "redirect:" + refererURI;
     }
 
     @PostMapping("re-add/{id}")
@@ -68,19 +62,19 @@ public class TaskController {
     }
 
     @PostMapping("leaveBehind/{id}")
-    public String leaveBehind(@PathVariable Long id, Principal principal, RedirectAttributes ra) {
+    public String leaveBehind(@PathVariable Long id, Principal principal, RedirectAttributes ra, @RequestHeader String referer) throws URISyntaxException {
         taskService.leaveBehind(id, getUser(principal));
+        String refererURI = new URI(referer).getPath();
         ra.addFlashAttribute("leftBehindTask", true);
 
-        return "redirect:/";
+        return "redirect:" + refererURI;
     }
 
     @PostMapping("delete/{id}")
-    public String deleteTask(@PathVariable Long id, Principal principal, @RequestHeader String referer) throws URISyntaxException {
+    public String deleteTask(@PathVariable Long id, Principal principal) {
         taskService.deleteTask(id, getUser(principal));
-        String refererURI = new URI(referer).getPath();
 
-        return "redirect:" + refererURI;
+        return "redirect:/leftBehind";
     }
 
     private User getUser(Principal principal) {
