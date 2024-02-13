@@ -41,12 +41,6 @@ public class WeekService {
         return weekRepo.findTopByUserIdOrderByWeekNumberDesc(user.getId());
     }
 
-    /**
-     * Maps a list of tasks to a map where the tasks are grouped by day of the week.
-     *
-     * @param  tasks  the list of tasks to be mapped
-     * @return        a map where the tasks are grouped by day of the week
-     */
     public Map<DayOfWeek, List<Task>> mapDoneTasksByDayOfWeek(List<Task> tasks) {
         Map<DayOfWeek, List<Task>> result = new HashMap();
 

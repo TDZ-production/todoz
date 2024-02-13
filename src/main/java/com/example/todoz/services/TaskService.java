@@ -95,7 +95,7 @@ public class TaskService {
         taskRepo.deleteByIdAndUserId(id, user.getId());
     }
 
-    public List<Object[]> findWeekdayReviews(User user) {
+    public List<WeekdayReviewDTO> findWeekdayReviews(User user) {
         return taskRepo.getWeekdayReview(user.getId());
     }
 }
