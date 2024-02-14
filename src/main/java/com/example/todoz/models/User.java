@@ -6,7 +6,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,13 +22,16 @@ public class User {
     private String username;
     private String password;
     private Integer pussyMeter = 1;
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OrderBy("id DESC")
     private List<Week> weeks;
     @OneToMany(mappedBy = "user")
-    List<Task> tasks;
+    List<Task> tasks = new ArrayList<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     List<PasswordResetToken> pRTokens;
+    @OneToMany(mappedBy= "user")
+    private List<UserSubscription> userSubscription;
     public static final int MINIMAL_PASSWORD_LENGTH = 5;
 
     public User(String username, String password, Integer pussyMeter) {
@@ -38,6 +42,6 @@ public class User {
     }
 
     public User() {
-        this.createdAt = DateManager.now().toLocalDate();
+        this.createdAt = DateManager.now();
     }
 }
