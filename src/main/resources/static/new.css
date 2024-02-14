@@ -38,7 +38,7 @@ body {
 .app {
     margin: 0 auto;
     max-width: 28rem;
-    min-height: 24rem;
+    /*min-height: 24rem;*/
     height: 99.98vh; /* older browsers */
     height: 99.98dvh;
     display: flex;
