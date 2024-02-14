@@ -601,11 +601,10 @@ textarea {
 }
 
 .discordLogin {
-    margin: 6rem 5.5rem 0;
+    margin-top: 6rem;
     cursor: pointer;
     padding: 1rem;
     display: flex;
-    width: 15rem;
     justify-content: center;
     color: var(--link-color);
 }
@@ -735,7 +734,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 
 @media (max-width: 459px) {
     header {
-        position: fixed;
+        /*position: fixed;*/
         z-index: 8;
         top: 0;
         left: 0;
@@ -746,10 +745,10 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
         height: calc(5rem - env(safe-area-inset-bottom) / 2);
     }
 
-    header + main {
-        margin-top: 5rem;
-        margin-top: calc(5rem - env(safe-area-inset-bottom) / 2);
-    }
+    /*header + main {*/
+    /*    margin-top: 5rem;*/
+    /*    margin-top: calc(5rem - env(safe-area-inset-bottom) / 2);*/
+    /*}*/
 }
 
 @media (min-width: 460px) {

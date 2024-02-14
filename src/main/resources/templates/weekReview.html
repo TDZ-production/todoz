@@ -40,7 +40,7 @@
                 <span th:if="${upcomingTasks.size() > 0}"> Planned&nbsp;tasks are already selected.</span></p>
         </div>
 
-        <form th:action="@{/startNewWeek}" th:method="post" id="form">
+        <form th:action="@{/startNewWeek}" th:method="post">
 
             <div class="task" th:each="task : ${upcomingTasks}" th:data-done="${task.done}">
                 <span th:classappend="|prio${task.getPriority()}|"></span>
