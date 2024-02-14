@@ -176,7 +176,7 @@
         });
 
         function focusAdd() {
-            document.querySelector("#add").focus();
+            document.querySelector("#add").focus({preventScroll: true});
         }
 
         function updateWeekProgressbar() {
@@ -370,17 +370,21 @@
                 requestAnimationFrame(() => {
                     window.scrollY > 0 ? adjustSafeAreaInset(0) : adjustSafeAreaInset();
 
-                    // [40, 400].forEach((ms) => {
-                    //     setTimeout(() => {
-                    //         document.querySelector(".stars").scrollIntoView({behavior: "smooth"});
-                    //     }, ms);
-                    // })
+                    [4, 40, 400].forEach((ms) => {
+                        setTimeout(() => {
+                            scrollToBottom();
+                        }, ms);
+                    })
                 });
             }
 
             function adjustSafeAreaInset(value = 'calc(env(safe-area-inset-bottom)/2)') {
                 document.querySelector("footer").style.paddingBottom = value;
             }
+        }
+
+        function scrollToBottom() {
+            document.querySelector(".stars").scrollIntoView({behavior: "instant"});
         }
 
         function fadeout(el) {
