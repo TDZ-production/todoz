@@ -26,11 +26,11 @@ public class TaskService {
     }
 
     public List<Task> findUpcomingTasks(User user, Integer previousWeekNumber, Integer currentWeekNumber) {
-        return taskRepo.findAllByUserIdAndDueDateBetweenOrderByDueDate(user.getId(), DateManager.getNextSunday(previousWeekNumber), DateManager.getNextSunday(currentWeekNumber));
+        return taskRepo.findAllByUserIdAndDueDateBetweenAndLeftBehindNullOrderByDueDate(user.getId(), DateManager.getNextSunday(previousWeekNumber), DateManager.getNextSunday(currentWeekNumber));
     }
 
     public List<Task> findPlannedTasks(User user, Integer currentWeek) {
-        return taskRepo.findAllByUserIdAndDueDateAfterOrderByDueDate(user.getId(), DateManager.getNextSunday(currentWeek));
+        return taskRepo.findAllByUserIdAndDueDateAfterAndLeftBehindNullOrderByDueDate(user.getId(), DateManager.getNextSunday(currentWeek));
     }
 
     public Map<Integer, Map<Integer, List<Task>>> sortTasksByYearAndWeek(List<Task> tasks) {
@@ -77,8 +77,8 @@ public class TaskService {
 
     public void reAdd(Long taskId, User user, Week week) {
         Task task = findTaskByIdAndUserId(taskId, user);
-        task.setWeek(week);
         task.setLeftBehind(null);
+        task.setWeek(task.getDueDateWeekNumber() <= DateManager.formattedCurrentWeek() ? week : null);
         save(task);
     }
 

@@ -135,4 +135,8 @@ public class Task {
     public boolean isDone() {
         return this.doneAt != null;
     }
+
+    public Integer getDueDateWeekNumber() {
+        return DateManager.getPrefixedWeek(this.dueDate);
+    }
 }
