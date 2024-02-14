@@ -12,11 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.time.DayOfWeek;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -38,7 +34,6 @@ public class MainController {
 
             model.addAttribute("user", getUser(principal));
             model.addAttribute("previousWeek", previousWeek);
-            model.addAttribute("graphData", weekService.mapDoneTasksByDayOfWeek(previousWeek.getDoneTasks()));
             model.addAttribute("upcomingTasks", upcomingTasks);
 
             return "weekReview";
@@ -64,7 +59,7 @@ public class MainController {
         Optional<Week> currentWeek = weekService.findCurrentWeek(getUser(principal));
         Optional<Week> optPreviousWeek = weekService.findPreviousWeek(getUser(principal));
         Week previousWeek = optPreviousWeek.get();
-        System.out.println(taskService.findWeekdayReviews(getUser(principal)));
+//        System.out.println(taskService.findWeekdayReviews(getUser(principal)));
 
         List<List<Double>> testList = new ArrayList<>();
         Random random = new Random();
@@ -78,8 +73,7 @@ public class MainController {
         List<Task> upcomingTasks = taskService
                 .findUpcomingTasks(getUser(principal), previousWeek.getWeekNumber(), DateManager.formattedCurrentWeek());
         model.addAttribute("previousWeek", previousWeek);
-        model.addAttribute("graphData", testList);
-        model.addAttribute("weekDays", DayOfWeek.values());
+        model.addAttribute("graphData", taskService.getGraphData(getUser(principal)));
         model.addAttribute("upcomingTasks", upcomingTasks);
         return "weekReview";
     }

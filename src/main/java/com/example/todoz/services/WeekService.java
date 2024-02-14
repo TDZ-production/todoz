@@ -1,6 +1,5 @@
 package com.example.todoz.services;
 
-import com.example.todoz.models.Task;
 import com.example.todoz.models.User;
 import com.example.todoz.models.Week;
 import com.example.todoz.repos.WeekRepo;
@@ -39,16 +38,5 @@ public class WeekService {
 
     public Optional<Week> findPreviousWeek(User user) {
         return weekRepo.findTopByUserIdOrderByWeekNumberDesc(user.getId());
-    }
-
-    public Map<DayOfWeek, List<Task>> mapDoneTasksByDayOfWeek(List<Task> tasks) {
-        Map<DayOfWeek, List<Task>> result = new HashMap();
-
-        for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
-            result.put(dayOfWeek, new ArrayList<>());
-        }
-        tasks.forEach(task -> result.get(task.getDoneAt().getDayOfWeek()).add(task));
-
-        return result;
     }
 }

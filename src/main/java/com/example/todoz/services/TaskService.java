@@ -9,10 +9,8 @@ import com.example.todoz.repos.TaskRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class TaskService {
@@ -97,6 +95,31 @@ public class TaskService {
 
     public List<WeekdayReviewDTO> findWeekdayReviews(User user) {
         return taskRepo.getWeekdayReview(user.getId());
+    }
+
+    public List<List<Double>> getGraphData(User user) {
+        List<WeekdayReviewDTO> review = taskRepo.getWeekdayReview(user.getId());
+        List<List<Double>> result = new ArrayList<>();
+        for (int i=0; i<7; i++) {
+            result.add(new ArrayList<>());
+            for (int j=0; j<4; j++) {
+                result.get(i).add(0.01);
+            }
+        }
+
+        AtomicReference<Double> maxDivider = new AtomicReference<>(3.0);
+        review.stream()
+                        .max(Comparator.comparing(WeekdayReviewDTO::count))
+                        .ifPresent(r -> {
+                            if (r.count() > maxDivider.get()) maxDivider.set((double)r.count());
+                        });
+
+        review.forEach(r -> result.get(r.doneAt().getValue() - 1).set(r.priority()-1, r.count()/ maxDivider.get()));
+
+        result.add(0, result.get(6));
+        result.remove(7);
+
+        return result;
     }
 }
 
