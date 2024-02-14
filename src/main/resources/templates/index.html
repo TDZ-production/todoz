@@ -370,11 +370,11 @@
                 requestAnimationFrame(() => {
                     window.scrollY > 0 ? adjustSafeAreaInset(0) : adjustSafeAreaInset();
 
-                    [2, 40, 400].forEach((ms) => {
-                        setTimeout(() => {
-                            document.querySelector(".stars").scrollIntoView({behavior: "instant"});
-                        }, ms);
-                    })
+                    // [40, 400].forEach((ms) => {
+                    //     setTimeout(() => {
+                    //         document.querySelector(".stars").scrollIntoView({behavior: "smooth"});
+                    //     }, ms);
+                    // })
                 });
             }
 
@@ -473,7 +473,7 @@
         function due(days) {
             const dateEl = document.querySelector("#date");
 
-            focusAdd();
+            //focusAdd();
 
             if (days === null) {
                 dateEl.value = "";
