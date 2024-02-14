@@ -11,8 +11,8 @@ import java.util.Optional;
 @Repository
 public interface TaskRepo extends ListCrudRepository<Task, Long> {
     Optional<Task> findByIdAndUserId(Long taskId, Long userId);
-    List<Task> findAllByUserIdAndDueDateBetweenOrderByDueDate(Long userId, LocalDateTime previousSaturday, LocalDateTime currentSaturday);
-    List<Task> findAllByUserIdAndDueDateAfterOrderByDueDate(Long userId, LocalDateTime dueDate);
+    List<Task> findAllByUserIdAndDueDateBetweenAndLeftBehindNullOrderByDueDate(Long userId, LocalDateTime previousSaturday, LocalDateTime currentSaturday);
+    List<Task> findAllByUserIdAndDueDateAfterAndLeftBehindNullOrderByDueDate(Long userId, LocalDateTime dueDate);
     List<Task> findAllByUserIdAndLeftBehindNotNullOrderByLeftBehindDesc(Long userId);
     void deleteByIdAndUserId(Long taskId, Long userID);
 }
