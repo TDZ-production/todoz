@@ -593,7 +593,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     fill: #919191;
 }
 
-.container {
+.taskContainer {
     display: flex;
     flex-direction: row;
     overflow: scroll;
@@ -601,7 +601,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     -ms-overflow-style: none;
 }
 
-.container::-webkit-scrollbar {
+.taskContainer::-webkit-scrollbar {
     display: none;
 }
 

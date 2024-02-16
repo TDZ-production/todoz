@@ -67,6 +67,13 @@ public class TaskController {
         return "redirect:/";
     }
 
+    @PostMapping("delete/{id}")
+    public String deleteTask(@PathVariable Long id, Principal principal) {
+        taskService.deleteTask(id, getUser(principal));
+
+        return "redirect:/";
+    }
+
     private User getUser(Principal principal) {
         return userService.findByUsername(principal.getName()).orElseThrow(EntityNotFoundException::new);
     }

@@ -3,7 +3,6 @@ package com.example.todoz.models;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.Temporal;
 import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.WeekFields;
@@ -19,7 +18,7 @@ public class DateManager {
         return getYearOfNextOrSameSaturday(date) * 100 + date.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
     }
 
-    public static Temporal now() {
+    public static LocalDateTime now() {
         return LocalDateTime.now();
     }
 

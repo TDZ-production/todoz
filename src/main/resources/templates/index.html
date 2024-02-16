@@ -38,12 +38,10 @@
     </header>
 
     <main>
-        <div class="container" th:unless="${currentWeek.getSortedTasks().isEmpty()}"
+        <div class="taskContainer" th:unless="${currentWeek.getSortedTasks().isEmpty()}"
              th:each="task : ${currentWeek.getSortedTasks()}">
-            <div class="task"
-                 th:object="${task}"
-                 th:data-priority="*{priority}" th:data-id="*{id}" th:data-done="*{done}"
-                 th:data-maturity="*{getMaturity()}">
+            <div class="task" th:object="${task}" th:data-priority="*{priority}" th:data-id="*{id}"
+                 th:data-done="*{done}" th:data-maturity="*{getMaturity()}">
 
                 <span th:classappend="|prio${task.getPriority()}|"></span>
                 <p th:text="*{description}"></p>
