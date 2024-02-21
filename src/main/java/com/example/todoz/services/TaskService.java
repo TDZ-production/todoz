@@ -55,7 +55,12 @@ public class TaskService {
     public void checkedTask(Long taskId, User user, boolean done) {
         Task task = taskRepo.findByIdAndUserId(taskId, user.getId())
                 .orElseThrow(() -> new RuntimeException(String.format("Task not found with id: %d, %s", taskId, user)));
-        task.setDone(done);
+        if(done) {
+            task.setDoneAt(DateManager.now());
+        } else {
+            task.setDoneAt(null);
+        }
+
         taskRepo.save(task);
     }
 
@@ -85,7 +90,7 @@ public class TaskService {
     public void leaveBehind(Long id, User user) {
         Task task = findTaskByIdAndUserId(id,user);
         task.setWeek(null);
-        task.setLeftBehind(DateManager.now().toLocalDate());
+        task.setLeftBehind(DateManager.now());
         save(task);
     }
 

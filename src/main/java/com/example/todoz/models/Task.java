@@ -29,8 +29,8 @@ public class Task {
     private Integer priority;
     private LocalDateTime createdAt;
     private LocalDateTime dueDate;
-    private LocalDate leftBehind;
-    private boolean done;
+    private LocalDateTime leftBehind;
+    private LocalDateTime doneAt;
     @ManyToOne
     private Week week;
     @ManyToOne
@@ -130,5 +130,9 @@ public class Task {
         task.setPriority(this.priority);
         task.setWeek(week);
         return task;
+    }
+
+    public boolean isDone() {
+        return this.doneAt != null;
     }
 }
