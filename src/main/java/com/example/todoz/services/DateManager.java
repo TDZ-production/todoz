@@ -44,10 +44,13 @@ public class DateManager {
         return localDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY)).getYear();
     }
 
+    public static LocalDateTime getNextSunday() {
+        return getNextSunday(DateManager.formattedCurrentWeek());
+    }
+
     public static LocalDateTime getNextSunday(Integer prefixedWeekNumber) {
         return LocalDateTime.now()
                 .with(WeekFields.SUNDAY_START.weekOfWeekBasedYear(), prefixedWeekNumber % 100)
-                .with(TemporalAdjusters.nextOrSame((DayOfWeek.SUNDAY)))
-                .with(TemporalAdjusters.next(DayOfWeek.SUNDAY)); // wtf?
+                .with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
     }
 }
