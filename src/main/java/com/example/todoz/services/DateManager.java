@@ -47,6 +47,7 @@ public class DateManager {
     public static LocalDateTime getNextSunday(Integer prefixedWeekNumber) {
         return LocalDateTime.now()
                 .with(WeekFields.SUNDAY_START.weekOfWeekBasedYear(), prefixedWeekNumber % 100)
-                .with(TemporalAdjusters.nextOrSame((DayOfWeek.SUNDAY)));
+                .with(TemporalAdjusters.nextOrSame((DayOfWeek.SUNDAY)))
+                .with(TemporalAdjusters.next(DayOfWeek.SUNDAY)); // wtf?
     }
 }
