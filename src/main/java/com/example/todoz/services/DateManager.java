@@ -21,6 +21,9 @@ public class DateManager {
         return getYearOfNextOrSameSaturday(date) * 100 + getWeekNumber(date);
     }
 
+    public static Integer getWeekNumber() {
+        return getWeekNumber(now());
+    }
     public static Integer getWeekNumber(TemporalAccessor date) {
         return date.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
     }

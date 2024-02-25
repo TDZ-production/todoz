@@ -34,6 +34,7 @@ public class MainController {
             model.addAttribute("user", getUser(principal));
             model.addAttribute("previousWeek", previousWeek);
             model.addAttribute("upcomingTasks", upcomingTasks);
+            model.addAttribute("currentWeekNumber", DateManager.getWeekNumber());
 
             return "weekReview";
         } else if (currentWeek.isEmpty()) {
