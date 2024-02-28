@@ -1,5 +1,6 @@
 package com.example.todoz.controllers;
 
+import com.example.todoz.appMessages.AppMessageService;
 import com.example.todoz.models.*;
 import com.example.todoz.services.*;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,11 +21,13 @@ public class MainController {
     private final TaskService taskService;
     private final WeekService weekService;
     private final NotificationService notificationService;
+    private final AppMessageService appMessageService;
 
     @GetMapping
     public String showIndex(Model model, Principal principal) {
         Optional<Week> currentWeek = weekService.findCurrentWeek(getUser(principal));
         Optional<Week> optPreviousWeek = weekService.findPreviousWeek(getUser(principal));
+
 
         if (currentWeek.isEmpty() && optPreviousWeek.isPresent()) {
             Week previousWeek = optPreviousWeek.get();
@@ -108,6 +111,7 @@ public class MainController {
 
         model.addAttribute("leftBehind", leftBehind);
         model.addAttribute("user", getUser(principal));
+        model.addAttribute("message", appMessageService.findMessage(Location.LEFT_BEHIND, Language.ENG, getUser(principal).getPussyMeter()));
         return "leftBehind";
     }
 

@@ -2,6 +2,8 @@ package com.example.todoz.models;
 
 import com.example.todoz.prtoken.PasswordResetToken;
 import com.example.todoz.services.DateManager;
+import com.example.todoz.services.Language;
+import com.example.todoz.services.MessageManager;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,6 +35,10 @@ public class User {
     @OneToMany(mappedBy= "user")
     private List<UserSubscription> userSubscription;
     public static final int MINIMAL_PASSWORD_LENGTH = 5;
+
+    public String say(String key) {
+        return MessageManager.getString(key, Language.ENG, pussyMeter);
+    }
 
     public User(String username, String password, Integer pussyMeter) {
         this();

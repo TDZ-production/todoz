@@ -42,7 +42,7 @@
         </div>
 
         <div th:if="${leftBehind.isEmpty()}" class="NoTaskPlaceholder">
-            <p>All your left behind tasks at your display... <br> Oops you don´t have any...</p>
+            <p th:utext="${message.getText()}"></p>
             <img th:src="|/img/cat_pm_${user.pussyMeter}.svg|" alt="cat">
         </div>
     </main>
