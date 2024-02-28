@@ -1,6 +1,6 @@
 package com.example.todoz.prtoken;
 
-import com.example.todoz.models.User;
+import com.example.todoz.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

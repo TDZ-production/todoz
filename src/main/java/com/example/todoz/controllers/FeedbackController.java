@@ -1,7 +1,7 @@
 package com.example.todoz.controllers;
 
-import com.example.todoz.models.Feedback;
-import com.example.todoz.services.FeedbackService;
+import com.example.todoz.feedback.Feedback;
+import com.example.todoz.feedback.FeedbackService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

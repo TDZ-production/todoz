@@ -1,6 +1,6 @@
 package com.example.todoz.prtoken;
 
-import com.example.todoz.models.User;
+import com.example.todoz.user.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
