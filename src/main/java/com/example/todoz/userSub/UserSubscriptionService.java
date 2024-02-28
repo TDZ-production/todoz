@@ -1,7 +1,5 @@
-package com.example.todoz.services;
+package com.example.todoz.userSub;
 
-import com.example.todoz.models.UserSubscription;
-import com.example.todoz.repos.UserSubscriptionRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

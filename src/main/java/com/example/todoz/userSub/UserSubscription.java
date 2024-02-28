@@ -1,6 +1,7 @@
-package com.example.todoz.models;
+package com.example.todoz.userSub;
 
 
+import com.example.todoz.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

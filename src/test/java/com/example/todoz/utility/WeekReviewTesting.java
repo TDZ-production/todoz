@@ -1,8 +1,11 @@
-package com.example.todoz.services;
+package com.example.todoz.utility;
 
-import com.example.todoz.models.Task;
-import com.example.todoz.models.User;
-import com.example.todoz.models.Week;
+import com.example.todoz.task.Task;
+import com.example.todoz.task.TaskService;
+import com.example.todoz.user.User;
+import com.example.todoz.week.Week;
+import com.example.todoz.user.UserService;
+import com.example.todoz.week.WeekService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

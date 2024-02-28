@@ -1,8 +1,9 @@
-package com.example.todoz.services;
+package com.example.todoz.utility;
 
-import com.example.todoz.models.Task;
-import com.example.todoz.models.User;
-import com.example.todoz.models.Week;
+import com.example.todoz.task.Task;
+import com.example.todoz.user.User;
+import com.example.todoz.week.Week;
+import com.example.todoz.week.WeekService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

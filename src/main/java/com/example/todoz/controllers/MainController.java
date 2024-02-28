@@ -1,7 +1,13 @@
 package com.example.todoz.controllers;
 
-import com.example.todoz.models.*;
-import com.example.todoz.services.*;
+import com.example.todoz.notification.NotificationService;
+import com.example.todoz.utility.*;
+import com.example.todoz.task.Task;
+import com.example.todoz.task.TaskService;
+import com.example.todoz.user.User;
+import com.example.todoz.user.UserService;
+import com.example.todoz.week.Week;
+import com.example.todoz.week.WeekService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
