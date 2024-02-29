@@ -1,6 +1,5 @@
 package com.example.todoz.controllers;
 
-import com.example.todoz.appMessages.AppMessageService;
 import com.example.todoz.models.*;
 import com.example.todoz.services.*;
 import jakarta.persistence.EntityNotFoundException;
@@ -21,7 +20,6 @@ public class MainController {
     private final TaskService taskService;
     private final WeekService weekService;
     private final NotificationService notificationService;
-    private final AppMessageService appMessageService;
 
     @GetMapping
     public String showIndex(Model model, Principal principal) {
@@ -51,6 +49,7 @@ public class MainController {
 
         model.addAttribute("user", getUser(principal));
         model.addAttribute("publicKey", notificationService.getPublicKey());
+        model.addAttribute("message", getUser(principal).getText("index"));
 
         return "index";
     }
@@ -102,6 +101,7 @@ public class MainController {
         model.addAttribute("planned",
                 taskService.sortTasksByYearAndWeek(taskService.findPlannedTasks(getUser(principal))));
         model.addAttribute("user", getUser(principal));
+        model.addAttribute("message", getUser(principal).getText("planned"));
         return "planned";
     }
 
@@ -111,7 +111,7 @@ public class MainController {
 
         model.addAttribute("leftBehind", leftBehind);
         model.addAttribute("user", getUser(principal));
-        model.addAttribute("message", appMessageService.findMessage(Location.LEFT_BEHIND, Language.ENG, getUser(principal).getPussyMeter()));
+        model.addAttribute("message", getUser(principal).getText("left_behind"));
         return "leftBehind";
     }
 

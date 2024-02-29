@@ -1,3 +1,5 @@
 {
-  "left_behind": ["friendly", "neutral", "agressive"]
+  "left_behind" : ["All your left behind tasks at your display...<br>...it's empty and let's keep it that way", "All your left behind tasks at your display...", "All your left behind tasks at your display...<br>...perhaps you should be left behind"],
+  "planned" : ["Here will be all your planned tasks...<br>...this is where your future successes take shape", "Here will be all your planned tasks...", "Here will be all your planned tasks...<br>...no plans, no bitches"],
+  "index" : ["Ready to create your first task?<br>Save the task by picking a priority, to keep thinks organised!", "Ready to create your first task?<br>write down your task and submit it by picking priority. Due date is optional", "Are you finally going to do something?<br>This is just todo app, no science diploma required!"]
 }

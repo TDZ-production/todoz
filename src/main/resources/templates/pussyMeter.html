@@ -21,7 +21,7 @@
     </header>
     <main>
         <h1 class="pussyHeader">Pussy meter</h1>
-        <p class="note">Choose how big of a pussy are you!</p>
+        <p class="note">Choose how big of a pussy you are!</p>
 
         <form th:action="@{/changeMeter}" method="post" th:object="${user}">
             <div class="pussySliderIcons">
@@ -40,7 +40,6 @@
     const slider = document.getElementById("pussySlider");
     const output = document.getElementById("pussyLabel");
     const icon = document.querySelector(".icon");
-    const range = document.querySelector("#pussySlider");
     const subtitle = document.querySelector(".pussyHeader + p");
 
     output.innerHTML = slider.innerHTML;
@@ -53,7 +52,7 @@
         } else if (this.value == 1) {
             output.innerText = "Neutral";
             icon.src = "/img/prio4_pm_1.svg";
-            subtitle.innerText = "Choose how big of a pussy are you!";
+            subtitle.innerText = "Choose how big of a pussy you are!";
         } else {
             output.innerText = "Aggressive";
             icon.src = "/img/prio4_pm_2.svg";

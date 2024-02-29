@@ -36,7 +36,7 @@ public class User {
     private List<UserSubscription> userSubscription;
     public static final int MINIMAL_PASSWORD_LENGTH = 5;
 
-    public String say(String key) {
+    public String getText(String key) {
         return MessageManager.getString(key, Language.ENG, pussyMeter);
     }
 

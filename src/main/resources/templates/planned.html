@@ -50,7 +50,7 @@
         </div>
 
         <div th:if="${planned.isEmpty()}" class="NoTaskPlaceholder">
-            <p>Here will be all your planned tasks... <br> in the meantime enjoy this ball...</p>
+            <p th:utext="${message}"></p>
             <img th:src="|/img/cat_pm_${user.pussyMeter}.svg|" alt="cat">
         </div>
     </main>
