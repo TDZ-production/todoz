@@ -1,6 +1,7 @@
 package com.example.todoz.task;
 
 import com.example.todoz.dtos.TaskUpdateDTO;
+import com.example.todoz.dtos.WeekdayReviewDTO;
 import com.example.todoz.utility.DateManager;
 import com.example.todoz.user.User;
 import com.example.todoz.week.Week;
@@ -89,10 +90,6 @@ public class TaskService {
     @Transactional
     public void deleteTask(Long id, User user) {
         taskRepo.deleteByIdAndUserId(id, user.getId());
-    }
-
-    public List<WeekdayReviewDTO> findWeekdayReviews(User user) {
-        return taskRepo.getWeekdayReview(user.getId());
     }
 
     public List<List<Double>> getGraphData(User user) {
