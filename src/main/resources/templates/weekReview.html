@@ -29,14 +29,16 @@
                 </tr>
             </table>
 
-            <h1 th:style="'color: red'" th:text="|${previousWeek.getDonePercentage()}%|"
-                th:if="${previousWeek.getDonePercentage() <= 30}"></h1>
-            <h1 th:style="'color: #f39875'" th:text="|${previousWeek.getDonePercentage()}%|"
-                th:if="${previousWeek.getDonePercentage() > 30 && previousWeek.getDonePercentage() <= 60}"></h1>
-            <h1 th:style="'color: #83e162'" th:text="|${previousWeek.getDonePercentage()}%|"
-                th:if="${previousWeek.getDonePercentage() > 60}"></h1>
+            <div class = "weeekdays">
+                <span>Su</span>
+                <span>Mo</span>
+                <span>Tu</span>
+                <span>We</span>
+                <span>Th</span>
+                <span>Fr</span>
+                <span>Sa</span>
+            </div>
 
-            <h2>tasks done</h2>
             <p th:text="|Well, you managed to survive through last week with ${previousWeek.getDonePercentage()}% of finished tasks... Not great, not terrible!|"></p>
             <p style="margin-top:0.5rem">
                 <img style="height: 4.7rem" th:src="${previousWeek.getCatImage()}" alt="">

@@ -113,9 +113,7 @@ public class TaskService {
                         .ifPresent(r -> {
                             if (r.count() > maxDivider.get()) maxDivider.set((double)r.count());
                         });
-
         review.forEach(r -> result.get(r.doneAt().getValue() - 1).set(r.priority()-1, r.count()/ maxDivider.get()));
-
         result.add(0, result.get(6));
         result.remove(7);
 

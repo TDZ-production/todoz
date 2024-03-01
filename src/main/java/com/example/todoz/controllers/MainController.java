@@ -33,6 +33,7 @@ public class MainController {
             model.addAttribute("user", getUser(principal));
             model.addAttribute("previousWeek", previousWeek);
             model.addAttribute("upcomingTasks", upcomingTasks);
+            model.addAttribute("graphData", taskService.getGraphData(getUser(principal)));
 
             return "weekReview";
         } else if (currentWeek.isEmpty()) {
@@ -48,31 +49,6 @@ public class MainController {
         model.addAttribute("publicKey", notificationService.getPublicKey());
 
         return "index";
-    }
-    // Endpoint for testing the chart - delete before merge
-    @GetMapping("/test")
-    public String showTest(Model model, Principal principal) {
-        model.addAttribute("user", getUser(principal));
-        Optional<Week> currentWeek = weekService.findCurrentWeek(getUser(principal));
-        Optional<Week> optPreviousWeek = weekService.findPreviousWeek(getUser(principal));
-        Week previousWeek = optPreviousWeek.get();
-//        System.out.println(taskService.findWeekdayReviews(getUser(principal)));
-
-        List<List<Double>> testList = new ArrayList<>();
-        Random random = new Random();
-        for (int i=0; i<7; i++) {
-            testList.add(new ArrayList<>());
-            for (int j=0; j<4; j++) {
-                testList.get(i).add(random.nextDouble());
-            }
-        }
-
-        List<Task> upcomingTasks = taskService
-                .findUpcomingTasks(getUser(principal), previousWeek.getWeekNumber(), DateManager.formattedCurrentWeek());
-        model.addAttribute("previousWeek", previousWeek);
-        model.addAttribute("graphData", taskService.getGraphData(getUser(principal)));
-        model.addAttribute("upcomingTasks", upcomingTasks);
-        return "weekReview";
     }
 
     @PostMapping("/startNewWeek")
