@@ -1,7 +1,13 @@
 package com.example.todoz.controllers;
 
-import com.example.todoz.models.*;
-import com.example.todoz.services.*;
+import com.example.todoz.notification.NotificationService;
+import com.example.todoz.utility.*;
+import com.example.todoz.task.Task;
+import com.example.todoz.task.TaskService;
+import com.example.todoz.user.User;
+import com.example.todoz.user.UserService;
+import com.example.todoz.week.Week;
+import com.example.todoz.week.WeekService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -9,7 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -33,6 +40,7 @@ public class MainController {
             model.addAttribute("user", getUser(principal));
             model.addAttribute("previousWeek", previousWeek);
             model.addAttribute("upcomingTasks", upcomingTasks);
+            model.addAttribute("currentWeekNumber", DateManager.getWeekNumber());
             model.addAttribute("graphData", taskService.getGraphData(getUser(principal)));
 
             return "weekReview";
@@ -96,7 +104,7 @@ public class MainController {
     @GetMapping("planned")
     public String showPlanned(Model model, Principal principal) {
         model.addAttribute("planned",
-                taskService.mapTasksByYearAndWeek(taskService.findPlannedTasks(getUser(principal), DateManager.formattedCurrentWeek())));
+                taskService.sortTasksByYearAndWeek(taskService.findPlannedTasks(getUser(principal))));
         model.addAttribute("user", getUser(principal));
         return "planned";
     }

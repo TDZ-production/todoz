@@ -1,13 +1,13 @@
 package com.example.todoz.controllers;
 
 import com.example.todoz.dtos.TaskUpdateDTO;
-import com.example.todoz.services.DateManager;
-import com.example.todoz.models.Task;
-import com.example.todoz.models.User;
-import com.example.todoz.models.Week;
-import com.example.todoz.services.TaskService;
-import com.example.todoz.services.UserService;
-import com.example.todoz.services.WeekService;
+import com.example.todoz.utility.DateManager;
+import com.example.todoz.task.Task;
+import com.example.todoz.user.User;
+import com.example.todoz.week.Week;
+import com.example.todoz.task.TaskService;
+import com.example.todoz.user.UserService;
+import com.example.todoz.week.WeekService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,6 +18,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,11 +30,15 @@ public class TaskController {
 
     @PostMapping("add")
     public String add(Task task, LocalDate maybeDueDate, Principal principal, RedirectAttributes ra) {
-        task.digestDueDate(maybeDueDate, getWeek(principal));
-        task.setUser(getUser(principal));
-        taskService.save(task);
-        if (task.getDueDate() != null && DateManager.getPrefixedWeek(task.getDueDate()) > DateManager.formattedCurrentWeek()) {
-            ra.addFlashAttribute("plannedTask", true);
+        Optional<Week> optWeek = weekService.findCurrentWeek(getUser(principal));
+
+        if (optWeek.isPresent()) {
+            task.digestDueDate(maybeDueDate, optWeek.get());
+            task.setUser(getUser(principal));
+            taskService.save(task);
+            if (task.getDueDate() != null && DateManager.getPrefixedWeek(task.getDueDate()) > DateManager.formattedCurrentWeek()) {
+                ra.addFlashAttribute("plannedTask", true);
+            }
         }
 
         return "redirect:/";
@@ -82,6 +87,6 @@ public class TaskController {
     }
 
     private Week getWeek(Principal principal) {
-        return weekService.getCurrentWeek(getUser(principal));
+        return weekService.findOrCreateCurrentWeek(getUser(principal));
     }
 }

@@ -43,12 +43,12 @@
             <p style="margin-top:0.5rem">
                 <img style="height: 4.7rem" th:src="${previousWeek.getCatImage()}" alt="">
             </p>
-            <p class="weekNote">Select tasks you want in week <span th:text="|${previousWeek.nextWeekNumber()}|"/>.<br/>You
+            <p class="weekNote">Select tasks you want in week <span th:text="|${currentWeekNumber}|"/>.<br/>You
                 can look back on&nbsp;your&nbsp;week and&nbsp;retrospect. Keep your&nbsp;week clean and&nbsp;focused!
                 <span th:if="${upcomingTasks.size() > 0}"> Planned&nbsp;tasks are already selected.</span></p>
         </div>
 
-        <form th:action="@{/startNewWeek}" th:method="post" id="form">
+        <form th:action="@{/startNewWeek}" th:method="post">
 
             <div class="task" th:each="task : ${upcomingTasks}" th:data-done="${task.done}">
                 <span th:classappend="|prio${task.getPriority()}|"></span>

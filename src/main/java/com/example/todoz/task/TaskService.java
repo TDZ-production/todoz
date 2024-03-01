@@ -1,11 +1,9 @@
-package com.example.todoz.services;
+package com.example.todoz.task;
 
 import com.example.todoz.dtos.TaskUpdateDTO;
-import com.example.todoz.dtos.WeekdayReviewDTO;
-import com.example.todoz.models.Task;
-import com.example.todoz.models.User;
-import com.example.todoz.models.Week;
-import com.example.todoz.repos.TaskRepo;
+import com.example.todoz.utility.DateManager;
+import com.example.todoz.user.User;
+import com.example.todoz.week.Week;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +23,11 @@ public class TaskService {
     }
 
     public List<Task> findUpcomingTasks(User user, Integer previousWeekNumber, Integer currentWeekNumber) {
-        return taskRepo.findAllByUserIdAndDueDateBetweenOrderByDueDate(user.getId(), DateManager.getNextSunday(previousWeekNumber), DateManager.getNextSunday(currentWeekNumber));
+        return taskRepo.findAllByUserIdAndDueDateBetweenAndLeftBehindNullOrderByDueDate(user.getId(), DateManager.getNextSunday(previousWeekNumber), DateManager.getNextSunday(currentWeekNumber));
     }
 
-    public List<Task> findPlannedTasks(User user, Integer currentWeek) {
-        return taskRepo.findAllByUserIdAndDueDateAfterOrderByDueDate(user.getId(), DateManager.getNextSunday(currentWeek));
+    public List<Task> findPlannedTasks(User user) {
+        return taskRepo.findAllByUserIdAndDueDateAfterAndLeftBehindNullOrderByDueDate(user.getId(), DateManager.getNextSunday());
     }
 
     public Map<Integer, Map<Integer, List<Task>>> mapTasksByYearAndWeek(List<Task> tasks) {
@@ -76,8 +74,8 @@ public class TaskService {
 
     public void reAdd(Long taskId, User user, Week week) {
         Task task = findTaskByIdAndUserId(taskId, user);
-        task.setWeek(week);
         task.setLeftBehind(null);
+        task.setWeek(task.getDueDateWeekNumber() <= DateManager.formattedCurrentWeek() ? week : null);
         save(task);
     }
 

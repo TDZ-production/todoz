@@ -1,4 +1,4 @@
-package com.example.todoz.services;
+package com.example.todoz.utility;
 
 import org.springframework.stereotype.Service;
 
@@ -21,6 +21,9 @@ public class DateManager {
         return getYearOfNextOrSameSaturday(date) * 100 + getWeekNumber(date);
     }
 
+    public static Integer getWeekNumber() {
+        return getWeekNumber(now());
+    }
     public static Integer getWeekNumber(TemporalAccessor date) {
         return date.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
     }
@@ -44,9 +47,13 @@ public class DateManager {
         return localDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY)).getYear();
     }
 
+    public static LocalDateTime getNextSunday() {
+        return getNextSunday(DateManager.formattedCurrentWeek());
+    }
+
     public static LocalDateTime getNextSunday(Integer prefixedWeekNumber) {
         return LocalDateTime.now()
                 .with(WeekFields.SUNDAY_START.weekOfWeekBasedYear(), prefixedWeekNumber % 100)
-                .with(TemporalAdjusters.next((DayOfWeek.SUNDAY)));
+                .with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
     }
 }
