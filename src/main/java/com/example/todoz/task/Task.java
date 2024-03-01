@@ -24,6 +24,7 @@ import java.util.Locale;
 @Setter
 public class Task {
 
+    public static final int MAX_PRIORITY = 4;
     @Id
     @GeneratedValue
     private Long id;

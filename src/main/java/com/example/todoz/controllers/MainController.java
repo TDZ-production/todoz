@@ -41,6 +41,7 @@ public class MainController {
             model.addAttribute("previousWeek", previousWeek);
             model.addAttribute("upcomingTasks", upcomingTasks);
             model.addAttribute("currentWeekNumber", DateManager.getWeekNumber());
+            model.addAttribute("graphData", taskService.getGraphData(getUser(principal)));
 
             return "weekReview";
         } else if (currentWeek.isEmpty()) {
@@ -103,7 +104,7 @@ public class MainController {
     @GetMapping("planned")
     public String showPlanned(Model model, Principal principal) {
         model.addAttribute("planned",
-                taskService.sortTasksByYearAndWeek(taskService.findPlannedTasks(getUser(principal))));
+                taskService.mapTasksByYearAndWeek(taskService.findPlannedTasks(getUser(principal))));
         model.addAttribute("user", getUser(principal));
         return "planned";
     }

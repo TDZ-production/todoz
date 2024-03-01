@@ -23,14 +23,22 @@
         <h2 class="reviewTitle">Week <span th:text="${previousWeek.getWeekNumberNumber()}"/> Review</h2>
 
         <div class="weekSummary">
-            <h1 th:style="'color: red'" th:text="|${previousWeek.getDonePercentage()}%|"
-                th:if="${previousWeek.getDonePercentage() <= 30}"></h1>
-            <h1 th:style="'color: #f39875'" th:text="|${previousWeek.getDonePercentage()}%|"
-                th:if="${previousWeek.getDonePercentage() > 30 && previousWeek.getDonePercentage() <= 60}"></h1>
-            <h1 th:style="'color: #83e162'" th:text="|${previousWeek.getDonePercentage()}%|"
-                th:if="${previousWeek.getDonePercentage() > 60}"></h1>
+            <table class="area-chart">
+                <tr th:each="day, iterStat : ${graphData}" th:object="${day}" th:unless="${iterStat.index > 5}">
+                    <td th:each="value : ${day}" th:style="|--start:${value}; --end:${graphData.get(iterStat.index + 1).get(valueStat.index)};|"></td></td>
+                </tr>
+            </table>
 
-            <h2>tasks done</h2>
+            <div class = "weeekdays">
+                <span>Su</span>
+                <span>Mo</span>
+                <span>Tu</span>
+                <span>We</span>
+                <span>Th</span>
+                <span>Fr</span>
+                <span>Sa</span>
+            </div>
+
             <p th:text="|Well, you managed to survive through last week with ${previousWeek.getDonePercentage()}% of finished tasks... Not great, not terrible!|"></p>
             <p style="margin-top:0.5rem">
                 <img style="height: 4.7rem" th:src="${previousWeek.getCatImage()}" alt="">

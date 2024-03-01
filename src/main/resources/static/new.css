@@ -732,6 +732,70 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     height: 3.5rem;
 }
 
+/*area chart for week review*/
+.area-chart {
+    margin: auto;
+    padding: 0;
+    border: 0;
+    width: 80%;
+}
+.area-chart tbody{
+    width: 100%;
+    height: 10rem;
+
+    /* Layout */
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+    flex-direction: row;
+}
+.area-chart tr {
+    position: relative;
+    display: block;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+}
+.area-chart td {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 10rem;
+
+    /* Color */
+    background: var(--fillcolor, var(--main-bg-color));
+    opacity: 0.4;
+    clip-path: polygon(
+            0% calc(100% * (1 - var(--start))),
+            100% calc(100% * (1 - var(--end))),
+            100% 100%,
+            0% 100%
+    );
+}
+
+.area-chart td:nth-of-type(1) {
+    --fillcolor: var(--prio1-color);
+}
+.area-chart td:nth-of-type(2) {
+    --fillcolor: var(--prio2-color);
+}
+.area-chart td:nth-of-type(3) {
+    --fillcolor: var(--prio3-color);
+}
+.area-chart td:nth-of-type(4) {
+    --fillcolor: var(--prio4-color);
+}
+
+.weeekdays {
+    width: 83%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    color: var(--light-font-color);
+}
+
 @media (max-width: 459px) {
     header {
         /*position: fixed;*/

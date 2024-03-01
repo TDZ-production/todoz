@@ -4,7 +4,8 @@ import com.example.todoz.utility.DateManager;
 import com.example.todoz.user.User;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.time.DayOfWeek;
+import java.util.*;
 
 @Service
 public class WeekService {
