@@ -79,8 +79,9 @@ public class TaskController {
     }
 
     @PostMapping("delete/{id}")
-    public String deleteTask(@PathVariable Long id, Principal principal) {
+    public String deleteTask(@PathVariable Long id, Principal principal, RedirectAttributes ra) {
         taskService.deleteTask(id, getUser(principal));
+        ra.addFlashAttribute("deletedTask", true);
 
         return "redirect:/leftBehind";
     }

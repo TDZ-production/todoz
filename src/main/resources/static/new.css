@@ -686,11 +686,18 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     left: 15%;
 }
 
-
 #leftBehind {
     color: #d7703d;
     border: 1px solid #d7703d;
     background-color: var(--pink-stickit-color);
+}
+
+
+#deletedTask {
+    color: #d7703d;
+    border: 1px solid #d7703d;
+    background-color: var(--pink-stickit-color);
+    left: 5%;
 }
 
 .fadeoutMessage.fade-out {
