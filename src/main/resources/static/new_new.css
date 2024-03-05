@@ -6,20 +6,32 @@
 :root {
     --body-bg-color: #494949;
     --main-bg-color: #494949;
-    --font-color: #b0b0b0;
+    --font-color: #cbcbcb;
     --light-font-color: #D1D1D1;
     --main-color: #444443;
-    --pussy-color: #F9C0D3;
-    --link-color: #F9C0D3;
+    --pussy-color: #494949;
+    --pussy-font-color: #F9C0D3;
+    --pussy-slider-color: #F9C0D3;
+    --pussy-submit-border-color: 2px solid #F9C0D3;;
+    --pussy-submit-background-color: rgba(249, 192, 211, 0.6);
+    --link-color: #D1D1D1;
     --input-color: #444443;
-    --pink-stickit-color: #FFC9C9;
-    --pink-stickit-hover: #ffb4b4;
-    --pink-stickit-shadow: #996A6A;
+    --filter-border-color:2px solid #F9C0D3;
+    --filter-background-color:#444443;
+    --filter-button_border-color:2px solid #F9C0D3;
+    --pink-stickit-color: rgba(249, 192, 211, 0.6);
+    --pink-stickit-hover: rgba(249, 192, 211, 0.6);
+    --dateTime-active_button-color: rgba(204, 193, 159, 0.6);
+    --dateTime-active_button-border-color: 2px solid #CCC19F;
+    --dateTime-border-color: #CCC19F;
+    --button-hover-backgroud-color: rgba(209, 209, 209, 0.6);
+    --button-hover-border-color: 2px solid #D1D1D1;
+    --star-border-color:2px solid #262626;
     --border-color: #a2a2a2;
-    --prio1-color: #a9d1e5;
-    --prio2-color: #9EBB95;
-    --prio3-color: #CCC19F;
-    --prio4-color: #C89EAC;
+    --prio1-color: rgba(169, 209, 229, 0.6);
+    --prio2-color: rgba(158, 187, 149, 0.6);
+    --prio3-color: rgba(204, 193, 159, 0.6);
+    --prio4-color: rgba(200, 158, 172, 0.6);
     --add-task-color: #9EBB95;
 }
 
@@ -54,6 +66,22 @@ body {
 
 .app.register, .app.pussyMeter, header.pussyBack {
     background: var(--pussy-color);
+}
+
+.app.pussyMeter{
+    color: var(--pussy-font-color);
+}
+
+.app.pussyMeter .cta{
+    background-color: var(--pussy-submit-background-color);
+    border: var(--pussy-submit-border-color);
+    color: var(--main-bg-color);
+}
+
+.app.pussyMeter .cta:hover{
+    background-color: var(--button-hover-backgroud-color);
+    border: var(--button-hover-border-color);
+    color: var(--font-color);
 }
 
 .app main {
@@ -131,8 +159,8 @@ input, button {
 }
 
 .filters {
-    border-bottom: 2px solid black;
-    background: var(--pink-stickit-color);
+    border-bottom: var(--filter-border-color);
+    background: var(--filter-background-color);
     display: flex;
     gap: .5rem;
     padding: .5rem;
@@ -146,6 +174,8 @@ input, button {
 
 .filters button:hover {
     background: var(--pink-stickit-hover);
+    border: var(--filter-button_border-color);
+    color: var(--body-bg-color);
 }
 
 button, label {
@@ -161,6 +191,12 @@ button.img, .stars button {
 
 button {
     color: inherit;
+}
+
+.dateTime input:hover{
+    background-color: var(--button-hover-backgroud-color);
+    border: var(--button-hover-border-color);
+    color: var(--font-color);
 }
 
 button.cta {
@@ -180,7 +216,7 @@ button.cta {
 }
 
 .stars button + button {
-    border-right: 2px solid var(--border-color);
+    border-right: var(--star-border-color);
 }
 
 h1 {
@@ -291,7 +327,7 @@ main > form button {
 
 .dateTime {
     display: flex;
-    border-bottom: .1rem solid var(--border-color);
+    border-bottom: .1rem solid var(--dateTime-border-color);
     background-color: var(--main-color);
     gap: .5rem;
     padding: .5rem;
@@ -305,7 +341,9 @@ main > form button {
 }
 
 .dateTime .active {
-    background: var(--pink-stickit-color);
+    background: var(--dateTime-active_button-color);
+    border: var(--dateTime-active_button-border-color);
+    color: var(--main-bg-color);
 }
 
 .task .due {
