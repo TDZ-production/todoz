@@ -43,4 +43,10 @@ public class DateManager {
         LocalDate localDate = LocalDate.from(date);
         return localDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY)).getYear();
     }
+
+    public static LocalDateTime getNextSunday(Integer prefixedWeekNumber) {
+        return LocalDateTime.now()
+                .with(WeekFields.SUNDAY_START.weekOfWeekBasedYear(), prefixedWeekNumber % 100)
+                .with(TemporalAdjusters.nextOrSame((DayOfWeek.SUNDAY)));
+    }
 }
