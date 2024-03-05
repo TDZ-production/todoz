@@ -25,7 +25,7 @@ public class UserSubscription {
     private String authKey;
     private String p256dhKey;
 
-    private LocalTime created;
+    private LocalTime createdAt;
     @ManyToOne
     private User user;
 
@@ -34,7 +34,7 @@ public class UserSubscription {
         this.authKey= subscription.keys.auth;
         this.p256dhKey = subscription.keys.p256dh;
         this.user = user;
-        this.created = LocalTime.now();
+        this.createdAt = LocalTime.now();
     }
 
     public UserSubscription() {
