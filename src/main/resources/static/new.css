@@ -680,20 +680,17 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     border-radius: .3rem;
     padding: .666rem;
     transition: opacity 1s ease-out;
-}
-
-#planned {
     color: green;
     border: 1px solid green;
     background-color: var(--prio2-color);
-    left: 20%;
+    left: 15%;
 }
+
 
 #leftBehind {
     color: #d7703d;
     border: 1px solid #d7703d;
     background-color: var(--pink-stickit-color);
-    left: 16%;
 }
 
 .fadeoutMessage.fade-out {
