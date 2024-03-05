@@ -39,6 +39,9 @@ public class TaskController {
             if (task.getDueDate() != null && DateManager.getPrefixedWeek(task.getDueDate()) > DateManager.formattedCurrentWeek()) {
                 ra.addFlashAttribute("plannedTask", true);
             }
+            if(optWeek.get().getTasks().size() == 1){
+                ra.addFlashAttribute("firstTask", true);
+            }
         }
 
         return "redirect:/";
