@@ -63,8 +63,9 @@ public class TaskController {
     }
 
     @PostMapping("re-add/{id}")
-    public String reAdd(@PathVariable Long id, Principal principal) {
+    public String reAdd(@PathVariable Long id, Principal principal, RedirectAttributes ra) {
         taskService.reAdd(id, getUser(principal), getWeek(principal));
+        ra.addFlashAttribute("reAddedTask", true);
 
         return "redirect:/leftBehind";
     }

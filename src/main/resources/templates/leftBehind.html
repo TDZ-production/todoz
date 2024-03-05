@@ -48,6 +48,7 @@
     </main>
     <footer>
         <p th:if="${deletedTask} == true"  class="fadeoutMessage" id="deletedTask"> You have completely deleted the task </p>
+        <p th:if="${reAddedTask} == true"  class="fadeoutMessage"> You have readmitted the task</p>
     </footer>
 </section>
 </body>
