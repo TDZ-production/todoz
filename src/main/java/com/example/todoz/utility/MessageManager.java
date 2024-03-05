@@ -1,22 +1,25 @@
-package com.example.todoz.services;
+package com.example.todoz.utility;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.util.ResourceUtils;
-
+import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class MessageManager {
-    private static Map<Language, Map<String, String[]>> db = new HashMap<>();
+    private static Map<Language, Map<String, String[]>> textDataBase = new HashMap<>();
 
     static {
-        ObjectMapper mapper = new ObjectMapper();
 
         for (Language language : Language.values()) {
-            try {
-                db.put(language, mapper.readValue(ResourceUtils.getFile(String.format("classpath:messages_%s.json", language)), new TypeReference<Map<String, String[]>>() {}));
+            try (Scanner scanner = new Scanner(new File(String.format("src/main/resources/messages_%s.csv", language)))) {
+                Map<String, String[]> languageText = new HashMap<>();
+                while(scanner.hasNextLine()){
+                    String[] parts = scanner.nextLine().split(":");
+                    languageText.put(parts[0], Arrays.copyOfRange(parts, 1, parts.length));
+                }
+                textDataBase.put(language, languageText);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -25,7 +28,7 @@ public class MessageManager {
 
     public static String getString(String key, Language lang, Integer pussyMeter) {
 
-        String[] labels = db.get(lang).get(key);
+        String[] labels = textDataBase.get(lang).get(key);
 
         return labels[pussyMeter % labels.length];
     }

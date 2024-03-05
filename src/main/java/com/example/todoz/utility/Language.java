@@ -1,4 +1,4 @@
-package com.example.todoz.services;
+package com.example.todoz.utility;
 
 public enum Language {
     ENG,

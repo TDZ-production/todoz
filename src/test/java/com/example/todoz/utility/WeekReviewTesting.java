@@ -2,6 +2,7 @@ package com.example.todoz.utility;
 
 import com.example.todoz.task.Task;
 import com.example.todoz.task.TaskService;
+import com.example.todoz.user.User;
 import com.example.todoz.week.Week;
 import com.example.todoz.user.UserService;
 import com.example.todoz.week.WeekService;
@@ -22,7 +23,6 @@ import java.util.Optional;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.mockito.Mockito.*;
 
@@ -55,11 +55,10 @@ public class WeekReviewTesting {
 
         Task doneTask = new Task();
         doneTask.setDescription("doneTask");
-        doneTask.setDone(true);
+        doneTask.setDoneAt(DateManager.now());
 
         Task notDoneTask = new Task();
         notDoneTask.setDescription("notDoneTask");
-        notDoneTask.setDone(false);
 
         Week previuosWeek = new Week();
         previuosWeek.getTasks().add(doneTask);
