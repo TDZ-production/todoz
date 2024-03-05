@@ -30,14 +30,15 @@ public class TaskController {
 
     @PostMapping("add")
     public String add(Task task, LocalDate maybeDueDate, Principal principal, RedirectAttributes ra) {
-        Optional<Week> optWeek = weekService.findCurrentWeek(getUser(principal));
+        User user = getUser(principal);
+        Optional<Week> optWeek = weekService.findCurrentWeek(user);
 
         if (optWeek.isPresent()) {
             task.digestDueDate(maybeDueDate, optWeek.get());
-            task.setUser(getUser(principal));
+            task.setUser(user);
             taskService.save(task);
             if (task.getDueDate() != null && DateManager.getPrefixedWeek(task.getDueDate()) > DateManager.formattedCurrentWeek()) {
-                ra.addFlashAttribute("plannedTask", true);
+                ra.addFlashAttribute("plannedTask", user.getText("index_planned_popup"));
             }
         }
 
@@ -68,9 +69,10 @@ public class TaskController {
 
     @PostMapping("leaveBehind/{id}")
     public String leaveBehind(@PathVariable Long id, Principal principal, RedirectAttributes ra, @RequestHeader String referer) throws URISyntaxException {
-        taskService.leaveBehind(id, getUser(principal));
+        User user = getUser(principal);
+        taskService.leaveBehind(id, user);
         String refererURI = new URI(referer).getPath();
-        ra.addFlashAttribute("leftBehindTask", true);
+        ra.addFlashAttribute("leftBehindTask", user.getText("index_left_behind_popup"));
 
         return "redirect:" + refererURI;
     }

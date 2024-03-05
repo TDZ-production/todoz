@@ -76,8 +76,8 @@
     </main>
 
     <footer>
-        <p th:if="${plannedTask} == true" class="fadeoutMessage" id="planned">Task added to "Planned"</p>
-        <p th:if="${leftBehindTask} == true" class="fadeoutMessage" id="leftBehind">Task added to "Left Behind"</p>
+        <p th:if="${plannedTask}" class="fadeoutMessage" id="planned" th:utext="${plannedTask}"></p>
+        <p th:if="${leftBehindTask}" class="fadeoutMessage" id="leftBehind" th:utext="${leftBehindTask}"></p>
         <form method="post" th:action="@{/tasks/add}">
             <button type="submit" name="priority" value="4" class="hidden"></button>
 

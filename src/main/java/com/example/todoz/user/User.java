@@ -40,7 +40,7 @@ public class User {
     public static final int MINIMAL_PASSWORD_LENGTH = 5;
 
     public String getText(String key) {
-        return MessageManager.getString(key, Language.CZE, pussyMeter);
+        return MessageManager.getString(key, Language.ENG, pussyMeter);
     }
 
     public User(String username, String password, Integer pussyMeter) {

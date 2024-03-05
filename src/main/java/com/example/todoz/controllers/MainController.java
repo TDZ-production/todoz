@@ -29,24 +29,25 @@ public class MainController {
 
     @GetMapping
     public String showIndex(Model model, Principal principal) {
-        Optional<Week> currentWeek = weekService.findCurrentWeek(getUser(principal));
-        Optional<Week> optPreviousWeek = weekService.findPreviousWeek(getUser(principal));
+        User user = getUser(principal);
+        Optional<Week> currentWeek = weekService.findCurrentWeek(user);
+        Optional<Week> optPreviousWeek = weekService.findPreviousWeek(user);
 
 
         if (currentWeek.isEmpty() && optPreviousWeek.isPresent()) {
             Week previousWeek = optPreviousWeek.get();
             List<Task> upcomingTasks = taskService
-                    .findUpcomingTasks(getUser(principal), previousWeek.getWeekNumber(), DateManager.formattedCurrentWeek());
+                    .findUpcomingTasks(user, previousWeek.getWeekNumber(), DateManager.formattedCurrentWeek());
 
-            model.addAttribute("user", getUser(principal));
+            model.addAttribute("user", user);
             model.addAttribute("previousWeek", previousWeek);
             model.addAttribute("upcomingTasks", upcomingTasks);
             model.addAttribute("currentWeekNumber", DateManager.getWeekNumber());
-            model.addAttribute("graphData", taskService.getGraphData(getUser(principal)));
+            model.addAttribute("graphData", taskService.getGraphData(user));
 
             return "weekReview";
         } else if (currentWeek.isEmpty()) {
-            Week week = new Week(getUser(principal));
+            Week week = new Week(user);
             weekService.save(week);
 
             model.addAttribute("currentWeek", week);
@@ -54,9 +55,9 @@ public class MainController {
             model.addAttribute("currentWeek", currentWeek.get());
         }
 
-        model.addAttribute("user", getUser(principal));
+        model.addAttribute("user", user);
         model.addAttribute("publicKey", notificationService.getPublicKey());
-        model.addAttribute("message", getUser(principal).getText("index"));
+        model.addAttribute("message", user.getText("index_body"));
 
         return "index";
     }
