@@ -1,4 +1,4 @@
-package com.example.todoz.services;
+package com.example.todoz.notification;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -7,8 +7,9 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 
-import com.example.todoz.models.User;
-import com.example.todoz.models.UserSubscription;
+import com.example.todoz.user.User;
+import com.example.todoz.userSub.UserSubscription;
+import com.example.todoz.userSub.UserSubscriptionService;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;

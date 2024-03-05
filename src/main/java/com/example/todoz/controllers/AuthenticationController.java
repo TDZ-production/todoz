@@ -2,10 +2,10 @@ package com.example.todoz.controllers;
 
 import com.example.todoz.dtos.RegisterDTO;
 import com.example.todoz.prtoken.PasswordResetToken;
-import com.example.todoz.services.EmailService;
-import com.example.todoz.models.User;
+import com.example.todoz.utility.EmailService;
+import com.example.todoz.user.User;
 import com.example.todoz.prtoken.PRTService;
-import com.example.todoz.services.UserService;
+import com.example.todoz.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static com.example.todoz.models.User.MINIMAL_PASSWORD_LENGTH;
+import static com.example.todoz.user.User.MINIMAL_PASSWORD_LENGTH;
 
 @Controller
 @RequiredArgsConstructor

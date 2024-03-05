@@ -1,6 +1,5 @@
-package com.example.todoz.repos;
+package com.example.todoz.userSub;
 
-import com.example.todoz.models.UserSubscription;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 

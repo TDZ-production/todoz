@@ -1,8 +1,8 @@
 package com.example.todoz.controllers;
 
-import com.example.todoz.models.User;
-import com.example.todoz.services.NotificationService;
-import com.example.todoz.services.UserService;
+import com.example.todoz.user.User;
+import com.example.todoz.notification.NotificationService;
+import com.example.todoz.user.UserService;
 import nl.martijndwars.webpush.Subscription;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
