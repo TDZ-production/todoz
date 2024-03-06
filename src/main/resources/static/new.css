@@ -674,6 +674,10 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 }
 
 .fadeoutMessage {
+    margin-inline: auto;
+    left: 0;
+    right: 0;
+    width: fit-content;
     position: absolute;
     top: -4rem;
     font-size: 1.1rem;
@@ -682,8 +686,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     transition: opacity 1s ease-out;
     color: green;
     border: 1px solid green;
-    background-color: var(--prio2-color);
-    left: 15%;
+    background-color:var(--prio2-color);
 }
 
 #leftBehind {
