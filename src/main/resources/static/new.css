@@ -736,16 +736,14 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     position: relative;
 }
 
-/*.date-input input[type="date"] {*/
-/*    padding-right: 30px; */
-/*}*/
 
 .date-input img {
     position: absolute;
-    right: 13px;
+    right: 12px;
     top: 50%;
     transform: translateY(-50%);
-    width: 40px;
+    width: 35px;
+    pointer-events: none;
 }
 
 
