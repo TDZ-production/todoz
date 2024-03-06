@@ -59,13 +59,15 @@
         <form method="post" th:action="@{/tasks/add}">
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
-            <label>
-                <input type="date" name="maybeDueDate" id="date">
+            <label  class="date-input">
+                <img src="/img/calendar_icon.svg" alt="due date">
+                <input type="date" name="maybeDueDate">
             </label>
 
             <div class="addTask">
                 <input type="text" placeholder="new task" name="description" id="add" required autofocus
                        autocomplete="off">
+
             </div>
 
             <div class="stars">
