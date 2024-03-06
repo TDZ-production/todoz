@@ -35,6 +35,7 @@
         </div>
         <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|" id="filter-text" onclick="toggleDropdown('filters')"></h2>
         <div class="week-progressbar"></div>
+        <button id="toggleButton">|</button>
     </header>
 
     <div class="filters" style="display: none;">
@@ -121,6 +122,25 @@
     </footer>
 
     <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            const toggleButton = document.getElementById("toggleButton");
+            const rootElement = document.documentElement;
+            const theme = localStorage.getItem("theme");
+
+            theme && rootElement.classList.add(theme);
+
+
+            toggleButton.addEventListener("click", function() {
+                rootElement.classList.toggle("dark");
+
+                if (rootElement.classList.contains("dark")) {
+                    localStorage.setItem("theme", "dark");
+                } else {
+                    localStorage.removeItem("theme");
+                }
+            });
+        });
+
         /*<![CDATA[*/
         const publicKeyBase64 =  /*[[@{${publicKey}}]]*/ 0;
         /*]]>*/
