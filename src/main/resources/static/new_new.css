@@ -3,36 +3,113 @@
     src: url("webfonts/Virgil.woff2");
 }
 
+
 :root {
-    --body-bg-color: #494949;
-    --main-bg-color: #494949;
+    --feedback-text-area-color: #fcfcf6;
+    --feedback-text-area-border-color:#b78300;
+    --feedback-submit-color: rgb(77, 122, 65);
+    --feedback-submit-backgroud-color: rgb(164, 201, 153);
+    --feedback-submit-backgroud-hover-color: rgba(164, 201, 153, 0.73);
+    --feedback-discord-color:#7678d2;
+    --feedback-discord-background-color: rgba(137, 137, 192, 0.82);
+    --body-bg-color: #ededed;
+    --main-bg-color: #FCFAEE;
+    --task-input-color: #fcf9e5;
+    --font-color: #333;
+    --light-font-color: #919191;
+    --main-color: #fff0c1;
+    --pussy-color: #FFF0F6;
+    --pussy-font-color: #333;
+    --pussy-slider-color: #F9C0D3;
+    --pussy-submit-border-color: 2px solid #333;
+    --pussy-submit-background-color: #F9C0D3;
+    --link-color: #b78300;
+    --input-color: #fcfcf6;
+    --filter-border-color:2px solid #b75676;
+    --filter-background-color: #FFC9C9;
+    --filter-button_border-color:2px solid #b75676;
+    --pink-stickit-color: #FFC9C9;
+    --pink-stickit-hover: rgba(255, 180, 180, 0.57);
+    --dateTime-active_button-color: #dcc23f;
+    --dateTime-active_button-border-color: 2px solid #b78300;
+    --dateTime-border-color: #b78300;
+    --button-hover-backgroud-color: #f3e494;
+    --button-hover-border-color: 2px solid #b78300;
+    --star-border-color:2px solid #dcc798;
+    --border-color: #e9dbaf;
+    --prio1-color: #c7e9fb;
+    --prio2-color: #c3eab5;
+    --prio3-color: #f5e48d;
+    --prio4-color: #ffb692;
+    --prio1-hover-color: #c7e9fb;
+    --prio2-hover-color: #c3eab5;
+    --prio3-hover-color: #f5e48d;
+    --prio4-hover-color: #ffb692;
+    --add-task-color: #ebffe7;
+    --add-task-color-hover: #D1D1D1;
+    --positive-output-background-color: rgb(175, 239, 155);
+    --positive-output-color: rgb(93, 152, 77);
+    --negative-output-background-color: #eaa599;
+    --negative-output-color: #ce5d44;
+    --weekreview-date-color: rgb(97, 155, 79);
+    --weekreview-button-background-color: rgb(179, 236, 161);
+    --weekreview-button-color:rgb(97, 155, 79);
+    --weekreview-note-background-color:#f5e48d59;
+    --cta-font-color: #333;
+}
+
+:root.dark {
+    --feedback-text-area-color: #949494;
+    --feedback-text-area-border-color:#cbcbcb;
+    --feedback-submit-color: rgb(164, 201, 153);
+    --feedback-submit-backgroud-color: rgba(158, 187, 149, 0.6);
+    --feedback-submit-backgroud-hover-color: rgb(164, 201, 153);
+    --feedback-discord-color:#7678d2;
+    --feedback-discord-background-color:#646493d1;
+    --body-bg-color: #373737;
+    --main-bg-color: #3c3c3c;
+    --task-input-color: #434343;
     --font-color: #cbcbcb;
     --light-font-color: #D1D1D1;
-    --main-color: #444443;
-    --pussy-color: #494949;
+    --main-color: #373737;
+    --pussy-color: #373737;
     --pussy-font-color: #F9C0D3;
     --pussy-slider-color: #F9C0D3;
     --pussy-submit-border-color: 2px solid #F9C0D3;;
-    --pussy-submit-background-color: rgba(249, 192, 211, 0.6);
+    --pussy-submit-background-color: rgba(249, 192, 211, 0.9);
     --link-color: #D1D1D1;
-    --input-color: #444443;
+    --input-color: #373737;
     --filter-border-color:2px solid #F9C0D3;
-    --filter-background-color:#444443;
+    --filter-background-color:#373737;
     --filter-button_border-color:2px solid #F9C0D3;
-    --pink-stickit-color: rgba(249, 192, 211, 0.6);
-    --pink-stickit-hover: rgba(249, 192, 211, 0.6);
-    --dateTime-active_button-color: rgba(204, 193, 159, 0.6);
+    --pink-stickit-color: rgba(249, 192, 211, 0.8);
+    --pink-stickit-hover: rgba(249, 192, 211, 0.7);
+    --dateTime-active_button-color: #7e6310;
     --dateTime-active_button-border-color: 2px solid #CCC19F;
-    --dateTime-border-color: #CCC19F;
-    --button-hover-backgroud-color: rgba(209, 209, 209, 0.6);
+    --dateTime-border-color: #7e6310;
+    --button-hover-backgroud-color: rgba(209, 209, 209, 0.3);
     --button-hover-border-color: 2px solid #D1D1D1;
     --star-border-color:2px solid #262626;
     --border-color: #a2a2a2;
-    --prio1-color: rgba(169, 209, 229, 0.6);
-    --prio2-color: rgba(158, 187, 149, 0.6);
-    --prio3-color: rgba(204, 193, 159, 0.6);
-    --prio4-color: rgba(200, 158, 172, 0.6);
-    --add-task-color: #9EBB95;
+    --prio1-color: rgba(169, 209, 229);
+    --prio2-color: rgba(158, 187, 149);
+    --prio3-color: rgba(204, 193, 159);
+    --prio4-color: rgba(200, 158, 172);
+    --prio1-hover-color: rgba(169, 209, 229, 0.6);
+    --prio2-hover-color: rgba(158, 187, 149, 0.6);
+    --prio3-hover-color: rgba(204, 193, 159, 0.6);
+    --prio4-hover-color: rgba(200, 158, 172, 0.6);
+    --add-task-color: rgba(158, 187, 149, 0.6);
+    --add-task-color-hover: #D1D1D1;
+    --positive-output-background-color: rgba(158, 187, 149, 0.6);
+    --positive-output-color: rgba(158, 187, 149);
+    --negative-output-background-color: rgba(200, 158, 172, 0.6);
+    --negative-output-color: rgb(200, 158, 172);
+    --weekreview-date-color: rgb(148, 190, 135);
+    --weekreview-button-background-color:rgba(158, 187, 149, 0.6);
+    --weekreview-button-color:rgba(158, 187, 149);
+    --weekreview-note-background-color:#ffffff17;
+    --cta-font-color: #373737;
 }
 
 * {
@@ -75,7 +152,7 @@ body {
 .app.pussyMeter .cta{
     background-color: var(--pussy-submit-background-color);
     border: var(--pussy-submit-border-color);
-    color: var(--main-bg-color);
+    color: var(--cta-font-color);
 }
 
 .app.pussyMeter .cta:hover{
@@ -175,7 +252,7 @@ input, button {
 .filters button:hover {
     background: var(--pink-stickit-hover);
     border: var(--filter-button_border-color);
-    color: var(--body-bg-color);
+    color: var(--cta-font-color);
 }
 
 button, label {
@@ -200,7 +277,15 @@ button {
 }
 
 button.cta {
-    background: var(--pink-stickit-color);
+    background-color: var(--pussy-submit-background-color);
+    border: var(--pussy-submit-border-color);
+    color: var(--cta-font-color);
+    min-width: 6rem;
+}
+button.cta:hover {
+    background-color: var(--button-hover-backgroud-color);
+    border: var(--button-hover-border-color);
+    color: var(--font-color);
     min-width: 6rem;
 }
 
@@ -454,19 +539,19 @@ footer input, .stars button {
 }
 
 .stars > :nth-child(1):hover, .stars > :nth-child(1).active {
-    background: var(--prio4-color)
+    background: var(--prio4-hover-color)
 }
 
 .stars > :nth-child(2):hover, .stars > :nth-child(2).active {
-    background: var(--prio3-color)
+    background: var(--prio3-hover-color)
 }
 
 .stars > :nth-child(3):hover, .stars > :nth-child(3).active {
-    background: var(--prio2-color)
+    background: var(--prio2-hover-color)
 }
 
 .stars > :nth-child(4):hover, .stars > :nth-child(4).active {
-    background: var(--prio1-color)
+    background: var(--prio1-hover-color)
 }
 
 
@@ -491,6 +576,10 @@ footer input, .stars button {
     margin-top: 2rem;
 }
 
+p.weekNote{
+    background-color: var(--weekreview-note-background-color);
+}
+
 .weekSummary .weekNote, .week-review .awesome {
     font-size: 86%;
     padding: 1rem;
@@ -508,9 +597,17 @@ footer input, .stars button {
 }
 
 button.startWeek {
-    background: var(--prio2-color);
+    background: var(--weekreview-button-background-color);
+    color: var(--weekreview-button-color);
+    border: 2px solid var(--weekreview-button-color);
     margin-bottom: 25vh;
     margin-top: 10vh;
+}
+
+button.startWeek:hover {
+    background-color: var(--button-hover-backgroud-color);
+    border: var(--button-hover-border-color);
+    color: var(--font-color);
 }
 
 .stickman {
@@ -608,19 +705,29 @@ button.startWeek {
 textarea {
     width: 21rem;
     height: 5rem;
-    border: 2px solid #333;
+    border: 2px solid var(--feedback-text-area-border-color);
+    background-color: var(--feedback-text-area-color);
     font: inherit;
     border-radius: .5rem;
 }
-
+textarea:focus {
+    color:var(--feedback-text-area-border-color);
+}
 #received {
     padding: .8rem;
-    color: darkgreen;
+    color: var(--positive-output-color);
 }
 
 #formButton {
     margin-top: 0;
-    background: #C3EDCE;
+    border: 1px solid var(--feedback-submit-color);
+    background: var(--feedback-submit-backgroud-color);
+    color: var(--feedback-submit-color);
+}
+
+#formButton:hover {
+    background: var(--feedback-submit-backgroud-hover-color);
+    color: var(--main-bg-color);
 }
 
 .discordFeedback {
@@ -628,10 +735,15 @@ textarea {
     cursor: pointer;
     padding: .625rem;
     text-align: center;
-    border: 2px solid #333;
+    border: 2px solid var(--feedback-discord-color);
     border-radius: .5rem;
     width: 15rem;
-    background: #d9d9ff
+    background: var(--feedback-discord-background-color);
+}
+
+.discordFeedback:hover {
+    background-color: var(--button-hover-backgroud-color);
+    border: var(--button-hover-border-color);
 }
 
 .discordFeedback img {
@@ -652,9 +764,14 @@ textarea {
 }
 
 .task:has(.cross), .task:has(input[value="true"]) {
-    background: var(--input-color);
+    background: var(--task-input-color);
 }
-
+.weekIcon {
+    color: var(--weekreview-date-color);
+}
+.weekIcon:hover {
+    color: var(--weekreview-date-hover-color);
+}
 span.weekIcon, input.toDelegate {
     display: none;
 }
@@ -721,16 +838,16 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 }
 
 #planned {
-    color: green;
-    border: 1px solid green;
-    background-color: var(--prio2-color);
+    color: var(--positive-output-color);
+    border: 1px var(--positive-output-color);
+    background-color: var(--positive-output-background-color);
     left: 20%;
 }
 
 #leftBehind {
-    color: #d7703d;
-    border: 1px solid #d7703d;
-    background-color: var(--pink-stickit-color);
+    color: var(--negative-output-color);
+    border: 1px solid var(--negative-output-color);
+    background-color: var(--negative-output-background-color);
     left: 16%;
 }
 
