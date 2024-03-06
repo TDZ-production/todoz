@@ -41,7 +41,7 @@
 
             <p th:text="|Well, you managed to survive through last week with ${previousWeek.getDonePercentage()}% of finished tasks... Not great, not terrible!|"></p>
             <p style="margin-top:0.5rem">
-                <img style="height: 4.7rem" th:src="${previousWeek.getCatImage()}" alt="">
+                <img style="height: 8rem;margin-left: -1.5rem" th:src="${previousWeek.getCatImage()}" alt="">
             </p>
             <p class="weekNote">Select tasks you want in week <span th:text="|${currentWeekNumber}|"/>.<br/>You
                 can look back on&nbsp;your&nbsp;week and&nbsp;retrospect. Keep your&nbsp;week clean and&nbsp;focused!
@@ -58,8 +58,7 @@
                     <input type="checkbox" class="toDelegate" onclick="updateButton()" name="taskIds"
                            th:value="${task.id}" checked>
                     <span class="weekIcon"><img class="icon-unchecked" src="/img/week_review_icon_add.svg"></span>
-                    <span class="weekIcon" th:style="'color: green'"
-                          th:text="|due by ${task.getDueDateDayOfWeek()}|"></span>
+                    <span class="weekIcon" th:text="|due by ${task.getDueDateDayOfWeek()}|"></span>
                 </label>
             </div>
 
@@ -74,7 +73,7 @@
                     <input type="checkbox" class="toDelegate" onclick="updateButton()" name="taskIds"
                            th:value="${task.id}">
                     <span class="weekIcon"><img class="icon-unchecked" src="/img/week_review_icon_add.svg"></span>
-                    <span class="weekIcon" th:style="'color: green'">added</span>
+                    <span class="weekIcon">added</span>
                 </label>
             </div>
 
