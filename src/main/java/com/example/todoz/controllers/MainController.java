@@ -64,12 +64,13 @@ public class MainController {
 
     @PostMapping("/startNewWeek")
     public String startNewWeek(Principal principal, @RequestParam(value = "taskIds", required = false) List<Long> taskIds, @RequestParam(value = "leftBehinds", required = false) List<Long> leftBehinds) {
-        Week week = new Week(getUser(principal));
+        User user = getUser(principal);
+        Week week = new Week(user);
         weekService.save(week);
 
         if (taskIds != null && !taskIds.isEmpty()) {
             taskIds.stream()
-                    .map(taskId -> taskService.findTaskByIdAndUserId(taskId, getUser(principal)))
+                    .map(taskId -> taskService.findTaskByIdAndUserId(taskId, user))
                     .forEach(task -> {
                         if (task.isDone()) {
                             taskService.save(task.copy(week));
@@ -82,7 +83,7 @@ public class MainController {
 
         if (leftBehinds != null && !leftBehinds.isEmpty()) {
             leftBehinds.stream()
-                    .map(leftID -> taskService.findTaskByIdAndUserId(leftID, getUser(principal)))
+                    .map(leftID -> taskService.findTaskByIdAndUserId(leftID, user))
                     .filter(t -> !t.isDone())
                     .peek(t -> t.setLeftBehind(DateManager.now()))
                     .forEach(taskService::save);
@@ -99,31 +100,37 @@ public class MainController {
 
     @PostMapping("/changeMeter")
     public String postPussyMeter(Principal principal, Integer pussyMeter) {
-        getUser(principal).setPussyMeter(pussyMeter);
-        userService.save(getUser(principal));
+        User user = getUser(principal);
+
+        user.setPussyMeter(pussyMeter);
+        userService.save(user);
         return "redirect:/";
     }
 
     @GetMapping("planned")
     public String showPlanned(Model model, Principal principal) {
+        User user = getUser(principal);
+
         model.addAttribute("planned",
-                taskService.mapTasksByYearAndWeek(taskService.findPlannedTasks(getUser(principal))));
-        model.addAttribute("user", getUser(principal));
-        model.addAttribute("message", getUser(principal).getText("planned"));
+                taskService.mapTasksByYearAndWeek(taskService.findPlannedTasks(user)));
+        model.addAttribute("user", user);
+        model.addAttribute("message", user.getText("planned"));
         return "planned";
     }
 
     @GetMapping("leftBehind")
     public String showLeftBehind(Model model, Principal principal) {
-        List<Task> leftBehind = taskService.findLeftBehind(getUser(principal));
+        User user = getUser(principal);
+        List<Task> leftBehind = taskService.findLeftBehind(user);
 
         model.addAttribute("leftBehind", leftBehind);
-        model.addAttribute("user", getUser(principal));
-        model.addAttribute("message", getUser(principal).getText("left_behind"));
+        model.addAttribute("user", user);
+        model.addAttribute("message", user.getText("left_behind"));
         return "leftBehind";
     }
 
     private User getUser(Principal principal) {
-        return userService.findByUsername(principal.getName()).orElseThrow(EntityNotFoundException::new);
+        return userService.findByUsername(principal.getName())
+                .orElseThrow(EntityNotFoundException::new);
     }
 }
