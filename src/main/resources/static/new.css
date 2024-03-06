@@ -84,9 +84,9 @@
     --filter-button_border-color:2px solid #F9C0D3;
     --pink-stickit-color: rgba(249, 192, 211, 0.8);
     --pink-stickit-hover: rgba(249, 192, 211, 0.7);
-    --dateTime-active_button-color: #7e6310;
-    --dateTime-active_button-border-color: 2px solid #CCC19F;
-    --dateTime-border-color: #7e6310;
+    --dateTime-active_button-color: rgba(213, 186, 104, 0.8);
+    --dateTime-active_button-border-color: 2px solid #e0c46e;
+    --dateTime-border-color: #d5ba68;
     --button-hover-backgroud-color: rgba(209, 209, 209, 0.3);
     --button-hover-border-color: 2px solid #D1D1D1;
     --star-border-color:2px solid #262626;
