@@ -2,12 +2,13 @@ package com.example.todoz.userSub;
 
 
 import com.example.todoz.user.User;
+import com.example.todoz.utility.DateManager;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import nl.martijndwars.webpush.Subscription;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 
 @Getter
@@ -25,7 +26,7 @@ public class UserSubscription {
     private String authKey;
     private String p256dhKey;
 
-    private LocalTime createdAt;
+    private LocalDateTime createdAt;
     @ManyToOne
     private User user;
 
@@ -34,7 +35,7 @@ public class UserSubscription {
         this.authKey= subscription.keys.auth;
         this.p256dhKey = subscription.keys.p256dh;
         this.user = user;
-        this.createdAt = LocalTime.now();
+        this.createdAt = DateManager.now();
     }
 
     public UserSubscription() {
