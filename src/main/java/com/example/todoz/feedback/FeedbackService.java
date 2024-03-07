@@ -20,7 +20,8 @@ public class FeedbackService {
     }
 
     public void save(Feedback feedback) {
-        repo.save(feedback);
+        Feedback feed = new Feedback(feedback);
+        repo.save(feed);
     }
 
     public Feedback findById(Long id) {
