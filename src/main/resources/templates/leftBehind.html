@@ -51,21 +51,6 @@
         <p th:if="${reAddedTask} == true"  class="fadeoutMessage"> You have readmitted the task</p>
     </footer>
 </section>
+<script src="/js/fadeout.js"></script>
 </body>
 </html>
-<script th:inline="javascript">
-    const el = document.querySelector(".fadeoutMessage");
-    if (el) {
-        setTimeout(() => fadeout(el), 3000);
-    }
-
-    function fadeout(el) {
-        if (el !== null) {
-            el.classList.add("fade-out");
-            setTimeout(() => {
-                el.remove();
-            }, 1000);
-        }
-    }
-
-</script>

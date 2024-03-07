@@ -95,19 +95,6 @@
 <script th:inline="javascript">
     initTaskEditListener();
 
-    const el = document.querySelector(".fadeoutMessage");
-    if (el) {
-        setTimeout(() => fadeout(el), 3000);
-    }
-
-    function fadeout(el) {
-        if (el !== null) {
-            el.classList.add("fade-out");
-            setTimeout(() => {
-                el.remove();
-            }, 1000);
-        }
-    }
     function initTaskEditListener() {
         document.querySelector("main").addEventListener("click", function (event) {
             if (event.target.tagName !== "P") return;
@@ -170,5 +157,6 @@
         });
     }
 </script>
+<script src="/js/fadeout.js"></script>
 </body>
 </html>
