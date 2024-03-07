@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -16,6 +18,29 @@ import java.util.*;
 public class MessageService {
 
     private final WeekService weekService;
+    private final static Map<Language, Map<String, String[]>> textDataBase = new HashMap<>();
+
+    static {
+        for (Language language : Language.values()) {
+            try (Scanner scanner = new Scanner(new File(String.format("src/main/resources/messages_%s.csv", language)))) {
+                Map<String, String[]> languageText = new HashMap<>();
+                while(scanner.hasNextLine()){
+                    String[] parts = scanner.nextLine().split(":");
+                    languageText.put(parts[0], Arrays.copyOfRange(parts, 1, parts.length));
+                }
+                textDataBase.put(language, languageText);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public static String getInAppText(String key, Language lang, Integer pussyMeter) {
+
+        String[] labels = textDataBase.get(lang).get(key);
+
+        return labels[pussyMeter % labels.length];
+    }
 
     public String getNotification(User user) {
 

@@ -3,10 +3,10 @@ package com.example.todoz.user;
 import com.example.todoz.task.Task;
 import com.example.todoz.userSub.UserSubscription;
 import com.example.todoz.utility.Language;
+import com.example.todoz.utility.MessageService;
 import com.example.todoz.week.Week;
 import com.example.todoz.prtoken.PasswordResetToken;
 import com.example.todoz.utility.DateManager;
-import com.example.todoz.utility.MessageManager;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,7 +40,7 @@ public class User {
     public static final int MINIMAL_PASSWORD_LENGTH = 5;
 
     public String getText(String key) {
-        return MessageManager.getString(key, Language.ENG, pussyMeter);
+        return MessageService.getInAppText(key, Language.ENG, pussyMeter);
     }
 
     public User(String username, String password, Integer pussyMeter) {
