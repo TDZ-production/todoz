@@ -34,4 +34,13 @@
         </button>
     </div>
 </th:block>
+
+<!--Fadeout-->
+<th:block th:fragment="planned-fadeout">
+    <p th:if="${plannedTask} == true" class="fadeoutMessage" id="planned">Task added to "Planned"</p>
+</th:block>
+<th:block th:fragment="leftBehind-fadeout">
+    <p th:if="${leftBehindTask} == true" class="fadeoutMessage" id="leftBehind">Task added to "Left Behind"</p>
+</th:block>
+
 </html>
