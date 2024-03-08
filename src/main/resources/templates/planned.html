@@ -60,25 +60,7 @@
                 <input type="text" placeholder="new task" name="description" id="add" required autofocus
                        autocomplete="off">
             </div>
-
-            <div class="stars">
-                <button onclick="setPriority(4)" type="submit" name="priority" value="4" data-umami-event="setPriority"
-                        data-umami-event-priority="4">
-                    <img th:src="|/img/prio4_pm_${user.pussyMeter}.svg|" alt="priority 4">
-                </button>
-                <button onclick="setPriority(3)" type="submit" name="priority" value="3" data-umami-event="setPriority"
-                        data-umami-event-priority="3">
-                    <img th:src="|/img/prio3_pm_${user.pussyMeter}.svg|" alt="priority 3">
-                </button>
-                <button onclick="setPriority(2)" type="submit" name="priority" value="2" data-umami-event="setPriority"
-                        data-umami-event-priority="2">
-                    <img th:src="|/img/prio2_pm_${user.pussyMeter}.svg|" alt="priority 2">
-                </button>
-                <button onclick="setPriority(1)" type="submit" name="priority" value="1" data-umami-event="setPriority"
-                        data-umami-event-priority="1">
-                    <img th:src="|/img/prio1_pm_${user.pussyMeter}.svg|" alt="priority 1">
-                </button>
-            </div>
+            <meta th:replace="fragments.html :: buttons-priority">
         </form>
     </footer>
 </section>
