@@ -17,16 +17,7 @@
             <p th:if="${param.error}">Invalid username or password.</p>
             <p th:if="${param.logout}">You have been logged out.</p>
             <p th:if="${passwordReset} == true">Password reset successful</p>
-
-            <label>
-                <input type="text" name="username" placeholder="email" autofocus required autocapitalize="none">
-            </label>
-
-            <label class="password">
-                <input type="password" name="password" id="password" placeholder="password" required>
-                <img src="/img/eye_icon_closed.svg" id="showPassword" onclick="togglePasswordVisibility()" alt="hide icon">
-            </label>
-
+            <div th:replace="fragments.html :: user-login-fields"></div>
             <p class="alignRight"><a th:href="@{/resetPassword}">Forgot password?</a></p>
             <button class="cta" type="submit" value="Log In">&gt;&gt;</button>
         </form>

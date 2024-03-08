@@ -17,15 +17,7 @@
             <p th:if="${userExists} == true">User with this email exists</p>
             <p th:if="${invalidCredentials} == true">Invalid credentials!</p>
             <p id="placeholder"></p>
-            <label>
-                <input name="username" type="text" id="email" placeholder="email" autofocus autocapitalize="none">
-            </label>
-
-            <label class="password">
-                <input name="password" type="password" id="password" placeholder="password">
-                <img src="/img/eye_icon_closed.svg" id="showPassword" onclick="togglePasswordVisibility()" alt="hide icon">
-            </label>
-
+            <div th:replace="fragments.html :: user-login-fields"></div>
             <label class="slideContainer">
                 <p id="pussyLabel">Neutral</p>
                 <input type="range" name="pussyMeter" step="1" max="2" class="slider" id="range"

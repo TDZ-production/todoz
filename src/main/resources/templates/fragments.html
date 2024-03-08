@@ -16,6 +16,18 @@
 </head>
 
 <body>
+<!-- Fragment for the user and password input fields -->
+<th:block th:fragment="user-login-fields()">
+    <label>
+        <input type="text" name="username" placeholder="email" autofocus required autocapitalize="none">
+    </label>
+
+    <label class="password">
+        <input type="password" name="password" id="password" placeholder="password" required>
+        <img src="/img/eye_icon_closed.svg" id="showPassword" onclick="togglePasswordVisibility()" alt="hide icon">
+    </label>
+</th:block>
+
 <!--If no tasks-->
 <th:block th:fragment="task-placeholder(isEmpty, message, imgSrc)">
     <div th:if="${isEmpty}" class="NoTaskPlaceholder">
