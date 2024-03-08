@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/new.css?1">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <div th:replace="fragments.html :: head-metadata"></div>
+    <meta th:replace="fragments.html :: head-metadata">
 </head>
 <body>
 <section class="app home">
@@ -55,12 +55,11 @@
                     </button>
                 </form>
             </div>
-
-            <form class="delete" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
-                <input type="hidden" name="id" th:value="${task.id}">
-                <button th:class="deleteImg"><img src="/img/leaveBehind_icon.svg" alt="delete icon">
-                </button>
-            </form>
+            <div th:replace="fragments.html :: delete-form(
+            taskId=${task.id},
+            action='/tasks/leaveBehind/' + ${task.id},
+            imgSrc='/img/leaveBehind_icon.svg')">
+            </div>
         </div>
 
         <div th:if="${currentWeek.getSortedTasks().isEmpty()}" class="NoTaskPlaceholder">

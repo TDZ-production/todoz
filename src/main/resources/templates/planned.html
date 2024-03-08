@@ -29,10 +29,11 @@
                               th:data-duedate="*{dueDateDate}"></span>
                     </div>
 
-                    <form class="delete" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
-                        <input type="hidden" name="id" th:value="${task.id}">
-                        <button class="deleteImg"><img src="/img/leaveBehind_icon.svg" alt="delete"></button>
-                    </form>
+                    <div th:replace="fragments.html :: delete-form(
+                     taskId=${task.id},
+                     action='/tasks/leaveBehind/' + ${task.id},
+                     imgSrc='/img/leaveBehind_icon.svg')">
+                    </div>
                 </div>
             </div>
         </div>

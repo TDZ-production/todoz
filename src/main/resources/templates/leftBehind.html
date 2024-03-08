@@ -26,11 +26,11 @@
                     </button>
                 </form>
             </div>
-
-            <form class="delete" th:method="post" th:action="|/tasks/delete/${task.id}|">
-                <input type="hidden" name="id" th:value="${task.id}">
-                <button class="deleteImg"><img src="/img/delete_icon.svg" alt="delete icon"></button>
-            </form>
+            <div th:replace="fragments.html :: delete-form(
+            taskId=${task.id},
+            action='/tasks/delete/' + ${task.id},
+            imgSrc='/img/delete_icon.svg')">
+            </div>
         </div>
 
         <div th:if="${leftBehind.isEmpty()}" class="NoTaskPlaceholder">

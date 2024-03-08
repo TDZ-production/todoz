@@ -1,46 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- Meta fragment -->
-<th:block th:fragment="head-metadata">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <script async src="https://umami.petabyte.farm/script.js"
-            data-website-id="0076ce35-dec8-4042-ba76-0dc4b52922b0"></script>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/iconx32.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/touch-icon.png">
-    <link rel="manifest" href="/manifest.json">
+<head>
+    <!-- Meta fragment -->
+    <th:block th:fragment="head-metadata">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <script async src="https://umami.petabyte.farm/script.js"
+                data-website-id="0076ce35-dec8-4042-ba76-0dc4b52922b0"></script>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="icon" type="image/png" sizes="32x32" href="/icons/iconx32.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/icons/touch-icon.png">
+        <link rel="manifest" href="/manifest.json">
+    </th:block>
+</head>
+
+<body>
+<!--Delete-->
+<th:block th:fragment="delete-form(taskId, action, imgSrc)">
+    <form class="delete" th:method="post" th:action="${action}">
+        <input type="hidden" name="id" th:value="${taskId}">
+        <button class="deleteImg">
+            <img th:src="${imgSrc}" alt="delete icon">
+        </button>
+    </form>
 </th:block>
 
-<!--Buttons priority-->
-<th:block th:fragment="buttons-priority">
-    <div class="stars">
-        <button onclick="setPriority(4)" type="submit" name="priority" value="4" data-umami-event="setPriority"
-                data-umami-event-priority="4">
-            <img th:src="|/img/prio4_pm_${user.pussyMeter}.svg|" alt="priority 4">
-        </button>
-        <button onclick="setPriority(3)" type="submit" name="priority" value="3" data-umami-event="setPriority"
-                data-umami-event-priority="3">
-            <img th:src="|/img/prio3_pm_${user.pussyMeter}.svg|" alt="priority 3">
-        </button>
-        <button onclick="setPriority(2)" type="submit" name="priority" value="2" data-umami-event="setPriority"
-                data-umami-event-priority="2">
-            <img th:src="|/img/prio2_pm_${user.pussyMeter}.svg|" alt="priority 2">
-        </button>
-        <button onclick="setPriority(1)" type="submit" name="priority" value="1" data-umami-event="setPriority"
-                data-umami-event-priority="1">
-            <img th:src="|/img/prio1_pm_${user.pussyMeter}.svg|" alt="priority 1">
-        </button>
-    </div>
-</th:block>
 
-<!--Fadeout-->
-<th:block th:fragment="planned-fadeout">
-    <p th:if="${plannedTask} == true" class="fadeoutMessage" id="planned">Task added to "Planned"</p>
-</th:block>
-<th:block th:fragment="leftBehind-fadeout">
-    <p th:if="${leftBehindTask} == true" class="fadeoutMessage" id="leftBehind">Task added to "Left Behind"</p>
-</th:block>
+</body>
 
+<footer>
+    <!--Buttons priority-->
+    <th:block th:fragment="buttons-priority">
+        <div class="stars">
+            <button onclick="setPriority(4)" type="submit" name="priority" value="4" data-umami-event="setPriority"
+                    data-umami-event-priority="4">
+                <img th:src="|/img/prio4_pm_${user.pussyMeter}.svg|" alt="priority 4">
+            </button>
+            <button onclick="setPriority(3)" type="submit" name="priority" value="3" data-umami-event="setPriority"
+                    data-umami-event-priority="3">
+                <img th:src="|/img/prio3_pm_${user.pussyMeter}.svg|" alt="priority 3">
+            </button>
+            <button onclick="setPriority(2)" type="submit" name="priority" value="2" data-umami-event="setPriority"
+                    data-umami-event-priority="2">
+                <img th:src="|/img/prio2_pm_${user.pussyMeter}.svg|" alt="priority 2">
+            </button>
+            <button onclick="setPriority(1)" type="submit" name="priority" value="1" data-umami-event="setPriority"
+                    data-umami-event-priority="1">
+                <img th:src="|/img/prio1_pm_${user.pussyMeter}.svg|" alt="priority 1">
+            </button>
+        </div>
+    </th:block>
+
+    <!--Fadeout-->
+    <th:block th:fragment="planned-fadeout">
+        <p th:if="${plannedTask} == true" class="fadeoutMessage" id="planned">Task added to "Planned"</p>
+    </th:block>
+    <th:block th:fragment="leftBehind-fadeout">
+        <p th:if="${leftBehindTask} == true" class="fadeoutMessage" id="leftBehind">Task added to "Left Behind"</p>
+    </th:block>
+</footer>
 </html>
