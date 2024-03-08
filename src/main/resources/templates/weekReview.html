@@ -5,20 +5,10 @@
     <title>Week review</title>
     <link rel="stylesheet" href="/new.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <script async src="https://umami.petabyte.farm/script.js"
-            data-website-id="0076ce35-dec8-4042-ba76-0dc4b52922b0"></script>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/iconx32.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/touch-icon.png">
-    <link rel="manifest" href="/manifest.json">
+    <div th:replace="index.html :: head-metadata"></div>
 </head>
 <body>
-
 <section class="app week-review">
-
     <main>
         <h2 class="reviewTitle">Week <span th:text="${previousWeek.getWeekNumberNumber()}"/> Review</h2>
 
