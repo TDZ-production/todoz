@@ -61,11 +61,10 @@
             imgSrc='/img/leaveBehind_icon.svg')">
             </div>
         </div>
-
-        <div th:if="${currentWeek.getSortedTasks().isEmpty()}" class="NoTaskPlaceholder">
-            <p>Meow purrtner! Ready&nbsp;to create your&nbsp;first&nbsp;task?<br>Save the task by picking&nbsp;a&nbsp;priority,
-                to&nbsp;keep things organised!</p>
-            <img th:src="|/img/cat_pm_${user.pussyMeter}.svg|" alt="cat">
+        <div th:replace="fragments.html :: task-placeholder(
+            isEmpty=${currentWeek.getSortedTasks().isEmpty()},
+            message='Meow purrtner! Ready&nbsp;to create your&nbsp;first&nbsp;task?<br>Save the task by picking&nbsp;a&nbsp;priority, to&nbsp;keep things organised!',
+            imgSrc='/img/cat_pm_' + ${user.pussyMeter} + '.svg')">
         </div>
     </main>
 

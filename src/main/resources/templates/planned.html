@@ -37,14 +37,13 @@
                 </div>
             </div>
         </div>
-
+        <div th:replace="fragments.html :: task-placeholder(
+            isEmpty=${planned.isEmpty()},
+            message='Here will be all your planned tasks... <br> in the meantime enjoy this ball...',
+            imgSrc='/img/cat_pm_' + ${user.pussyMeter} + '.svg')">
+        </div>
         <div th:unless="${planned.isEmpty()}" class="plannedPlaceholder">
             <p>The future is only<br> in your hands...</p>
-        </div>
-
-        <div th:if="${planned.isEmpty()}" class="NoTaskPlaceholder">
-            <p>Here will be all your planned tasks... <br> in the meantime enjoy this ball...</p>
-            <img th:src="|/img/cat_pm_${user.pussyMeter}.svg|" alt="cat">
         </div>
     </main>
 

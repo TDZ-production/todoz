@@ -32,10 +32,10 @@
             imgSrc='/img/delete_icon.svg')">
             </div>
         </div>
-
-        <div th:if="${leftBehind.isEmpty()}" class="NoTaskPlaceholder">
-            <p>All your left behind tasks at your display... <br> Oops you don´t have any...</p>
-            <img th:src="|/img/cat_pm_${user.pussyMeter}.svg|" alt="cat">
+        <div th:replace="fragments.html :: task-placeholder(
+            isEmpty=${leftBehind.isEmpty()},
+            message='All your left behind tasks at your display... <br> Oops you don´t have any...',
+            imgSrc='/img/cat_pm_' + ${user.pussyMeter} + '.svg')">
         </div>
     </main>
 </section>
