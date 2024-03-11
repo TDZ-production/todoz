@@ -2,6 +2,7 @@ self.addEventListener('push', function(event) {
     const data = event.data.json();
 
     const options = {
+        icon: "/icons/iconx192.png",
         body: data.body,
         data: {
             click_action: "/"

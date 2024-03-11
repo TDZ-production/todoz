@@ -47,20 +47,24 @@
         </div>
     </main>
 
-    <footer id="plannedFooter">
-        <form method="post" th:action="@{/tasks/add}">
-            <button type="submit" name="priority" value="4" class="hidden"></button>
+    <footer>
+        <p th:if="${leftBehindTask} == true" class="fadeoutMessage" id="redFeedback">Task added to "Left Behind"</p>
+        <div id="plannedFooter">
+            <form method="post" th:action="@{/tasks/add}">
+                <button type="submit" name="priority" value="4" class="hidden"></button>
 
-            <label>
-                <input type="date" name="maybeDueDate" id="date">
-            </label>
+                <label>
+                    <img src="/img/calendar_icon.svg" alt="due date">
+                    <input type="date" name="maybeDueDate" id="date">
+                </label>
 
-            <div class="addTask">
-                <input type="text" placeholder="new task" name="description" id="add" required autofocus
-                       autocomplete="off">
-            </div>
-            <meta th:replace="fragments.html :: buttons-priority">
-        </form>
+                <div class="addTask">
+                    <input type="text" placeholder="new task" name="description" id="add" required autofocus
+                           autocomplete="off">
+                </div>
+                <meta th:replace="fragments.html :: buttons-priority">
+            </form>
+        </div>
     </footer>
 </section>
 <script>
@@ -128,5 +132,6 @@
         });
     }
 </script>
+<script src="/js/fadeout.js"></script>
 </body>
 </html>
