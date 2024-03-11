@@ -1,5 +1,6 @@
 package com.example.todoz.controllers;
 
+import com.example.todoz.dtos.QuoteDTO;
 import com.example.todoz.notification.NotificationService;
 import com.example.todoz.utility.*;
 import com.example.todoz.task.Task;
@@ -32,6 +33,7 @@ public class MainController {
     public String showIndex(Model model, Principal principal) {
         Optional<Week> currentWeek = weekService.findCurrentWeek(getUser(principal));
         Optional<Week> optPreviousWeek = weekService.findPreviousWeek(getUser(principal));
+        QuoteDTO quote = webClientService.getRandomQuote();
 
         if (currentWeek.isEmpty() && optPreviousWeek.isPresent()) {
             Week previousWeek = optPreviousWeek.get();
@@ -56,8 +58,8 @@ public class MainController {
 
         model.addAttribute("user", getUser(principal));
         model.addAttribute("publicKey", notificationService.getPublicKey());
-        model.addAttribute("quote", webClientService.getRandomQuote().quote());
-        model.addAttribute("author", "–" + webClientService.getRandomQuote().author());
+        model.addAttribute("quote", "\"" + quote.quote() + "\"");
+        model.addAttribute("author", "–" + quote.author());
 
         return "index";
     }

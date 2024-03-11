@@ -24,15 +24,19 @@ public class WebClientService {
                 .uri("https://api.api-ninjas.com/v1/quotes?category=success")
                 .header("X-Api-Key", apiKey)
                 .retrieve()
-                .bodyToMono(String.class).log();
+                .bodyToMono(String.class);
     }
 
     public QuoteDTO getRandomQuote() {
-        return fetchQuote()
-                .flatMap(this::convertJsonArray)
-                .onErrorResume(t -> Mono.empty())
-                .retry()
-                .block();
+        QuoteDTO quote;
+        do {
+            quote = fetchQuote()
+                    .flatMap(this::convertJsonArray)
+                    .block();
+        }
+        while (quote != null && quote.quote().length() > 150);
+
+        return quote;
     }
 
     private Mono<QuoteDTO> convertJsonArray(String jsonArray) {
@@ -40,9 +44,8 @@ public class WebClientService {
         try {
             JsonNode attributes = objectMapper.readTree(jsonArray).get(0);
                 return Mono.just(new QuoteDTO(
-                        attributes.path("quote").asText("quote"),
-                        attributes.path("author").asText("author"),
-                        attributes.path("category").asText("Unknown")
+                        attributes.path("quote").asText(),
+                        attributes.path("author").asText()
                 ));
         } catch (JsonProcessingException e) {
             return Mono.empty();
