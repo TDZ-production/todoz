@@ -73,11 +73,15 @@
             <p th:utext="${message}"></p>
             <img th:src="|/img/cat_pm_${user.pussyMeter}.svg|" alt="cat">
         </div>
+
+            <p class="quote" th:text="${quote}"></p>
+            <p class="author" th:text="${author}"></p>
     </main>
 
     <footer>
-        <p th:if="${plannedTask}" class="fadeoutMessage" id="planned" th:utext="${plannedTask}"></p>
-        <p th:if="${leftBehindTask}" class="fadeoutMessage" id="leftBehind" th:utext="${leftBehindTask}"></p>
+        <p th:if="${plannedTask} == true" class="fadeoutMessage">Task added to "Planned"</p>
+        <p th:if="${leftBehindTask} == true" class="fadeoutMessage" id="redFeedback">Task added to "Left Behind"</p>
+        <p th:if="${firstTask} == true"  class="fadeoutMessage">First task added to this week</p>
         <form method="post" th:action="@{/tasks/add}">
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
