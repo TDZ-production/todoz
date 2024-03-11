@@ -77,8 +77,9 @@
     </main>
 
     <footer>
-        <p th:if="${plannedTask} == true" class="fadeoutMessage" id="planned">Task added to "Planned"</p>
-        <p th:if="${leftBehindTask} == true" class="fadeoutMessage" id="leftBehind">Task added to "Left Behind"</p>
+        <p th:if="${plannedTask} == true" class="fadeoutMessage">Task added to "Planned"</p>
+        <p th:if="${leftBehindTask} == true" class="fadeoutMessage" id="redFeedback">Task added to "Left Behind"</p>
+        <p th:if="${firstTask} == true"  class="fadeoutMessage">First task added to this week</p>
         <form method="post" th:action="@{/tasks/add}">
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
@@ -151,10 +152,6 @@
             }
         }
 
-        const el = document.querySelector(".fadeoutMessage");
-        if (el) {
-            setTimeout(() => fadeout(el), 3000);
-        }
 
         document.querySelector("#date").addEventListener("input", function () {
             const dateEl = document.querySelector("#date");
@@ -387,14 +384,6 @@
             document.querySelector(".stars").scrollIntoView({behavior: "instant"});
         }
 
-        function fadeout(el) {
-            if (el !== null) {
-                el.classList.add("fade-out");
-                setTimeout(() => {
-                    el.remove();
-                }, 1000);
-            }
-        }
 
         function toggleDropdown(target) {
 
@@ -533,6 +522,7 @@
                 })
         }
     </script>
+    <script src="/js/fadeout.js"></script>
 </section>
 </body>
 </html>

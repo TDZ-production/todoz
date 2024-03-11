@@ -674,26 +674,26 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 }
 
 .fadeoutMessage {
+    margin-inline: auto;
+    left: 0;
+    right: 0;
+    width: fit-content;
     position: absolute;
     top: -4rem;
     font-size: 1.1rem;
     border-radius: .3rem;
     padding: .666rem;
     transition: opacity 1s ease-out;
-}
-
-#planned {
     color: green;
     border: 1px solid green;
-    background-color: var(--prio2-color);
-    left: 20%;
+    background-color:var(--prio2-color);
 }
 
-#leftBehind {
+
+#redFeedback {
     color: #d7703d;
     border: 1px solid #d7703d;
     background-color: var(--pink-stickit-color);
-    left: 16%;
 }
 
 .fadeoutMessage.fade-out {
