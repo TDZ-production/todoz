@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/new.css?1">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta th:replace="fragments.html :: head-metadata">
+    <meta th:replace="fragments :: head-metadata">
 </head>
 <body>
 <section class="app home">
@@ -25,7 +25,8 @@
                 </form>
             </div>
         </div>
-        <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|" id="filter-text" onclick="toggleDropdown('filters')"></h2>
+        <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|" id="filter-text"
+            onclick="toggleDropdown('filters')"></h2>
         <div class="week-progressbar"></div>
         <button id="toggleButton">|</button>
     </header>
@@ -37,11 +38,20 @@
         <button onclick="filterTasks('tomorrow')">Tomorrow</button>
     </div>
 
+
     <main>
         <div class="taskContainer" th:unless="${currentWeek.getSortedTasks().isEmpty()}"
              th:each="task : ${currentWeek.getSortedTasks()}">
-            <div th:include="fragments.html :: task-container(object=${task})" th:object="${task}">
-                <span class="due" th:text="*{getRemainingDays()}"></span>
+            <div class="task"
+                 th:object="${task}"
+                 th:data-priority="*{priority}"
+                 th:data-id="*{id}"
+                 th:data-done="*{done}"
+                 th:data-maturity="*{getMaturity()}"
+                 th:data-duedate="*{dueDateDate}">
+                <span th:classappend="|prio${task.getPriority()}|"></span>
+                <p th:text="*{description}"></p>
+                <span class="due" th:text="*{getRemainingDays()}" th:data-duedate="*{dueDateDate}"></span>
                 <form onsubmit="handleSubmit(event)" th:action="|/tasks/check/*{id}|" th:method="POST">
                     <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
                     <button class="img" th:type="submit">
@@ -50,26 +60,25 @@
                     </button>
                 </form>
             </div>
-            <div th:replace="fragments.html :: delete-form(
+            <div th:replace="fragments :: delete-form(
             taskId=${task.id},
             action='/tasks/leaveBehind/' + ${task.id},
             imgSrc='/img/leaveBehind_icon.svg')">
             </div>
         </div>
-        <div th:replace="fragments.html :: task-placeholder(
+        <div th:replace="fragments :: task-placeholder(
             isEmpty=${currentWeek.getSortedTasks().isEmpty()},
             message='Meow purrtner! Ready&nbsp;to create your&nbsp;first&nbsp;task?<br>Save the task by picking&nbsp;a&nbsp;priority, to&nbsp;keep things organised!',
             imgSrc='/img/cat_pm_' + ${user.pussyMeter} + '.svg')">
         </div>
-
-            <p class="quote" th:text="${quote}"></p>
-            <p class="author" th:text="${author}"></p>
+        <p class="quote" th:text="${quote}"></p>
+        <p class="author" th:text="${author}"></p>
     </main>
 
     <footer>
         <div th:replace="fragments.html :: planned-fadeout"></div>
         <div th:replace="fragments.html :: leftBehind-fadeout"></div>
-        <p th:if="${firstTask} == true"  class="fadeoutMessage">First task added to this week</p>
+        <p th:if="${firstTask} == true" class="fadeoutMessage">First task added to this week</p>
         <form method="post" th:action="@{/tasks/add}">
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
@@ -94,7 +103,7 @@
     </footer>
 
     <script th:inline="javascript">
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             const toggleButton = document.getElementById("toggleButton");
             const rootElement = document.documentElement;
             const theme = localStorage.getItem("theme");
@@ -102,7 +111,7 @@
             theme && rootElement.classList.add(theme);
 
 
-            toggleButton.addEventListener("click", function() {
+            toggleButton.addEventListener("click", function () {
                 rootElement.classList.toggle("dark");
 
                 if (rootElement.classList.contains("dark")) {
@@ -217,7 +226,7 @@
 
             localStorage.setItem('filter', filter);
 
-            if (filter === 'all' ) {
+            if (filter === 'all') {
                 localStorage.removeItem('filter');
                 if (filterText.dataset.text !== undefined) {
                     filterText.innerText = filterText.dataset.text;
