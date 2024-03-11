@@ -27,6 +27,7 @@
         </div>
         <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|" id="filter-text" onclick="toggleDropdown('filters')"></h2>
         <div class="week-progressbar"></div>
+        <button id="toggleButton">|</button>
     </header>
 
     <div class="filters" style="display: none;">
@@ -140,11 +141,6 @@
                 localStorage.removeItem('filter');
                 filterTasks('all');
             }
-        }
-
-        const el = document.querySelector(".fadeoutMessage");
-        if (el) {
-            setTimeout(() => fadeout(el), 3000);
         }
 
         document.querySelector("#date").addEventListener("input", function () {
@@ -376,15 +372,6 @@
 
         function scrollToBottom() {
             document.querySelector(".stars").scrollIntoView({behavior: "instant"});
-        }
-
-        function fadeout(el) {
-            if (el !== null) {
-                el.classList.add("fade-out");
-                setTimeout(() => {
-                    el.remove();
-                }, 1000);
-            }
         }
 
         function toggleDropdown(target) {
