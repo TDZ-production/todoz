@@ -21,6 +21,7 @@ spring.mail.properties.mail.smtp.starttls.enable=true
 
 vapid.public.key=
 vapid.private.key=
+api.ninjas.api.key=
 
 server.servlet.session.timeout=31536000
 server.servlet.session.persistent=true

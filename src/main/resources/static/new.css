@@ -796,6 +796,15 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     color: var(--light-font-color);
 }
 
+.quote {
+    margin: 1.5rem;
+}
+
+.author {
+    text-align: end;
+    margin-right: 1rem;
+}
+
 @media (max-width: 459px) {
     header {
         /*position: fixed;*/
