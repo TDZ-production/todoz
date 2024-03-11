@@ -732,6 +732,21 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     height: 3.5rem;
 }
 
+.date-input {
+    position: relative;
+}
+
+
+.date-input img {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 35px;
+    pointer-events: none;
+}
+
+
 /*area chart for week review*/
 .area-chart {
     margin: auto;
