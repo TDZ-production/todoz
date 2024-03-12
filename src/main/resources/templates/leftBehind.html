@@ -46,6 +46,11 @@
             <img th:src="|/img/cat_pm_${user.pussyMeter}.svg|" alt="cat">
         </div>
     </main>
+    <footer>
+        <p th:if="${deletedTask} == true"  class="fadeoutMessage" id="redFeedback">Task was completely deleted</p>
+        <p th:if="${reAddedTask} == true"  class="fadeoutMessage">Task re-added</p>
+    </footer>
 </section>
+<script src="/js/fadeout.js"></script>
 </body>
 </html>
