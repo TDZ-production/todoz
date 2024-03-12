@@ -9,9 +9,9 @@
             }
             :root{
             --cls-1-color:#060606;
-            --cls-2-color:#f2f2f2;
-            --cls-3-color:#f9f9f9;
-            --cls-4-color:#fefefe;
+            --cls-2-color:#060606;
+            --cls-3-color:#060606;
+            --cls-4-color:#060606;
             }
             .cls-1{fill:var(--cls-1-color);}
             .cls-2{fill:var(--cls-2-color);}

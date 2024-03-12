@@ -20,7 +20,6 @@
             .cls-3{fill:var(--cls-3-color);}
             .cls-4{fill:var(--cls-4-color);}
             .cls-5{fill:var(--cls-5-color);}
-
         </style>
     </defs>
     <path class="cls-1"
