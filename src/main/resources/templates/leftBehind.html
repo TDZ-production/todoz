@@ -36,8 +36,8 @@
         </div>
     </main>
     <footer>
-        <p th:if="${deletedTask} == true"  class="fadeoutMessage" id="redFeedback">Task was completely deleted</p>
-        <p th:if="${reAddedTask} == true"  class="fadeoutMessage">Task re-added</p>
+        <div th:replace="fragments.html :: red-fadeout('Task was completely deleted', ${deletedTask})"></div>
+        <div th:replace="fragments.html :: green-fadeout('Task re-added', ${reAddedTask})"></div>
     </footer>
 </section>
 <script src="/js/fadeout.js"></script>

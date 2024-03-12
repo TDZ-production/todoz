@@ -76,7 +76,7 @@
     </main>
 
     <footer>
-        <div th:replace="fragments.html :: red-fadeout('Task added to \&#39;leftBehind\&#39;', ${leftBehindTask})"></div>
+        <div th:replace="fragments.html :: red-fadeout('Task added to \&#39;Left behind\&#39;', ${leftBehindTask})"></div>
         <div th:replace="fragments.html :: green-fadeout('Task added to \&#39;Planned\&#39;', ${plannedTask})"></div>
         <div th:replace="fragments.html :: green-fadeout('First task added to this week', ${firstTask})"></div>
         <form method="post" th:action="@{/tasks/add}">

@@ -839,22 +839,15 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     border-radius: .3rem;
     padding: .666rem;
     transition: opacity 1s ease-out;
-    color: var(--positive-output-color);
-    border: 1px var(--positive-output-color);
-    background-color: var(--positive-output-background-color);
-}
-
-#planned {
     color: green;
     border: 1px solid green;
-    background-color: var(--prio2-color);
-    left: 20%;
+    background-color:var(--prio2-color);
 }
 
-#leftBehind {
-    color: var(--negative-output-color);
-    border: 1px solid var(--negative-output-color);
-    background-color: var(--negative-output-background-color);
+#redFeedback {
+    color: #d7703d;
+    border: 1px solid #d7703d;
+    background-color: var(--pink-stickit-color);
 }
 
 .fadeoutMessage.fade-out {
