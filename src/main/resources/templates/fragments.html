@@ -36,14 +36,14 @@
             <img th:if="${task.isUpcoming}" src="/img/week_review_clock.svg"/>
             <img th:unless="${task.isUpcoming}"
                  th:src="${task.isDone() ? '/img/week_review_check.svg' : '/img/week_review_cross.svg'}"
-                 th:class="${task.isDone() ? '' : 'cross'}" />
+                 th:class="${task.isDone() ? '' : 'cross'}"/>
         </span>
         <p class="taskText" th:text="${task.getDescription()}"></p>
         <label class="checkboxContainer">
             <input type="checkbox" class="toDelegate" onclick="updateButton()"
-                   name="taskIds" th:value="${task.id}" th:checked="${task.isUpcoming}" />
+                   name="taskIds" th:value="${task.id}" th:checked="${task.isUpcoming}"/>
             <span class="weekIcon">
-                    <img class="icon-unchecked" src="/img/week_review_icon_add.svg">
+                <img class="icon-unchecked" src="/img/week_review_icon_add.svg">
             </span>
             <span class="weekIcon" th:style="'color: green'"
                   th:text="${task.isUpcoming ? 'due by ' + task.getDueDateDayOfWeek() : 'added'}">
@@ -95,11 +95,11 @@
     </th:block>
 
     <!--Fadeout-->
-    <th:block th:fragment="planned-fadeout">
-        <p th:if="${plannedTask} == true" class="fadeoutMessage" id="planned">Task added to "Planned"</p>
+    <th:block th:fragment="green-fadeout(message, isEmpty)">
+        <p class="fadeoutMessage" th:text="${message}" th:if="${isEmpty} == true"></p>
     </th:block>
-    <th:block th:fragment="leftBehind-fadeout">
-        <p th:if="${leftBehindTask} == true" class="fadeoutMessage" id="leftBehind">Task added to "Left Behind"</p>
+    <th:block th:fragment="red-fadeout(message, isEmpty)">
+        <p class="fadeoutMessage" th:text="${message}" th:if="${isEmpty} == true" id="redFeedback"></p>
     </th:block>
 </footer>
 </html>
