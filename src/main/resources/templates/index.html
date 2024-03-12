@@ -62,9 +62,9 @@
                 </form>
             </div>
 
-            <form class="delete" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
+            <form class="delete" onsubmit="handleDelete(event)" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
                 <input type="hidden" name="id" th:value="${task.id}">
-                <button th:class="deleteImg"><img src="/img/leaveBehind_icon.svg" alt="delete icon">
+                <button th:class="deleteImg"><img src="/img/leaveBehind_icon.svg" alt="delete task">
                 </button>
             </form>
         </div>
@@ -221,6 +221,24 @@
 
                 const task = form.closest(".task");
                 task.dataset.done = task.dataset.done === "true" ? "false" : "true";
+            });
+        }
+
+        function handleDelete(event) {
+            event.preventDefault();
+            const form = event.target;
+            const data = new FormData(form);
+            const url = form.action;
+
+            fetch(url, {
+                method: 'POST',
+                body: data
+            }).then(resp => {
+                if (resp.redirected && resp.url.indexOf("login") > -1) { // session expired
+                    window.location.reload();
+                }
+
+                form.parentNode.remove();
             });
         }
 
