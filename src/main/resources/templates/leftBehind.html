@@ -28,6 +28,11 @@
                     </button>
                 </form>
             </div>
+            <div th:replace="fragments :: delete-form(
+            taskId=${task.id},
+            action='/tasks/delete/' + ${task.id},
+            imgSrc='/img/delete_icon.svg')">
+            </div>
         </div>
         <div th:replace="fragments :: task-placeholder(
             isEmpty=${leftBehind.isEmpty()},
