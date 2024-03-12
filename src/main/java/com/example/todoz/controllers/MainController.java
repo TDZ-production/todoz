@@ -57,8 +57,8 @@ public class MainController {
 
         model.addAttribute("user", getUser(principal));
         model.addAttribute("publicKey", notificationService.getPublicKey());
-//        model.addAttribute("quote", webClientService.getRandomQuote().quote());
-//        model.addAttribute("author", "–" + webClientService.getRandomQuote().author());
+        model.addAttribute("quote", webClientService.getRandomQuote().quote());
+        model.addAttribute("author", "–" + webClientService.getRandomQuote().author());
 
         return "index";
     }
