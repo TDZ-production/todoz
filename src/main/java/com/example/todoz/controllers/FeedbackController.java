@@ -1,6 +1,7 @@
 package com.example.todoz.controllers;
 
 
+import com.example.todoz.dtos.DiscordDTO;
 import com.example.todoz.feedback.Feedback;
 import com.example.todoz.feedback.FeedbackService;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,7 +41,7 @@ public class FeedbackController {
         webClient.post()
                 .uri(uri)
                 .header("Content-Type", "application/json")
-                .body(BodyInserters.fromValue("{\"content\": \"" + feedback.getDescription() + "\"}"))
+                .body(BodyInserters.fromValue(new DiscordDTO(feedback.getDescription())))
                 .retrieve()
                 .bodyToMono(Void.class)
                 .subscribe();
