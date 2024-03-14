@@ -27,13 +27,12 @@ public class MainController {
     private final TaskService taskService;
     private final WeekService weekService;
     private final NotificationService notificationService;
-    private final WebClientService webClientService;
+    private final QuoteGetter quoteGetter;
 
     @GetMapping
     public String showIndex(Model model, Principal principal) {
         Optional<Week> currentWeek = weekService.findCurrentWeek(getUser(principal));
         Optional<Week> optPreviousWeek = weekService.findPreviousWeek(getUser(principal));
-        QuoteDTO quote = webClientService.getRandomQuote();
 
         if (currentWeek.isEmpty() && optPreviousWeek.isPresent()) {
             Week previousWeek = optPreviousWeek.get();
@@ -58,8 +57,8 @@ public class MainController {
 
         model.addAttribute("user", getUser(principal));
         model.addAttribute("publicKey", notificationService.getPublicKey());
-        model.addAttribute("quote", "\"" + quote.quote() + "\"");
-        model.addAttribute("author", "–" + quote.author());
+        model.addAttribute("quote", "\"" + QuoteGetter.quote.quote() + "\"");
+        model.addAttribute("author", "–" + QuoteGetter.quote.author());
 
         return "index";
     }

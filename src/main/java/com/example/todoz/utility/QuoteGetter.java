@@ -5,17 +5,19 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @Service
-public class WebClientService {
+public class QuoteGetter {
     private final WebClient webClient;
     @Value("${api.ninjas.api.key}")
     private String apiKey;
+    public static QuoteDTO quote = new QuoteDTO("This app is awesome *nervous wink*", "DEV Tom");
 
-    public WebClientService(WebClient.Builder webClientBuilder) {
+    public QuoteGetter(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder.build();
     }
 
@@ -27,19 +29,17 @@ public class WebClientService {
                 .bodyToMono(String.class);
     }
 
-    public QuoteDTO getRandomQuote() {
-        QuoteDTO quote;
+    @Scheduled (cron = "0 30 3 * * *")
+    public void getRandomQuote() {
         do {
             quote = fetchQuote()
                     .flatMap(this::convertJsonArray)
                     .block();
         }
         while (quote != null && quote.quote().length() > 150);
-
-        return quote;
     }
 
-    private Mono<QuoteDTO> convertJsonArray(String jsonArray) {
+    public Mono<QuoteDTO> convertJsonArray(String jsonArray) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             JsonNode attributes = objectMapper.readTree(jsonArray).get(0);
