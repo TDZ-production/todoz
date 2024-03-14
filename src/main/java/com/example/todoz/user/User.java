@@ -37,10 +37,11 @@ public class User {
     List<PasswordResetToken> pRTokens;
     @OneToMany(mappedBy= "user")
     private List<UserSubscription> userSubscription;
+    private Language language = Language.ENG;
     public static final int MINIMAL_PASSWORD_LENGTH = 5;
 
     public String getText(String key) {
-        return MessageService.getInAppText(key, Language.ENG, pussyMeter);
+        return MessageService.getInAppText(key, language, pussyMeter);
     }
 
     public User(String username, String password, Integer pussyMeter) {

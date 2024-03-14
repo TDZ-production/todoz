@@ -25,7 +25,7 @@ public class MessageService {
             try (Scanner scanner = new Scanner(new File(String.format("src/main/resources/messages_%s.csv", language)))) {
                 Map<String, String[]> languageText = new HashMap<>();
                 while(scanner.hasNextLine()){
-                    String[] parts = scanner.nextLine().split(":");
+                    String[] parts = scanner.nextLine().split(";");
                     languageText.put(parts[0], Arrays.copyOfRange(parts, 1, parts.length));
                 }
                 textDataBase.put(language, languageText);
