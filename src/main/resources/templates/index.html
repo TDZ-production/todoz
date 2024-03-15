@@ -58,15 +58,16 @@
                 <form onsubmit="handleSubmit(event)" th:action="|/tasks/check/*{id}|" th:method="POST">
                     <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
                     <button class="img" th:type="submit">
-                        <img class="isdone" src="/img/checkbox_checked.svg" alt="mark as not done"/>
-                        <img class="notdone" src="/img/checkbox_unchecked.svg" alt="mark as done"/>
+                        <svg class="isdone" th:insert="svgFragments::checkbox_checked"></svg>
+                        <svg class="notdone" th:insert="svgFragments::checkbox_unchecked"></svg>
                     </button>
                 </form>
             </div>
 
             <form class="delete" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
                 <input type="hidden" name="id" th:value="${task.id}">
-                <button th:class="deleteImg"><img src="/img/leaveBehind_icon.svg" alt="delete icon">
+                <button th:class="deleteImg">
+                    <svg th:insert="svgFragments::leaveBehind_icon"></svg>
                 </button>
             </form>
         </div>
@@ -74,7 +75,7 @@
         <div th:if="${currentWeek.getSortedTasks().isEmpty()}" class="NoTaskPlaceholder">
             <p>Meow purrtner! Ready&nbsp;to create your&nbsp;first&nbsp;task?<br>Save the task by picking&nbsp;a&nbsp;priority,
                 to&nbsp;keep things organised!</p>
-            <img th:src="|/img/cat_pm_${user.pussyMeter}.svg|" alt="cat">
+            <svg th:insert="svgFragments::|cat_pm_${user.pussyMeter}|"></svg>
         </div>
     </main>
 
@@ -98,25 +99,25 @@
             <div class="addTask">
                 <input type="text" placeholder="new task" name="description" id="add" required autofocus
                        autocomplete="off">
-                <img onclick="toggleDueDate()" src="/img/calendar_icon.svg" alt="due date" id="calendar_icon">
+                <svg onclick="toggleDueDate()" th:insert="svgFragments::calendar_icon" id="calendar_icon"></svg>
             </div>
 
             <div class="stars">
                 <button onclick="setPriority(4)" type="submit" name="priority" value="4" data-umami-event="setPriority"
                         data-umami-event-priority="4">
-                    <img th:src="|/img/prio4_pm_${user.pussyMeter}.svg|" alt="priority 4">
+                    <svg th:insert="svgFragments::|prio4_pm_${user.pussyMeter}|" alt="priority 4"/>
                 </button>
                 <button onclick="setPriority(3)" type="submit" name="priority" value="3" data-umami-event="setPriority"
                         data-umami-event-priority="3">
-                    <img th:src="|/img/prio3_pm_${user.pussyMeter}.svg|" alt="priority 3">
+                    <svg th:insert="svgFragments::|prio3_pm_${user.pussyMeter}|" alt="priority 4"/>
                 </button>
                 <button onclick="setPriority(2)" type="submit" name="priority" value="2" data-umami-event="setPriority"
                         data-umami-event-priority="2">
-                    <img th:src="|/img/prio2_pm_${user.pussyMeter}.svg|" alt="priority 2">
+                    <svg th:insert="svgFragments::|prio2_pm_${user.pussyMeter}|" alt="priority 4"/>
                 </button>
                 <button onclick="setPriority(1)" type="submit" name="priority" value="1" data-umami-event="setPriority"
                         data-umami-event-priority="1">
-                    <img th:src="|/img/prio1_pm_${user.pussyMeter}.svg|" alt="priority 1">
+                    <svg th:insert="svgFragments::|prio1_pm_${user.pussyMeter}|" alt="priority 4"/>
                 </button>
             </div>
         </form>
