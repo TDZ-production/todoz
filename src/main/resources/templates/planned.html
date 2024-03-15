@@ -173,6 +173,23 @@
             }
         });
     }
+
+    function togglePasswordVisibility() {
+        const password = document.querySelector("#password");
+        const closeEye = document.querySelector(".showPassword");
+        const openEye = document.querySelector(".hidePassword");
+
+        if (password.type === "password") {
+            password.type = "text";
+            closeEye.style.display = "none";
+            openEye.style.display = "inline-block";
+        }
+        else {
+            password.type = "password";
+            closeEye.style.display = "inline-block";
+            openEye.style.display = "none";
+        }
+    }
 </script>
 </body>
 </html>
