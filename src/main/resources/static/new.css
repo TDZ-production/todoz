@@ -398,10 +398,6 @@ footer input, .stars button {
     padding: .5rem .5rem;
 }
 
-#plannedFooter {
-    display: none;
-}
-
 .stars button {
     padding-bottom: 0;
 }
