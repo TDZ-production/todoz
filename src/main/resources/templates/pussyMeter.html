@@ -25,9 +25,9 @@
 
         <form th:action="@{/changeMeter}" method="post" th:object="${user}">
             <div class="pussySliderIcons">
-                <img src="/img/prio4_pm_0.svg" id="starIcon">
-                <img src="/img/prio4_pm_1.svg" id="fireIcon">
-                <img src="/img/prio4_pm_2.svg" id="skullIcon">
+                <svg th:insert="svgFragments::prio4_pm_0" id="starIcon"/>
+                <svg th:insert="svgFragments::prio4_pm_1" id="fireIcon"/>
+                <svg th:insert="svgFragments::prio4_pm_2" id="skullIcon"/>
             </div>
             <label class="slideContainer">
                 <span id="pussyLabel"></span>
