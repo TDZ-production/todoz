@@ -21,7 +21,8 @@
     <header>
         <div class="dropdown">
             <button class="dropbtn" onclick="toggleDropdown('dropdownOptions')">
-                <img src="/img/menu_icon_open.svg" alt="open menu">
+                <svg id="menu_open" th:insert="svgFragments::menu_icon_open"></svg>
+                <svg id="menu_close" th:insert="svgFragments::menu_icon_close" style="display:none;"></svg>
             </button>
             <div class="dropdown-content">
                 <a href="/planned">Planned</a>
@@ -417,36 +418,37 @@
         }
 
         function toggleDropdown(target) {
-
             popOverActive = !popOverActive;
 
-            let dropdownOptions = document.querySelector(".dropdown-content");
+            const dropdownOptions = document.querySelector(".dropdown-content");
             const filtersWrapper = document.querySelector(".filters");
             const textSpan = document.querySelector("#filter-text");
-            const img = document.querySelector(".dropbtn img");
-
+            const menuOpenIcon = document.getElementById("menu_open");
+            const menuCloseIcon = document.getElementById("menu_close");
             const main = document.querySelector("main");
             const footer = document.querySelector("footer");
-
 
             registerCancel(main);
             registerCancel(footer);
 
             if (target === 'dropdownOptions') {
                 dropdownOptions.style.display = (dropdownOptions.style.display === "block") ? "none" : "block";
-                img.src = (dropdownOptions.style.display === "block") ? "/img/menu_icon_close.svg" : "/img/menu_icon_open.svg";
-                img.alt = (dropdownOptions.style.display === "block") ? "close menu" : "open menu";
-
                 if (filtersWrapper.style.display === 'flex') {
                     filtersWrapper.style.display = 'none';
                 }
+                if (dropdownOptions.style.display === "block") {
+                    menuOpenIcon.style.display = "none";
+                    menuCloseIcon.style.display = "inline-block";
+                } else {
+                    menuOpenIcon.style.display = "inline-block";
+                    menuCloseIcon.style.display = "none";
+                }
             } else if (target === 'filters') {
                 filtersWrapper.style.display = (filtersWrapper.style.display === 'flex') ? "none" : "flex";
-
                 if (dropdownOptions.style.display === "block") {
                     dropdownOptions.style.display = "none";
-                    img.src = "/img/menu_icon_open.svg";
-                    img.alt = "open menu";
+                    menuOpenIcon.style.display = "inline-block";
+                    menuCloseIcon.style.display = "none";
                 }
             }
 
@@ -454,7 +456,6 @@
                 element.addEventListener("click", function () {
                     cancelMenu();
                 }, {once: true});
-
                 window.onkeydown = function (event) {
                     if (event.key === "Escape") {
                         cancelMenu();
@@ -465,8 +466,8 @@
                     popOverActive = false;
                     dropdownOptions.style.display = "none";
                     filtersWrapper.style.display = 'none';
-                    img.src = "/img/menu_icon_open.svg";
-                    img.alt = "open menu";
+                    menuOpenIcon.style.display = "inline-block";
+                    menuCloseIcon.style.display = "none";
                 }
             }
         }
