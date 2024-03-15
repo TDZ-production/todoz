@@ -31,7 +31,8 @@
 
             <label class="password">
                 <input name="password" type="password" id="password" placeholder="password">
-                <img src="/img/eye_icon_closed.svg" id="showPassword" onclick="togglePasswordVisibility()" alt="hide icon">
+                <svg th:insert="svgFragments::eye_icon_open" class="hidePassword" style="display:none;" onclick="togglePasswordVisibility()"/>
+                <svg th:insert="svgFragments::eye_icon_closed" class="showPassword" onclick="togglePasswordVisibility()"/>
             </label>
 
             <label class="slideContainer">
@@ -141,6 +142,23 @@
             event.preventDefault();
         }
     });
+
+    function togglePasswordVisibility() {
+        const password = document.querySelector("#password");
+        const closeEye = document.querySelector(".showPassword");
+        const openEye = document.querySelector(".hidePassword");
+
+        if (password.type === "password") {
+            password.type = "text";
+            closeEye.style.display = "none";
+            openEye.style.display = "inline-block";
+        }
+        else {
+            password.type = "password";
+            closeEye.style.display = "inline-block";
+            openEye.style.display = "none";
+        }
+    }
 </script>
 </body>
 </html>
