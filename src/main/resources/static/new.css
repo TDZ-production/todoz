@@ -205,7 +205,7 @@ input {
     width: 100%;
 }
 
-.pussySliderIcons img {
+.pussySliderIcons svg {
     width: 100px;
     height: 80px;
 }
@@ -391,11 +391,11 @@ main > form button {
     min-width: 100%;
 }
 
-.task[data-done=true] img.notdone {
+.task[data-done=true] svg.notdone {
     display: none;
 }
 
-.task[data-done=false] img.isdone {
+.task[data-done=false] svg.isdone {
     display: none;
 }
 
@@ -443,7 +443,7 @@ main > form button {
     margin-right: 0;
 }
 
-.task button, .task img {
+.task button, .task svg {
     display: block;
 }
 
@@ -495,7 +495,8 @@ main > form button {
     color: var(--pink-stickit-shadow);
 }
 
-img {
+svg {
+    width: 4rem;
     height: 1.7rem;
 }
 
@@ -513,7 +514,7 @@ footer {
     position: relative;
 }
 
-footer img {
+footer svg {
     height: 3rem;
 }
 
@@ -522,7 +523,7 @@ footer label {
     padding: .5rem;
 }
 
-footer input + img {
+footer input + svg {
     margin-left: 0.5rem;
 }
 
@@ -651,7 +652,7 @@ button.startWeek:hover {
     height: 3.25rem;
 }
 
-.dropbtn img {
+.dropbtn svg {
     height: 2rem;
 }
 
@@ -746,7 +747,7 @@ textarea:focus {
     border: var(--button-hover-border-color);
 }
 
-.discordFeedback img {
+.discordFeedback svg {
     margin: 1rem 1rem 0;
 }
 
@@ -807,7 +808,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     opacity: 0.6;
 }
 
-.NoTaskPlaceholder img {
+.NoTaskPlaceholder svg {
     width: 20.5rem;
     height: auto;
 }
@@ -855,7 +856,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     opacity: 0;
 }
 
-.taskStatus img {
+.taskStatus svg {
     fill: #919191;
 }
 
@@ -883,8 +884,15 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     padding: 0 .5rem;
 }
 
-.deleteImg img {
+.deleteImg svg {
+    width: 8rem;
     height: 3.5rem;
+}
+
+.hidePassword,.showPassword{
+    position: absolute;
+    right: 0.1rem;
+    top: 24%;
 }
 
 /*area chart for week review*/
