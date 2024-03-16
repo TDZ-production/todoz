@@ -798,12 +798,14 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 }
 
 .quote {
-    margin: 1.5rem;
+    margin: 2.5rem;
+    opacity: 0.6
 }
 
 .author {
     text-align: end;
-    margin-right: 1rem;
+    margin-right: 2.5rem;
+    opacity: 0.6
 }
 
 @media (max-width: 459px) {

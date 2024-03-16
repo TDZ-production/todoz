@@ -1,5 +1,6 @@
 package com.example.todoz.controllers;
 
+import com.example.todoz.dtos.QuoteDTO;
 import com.example.todoz.notification.NotificationService;
 import com.example.todoz.utility.*;
 import com.example.todoz.task.Task;
@@ -26,7 +27,7 @@ public class MainController {
     private final TaskService taskService;
     private final WeekService weekService;
     private final NotificationService notificationService;
-    private final WebClientService webClientService;
+    private final QuoteGetter quoteGetter;
 
     @GetMapping
     public String showIndex(Model model, Principal principal) {
@@ -56,8 +57,8 @@ public class MainController {
 
         model.addAttribute("user", getUser(principal));
         model.addAttribute("publicKey", notificationService.getPublicKey());
-        model.addAttribute("quote", webClientService.getRandomQuote().quote());
-        model.addAttribute("author", "–" + webClientService.getRandomQuote().author());
+        model.addAttribute("quote", "\"" + QuoteGetter.quote.quote() + "\"");
+        model.addAttribute("author", "–" + QuoteGetter.quote.author());
 
         return "index";
     }
