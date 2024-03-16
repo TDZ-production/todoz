@@ -18,13 +18,23 @@
 <body>
 <section class="app register">
     <main>
-        <h1 id="title">ToDoZápisník</h1>
-        <p class="note">Register your account</p>
+        <h1 id="title">ToDoZmrd</h1>
+        <p class="note">Register your ass!</p>
 
         <form th:action="|/register|" method="post">
             <p th:if="${userExists} == true">User with this email exists</p>
             <p th:if="${invalidCredentials} == true">Invalid credentials!</p>
             <p id="placeholder"></p>
+
+            <div class="aboveSlider" style="display: flex; justify-content: center; line-height: 1.7;}">
+                <span>Aggressive</span>
+                <img src="/img/prio4_pm_2.svg" alt="icon" style="margin-left: .5rem">
+            </div>
+            <label style="margin-top: 0.5rem">
+                <input type="range" name="pussyMeter" step="1" max="2" class="slider" value="2"
+                       oninput="updateTitle()">
+            </label>
+
             <label>
                 <input name="username" type="text" id="email" placeholder="email" autofocus autocapitalize="none">
             </label>
@@ -34,11 +44,6 @@
                 <img src="/img/eye_icon_closed.svg" id="showPassword" onclick="togglePasswordVisibility()" alt="hide icon">
             </label>
 
-            <label class="slideContainer">
-                <p id="pussyLabel">Neutral</p>
-                <input type="range" name="pussyMeter" step="1" max="2" class="slider" id="range"
-                       oninput="updateTitle()">
-            </label>
             <button class="cta" type="submit">Sign-up</button>
         </form>
         <p><a th:href="@{/login}">Log in</a></p>
@@ -51,23 +56,27 @@
     /*]]>*/
 
     function updateTitle() {
-        const range = document.querySelector("#range");
+        const range = document.querySelector(".slider");
         const title = document.querySelector("#title");
         const subtitle = document.querySelector("#title + p");
-        const pussyLabel = document.querySelector("#pussyLabel");
+        const pussyLabel = document.querySelector(".aboveSlider span");
+        const icon = document.querySelector(".aboveSlider img");
 
         if (range.value == 0) {
             title.innerText = "ToDoZlatíčko";
             subtitle.innerText = "Register yourself fam";
             pussyLabel.innerText = "Friendly";
+            icon.src="/img/prio4_pm_0.svg";
         } else if (range.value == 1) {
             title.innerText = "ToDoZápisník";
             subtitle.innerText = "Register your account";
             pussyLabel.innerText = "Neutral";
+            icon.src="/img/prio4_pm_1.svg";
         } else {
             title.innerText = "ToDoZmrd";
             subtitle.innerText = "Register your ass!";
             pussyLabel.innerText = "Aggressive";
+            icon.src="/img/prio4_pm_2.svg";
         }
     }
 

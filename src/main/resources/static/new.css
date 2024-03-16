@@ -100,19 +100,10 @@ input {
     width: 100%;
 }
 
-.pussySliderIcons img {
+.pussySliderIcon {
+    margin-top: 2rem;
     width: 100px;
     height: 80px;
-}
-
-.pussySliderIcons {
-    margin-top: 5rem;
-    display: flex;
-    justify-content: center;
-}
-
-.slideContainer input {
-    padding: 0;
 }
 
 input, button {
@@ -407,10 +398,6 @@ footer input, .stars button {
     padding: .5rem .5rem;
 }
 
-#plannedFooter {
-    display: none;
-}
-
 .stars button {
     padding-bottom: 0;
 }
@@ -485,6 +472,7 @@ button.startWeek {
     -webkit-appearance: none;
     appearance: none;
     height: 2px;
+    padding: 0;
 }
 
 .slider::-webkit-slider-thumb {
@@ -736,7 +724,6 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     position: relative;
 }
 
-
 .date-input img {
     position: absolute;
     right: 12px;
@@ -745,7 +732,6 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     width: 35px;
     pointer-events: none;
 }
-
 
 /*area chart for week review*/
 .area-chart {

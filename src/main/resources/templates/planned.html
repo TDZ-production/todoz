@@ -57,11 +57,11 @@
 
     <footer >
         <p class="hidden" id="redFeedback">Task added to "Left Behind"</p>
-        <div id="plannedFooter">
+        <div class="hidden">
             <form method="post" th:action="@{/tasks/add}">
                 <button type="submit" name="priority" value="4" class="hidden"></button>
 
-                <label>
+                <label class="date-input">
                     <img src="/img/calendar_icon.svg" alt="due date">
                     <input type="date" name="maybeDueDate" id="date">
                 </label>
@@ -109,7 +109,7 @@
     }
 
     function edit(task) {
-        document.querySelector("#plannedFooter").style.display = "block";
+        document.querySelector("div.hidden").classList.remove("hidden");
         document.querySelector("#add").focus();
 
         const main = document.querySelector("main");
