@@ -21,15 +21,16 @@
     </header>
     <main>
         <h1 class="pussyHeader">Pussy meter</h1>
-        <p class="note">Choose how big of a pussy you are!</p>
+        <p>Choose how big of a pussy you are!</p>
 
         <form th:action="@{/changeMeter}" method="post" th:object="${user}">
-            <div class="pussySliderIcons">
-                <img th:src="|/img/prio4_pm_*{pussyMeter}.svg|" class="icon">
-            </div>
+            <img class="pussySliderIcon" th:src="|/img/prio4_pm_*{pussyMeter}.svg|" alt="icon">
             <label class="slideContainer">
-                <span id="pussyLabel"></span>
-                <input type="range" step="1" max="2" class="slider" id="pussySlider" name="pussyMeter" th:field="*{pussyMeter}">
+                <span th:if="*{pussyMeter == 0}">Friendly</span>
+                <span th:if="*{pussyMeter == 1}">Neutral</span>
+                <span th:if="*{pussyMeter == 2}">Aggressive</span>
+                <input type="range" step="1" max="2" class="slider" name="pussyMeter"
+                       th:field="*{pussyMeter}" oninput="updateText()">
             </label>
             <button class="cta" type="submit">&gt;&gt;</button>
         </form>
@@ -37,29 +38,25 @@
 </section>
 </body>
 <script>
-    const slider = document.getElementById("pussySlider");
-    const output = document.getElementById("pussyLabel");
-    const icon = document.querySelector(".icon");
-    const subtitle = document.querySelector(".pussyHeader + p");
+    function updateText() {
+        const slider = document.querySelector(".slider");
+        const text = document.querySelector(".slideContainer span");
+        const icon = document.querySelector(".pussySliderIcons img");
+        const subtitle = document.querySelector(".pussyHeader + p");
 
-    output.innerHTML = slider.innerHTML;
-
-    slider.oninput = function() {
-        if (this.value == 0) {
-            output.innerText = "Friendly";
+        if (slider.value == 0) {
+            text.innerText = "Friendly"
             icon.src = "/img/prio4_pm_0.svg";
             subtitle.innerText = "Changing the PM? Sorry for not being helpful";
-        } else if (this.value == 1) {
-            output.innerText = "Neutral";
+        } else if (slider.value == 1) {
+            text.innerText = "Neutral"
             icon.src = "/img/prio4_pm_1.svg";
             subtitle.innerText = "Choose how big of a pussy you are!";
         } else {
-            output.innerText = "Aggressive";
+            text.innerText = "Aggressive";
             icon.src = "/img/prio4_pm_2.svg";
             subtitle.innerText = "*spit* WEAKNESS DISGUSTS ME!";
         }
     }
-
-    slider.oninput();
 </script>
 </html>

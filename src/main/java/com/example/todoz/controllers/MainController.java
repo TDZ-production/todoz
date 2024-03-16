@@ -26,7 +26,7 @@ public class MainController {
     private final TaskService taskService;
     private final WeekService weekService;
     private final NotificationService notificationService;
-    private final WebClientService webClientService;
+    private final QuoteGetter quoteGetter;
 
     @GetMapping
     public String showIndex(Model model, Principal principal) {
@@ -58,8 +58,8 @@ public class MainController {
         model.addAttribute("user", user);
         model.addAttribute("publicKey", notificationService.getPublicKey());
         model.addAttribute("message", user.getText("index_body"));
-        model.addAttribute("quote", webClientService.getRandomQuote().quote());
-        model.addAttribute("author", "–" + webClientService.getRandomQuote().author());
+        model.addAttribute("quote", "\"" + QuoteGetter.quote.quote() + "\"");
+        model.addAttribute("author", "–" + QuoteGetter.quote.author());
 
         return "index";
     }
@@ -103,7 +103,6 @@ public class MainController {
     @PostMapping("/changeMeter")
     public String postPussyMeter(Principal principal, Integer pussyMeter) {
         User user = getUser(principal);
-
         user.setPussyMeter(pussyMeter);
         userService.save(user);
         return "redirect:/";
