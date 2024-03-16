@@ -53,9 +53,7 @@ public class TaskController {
 
     @PostMapping("re-add/{id}")
     public String reAdd(@PathVariable Long id, Principal principal) {
-        Task task = taskService.findTaskByIdAndUserId(id, getUser(principal));
-        task.setWeek(getWeek(principal));
-        taskService.save(task);
+        taskService.reAdd(id, getUser(principal), getWeek(principal));
 
         return "redirect:/leftBehind";
     }
