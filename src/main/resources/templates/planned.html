@@ -37,7 +37,7 @@
                               th:data-duedate="*{dueDateDate}"></span>
                     </div>
 
-                    <form class="delete" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
+                    <form class="delete" onsubmit="handleDelete(event)" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
                         <input type="hidden" name="id" th:value="${task.id}">
                         <button class="deleteImg"><img src="/img/leaveBehind_icon.svg" alt="delete"></button>
                     </form>
@@ -56,7 +56,7 @@
     </main>
 
     <footer >
-        <p th:if="${leftBehindTask} == true" class="fadeoutMessage" id="redFeedback">Task added to "Left Behind"</p>
+        <p class="hidden" id="redFeedback">Task added to "Left Behind"</p>
         <div class="hidden">
             <form method="post" th:action="@{/tasks/add}">
                 <button type="submit" name="priority" value="4" class="hidden"></button>
@@ -109,7 +109,7 @@
     }
 
     function edit(task) {
-        document.querySelector(".hidden").classList.remove("hidden");
+        document.querySelector("div.hidden").classList.remove("hidden");
         document.querySelector("#add").focus();
 
         const main = document.querySelector("main");
@@ -156,6 +156,30 @@
                 button.classList.remove("active");
             }
         });
+    }
+
+    function handleDelete(event) {
+        event.preventDefault();
+        const form = event.target;
+        const data = new FormData(form);
+        const url = form.action;
+        const popupMessage = document.querySelector("#redFeedback");
+
+        fetch(url, {
+            method: 'POST',
+            body: data
+        }).then(resp => {
+            if (resp.redirected && resp.url.indexOf("login") > -1) { // session expired
+                window.location.reload();
+            }
+
+            form.parentNode.remove();
+        });
+
+        popupMessage.className = "fadeoutMessage";
+        setTimeout(() => {
+            popupMessage.className = "hidden";
+        }, 3000);
     }
 </script>
 <script src="/js/fadeout.js"></script>
