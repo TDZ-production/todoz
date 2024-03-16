@@ -1,0 +1,1 @@
+update users set language = 0 where id > 0;

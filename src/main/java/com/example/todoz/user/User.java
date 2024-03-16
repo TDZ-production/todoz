@@ -37,6 +37,7 @@ public class User {
     List<PasswordResetToken> pRTokens;
     @OneToMany(mappedBy= "user")
     private List<UserSubscription> userSubscription;
+    @Enumerated
     private Language language = Language.ENG;
     public static final int MINIMAL_PASSWORD_LENGTH = 5;
 

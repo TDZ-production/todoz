@@ -22,7 +22,7 @@ public class MessageService {
 
     static {
         for (Language language : Language.values()) {
-            try (Scanner scanner = new Scanner(new File(String.format("src/main/resources/messages_%s.csv", language)))) {
+            try (Scanner scanner = new Scanner(new File(String.format("src/main/resources/languagePackages/messages_%s.csv", language)))) {
                 Map<String, String[]> languageText = new HashMap<>();
                 while(scanner.hasNextLine()){
                     String[] parts = scanner.nextLine().split(";");
