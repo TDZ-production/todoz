@@ -35,7 +35,7 @@
                 </form>
             </div>
 
-            <form class="delete" th:method="post" th:action="|/tasks/delete/${task.id}|">
+            <form class="delete" onsubmit="handleDelete(event)" th:method="post" th:action="|/tasks/delete/${task.id}|">
                 <input type="hidden" name="id" th:value="${task.id}">
                 <button class="deleteImg"><img src="/img/delete_icon.svg" alt="delete icon"></button>
             </form>
@@ -47,10 +47,35 @@
         </div>
     </main>
     <footer>
-        <p th:if="${deletedTask} == true"  class="fadeoutMessage" id="redFeedback">Task was completely deleted</p>
+        <p class="hidden" id="redFeedback">Task was completely deleted</p>
         <p th:if="${reAddedTask} == true"  class="fadeoutMessage">Task re-added</p>
     </footer>
 </section>
+<script>
+    function handleDelete(event) {
+        event.preventDefault();
+        const form = event.target;
+        const data = new FormData(form);
+        const url = form.action;
+        const popupMessage = document.querySelector("#redFeedback");
+
+        fetch(url, {
+            method: 'POST',
+            body: data
+        }).then(resp => {
+            if (resp.redirected && resp.url.indexOf("login") > -1) { // session expired
+                window.location.reload();
+            }
+
+            form.parentNode.remove();
+        });
+
+        popupMessage.className = "fadeoutMessage";
+        setTimeout(() => {
+            popupMessage.className = "hidden";
+        }, 3000);
+    }
+</script>
 <script src="/js/fadeout.js"></script>
 </body>
 </html>
