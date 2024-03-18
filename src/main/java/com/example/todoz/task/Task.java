@@ -34,6 +34,7 @@ public class Task {
     private LocalDateTime dueDate;
     private LocalDateTime leftBehind;
     private LocalDateTime doneAt;
+    private boolean isUpcoming = false;
     @ManyToOne
     private Week week;
     @ManyToOne

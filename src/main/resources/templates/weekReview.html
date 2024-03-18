@@ -39,38 +39,12 @@
         </div>
 
         <form th:action="@{/startNewWeek}" th:method="post">
-
-            <div class="task" th:each="task : ${upcomingTasks}" th:data-done="${task.done}">
-                <span th:classappend="|prio${task.getPriority()}|"></span>
-                <span class="taskStatus"> <img src="/img/week_review_clock.svg"></span>
-                <p class="taskText" th:text="${task.getDescription()}"></p>
-                <label class="checkboxContainer">
-                    <input type="checkbox" class="toDelegate" onclick="updateButton()" name="taskIds"
-                           th:value="${task.id}" checked>
-                    <span class="weekIcon"><img class="icon-unchecked" src="/img/week_review_icon_add.svg"></span>
-                    <span class="weekIcon" th:text="|due by ${task.getDueDateDayOfWeek()}|"></span>
-                </label>
-            </div>
-
-            <div class="task" th:each="task : ${previousWeek.getSortedTasks()}" th:data-done="${task.done}">
-                <span th:classappend="|prio${task.getPriority()}|"></span>
-                <span class="taskStatus" th:if="${task.isDone()}"><img
-                        src="/img/week_review_check.svg"></span>
-                <span class="taskStatus" th:if="${!task.isDone()}"><img src="/img/week_review_cross.svg"
-                                                                        class="cross"></span>
-                <p class="taskText" th:text="${task.getDescription()}"></p>
-                <label class="checkboxContainer">
-                    <input type="checkbox" class="toDelegate" onclick="updateButton()" name="taskIds"
-                           th:value="${task.id}">
-                    <span class="weekIcon"><img class="icon-unchecked" src="/img/week_review_icon_add.svg"></span>
-                    <span class="weekIcon">added</span>
-                </label>
-            </div>
+            <div th:replace="fragments :: task-week-review(object=${upcomingTasks})"></div>
+            <div th:replace="fragments :: task-week-review(object=${previousWeek.getSortedTasks()})"></div>
 
             <p class="awesome">Hey, did you know this app is in pre-alpha?<br/>You're such a&nbsp;trend setter!</p>
             <input type="hidden" id="leftBehindInput" name="leftBehinds">
             <button class="startWeek" type="submit" data-umami-event="startNewWeek">Start your week</button>
-
         </form>
         <img src="/img/stickman1.svg" class="stickman" alt="">
     </main>

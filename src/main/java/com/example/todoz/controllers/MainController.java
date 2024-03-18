@@ -38,6 +38,7 @@ public class MainController {
             List<Task> upcomingTasks = taskService
                     .findUpcomingTasks(getUser(principal), previousWeek.getWeekNumber(), DateManager.formattedCurrentWeek());
 
+
             model.addAttribute("user", getUser(principal));
             model.addAttribute("previousWeek", previousWeek);
             model.addAttribute("upcomingTasks", upcomingTasks);
