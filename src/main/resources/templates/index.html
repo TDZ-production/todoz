@@ -36,7 +36,10 @@
         </div>
         <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|" id="filter-text" onclick="toggleDropdown('filters')"></h2>
         <div class="week-progressbar"></div>
-        <button id="toggleButton">|</button>
+        <button id="toggleButton">
+            <svg class="light_on" th:insert="svgFragments::light_on"></svg>
+            <svg class="light_off" th:insert="svgFragments::light_off" style="display:none;"></svg>
+        </button>
     </header>
 
     <div class="filters" style="display: none;">
@@ -128,17 +131,30 @@
             const toggleButton = document.getElementById("toggleButton");
             const rootElement = document.documentElement;
             const theme = localStorage.getItem("theme");
+            const lightOnIcon = document.querySelector(".light_on");
+            const lightOffIcon = document.querySelector(".light_off");
 
             theme && rootElement.classList.add(theme);
 
+            if (theme === "dark") {
+                lightOnIcon.style.display = "none";
+                lightOffIcon.style.display = "inline-block";
+            } else {
+                lightOnIcon.style.display = "inline-block";
+                lightOffIcon.style.display = "none";
+            }
 
             toggleButton.addEventListener("click", function() {
                 rootElement.classList.toggle("dark");
 
                 if (rootElement.classList.contains("dark")) {
                     localStorage.setItem("theme", "dark");
+                    lightOnIcon.style.display = "none";
+                    lightOffIcon.style.display = "inline-block";
                 } else {
                     localStorage.removeItem("theme");
+                    lightOnIcon.style.display = "inline-block";
+                    lightOffIcon.style.display = "none";
                 }
             });
         });
