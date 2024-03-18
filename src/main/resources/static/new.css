@@ -102,9 +102,9 @@
     --positive-output-color: rgba(158, 187, 149);
     --negative-output-background-color: rgba(200, 158, 172, 0.85);
     --negative-output-color: rgb(200, 158, 172);
-    --weekreview-date-color: rgb(148, 190, 135);
-    --weekreview-button-background-color:rgba(158, 187, 149, 0.6);
-    --weekreview-button-color:rgba(158, 187, 149);
+    --weekreview-date-color: #9bd895;
+    --weekreview-button-background-color:rgb(164, 201, 153);
+    --weekreview-button-color: #373737;
     --weekreview-note-background-color:#ffffff17;
     --cta-font-color: #373737;
 }
@@ -931,6 +931,11 @@ button#darkModeButtonLogin{
 }
 
 /*area chart for week review*/
+.catWeekReview{
+    height: 8rem;
+    margin-left: -1.5rem;
+    width: 24rem;
+}
 .area-chart {
     margin: auto;
     padding: 0;
