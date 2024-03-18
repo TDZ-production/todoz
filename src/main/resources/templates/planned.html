@@ -37,7 +37,8 @@
                               th:data-duedate="*{dueDateDate}"></span>
                     </div>
 
-                    <form class="delete" onsubmit="handleDelete(event)" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
+                    <form class="delete" onsubmit="handleDelete(event)" th:method="post"
+                          th:action="|/tasks/leaveBehind/${task.id}|">
                         <input type="hidden" name="id" th:value="${task.id}">
                         <button class="deleteImg">
                             <svg th:insert="svgFragments::leaveBehind_icon"></svg>
