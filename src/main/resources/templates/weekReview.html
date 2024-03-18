@@ -52,27 +52,37 @@
 
             <div class="task" th:each="task : ${upcomingTasks}" th:data-done="${task.done}">
                 <span th:classappend="|prio${task.getPriority()}|"></span>
-                <span class="taskStatus"> <img src="/img/week_review_clock.svg"></span>
+                <span class="taskStatus">
+                    <svg th:insert="svgFragments::week_review_clock"/>
+                </span>
                 <p class="taskText" th:text="${task.getDescription()}"></p>
                 <label class="checkboxContainer">
                     <input type="checkbox" class="toDelegate" onclick="updateButton()" name="taskIds"
                            th:value="${task.id}" checked>
-                    <span class="weekIcon"><img class="icon-unchecked" src="/img/week_review_icon_add.svg"></span>
+                    <span class="weekIcon">
+                        <svg class="icon-unchecked" th:insert="svgFragments::week_review_icon_add"/>
+                    </span>
                     <span class="weekIcon" th:text="|due by ${task.getDueDateDayOfWeek()}|"></span>
                 </label>
             </div>
 
             <div class="task" th:each="task : ${previousWeek.getSortedTasks()}" th:data-done="${task.done}">
-                <span th:classappend="|prio${task.getPriority()}|"></span>
-                <span class="taskStatus" th:if="${task.isDone()}"><img
-                        src="/img/week_review_check.svg"></span>
-                <span class="taskStatus" th:if="${!task.isDone()}"><img src="/img/week_review_cross.svg"
-                                                                        class="cross"></span>
+                <span th:classappend="|prio${task.getPriority()}|">
+
+                </span>
+                <span class="taskStatus" th:if="${task.isDone()}">
+                    <svg th:insert="svgFragments::week_review_check"/>
+                </span>
+                <span class="taskStatus" th:if="${!task.isDone()}">
+                    <svg th:insert="svgFragments::week_review_cross" class="cross"/>
+                </span>
                 <p class="taskText" th:text="${task.getDescription()}"></p>
                 <label class="checkboxContainer">
                     <input type="checkbox" class="toDelegate" onclick="updateButton()" name="taskIds"
                            th:value="${task.id}">
-                    <span class="weekIcon"><img class="icon-unchecked" src="/img/week_review_icon_add.svg"></span>
+                    <span class="weekIcon">
+                        <svg class="icon-unchecked" th:insert="svgFragments::week_review_icon_add"/>
+                    </span>
                     <span class="weekIcon">added</span>
                 </label>
             </div>

@@ -28,7 +28,9 @@
 
             <div class="aboveSlider" style="display: flex; justify-content: center; line-height: 1.7;}">
                 <span>Aggressive</span>
-                <img src="/img/prio4_pm_2.svg" alt="icon" style="margin-left: .5rem">
+                <svg class="pm_2_Register" th:insert="svgFragments::prio4_pm_2" style="display:inline-block;"/>
+                <svg class="pm_1_Register" th:insert="svgFragments::prio4_pm_1" style="display:none;"/>
+                <svg class="pm_0_Register" th:insert="svgFragments::prio4_pm_0" style="display:none;"/>
             </div>
             <label style="margin-top: 0.5rem">
                 <input type="range" name="pussyMeter" step="1" max="2" class="slider" value="2"
@@ -53,7 +55,6 @@
 
 <script th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function() {
-        const toggleButton = document.getElementById("toggleButton");
         const rootElement = document.documentElement;
         const theme = localStorage.getItem("theme");
 
@@ -81,36 +82,33 @@
         const title = document.querySelector("#title");
         const subtitle = document.querySelector("#title + p");
         const pussyLabel = document.querySelector(".aboveSlider span");
-        const icon = document.querySelector(".aboveSlider img");
+        const pm_0 = document.querySelector(".pm_0_Register");
+        const pm_1 = document.querySelector(".pm_1_Register");
+        const pm_2 = document.querySelector(".pm_2_Register");
+
 
         if (range.value == 0) {
             title.innerText = "ToDoZlatíčko";
             subtitle.innerText = "Register yourself fam";
             pussyLabel.innerText = "Friendly";
-            icon.src="/img/prio4_pm_0.svg";
+            pm_0.style.display = "inline-block";
+            pm_1.style.display = "none";
+            pm_2.style.display = "none";
+
         } else if (range.value == 1) {
             title.innerText = "ToDoZápisník";
             subtitle.innerText = "Register your account";
             pussyLabel.innerText = "Neutral";
-            icon.src="/img/prio4_pm_1.svg";
+            pm_0.style.display = "none";
+            pm_1.style.display = "inline-block";
+            pm_2.style.display = "none";
         } else {
             title.innerText = "ToDoZmrd";
             subtitle.innerText = "Register your ass!";
             pussyLabel.innerText = "Aggressive";
-            icon.src="/img/prio4_pm_2.svg";
-        }
-    }
-
-    function togglePasswordVisibility() {
-        const password = document.querySelector("#password");
-        const img = document.querySelector("#showPassword")
-
-        if (password.type === "password") {
-            password.type = "text";
-            img.src = "/img/eye_icon_open.svg"
-        } else {
-            password.type = "password";
-            img.src = "/img/eye_icon_closed.svg"
+            pm_0.style.display = "none";
+            pm_1.style.display = "none";
+            pm_2.style.display = "inline-block";
         }
     }
 
