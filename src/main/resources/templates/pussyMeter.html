@@ -25,9 +25,10 @@
 
         <form th:action="@{/changeMeter}" method="post" th:object="${user}">
             <div class="pussySliderIcons">
-                <svg th:insert="svgFragments::prio4_pm_0" id="starIcon"/>
-                <svg th:insert="svgFragments::prio4_pm_1" id="fireIcon"/>
-                <svg th:insert="svgFragments::prio4_pm_2" id="skullIcon"/>
+                <svg id="currentIcon" th:insert="svgFragments::|prio4_pm_*{pussyMeter}|" style="display:inline-block;"/>
+                <svg th:insert="svgFragments::prio4_pm_0" id="starIcon" style="display:none;"/>
+                <svg th:insert="svgFragments::prio4_pm_1" id="fireIcon" style="display:none;"/>
+                <svg th:insert="svgFragments::prio4_pm_2" id="skullIcon" style="display:none;"/>
             </div>
             <label class="slideContainer">
                 <span th:if="*{pussyMeter == 0}">Friendly</span>
@@ -66,6 +67,7 @@
     const starIcon = document.getElementById("starIcon");
     const fireIcon = document.getElementById("fireIcon");
     const skullIcon = document.getElementById("skullIcon");
+    const currentIcon = document.getElementById("currentIcon");
     function updateText() {
         const slider = document.querySelector(".slider");
         const text = document.querySelector(".slideContainer span");
@@ -73,13 +75,22 @@
 
         if (slider.value == 0) {
             text.innerText = "Friendly"
-            icon.src = "/img/prio4_pm_0.svg";
+            starIcon.style.display="inline-block";
+            fireIcon.style.display="none";
+            skullIcon.style.display="none";
+            currentIcon.style.display="none";
         } else if (slider.value == 1) {
             text.innerText = "Neutral"
-            icon.src = "/img/prio4_pm_1.svg";
+            starIcon.style.display="none";
+            fireIcon.style.display="inline-block";
+            skullIcon.style.display="none";
+            currentIcon.style.display="none";
         } else {
             text.innerText = "Aggressive"
-            icon.src = "/img/prio4_pm_2.svg";
+            starIcon.style.display="none";
+            fireIcon.style.display="none";
+            skullIcon.style.display="inline-block";
+            currentIcon.style.display="none";
         }
     }
 </script>
