@@ -56,7 +56,6 @@
 </section>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const toggleButton = document.getElementById("toggleButton");
         const rootElement = document.documentElement;
         const theme = localStorage.getItem("theme");
 
@@ -74,8 +73,6 @@
             localStorage.removeItem("theme");
         }
     });
-</script>
-<script>
     function handleDelete(event) {
         event.preventDefault();
         const form = event.target;
