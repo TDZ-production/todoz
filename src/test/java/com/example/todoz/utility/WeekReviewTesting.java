@@ -56,11 +56,10 @@ public class WeekReviewTesting {
 
         Task doneTask = new Task();
         doneTask.setDescription("doneTask");
-        doneTask.setDone(true);
+        doneTask.setDoneAt(DateManager.now());
 
         Task notDoneTask = new Task();
         notDoneTask.setDescription("notDoneTask");
-        notDoneTask.setDone(false);
 
         Week previuosWeek = new Week();
         previuosWeek.getTasks().add(doneTask);

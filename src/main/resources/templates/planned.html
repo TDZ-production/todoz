@@ -37,7 +37,7 @@
                               th:data-duedate="*{dueDateDate}"></span>
                     </div>
 
-                    <form class="delete" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
+                    <form class="delete" onsubmit="handleDelete(event)" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
                         <input type="hidden" name="id" th:value="${task.id}">
                         <button class="deleteImg">
                             <svg th:insert="svgFragments::leaveBehind_icon"></svg>
@@ -57,18 +57,21 @@
         </div>
     </main>
 
-    <footer id="plannedFooter">
-        <form method="post" th:action="@{/tasks/add}">
-            <button type="submit" name="priority" value="4" class="hidden"></button>
+    <footer>
+        <p class="hidden" id="redFeedback">Task added to "Left Behind"</p>
+        <div class="hidden">
+            <form method="post" th:action="@{/tasks/add}">
+                <button type="submit" name="priority" value="4" class="hidden"></button>
 
-            <label>
-                <input type="date" name="maybeDueDate" id="date">
-            </label>
+                <label class="date-input">
+                    <img src="/img/calendar_icon.svg" alt="due date">
+                    <input type="date" name="maybeDueDate" id="date">
+                </label>
 
-            <div class="addTask">
-                <input type="text" placeholder="new task" name="description" id="add" required autofocus
-                       autocomplete="off">
-            </div>
+                <div class="addTask">
+                    <input type="text" placeholder="new task" name="description" id="add" required autofocus
+                           autocomplete="off">
+                </div>
 
             <div class="stars">
                 <button onclick="setPriority(4)" type="submit" name="priority" value="4" data-umami-event="setPriority"
@@ -127,7 +130,7 @@
     }
 
     function edit(task) {
-        document.querySelector("#plannedFooter").style.display = "block";
+        document.querySelector("div.hidden").classList.remove("hidden");
         document.querySelector("#add").focus();
 
         const main = document.querySelector("main");
@@ -191,6 +194,30 @@
             closeEye.style.display = "inline-block";
             openEye.style.display = "none";
         }
+    }
+
+    function handleDelete(event) {
+        event.preventDefault();
+        const form = event.target;
+        const data = new FormData(form);
+        const url = form.action;
+        const popupMessage = document.querySelector("#redFeedback");
+
+        fetch(url, {
+            method: 'POST',
+            body: data
+        }).then(resp => {
+            if (resp.redirected && resp.url.indexOf("login") > -1) { // session expired
+                window.location.reload();
+            }
+
+            form.parentNode.remove();
+        });
+
+        popupMessage.className = "fadeoutMessage";
+        setTimeout(() => {
+            popupMessage.className = "hidden";
+        }, 3000);
     }
 </script>
 </body>

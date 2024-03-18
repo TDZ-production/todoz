@@ -76,7 +76,11 @@ public class TaskService {
     public void reAdd(Long taskId, User user, Week week) {
         Task task = findTaskByIdAndUserId(taskId, user);
         task.setLeftBehind(null);
-        task.setWeek(task.getDueDateWeekNumber() <= DateManager.formattedCurrentWeek() ? week : null);
+        if (task.getDueDate() == null){
+            task.setWeek(week);
+        } else {
+            task.setWeek(task.getDueDateWeekNumber() <= DateManager.formattedCurrentWeek() ? week : null);
+        }
         save(task);
     }
 

@@ -67,7 +67,7 @@
                 </form>
             </div>
 
-            <form class="delete" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
+            <form class="delete" onsubmit="handleDelete(event)" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
                 <input type="hidden" name="id" th:value="${task.id}">
                 <button th:class="deleteImg">
                     <svg th:insert="svgFragments::leaveBehind_icon"></svg>
@@ -80,11 +80,15 @@
                 to&nbsp;keep things organised!</p>
             <svg th:insert="svgFragments::|cat_pm_${user.pussyMeter}|"></svg>
         </div>
+
+            <p class="quote" th:text="${quote}"></p>
+            <p class="author" th:text="${author}"></p>
     </main>
 
     <footer>
-        <p th:if="${plannedTask} == true" class="fadeoutMessage" id="planned">Task added to "Planned"</p>
-        <p th:if="${leftBehindTask} == true" class="fadeoutMessage" id="leftBehind">Task added to "Left Behind"</p>
+        <p th:if="${plannedTask} == true" class="fadeoutMessage">Task added to "Planned"</p>
+        <p class="hidden" id="redFeedback">Task added to "Left Behind"</p>
+        <p th:if="${firstTask} == true"  class="fadeoutMessage">First task added to this week</p>
         <form method="post" th:action="@{/tasks/add}">
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
@@ -189,10 +193,6 @@
             }
         }
 
-        const el = document.querySelector(".fadeoutMessage");
-        if (el) {
-            setTimeout(() => fadeout(el), 3000);
-        }
 
         document.querySelector("#date").addEventListener("input", function () {
             const dateEl = document.querySelector("#date");
@@ -260,6 +260,30 @@
                 const task = form.closest(".task");
                 task.dataset.done = task.dataset.done === "true" ? "false" : "true";
             });
+        }
+
+        function handleDelete(event) {
+            event.preventDefault();
+            const form = event.target;
+            const data = new FormData(form);
+            const url = form.action;
+            const popupMessage = document.querySelector("#redFeedback");
+
+            fetch(url, {
+                method: 'POST',
+                body: data
+            }).then(resp => {
+                if (resp.redirected && resp.url.indexOf("login") > -1) { // session expired
+                    window.location.reload();
+                }
+
+                form.parentNode.remove();
+            });
+
+            popupMessage.className = "fadeoutMessage";
+            setTimeout(() => {
+                popupMessage.className = "hidden";
+            }, 3000);
         }
 
         function filterTasks(filter) {
@@ -425,14 +449,6 @@
             document.querySelector(".stars").scrollIntoView({behavior: "instant"});
         }
 
-        function fadeout(el) {
-            if (el !== null) {
-                el.classList.add("fade-out");
-                setTimeout(() => {
-                    el.remove();
-                }, 1000);
-            }
-        }
 
         function toggleDropdown(target) {
             popOverActive = !popOverActive;
@@ -444,6 +460,7 @@
             const menuCloseIcon = document.getElementById("menu_close");
             const main = document.querySelector("main");
             const footer = document.querySelector("footer");
+
 
             registerCancel(main);
             registerCancel(footer);
@@ -571,6 +588,7 @@
                 })
         }
     </script>
+    <script src="/js/fadeout.js"></script>
 </section>
 </body>
 </html>

@@ -3,7 +3,6 @@
     src: url("webfonts/Virgil.woff2");
 }
 
-
 :root {
     --feedback-text-area-color: #fcfcf6;
     --feedback-text-area-border-color:#b78300;
@@ -204,6 +203,7 @@ input {
 }
 
 .pussySliderIcons svg {
+    margin-top: 2rem;
     width: 100px;
     height: 80px;
 }
@@ -441,7 +441,7 @@ main > form button {
     margin-right: 0;
 }
 
-.task button, .task svg {
+.task button, .task img {
     display: block;
 }
 
@@ -619,6 +619,7 @@ button.startWeek:hover {
     -webkit-appearance: none;
     appearance: none;
     height: 2px;
+    padding: 0;
 }
 
 .slider::-webkit-slider-thumb {
@@ -829,6 +830,10 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 }
 
 .fadeoutMessage {
+    margin-inline: auto;
+    left: 0;
+    right: 0;
+    width: fit-content;
     position: absolute;
     top: -4rem;
     font-size: 1.1rem;
@@ -855,7 +860,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     opacity: 0;
 }
 
-.taskStatus svg {
+.taskStatus img {
     fill: #919191;
 }
 
@@ -908,6 +913,19 @@ button#darkModeButtonLogin{
     position: absolute;
     right: 3.5rem;
     top: 3rem;
+}
+
+.date-input {
+    position: relative;
+}
+
+.date-input svg {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 35px;
+    pointer-events: none;
 }
 
 /*area chart for week review*/
@@ -972,6 +990,17 @@ button#darkModeButtonLogin{
     display: flex;
     justify-content: space-between;
     color: var(--light-font-color);
+}
+
+.quote {
+    margin: 2.5rem;
+    opacity: 0.6
+}
+
+.author {
+    text-align: end;
+    margin-right: 2.5rem;
+    opacity: 0.6
 }
 
 @media (max-width: 459px) {

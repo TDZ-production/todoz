@@ -39,6 +39,9 @@ public class TaskController {
             if (task.getDueDate() != null && DateManager.getPrefixedWeek(task.getDueDate()) > DateManager.formattedCurrentWeek()) {
                 ra.addFlashAttribute("plannedTask", true);
             }
+            if(optWeek.get().getTasks().size() == 1){
+                ra.addFlashAttribute("firstTask", true);
+            }
         }
 
         return "redirect:/";
@@ -60,8 +63,9 @@ public class TaskController {
     }
 
     @PostMapping("re-add/{id}")
-    public String reAdd(@PathVariable Long id, Principal principal) {
+    public String reAdd(@PathVariable Long id, Principal principal, RedirectAttributes ra) {
         taskService.reAdd(id, getUser(principal), getWeek(principal));
+        ra.addFlashAttribute("reAddedTask", true);
 
         return "redirect:/leftBehind";
     }
@@ -76,8 +80,9 @@ public class TaskController {
     }
 
     @PostMapping("delete/{id}")
-    public String deleteTask(@PathVariable Long id, Principal principal) {
+    public String deleteTask(@PathVariable Long id, Principal principal, RedirectAttributes ra) {
         taskService.deleteTask(id, getUser(principal));
+        ra.addFlashAttribute("deletedTask", true);
 
         return "redirect:/leftBehind";
     }
