@@ -47,13 +47,14 @@
     --add-task-color-hover: #D1D1D1;
     --positive-output-background-color: rgb(175, 239, 155);
     --positive-output-color: rgb(93, 152, 77);
-    --negative-output-background-color: #eaa599;
-    --negative-output-color: #ce5d44;
+    --negative-output-background-color: #f5afc5;
+    --negative-output-color: #b75676;
     --weekreview-date-color: rgb(97, 155, 79);
     --weekreview-button-background-color: rgb(179, 236, 161);
     --weekreview-button-color:rgb(97, 155, 79);
     --weekreview-note-background-color:#f5e48d59;
     --cta-font-color: #333;
+    --register-message-color: #ab4768;
 }
 
 :root.dark {
@@ -107,6 +108,7 @@
     --weekreview-button-color: #373737;
     --weekreview-note-background-color:#ffffff17;
     --cta-font-color: #373737;
+    --register-message-color: rgba(200, 158, 172);
 }
 
 * {
@@ -331,6 +333,10 @@ header a, header div {
 
 header a {
     padding: 1rem;
+}
+.registerMessage{
+    color: var(--register-message-color);
+    margin-bottom: 1.4rem;
 }
 
 h1.pussyHeader {

@@ -22,9 +22,6 @@
         <p class="note">Register your ass!</p>
 
         <form th:action="|/register|" method="post">
-            <p th:if="${userExists} == true">User with this email exists</p>
-            <p th:if="${invalidCredentials} == true">Invalid credentials!</p>
-            <p id="placeholder"></p>
 
             <div class="aboveSlider" style="display: flex; justify-content: center; line-height: 1.7;}">
                 <span>Aggressive</span>
@@ -51,6 +48,9 @@
         </form>
         <p><a th:href="@{/login}">Log in</a></p>
     </main>
+    <p class="registerMessage" th:if="${userExists} == true">User with this email exists</p>
+    <p class="registerMessage" th:if="${invalidCredentials} == true">Invalid credentials!</p>
+    <p id="placeholder"></p>
 </section>
 
 <script th:inline="javascript">
