@@ -9,7 +9,6 @@
     --feedback-text-area-border-color:#b78300;
     --feedback-submit-color: rgb(77, 122, 65);
     --feedback-submit-backgroud-color: rgb(164, 201, 153);
-    --feedback-submit-backgroud-hover-color: rgba(164, 201, 153, 0.73);
     --feedback-discord-color:#7678d2;
     --feedback-discord-background-color: rgba(137, 137, 192, 0.82);
     --body-bg-color: #ededed;
@@ -59,13 +58,12 @@
 }
 
 :root.dark {
-    --feedback-text-area-color: #949494;
+    --feedback-text-area-color: #434343;
     --feedback-text-area-border-color:#cbcbcb;
-    --feedback-submit-color: rgb(164, 201, 153);
-    --feedback-submit-backgroud-color: rgba(158, 187, 149, 0.6);
-    --feedback-submit-backgroud-hover-color: rgb(164, 201, 153);
-    --feedback-discord-color:#7678d2;
-    --feedback-discord-background-color:#646493d1;
+    --feedback-submit-color: #434343;
+    --feedback-submit-backgroud-color: rgb(164, 201, 153);
+    --feedback-discord-color:#6466af;
+    --feedback-discord-background-color:#6466af;
     --body-bg-color: #373737;
     --main-bg-color: #3c3c3c;
     --task-input-color: #434343;
@@ -82,7 +80,7 @@
     --filter-border-color:2px solid #F9C0D3;
     --filter-background-color:#373737;
     --filter-button_border-color:2px solid #F9C0D3;
-    --pink-stickit-color: rgba(249, 192, 211, 0.8);
+    --pink-stickit-color: rgba(249, 192, 211, 0.89);
     --pink-stickit-hover: rgba(249, 192, 211, 0.7);
     --dateTime-active_button-color: rgba(213, 186, 104, 0.8);
     --dateTime-active_button-border-color: 2px solid #e0c46e;
@@ -101,9 +99,9 @@
     --prio4-hover-color: rgba(200, 158, 172, 0.6);
     --add-task-color: rgba(158, 187, 149, 0.6);
     --add-task-color-hover: #D1D1D1;
-    --positive-output-background-color: rgba(158, 187, 149, 0.6);
+    --positive-output-background-color: rgba(158, 187, 149, 0.85);
     --positive-output-color: rgba(158, 187, 149);
-    --negative-output-background-color: rgba(200, 158, 172, 0.6);
+    --negative-output-background-color: rgba(200, 158, 172, 0.85);
     --negative-output-color: rgb(200, 158, 172);
     --weekreview-date-color: rgb(148, 190, 135);
     --weekreview-button-background-color:rgba(158, 187, 149, 0.6);
@@ -727,8 +725,9 @@ textarea:focus {
 }
 
 #formButton:hover {
-    background: var(--feedback-submit-backgroud-hover-color);
-    color: var(--main-bg-color);
+    background-color: var(--button-hover-backgroud-color);
+    border: var(--button-hover-border-color);
+    color: var(--button-hover-border-color);;
 }
 
 .discordFeedback {
@@ -893,6 +892,22 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     position: absolute;
     right: 0.1rem;
     top: 24%;
+}
+.light_off,
+.light_on{
+    width: 5rem;
+    height: 3rem;
+}
+button#toggleButton,
+button#darkModeButtonLogin{
+    border: none;
+    background: none;
+    padding: 0;
+}
+#darkModeButtonLogin svg{
+    position: absolute;
+    right: 3.5rem;
+    top: 3rem;
 }
 
 /*area chart for week review*/
