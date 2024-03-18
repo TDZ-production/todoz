@@ -849,11 +849,10 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     left: 20%;
 }
 
-#leftBehind {
+#leftBehind,#redFeedback {
     color: var(--negative-output-color);
     border: 1px solid var(--negative-output-color);
     background-color: var(--negative-output-background-color);
-    left: 16%;
 }
 
 .fadeoutMessage.fade-out {
@@ -910,13 +909,16 @@ button#darkModeButtonLogin{
     padding: 0;
 }
 #darkModeButtonLogin svg{
-    position: absolute;
-    right: 3.5rem;
-    top: 3rem;
+    margin-left: 19.5rem;
+    margin-top: 1rem;
 }
 
 .date-input {
     position: relative;
+}
+
+.loginTitle{
+    margin-top: 1rem;
 }
 
 .date-input svg {
