@@ -964,7 +964,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     --fillcolor: var(--prio4-color);
 }
 
-.weeekdays {
+.weekdays {
     width: 83%;
     margin: auto;
     display: flex;

@@ -15,11 +15,11 @@
         <div class="weekSummary">
             <table class="area-chart">
                 <tr th:each="day, iterStat : ${graphData}" th:object="${day}" th:unless="${iterStat.index > 5}">
-                    <td th:each="value : ${day}" th:style="|--start:${value}; --end:${graphData.get(iterStat.index + 1).get(valueStat.index)};|"></td></td>
+                    <td th:each="value : ${day}" th:style="|--start:${value}; --end:${graphData.get(iterStat.index + 1).get(valueStat.index)};|"></td>
                 </tr>
             </table>
 
-            <div class = "weeekdays">
+            <div class = "weekdays">
                 <span>Su</span>
                 <span>Mo</span>
                 <span>Tu</span>
