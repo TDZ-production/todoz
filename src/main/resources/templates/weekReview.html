@@ -41,7 +41,7 @@
 
             <p th:text="|Well, you managed to survive through last week with ${previousWeek.getDonePercentage()}% of finished tasks... Not great, not terrible!|"></p>
             <p style="margin-top:0.5rem">
-                <img style="height: 8rem;margin-left: -1.5rem" th:src="${previousWeek.getCatImage()}" alt="">
+                <svg class="catWeekReview" th:insert="svgFragments::|${previousWeek.getCatImage()}|"/>
             </p>
             <p class="weekNote">Select tasks you want in week <span th:text="|${currentWeekNumber}|"/>.<br/>You
                 can look back on&nbsp;your&nbsp;week and&nbsp;retrospect. Keep your&nbsp;week clean and&nbsp;focused!
