@@ -37,9 +37,12 @@
                               th:data-duedate="*{dueDateDate}"></span>
                     </div>
 
-                    <form class="delete" onsubmit="handleDelete(event)" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
+                    <form class="delete" onsubmit="handleDelete(event)" th:method="post"
+                          th:action="|/tasks/leaveBehind/${task.id}|">
                         <input type="hidden" name="id" th:value="${task.id}">
-                        <button class="deleteImg"><img src="/img/leaveBehind_icon.svg" alt="delete"></button>
+                        <button class="deleteImg">
+                            <svg th:insert="svgFragments::leaveBehind_icon"></svg>
+                        </button>
                     </form>
                 </div>
             </div>
@@ -51,18 +54,18 @@
 
         <div th:if="${planned.isEmpty()}" class="NoTaskPlaceholder">
             <p>Here will be all your planned tasks... <br> in the meantime enjoy this ball...</p>
-            <img th:src="|/img/cat_pm_${user.pussyMeter}.svg|" alt="cat">
+            <svg th:insert="svgFragments::|cat_pm_${user.pussyMeter}|"></svg>
         </div>
     </main>
 
-    <footer >
+    <footer>
         <p class="hidden" id="redFeedback">Task added to "Left Behind"</p>
         <div class="hidden">
             <form method="post" th:action="@{/tasks/add}">
                 <button type="submit" name="priority" value="4" class="hidden"></button>
 
                 <label class="date-input">
-                    <img src="/img/calendar_icon.svg" alt="due date">
+                    <svg th:insert="svgFragments::calendar_icon"></svg>
                     <input type="date" name="maybeDueDate" id="date">
                 </label>
 
@@ -72,28 +75,52 @@
                 </div>
 
                 <div class="stars">
-                    <button onclick="setPriority(4)" type="submit" name="priority" value="4" data-umami-event="setPriority"
+                    <button onclick="setPriority(4)" type="submit" name="priority" value="4"
+                            data-umami-event="setPriority"
                             data-umami-event-priority="4">
-                        <img th:src="|/img/prio4_pm_${user.pussyMeter}.svg|" alt="priority 4">
+                        <svg th:insert="svgFragments::|prio4_pm_${user.pussyMeter}|"></svg>
                     </button>
-                    <button onclick="setPriority(3)" type="submit" name="priority" value="3" data-umami-event="setPriority"
+                    <button onclick="setPriority(3)" type="submit" name="priority" value="3"
+                            data-umami-event="setPriority"
                             data-umami-event-priority="3">
-                        <img th:src="|/img/prio3_pm_${user.pussyMeter}.svg|" alt="priority 3">
+                        <svg th:insert="svgFragments::|prio_pm_3${user.pussyMeter}|"></svg>
                     </button>
-                    <button onclick="setPriority(2)" type="submit" name="priority" value="2" data-umami-event="setPriority"
+                    <button onclick="setPriority(2)" type="submit" name="priority" value="2"
+                            data-umami-event="setPriority"
                             data-umami-event-priority="2">
-                        <img th:src="|/img/prio2_pm_${user.pussyMeter}.svg|" alt="priority 2">
+                        <svg th:insert="svgFragments::|prio4_pm_2${user.pussyMeter}|"></svg>
                     </button>
-                    <button onclick="setPriority(1)" type="submit" name="priority" value="1" data-umami-event="setPriority"
+                    <button onclick="setPriority(1)" type="submit" name="priority" value="1"
+                            data-umami-event="setPriority"
                             data-umami-event-priority="1">
-                        <img th:src="|/img/prio1_pm_${user.pussyMeter}.svg|" alt="priority 1">
+                        <svg th:insert="svgFragments::|prio4_pm_1${user.pussyMeter}|"></svg>
                     </button>
                 </div>
             </form>
         </div>
     </footer>
 </section>
-<script th:inline="javascript">
+<!--// FIXME: from some reason when I load the page the script is not loaded..-->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const rootElement = document.documentElement;
+        const theme = localStorage.getItem("theme");
+
+        theme && rootElement.classList.add(theme);
+
+        const isDarkMode = rootElement.classList.contains("dark");
+
+        if (!isDarkMode && theme === "dark") {
+            rootElement.classList.add("dark");
+        }
+
+        if (isDarkMode) {
+            localStorage.setItem("theme", "dark");
+        } else {
+            localStorage.removeItem("theme");
+        }
+    });
+
     initTaskEditListener();
 
     function initTaskEditListener() {
@@ -158,6 +185,22 @@
         });
     }
 
+    function togglePasswordVisibility() {
+        const password = document.querySelector("#password");
+        const closeEye = document.querySelector(".showPassword");
+        const openEye = document.querySelector(".hidePassword");
+
+        if (password.type === "password") {
+            password.type = "text";
+            closeEye.style.display = "none";
+            openEye.style.display = "inline-block";
+        } else {
+            password.type = "password";
+            closeEye.style.display = "inline-block";
+            openEye.style.display = "none";
+        }
+    }
+
     function handleDelete(event) {
         event.preventDefault();
         const form = event.target;
@@ -182,6 +225,5 @@
         }, 3000);
     }
 </script>
-<script src="/js/fadeout.js"></script>
 </body>
 </html>

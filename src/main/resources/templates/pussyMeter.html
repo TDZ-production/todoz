@@ -24,7 +24,12 @@
         <p class="note">Choose how big of a pussy are you!</p>
 
         <form th:action="@{/changeMeter}" method="post" th:object="${user}">
-            <img class="pussySliderIcon" th:src="|/img/prio4_pm_*{pussyMeter}.svg|" alt="icon">
+            <div class="pussySliderIcons">
+                <svg id="currentIcon" th:insert="svgFragments::|prio4_pm_*{pussyMeter}|" style="display:inline-block;"/>
+                <svg th:insert="svgFragments::prio4_pm_0" id="starIcon" style="display:none;"/>
+                <svg th:insert="svgFragments::prio4_pm_1" id="fireIcon" style="display:none;"/>
+                <svg th:insert="svgFragments::prio4_pm_2" id="skullIcon" style="display:none;"/>
+            </div>
             <label class="slideContainer">
                 <span th:if="*{pussyMeter == 0}">Friendly</span>
                 <span th:if="*{pussyMeter == 1}">Neutral</span>
@@ -38,6 +43,31 @@
 </section>
 </body>
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const rootElement = document.documentElement;
+        const theme = localStorage.getItem("theme");
+
+        theme && rootElement.classList.add(theme);
+
+        const isDarkMode = rootElement.classList.contains("dark");
+
+        if (!isDarkMode && theme === "dark") {
+            rootElement.classList.add("dark");
+        }
+
+        if (isDarkMode) {
+            localStorage.setItem("theme", "dark");
+        } else {
+            localStorage.removeItem("theme");
+        }
+    });
+
+    const slider = document.getElementById("pussySlider");
+    const output = document.getElementById("pussyLabel");
+    const starIcon = document.getElementById("starIcon");
+    const fireIcon = document.getElementById("fireIcon");
+    const skullIcon = document.getElementById("skullIcon");
+    const currentIcon = document.getElementById("currentIcon");
     function updateText() {
         const slider = document.querySelector(".slider");
         const text = document.querySelector(".slideContainer span");
@@ -45,13 +75,22 @@
 
         if (slider.value == 0) {
             text.innerText = "Friendly"
-            icon.src = "/img/prio4_pm_0.svg";
+            starIcon.style.display="inline-block";
+            fireIcon.style.display="none";
+            skullIcon.style.display="none";
+            currentIcon.style.display="none";
         } else if (slider.value == 1) {
             text.innerText = "Neutral"
-            icon.src = "/img/prio4_pm_1.svg";
+            starIcon.style.display="none";
+            fireIcon.style.display="inline-block";
+            skullIcon.style.display="none";
+            currentIcon.style.display="none";
         } else {
             text.innerText = "Aggressive"
-            icon.src = "/img/prio4_pm_2.svg";
+            starIcon.style.display="none";
+            fireIcon.style.display="none";
+            skullIcon.style.display="inline-block";
+            currentIcon.style.display="none";
         }
     }
 </script>

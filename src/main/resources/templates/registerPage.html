@@ -22,13 +22,12 @@
         <p class="note">Register your ass!</p>
 
         <form th:action="|/register|" method="post">
-            <p th:if="${userExists} == true">User with this email exists</p>
-            <p th:if="${invalidCredentials} == true">Invalid credentials!</p>
-            <p id="placeholder"></p>
 
             <div class="aboveSlider" style="display: flex; justify-content: center; line-height: 1.7;}">
                 <span>Aggressive</span>
-                <img src="/img/prio4_pm_2.svg" alt="icon" style="margin-left: .5rem">
+                <svg class="pm_2_Register" th:insert="svgFragments::prio4_pm_2" style="display:inline-block;"/>
+                <svg class="pm_1_Register" th:insert="svgFragments::prio4_pm_1" style="display:none;"/>
+                <svg class="pm_0_Register" th:insert="svgFragments::prio4_pm_0" style="display:none;"/>
             </div>
             <label style="margin-top: 0.5rem">
                 <input type="range" name="pussyMeter" step="1" max="2" class="slider" value="2"
@@ -41,16 +40,39 @@
 
             <label class="password">
                 <input name="password" type="password" id="password" placeholder="password">
-                <img src="/img/eye_icon_closed.svg" id="showPassword" onclick="togglePasswordVisibility()" alt="hide icon">
+                <svg th:insert="svgFragments::eye_icon_open" class="hidePassword" style="display:none;" onclick="togglePasswordVisibility()"/>
+                <svg th:insert="svgFragments::eye_icon_closed" class="showPassword" onclick="togglePasswordVisibility()"/>
             </label>
 
             <button class="cta" type="submit">Sign-up</button>
         </form>
         <p><a th:href="@{/login}">Log in</a></p>
     </main>
+    <p class="registerMessage" th:if="${userExists} == true">User with this email exists</p>
+    <p class="registerMessage" th:if="${invalidCredentials} == true">Invalid credentials!</p>
+    <p id="placeholder"></p>
 </section>
 
 <script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        const rootElement = document.documentElement;
+        const theme = localStorage.getItem("theme");
+
+        theme && rootElement.classList.add(theme);
+
+        const isDarkMode = rootElement.classList.contains("dark");
+
+        if (!isDarkMode && theme === "dark") {
+            rootElement.classList.add("dark");
+        }
+
+        if (isDarkMode) {
+            localStorage.setItem("theme", "dark");
+        } else {
+            localStorage.removeItem("theme");
+        }
+    });
+
     /*<![CDATA[*/
     const MINIMAL_PASSWORD_LENGTH = /*[[@{${minimalPasswordLength}}]]*/ 0;
     /*]]>*/
@@ -60,36 +82,33 @@
         const title = document.querySelector("#title");
         const subtitle = document.querySelector("#title + p");
         const pussyLabel = document.querySelector(".aboveSlider span");
-        const icon = document.querySelector(".aboveSlider img");
+        const pm_0 = document.querySelector(".pm_0_Register");
+        const pm_1 = document.querySelector(".pm_1_Register");
+        const pm_2 = document.querySelector(".pm_2_Register");
+
 
         if (range.value == 0) {
             title.innerText = "ToDoZlatíčko";
             subtitle.innerText = "Register yourself fam";
             pussyLabel.innerText = "Friendly";
-            icon.src="/img/prio4_pm_0.svg";
+            pm_0.style.display = "inline-block";
+            pm_1.style.display = "none";
+            pm_2.style.display = "none";
+
         } else if (range.value == 1) {
             title.innerText = "ToDoZápisník";
             subtitle.innerText = "Register your account";
             pussyLabel.innerText = "Neutral";
-            icon.src="/img/prio4_pm_1.svg";
+            pm_0.style.display = "none";
+            pm_1.style.display = "inline-block";
+            pm_2.style.display = "none";
         } else {
             title.innerText = "ToDoZmrd";
             subtitle.innerText = "Register your ass!";
             pussyLabel.innerText = "Aggressive";
-            icon.src="/img/prio4_pm_2.svg";
-        }
-    }
-
-    function togglePasswordVisibility() {
-        const password = document.querySelector("#password");
-        const img = document.querySelector("#showPassword")
-
-        if (password.type === "password") {
-            password.type = "text";
-            img.src = "/img/eye_icon_open.svg"
-        } else {
-            password.type = "password";
-            img.src = "/img/eye_icon_closed.svg"
+            pm_0.style.display = "none";
+            pm_1.style.display = "none";
+            pm_2.style.display = "inline-block";
         }
     }
 
@@ -130,6 +149,23 @@
             event.preventDefault();
         }
     });
+
+    function togglePasswordVisibility() {
+        const password = document.querySelector("#password");
+        const closeEye = document.querySelector(".showPassword");
+        const openEye = document.querySelector(".hidePassword");
+
+        if (password.type === "password") {
+            password.type = "text";
+            closeEye.style.display = "none";
+            openEye.style.display = "inline-block";
+        }
+        else {
+            password.type = "password";
+            closeEye.style.display = "inline-block";
+            openEye.style.display = "none";
+        }
+    }
 </script>
 </body>
 </html>

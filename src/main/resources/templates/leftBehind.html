@@ -30,20 +30,23 @@
                 <span th:classappend="|prio${task.getPriority()}|"></span>
                 <p th:text="*{description}"></p>
                 <form method="post" th:action="|/tasks/re-add/${task.id}|">
-                    <button class="img"><img class="icon-unchecked" src="/img/week_review_icon_add.svg" alt="re-add">
+                    <button class="img">
+                        <svg class="icon-unchecked" th:insert="svgFragments::week_review_icon_add"/>
                     </button>
                 </form>
             </div>
 
             <form class="delete" onsubmit="handleDelete(event)" th:method="post" th:action="|/tasks/delete/${task.id}|">
                 <input type="hidden" name="id" th:value="${task.id}">
-                <button class="deleteImg"><img src="/img/delete_icon.svg" alt="delete icon"></button>
+                <button class="deleteImg">
+                    <svg th:insert="svgFragments::delete_icon"></svg>
+                </button>
             </form>
         </div>
 
         <div th:if="${leftBehind.isEmpty()}" class="NoTaskPlaceholder">
             <p>All your left behind tasks at your display... <br> Oops you don´t have any...</p>
-            <img th:src="|/img/cat_pm_${user.pussyMeter}.svg|" alt="cat">
+            <svg th:insert="svgFragments::|cat_pm_${user.pussyMeter}|"></svg>
         </div>
     </main>
     <footer>
@@ -52,6 +55,24 @@
     </footer>
 </section>
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const rootElement = document.documentElement;
+        const theme = localStorage.getItem("theme");
+
+        theme && rootElement.classList.add(theme);
+
+        const isDarkMode = rootElement.classList.contains("dark");
+
+        if (!isDarkMode && theme === "dark") {
+            rootElement.classList.add("dark");
+        }
+
+        if (isDarkMode) {
+            localStorage.setItem("theme", "dark");
+        } else {
+            localStorage.removeItem("theme");
+        }
+    });
     function handleDelete(event) {
         event.preventDefault();
         const form = event.target;
