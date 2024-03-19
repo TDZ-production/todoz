@@ -29,32 +29,35 @@
                               th:data-duedate="*{dueDateDate}"></span>
                     </div>
 
-                    <div th:replace="fragments.html :: delete-form(
-                     taskId=${task.id},
-                     action='/tasks/leaveBehind/' + ${task.id},
-                     imgSrc='/img/leaveBehind_icon.svg')">
-                    </div>
+                    <form class="delete" onsubmit="handleDelete(event)" th:method="post"
+                          th:action="|/tasks/leaveBehind/${task.id}|">
+                        <input type="hidden" name="id" th:value="${task.id}">
+                        <button class="deleteImg">
+                            <svg th:insert="svgFragments::leaveBehind_icon"></svg>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
-        <div th:replace="fragments.html :: task-placeholder(
-            isEmpty=${planned.isEmpty()},
-            message='Here will be all your planned tasks... <br> in the meantime enjoy this ball...',
-            imgSrc='/img/cat_pm_' + ${user.pussyMeter} + '.svg')">
+
+        <div th:if="${planned.isEmpty()}" class="NoTaskPlaceholder">
+            <p>Here will be all your planned tasks... <br> in the meantime enjoy this ball...</p>
+            <svg th:insert="svgFragments::|cat_pm_${user.pussyMeter}|"></svg>
         </div>
+
         <div th:unless="${planned.isEmpty()}" class="plannedPlaceholder">
             <p>The future is only<br> in your hands...</p>
         </div>
     </main>
 
     <footer>
-        <div th:replace="fragments.html :: red-fadeout('Task added to \&#39;Left behind\&#39;', ${leftBehindTask})"></div>
-        <div id="plannedFooter">
+        <p class="hidden" id="redFeedback">Task added to "Left Behind"</p>
+        <div class="hidden">
             <form method="post" th:action="@{/tasks/add}">
                 <button type="submit" name="priority" value="4" class="hidden"></button>
 
                 <label class="date-input">
-                    <img src="/img/calendar_icon.svg" alt="due date">
+                    <svg th:insert="svgFragments::calendar_icon"></svg>
                     <input type="date" name="maybeDueDate" id="date">
                 </label>
 
@@ -68,6 +71,26 @@
     </footer>
 </section>
 <script>
+<!--// FIXME: from some reason when I load the page the script is not loaded..-->
+    document.addEventListener("DOMContentLoaded", function () {
+        const rootElement = document.documentElement;
+        const theme = localStorage.getItem("theme");
+
+        theme && rootElement.classList.add(theme);
+
+        const isDarkMode = rootElement.classList.contains("dark");
+
+        if (!isDarkMode && theme === "dark") {
+            rootElement.classList.add("dark");
+        }
+
+        if (isDarkMode) {
+            localStorage.setItem("theme", "dark");
+        } else {
+            localStorage.removeItem("theme");
+        }
+    });
+
     initTaskEditListener();
 
     function initTaskEditListener() {
@@ -83,7 +106,7 @@
     }
 
     function edit(task) {
-        document.querySelector("#plannedFooter").style.display = "block";
+        document.querySelector("div.hidden").classList.remove("hidden");
         document.querySelector("#add").focus();
 
         const main = document.querySelector("main");
@@ -130,6 +153,30 @@
                 button.classList.remove("active");
             }
         });
+    }
+
+    function handleDelete(event) {
+        event.preventDefault();
+        const form = event.target;
+        const data = new FormData(form);
+        const url = form.action;
+        const popupMessage = document.querySelector("#redFeedback");
+
+        fetch(url, {
+            method: 'POST',
+            body: data
+        }).then(resp => {
+            if (resp.redirected && resp.url.indexOf("login") > -1) { // session expired
+                window.location.reload();
+            }
+
+            form.parentNode.remove();
+        });
+
+        popupMessage.className = "fadeoutMessage";
+        setTimeout(() => {
+            popupMessage.className = "hidden";
+        }, 3000);
     }
 </script>
 <script src="/js/fadeout.js"></script>

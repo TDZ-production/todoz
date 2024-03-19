@@ -19,7 +19,7 @@
                 </tr>
             </table>
 
-            <div class = "weekdays">
+            <div class="weekdays">
                 <span>Su</span>
                 <span>Mo</span>
                 <span>Tu</span>
@@ -31,7 +31,7 @@
 
             <p th:text="|Well, you managed to survive through last week with ${previousWeek.getDonePercentage()}% of finished tasks... Not great, not terrible!|"></p>
             <p style="margin-top:0.5rem">
-                <img style="height: 8rem;margin-left: -1.5rem" th:src="${previousWeek.getCatImage()}" alt="">
+                <svg class="catWeekReview" th:insert="svgFragments::|${previousWeek.getCatImage()}|"/>
             </p>
             <p class="weekNote">Select tasks you want in week <span th:text="|${currentWeekNumber}|"/>.<br/>You
                 can look back on&nbsp;your&nbsp;week and&nbsp;retrospect. Keep your&nbsp;week clean and&nbsp;focused!
@@ -46,7 +46,7 @@
             <input type="hidden" id="leftBehindInput" name="leftBehinds">
             <button class="startWeek" type="submit" data-umami-event="startNewWeek">Start your week</button>
         </form>
-        <img src="/img/stickman1.svg" class="stickman" alt="">
+        <svg th:insert="svgFragments::stickman1" class="stickman" alt=""/>
     </main>
 
     <script>
@@ -72,6 +72,25 @@
             const leftBehinds = document.querySelectorAll(".toDelegate:not(:checked)");
 
             leftBehindInput.value = Array.from(leftBehinds).map(c => c.value);
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const rootElement = document.documentElement;
+            const theme = localStorage.getItem("theme");
+
+            theme && rootElement.classList.add(theme);
+
+            const isDarkMode = rootElement.classList.contains("dark");
+
+            if (!isDarkMode && theme === "dark") {
+                rootElement.classList.add("dark");
+            }
+
+            if (isDarkMode) {
+                localStorage.setItem("theme", "dark");
+            } else {
+                localStorage.removeItem("theme");
+            }
         });
     </script>
 </section>

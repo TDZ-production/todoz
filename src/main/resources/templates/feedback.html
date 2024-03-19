@@ -33,7 +33,7 @@
 
         <div class="discordFeedback" onclick="redirectToDiscord()">
             <p>Join our Discord Community</p>
-            <img src="/img/discord_icon.svg" alt="Discord">
+            <svg th:insert="svgFragments::discord_icon"></svg>
         </div>
     </main>
 </section>
@@ -43,6 +43,25 @@
         let discordUrl = 'https://discord.gg/cP9Xa5TcuX';
         window.open(discordUrl, '_blank');
     }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const rootElement = document.documentElement;
+        const theme = localStorage.getItem("theme");
+
+        theme && rootElement.classList.add(theme);
+
+        const isDarkMode = rootElement.classList.contains("dark");
+
+        if (!isDarkMode && theme === "dark") {
+            rootElement.classList.add("dark");
+        }
+
+        if (isDarkMode) {
+            localStorage.setItem("theme", "dark");
+        } else {
+            localStorage.removeItem("theme");
+        }
+    });
 </script>
 </body>
 </html>

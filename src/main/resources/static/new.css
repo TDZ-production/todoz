@@ -3,7 +3,6 @@
     src: url("webfonts/Virgil.woff2");
 }
 
-
 :root {
     --feedback-text-area-color: #fcfcf6;
     --feedback-text-area-border-color:#b78300;
@@ -49,23 +48,23 @@
     --add-task-color-hover: #D1D1D1;
     --positive-output-background-color: rgb(175, 239, 155);
     --positive-output-color: rgb(93, 152, 77);
-    --negative-output-background-color: #eaa599;
-    --negative-output-color: #ce5d44;
+    --negative-output-background-color: #f5afc5;
+    --negative-output-color: #b75676;
     --weekreview-date-color: rgb(97, 155, 79);
     --weekreview-button-background-color: rgb(179, 236, 161);
     --weekreview-button-color:rgb(97, 155, 79);
     --weekreview-note-background-color:#f5e48d59;
     --cta-font-color: #333;
+    --register-message-color: #ab4768;
 }
 
 :root.dark {
-    --feedback-text-area-color: #949494;
+    --feedback-text-area-color: #434343;
     --feedback-text-area-border-color:#cbcbcb;
-    --feedback-submit-color: rgb(164, 201, 153);
-    --feedback-submit-backgroud-color: rgba(158, 187, 149, 0.6);
-    --feedback-submit-backgroud-hover-color: rgb(164, 201, 153);
-    --feedback-discord-color:#7678d2;
-    --feedback-discord-background-color:#646493d1;
+    --feedback-submit-color: #434343;
+    --feedback-submit-backgroud-color: rgb(164, 201, 153);
+    --feedback-discord-color:#6466af;
+    --feedback-discord-background-color:#6466af;
     --body-bg-color: #373737;
     --main-bg-color: #3c3c3c;
     --task-input-color: #434343;
@@ -82,7 +81,7 @@
     --filter-border-color:2px solid #F9C0D3;
     --filter-background-color:#373737;
     --filter-button_border-color:2px solid #F9C0D3;
-    --pink-stickit-color: rgba(249, 192, 211, 0.8);
+    --pink-stickit-color: rgba(249, 192, 211, 0.89);
     --pink-stickit-hover: rgba(249, 192, 211, 0.7);
     --dateTime-active_button-color: rgba(213, 186, 104, 0.8);
     --dateTime-active_button-border-color: 2px solid #e0c46e;
@@ -101,15 +100,16 @@
     --prio4-hover-color: rgba(200, 158, 172, 0.6);
     --add-task-color: rgba(158, 187, 149, 0.6);
     --add-task-color-hover: #D1D1D1;
-    --positive-output-background-color: rgba(158, 187, 149, 0.6);
+    --positive-output-background-color: rgba(158, 187, 149, 0.85);
     --positive-output-color: rgba(158, 187, 149);
-    --negative-output-background-color: rgba(200, 158, 172, 0.6);
+    --negative-output-background-color: rgba(200, 158, 172, 0.85);
     --negative-output-color: rgb(200, 158, 172);
-    --weekreview-date-color: rgb(148, 190, 135);
-    --weekreview-button-background-color:rgba(158, 187, 149, 0.6);
-    --weekreview-button-color:rgba(158, 187, 149);
+    --weekreview-date-color: #9bd895;
+    --weekreview-button-background-color:rgb(164, 201, 153);
+    --weekreview-button-color: #373737;
     --weekreview-note-background-color:#ffffff17;
     --cta-font-color: #373737;
+    --register-message-color: rgba(200, 158, 172);
 }
 
 * {
@@ -205,7 +205,8 @@ input {
     width: 100%;
 }
 
-.pussySliderIcons img {
+.pussySliderIcons svg {
+    margin-top: 2rem;
     width: 100px;
     height: 80px;
 }
@@ -334,6 +335,10 @@ header a, header div {
 header a {
     padding: 1rem;
 }
+.registerMessage{
+    color: var(--register-message-color);
+    margin-bottom: 1.4rem;
+}
 
 h1.pussyHeader {
     margin-top: 1em;
@@ -391,11 +396,11 @@ main > form button {
     min-width: 100%;
 }
 
-.task[data-done=true] img.notdone {
+.task[data-done=true] svg.notdone {
     display: none;
 }
 
-.task[data-done=false] img.isdone {
+.task[data-done=false] svg.isdone {
     display: none;
 }
 
@@ -495,7 +500,8 @@ main > form button {
     color: var(--pink-stickit-shadow);
 }
 
-img {
+svg {
+    width: 4rem;
     height: 1.7rem;
 }
 
@@ -513,7 +519,7 @@ footer {
     position: relative;
 }
 
-footer img {
+footer svg {
     height: 3rem;
 }
 
@@ -522,7 +528,7 @@ footer label {
     padding: .5rem;
 }
 
-footer input + img {
+footer input + svg {
     margin-left: 0.5rem;
 }
 
@@ -620,6 +626,7 @@ button.startWeek:hover {
     -webkit-appearance: none;
     appearance: none;
     height: 2px;
+    padding: 0;
 }
 
 .slider::-webkit-slider-thumb {
@@ -651,7 +658,7 @@ button.startWeek:hover {
     height: 3.25rem;
 }
 
-.dropbtn img {
+.dropbtn svg {
     height: 2rem;
 }
 
@@ -726,8 +733,9 @@ textarea:focus {
 }
 
 #formButton:hover {
-    background: var(--feedback-submit-backgroud-hover-color);
-    color: var(--main-bg-color);
+    background-color: var(--button-hover-backgroud-color);
+    border: var(--button-hover-border-color);
+    color: var(--button-hover-border-color);;
 }
 
 .discordFeedback {
@@ -746,7 +754,7 @@ textarea:focus {
     border: var(--button-hover-border-color);
 }
 
-.discordFeedback img {
+.discordFeedback svg {
     margin: 1rem 1rem 0;
 }
 
@@ -807,7 +815,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     opacity: 0.6;
 }
 
-.NoTaskPlaceholder img {
+.NoTaskPlaceholder svg {
     width: 20.5rem;
     height: auto;
 }
@@ -839,15 +847,19 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     border-radius: .3rem;
     padding: .666rem;
     transition: opacity 1s ease-out;
-    color: green;
-    border: 1px solid green;
-    background-color:var(--prio2-color);
 }
 
-#redFeedback {
-    color: #d7703d;
-    border: 1px solid #d7703d;
-    background-color: var(--pink-stickit-color);
+#planned {
+    color: var(--positive-output-color);
+    border: 1px var(--positive-output-color);
+    background-color: var(--positive-output-background-color);
+    left: 20%;
+}
+
+#leftBehind,#redFeedback {
+    color: var(--negative-output-color);
+    border: 1px solid var(--negative-output-color);
+    background-color: var(--negative-output-background-color);
 }
 
 .fadeoutMessage.fade-out {
@@ -882,16 +894,41 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     padding: 0 .5rem;
 }
 
-.deleteImg img {
+.deleteImg svg {
+    width: 8rem;
     height: 3.5rem;
+}
+
+.hidePassword,.showPassword{
+    position: absolute;
+    right: 0.1rem;
+    top: 24%;
+}
+.light_off,
+.light_on{
+    width: 5rem;
+    height: 3rem;
+}
+button#toggleButton,
+button#darkModeButtonLogin{
+    border: none;
+    background: none;
+    padding: 0;
+}
+#darkModeButtonLogin svg{
+    margin-left: 19.5rem;
+    margin-top: 1rem;
 }
 
 .date-input {
     position: relative;
 }
 
+.loginTitle{
+    margin-top: 1rem;
+}
 
-.date-input img {
+.date-input svg {
     position: absolute;
     right: 12px;
     top: 50%;
@@ -900,8 +937,12 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     pointer-events: none;
 }
 
-
 /*area chart for week review*/
+.catWeekReview{
+    height: 8rem;
+    margin-left: -1.5rem;
+    width: 24rem;
+}
 .area-chart {
     margin: auto;
     padding: 0;
@@ -966,12 +1007,14 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 }
 
 .quote {
-    margin: 1.5rem;
+    margin: 2.5rem;
+    opacity: 0.6
 }
 
 .author {
     text-align: end;
-    margin-right: 1rem;
+    margin-right: 2.5rem;
+    opacity: 0.6
 }
 
 @media (max-width: 459px) {

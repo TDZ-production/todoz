@@ -17,59 +17,36 @@
 
 <body>
 <!-- Fragment for the user and password input fields -->
-<th:block th:fragment="user-login-fields()">
-    <label>
-        <input type="text" name="username" placeholder="email" autofocus required autocapitalize="none">
-    </label>
+<!--<th:block th:fragment="user-login-fields()">-->
+<!--    <label>-->
+<!--        <input type="text" name="username" placeholder="email" autofocus required autocapitalize="none">-->
+<!--    </label>-->
 
-    <label class="password">
-        <input type="password" name="password" id="password" placeholder="password" required>
-        <img src="/img/eye_icon_closed.svg" id="showPassword" onclick="togglePasswordVisibility()" alt="hide icon">
-    </label>
-</th:block>
+<!--    <label class="password">-->
+<!--        <input type="password" name="password" id="password" placeholder="password" required>-->
+<!--        <img src="/img/eye_icon_closed.svg" id="showPassword" onclick="togglePasswordVisibility()" alt="hide icon">-->
+<!--    </label>-->
+<!--</th:block>-->
 
-<!-- Fragment for task-week-review -->
-<th:block th:fragment="task-week-review(object)">
-    <div class="task" th:each="task : ${object}" th:data-done="${task.done}">
-        <span th:classappend="|prio${task.getPriority()}|"></span>
-        <span th:class="taskStatus">
-            <img th:if="${task.isUpcoming}" src="/img/week_review_clock.svg"/>
-            <img th:unless="${task.isUpcoming}"
-                 th:src="${task.isDone() ? '/img/week_review_check.svg' : '/img/week_review_cross.svg'}"
-                 th:class="${task.isDone() ? '' : 'cross'}"/>
-        </span>
-        <p class="taskText" th:text="${task.getDescription()}"></p>
-        <label class="checkboxContainer">
-            <input type="checkbox" class="toDelegate" onclick="updateButton()"
-                   name="taskIds" th:value="${task.id}" th:checked="${task.isUpcoming}"/>
-            <span class="weekIcon">
-                <img class="icon-unchecked" src="/img/week_review_icon_add.svg">
-            </span>
-            <span class="weekIcon" th:style="'color: green'"
-                  th:text="${task.isUpcoming ? 'due by ' + task.getDueDateDayOfWeek() : 'added'}">
-            </span>
-        </label>
-    </div>
-</th:block>
 
-<!--If no tasks-->
-<th:block th:fragment="task-placeholder(isEmpty, message, imgSrc)">
-    <div th:if="${isEmpty}" class="NoTaskPlaceholder">
-        <p th:utext="${message}"></p>
-        <img th:src="${imgSrc}" alt="cat">
-    </div>
-</th:block>
+<!--&lt;!&ndash;If no tasks&ndash;&gt;-->
+<!--<th:block th:fragment="task-placeholder(isEmpty, message, imgSrc)">-->
+<!--    <div th:if="${isEmpty}" class="NoTaskPlaceholder">-->
+<!--        <p th:utext="${message}"></p>-->
+<!--        <img th:src="${imgSrc}" alt="cat">-->
+<!--    </div>-->
+<!--</th:block>-->
 
-<!--Delete-->
-<th:block th:fragment="delete-form(taskId, action, imgSrc)">
-    <form class="delete" th:method="post" th:action="${action}">
-        <input type="hidden" name="id" th:value="${taskId}">
-        <button class="deleteImg">
-            <img th:src="${imgSrc}" alt="delete icon">
-        </button>
-    </form>
-</th:block>
-</body>
+<!--&lt;!&ndash;Delete&ndash;&gt;-->
+<!--<th:block th:fragment="delete-form(taskId, action, imgSrc)">-->
+<!--    <form class="delete" th:method="post" th:action="${action}">-->
+<!--        <input type="hidden" name="id" th:value="${taskId}">-->
+<!--        <button class="deleteImg">-->
+<!--            <img th:src="${imgSrc}" alt="delete icon">-->
+<!--        </button>-->
+<!--    </form>-->
+<!--</th:block>-->
+<!--</body>-->
 
 <footer>
     <!--Buttons priority-->
@@ -77,29 +54,29 @@
         <div class="stars">
             <button onclick="setPriority(4)" type="submit" name="priority" value="4" data-umami-event="setPriority"
                     data-umami-event-priority="4">
-                <img th:src="|/img/prio4_pm_${user.pussyMeter}.svg|" alt="priority 4">
+                <svg th:insert="svgFragments::|prio4_pm_${user.pussyMeter}|" alt="priority 4"/>
             </button>
             <button onclick="setPriority(3)" type="submit" name="priority" value="3" data-umami-event="setPriority"
                     data-umami-event-priority="3">
-                <img th:src="|/img/prio3_pm_${user.pussyMeter}.svg|" alt="priority 3">
+                <svg th:insert="svgFragments::|prio3_pm_${user.pussyMeter}|" alt="priority 4"/>
             </button>
             <button onclick="setPriority(2)" type="submit" name="priority" value="2" data-umami-event="setPriority"
                     data-umami-event-priority="2">
-                <img th:src="|/img/prio2_pm_${user.pussyMeter}.svg|" alt="priority 2">
+                <svg th:insert="svgFragments::|prio2_pm_${user.pussyMeter}|" alt="priority 4"/>
             </button>
             <button onclick="setPriority(1)" type="submit" name="priority" value="1" data-umami-event="setPriority"
                     data-umami-event-priority="1">
-                <img th:src="|/img/prio1_pm_${user.pussyMeter}.svg|" alt="priority 1">
+                <svg th:insert="svgFragments::|prio1_pm_${user.pussyMeter}|" alt="priority 4"/>
             </button>
         </div>
     </th:block>
 
-    <!--Fadeout-->
-    <th:block th:fragment="green-fadeout(message, isEmpty)">
-        <p class="fadeoutMessage" th:text="${message}" th:if="${isEmpty} == true"></p>
-    </th:block>
-    <th:block th:fragment="red-fadeout(message, isEmpty)">
-        <p class="fadeoutMessage" th:text="${message}" th:if="${isEmpty} == true" id="redFeedback"></p>
-    </th:block>
+<!--    &lt;!&ndash;Fadeout&ndash;&gt;-->
+<!--    <th:block th:fragment="green-fadeout(message, isEmpty)">-->
+<!--        <p class="fadeoutMessage" th:text="${message}" th:if="${isEmpty} == true"></p>-->
+<!--    </th:block>-->
+<!--    <th:block th:fragment="red-fadeout(message, isEmpty)">-->
+<!--        <p class="fadeoutMessage" th:text="${message}" th:if="${isEmpty} == true" id="redFeedback"></p>-->
+<!--    </th:block>-->
 </footer>
 </html>

@@ -24,27 +24,73 @@
                 <span th:classappend="|prio${task.getPriority()}|"></span>
                 <p th:text="*{description}"></p>
                 <form method="post" th:action="|/tasks/re-add/${task.id}|">
-                    <button class="img"><img class="icon-unchecked" src="/img/week_review_icon_add.svg" alt="re-add">
+                    <button class="img">
+                        <svg class="icon-unchecked" th:insert="svgFragments::week_review_icon_add"/>
                     </button>
                 </form>
             </div>
-            <div th:replace="fragments :: delete-form(
-            taskId=${task.id},
-            action='/tasks/delete/' + ${task.id},
-            imgSrc='/img/delete_icon.svg')">
-            </div>
+
+            <form class="delete" onsubmit="handleDelete(event)" th:method="post" th:action="|/tasks/delete/${task.id}|">
+                <input type="hidden" name="id" th:value="${task.id}">
+                <button class="deleteImg">
+                    <svg th:insert="svgFragments::delete_icon"></svg>
+                </button>
+            </form>
         </div>
-        <div th:replace="fragments :: task-placeholder(
-            isEmpty=${leftBehind.isEmpty()},
-            message='All your left behind tasks at your display... <br> Oops you don´t have any...',
-            imgSrc='/img/cat_pm_' + ${user.pussyMeter} + '.svg')">
+
+        <div th:if="${leftBehind.isEmpty()}" class="NoTaskPlaceholder">
+            <p>All your left behind tasks at your display... <br> Oops you don´t have any...</p>
+            <svg th:insert="svgFragments::|cat_pm_${user.pussyMeter}|"></svg>
         </div>
     </main>
     <footer>
-        <div th:replace="fragments.html :: red-fadeout('Task was completely deleted', ${deletedTask})"></div>
-        <div th:replace="fragments.html :: green-fadeout('Task re-added', ${reAddedTask})"></div>
+        <p class="hidden" id="redFeedback">Task was completely deleted</p>
+        <p th:if="${reAddedTask} == true"  class="fadeoutMessage">Task re-added</p>
     </footer>
 </section>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const rootElement = document.documentElement;
+        const theme = localStorage.getItem("theme");
+
+        theme && rootElement.classList.add(theme);
+
+        const isDarkMode = rootElement.classList.contains("dark");
+
+        if (!isDarkMode && theme === "dark") {
+            rootElement.classList.add("dark");
+        }
+
+        if (isDarkMode) {
+            localStorage.setItem("theme", "dark");
+        } else {
+            localStorage.removeItem("theme");
+        }
+    });
+    function handleDelete(event) {
+        event.preventDefault();
+        const form = event.target;
+        const data = new FormData(form);
+        const url = form.action;
+        const popupMessage = document.querySelector("#redFeedback");
+
+        fetch(url, {
+            method: 'POST',
+            body: data
+        }).then(resp => {
+            if (resp.redirected && resp.url.indexOf("login") > -1) { // session expired
+                window.location.reload();
+            }
+
+            form.parentNode.remove();
+        });
+
+        popupMessage.className = "fadeoutMessage";
+        setTimeout(() => {
+            popupMessage.className = "hidden";
+        }, 3000);
+    }
+</script>
 <script src="/js/fadeout.js"></script>
 </body>
 </html>

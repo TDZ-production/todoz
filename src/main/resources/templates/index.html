@@ -13,7 +13,8 @@
     <header>
         <div class="dropdown">
             <button class="dropbtn" onclick="toggleDropdown('dropdownOptions')">
-                <img src="/img/menu_icon_open.svg" alt="open menu">
+                <svg id="menu_open" th:insert="svgFragments::menu_icon_open"></svg>
+                <svg id="menu_close" th:insert="svgFragments::menu_icon_close" style="display:none;"></svg>
             </button>
             <div class="dropdown-content">
                 <a href="/planned">Planned</a>
@@ -28,7 +29,10 @@
         <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|" id="filter-text"
             onclick="toggleDropdown('filters')"></h2>
         <div class="week-progressbar"></div>
-        <button id="toggleButton">|</button>
+        <button id="toggleButton">
+            <svg class="light_on" th:insert="svgFragments::light_on"></svg>
+            <svg class="light_off" th:insert="svgFragments::light_off" style="display:none;"></svg>
+        </button>
     </header>
 
     <div class="filters" style="display: none;">
@@ -52,33 +56,37 @@
                 <span th:classappend="|prio${task.getPriority()}|"></span>
                 <p th:text="*{description}"></p>
                 <span class="due" th:text="*{getRemainingDays()}" th:data-duedate="*{dueDateDate}"></span>
+
                 <form onsubmit="handleSubmit(event)" th:action="|/tasks/check/*{id}|" th:method="POST">
                     <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
                     <button class="img" th:type="submit">
-                        <img class="isdone" src="/img/checkbox_checked.svg" alt="mark as not done"/>
-                        <img class="notdone" src="/img/checkbox_unchecked.svg" alt="mark as done"/>
+                        <svg class="isdone" th:insert="svgFragments::checkbox_checked"></svg>
+                        <svg class="notdone" th:insert="svgFragments::checkbox_unchecked"></svg>
                     </button>
                 </form>
             </div>
-            <div th:replace="fragments :: delete-form(
-            taskId=${task.id},
-            action='/tasks/leaveBehind/' + ${task.id},
-            imgSrc='/img/leaveBehind_icon.svg')">
-            </div>
+
+            <form class="delete" onsubmit="handleDelete(event)" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
+                <input type="hidden" name="id" th:value="${task.id}">
+                <button th:class="deleteImg">
+                    <svg th:insert="svgFragments::leaveBehind_icon"></svg>
+                </button>
+            </form>
         </div>
-        <div th:replace="fragments :: task-placeholder(
-            isEmpty=${currentWeek.getSortedTasks().isEmpty()},
-            message='Meow purrtner! Ready&nbsp;to create your&nbsp;first&nbsp;task?<br>Save the task by picking&nbsp;a&nbsp;priority, to&nbsp;keep things organised!',
-            imgSrc='/img/cat_pm_' + ${user.pussyMeter} + '.svg')">
+
+        <div th:if="${currentWeek.getSortedTasks().isEmpty()}" class="NoTaskPlaceholder">
+            <p>Meow purrtner! Ready&nbsp;to create your&nbsp;first&nbsp;task?<br>Save the task by picking&nbsp;a&nbsp;priority,
+                to&nbsp;keep things organised!</p>
+            <svg th:insert="svgFragments::|cat_pm_${user.pussyMeter}|"></svg>
         </div>
         <p class="quote" th:text="${quote}"></p>
         <p class="author" th:text="${author}"></p>
     </main>
 
     <footer>
-        <div th:replace="fragments.html :: red-fadeout('Task added to \&#39;Left behind\&#39;', ${leftBehindTask})"></div>
-        <div th:replace="fragments.html :: green-fadeout('Task added to \&#39;Planned\&#39;', ${plannedTask})"></div>
-        <div th:replace="fragments.html :: green-fadeout('First task added to this week', ${firstTask})"></div>
+        <p th:if="${plannedTask} == true" class="fadeoutMessage">Task added to "Planned"</p>
+        <p class="hidden" id="redFeedback">Task added to "Left Behind"</p>
+        <p th:if="${firstTask} == true"  class="fadeoutMessage">First task added to this week</p>
         <form method="post" th:action="@{/tasks/add}">
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
@@ -96,28 +104,41 @@
             <div class="addTask">
                 <input type="text" placeholder="new task" name="description" id="add" required autofocus
                        autocomplete="off">
-                <img onclick="toggleDueDate()" src="/img/calendar_icon.svg" alt="due date" id="calendar_icon">
+                <svg onclick="toggleDueDate()" th:insert="svgFragments::calendar_icon" id="calendar_icon"></svg>
             </div>
             <div th:replace="fragments.html :: buttons-priority"></div>
         </form>
     </footer>
 
     <script th:inline="javascript">
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             const toggleButton = document.getElementById("toggleButton");
             const rootElement = document.documentElement;
             const theme = localStorage.getItem("theme");
+            const lightOnIcon = document.querySelector(".light_on");
+            const lightOffIcon = document.querySelector(".light_off");
 
             theme && rootElement.classList.add(theme);
 
+            if (theme === "dark") {
+                lightOnIcon.style.display = "none";
+                lightOffIcon.style.display = "inline-block";
+            } else {
+                lightOnIcon.style.display = "inline-block";
+                lightOffIcon.style.display = "none";
+            }
 
-            toggleButton.addEventListener("click", function () {
+            toggleButton.addEventListener("click", function() {
                 rootElement.classList.toggle("dark");
 
                 if (rootElement.classList.contains("dark")) {
                     localStorage.setItem("theme", "dark");
+                    lightOnIcon.style.display = "none";
+                    lightOffIcon.style.display = "inline-block";
                 } else {
                     localStorage.removeItem("theme");
+                    lightOnIcon.style.display = "inline-block";
+                    lightOffIcon.style.display = "none";
                 }
             });
         });
@@ -218,6 +239,30 @@
                 const task = form.closest(".task");
                 task.dataset.done = task.dataset.done === "true" ? "false" : "true";
             });
+        }
+
+        function handleDelete(event) {
+            event.preventDefault();
+            const form = event.target;
+            const data = new FormData(form);
+            const url = form.action;
+            const popupMessage = document.querySelector("#redFeedback");
+
+            fetch(url, {
+                method: 'POST',
+                body: data
+            }).then(resp => {
+                if (resp.redirected && resp.url.indexOf("login") > -1) { // session expired
+                    window.location.reload();
+                }
+
+                form.parentNode.remove();
+            });
+
+            popupMessage.className = "fadeoutMessage";
+            setTimeout(() => {
+                popupMessage.className = "hidden";
+            }, 3000);
         }
 
         function filterTasks(filter) {
@@ -384,14 +429,13 @@
         }
 
         function toggleDropdown(target) {
-
             popOverActive = !popOverActive;
 
-            let dropdownOptions = document.querySelector(".dropdown-content");
+            const dropdownOptions = document.querySelector(".dropdown-content");
             const filtersWrapper = document.querySelector(".filters");
             const textSpan = document.querySelector("#filter-text");
-            const img = document.querySelector(".dropbtn img");
-
+            const menuOpenIcon = document.querySelector("#menu_open");
+            const menuCloseIcon = document.querySelector("#menu_close");
             const main = document.querySelector("main");
             const footer = document.querySelector("footer");
 
@@ -401,19 +445,23 @@
 
             if (target === 'dropdownOptions') {
                 dropdownOptions.style.display = (dropdownOptions.style.display === "block") ? "none" : "block";
-                img.src = (dropdownOptions.style.display === "block") ? "/img/menu_icon_close.svg" : "/img/menu_icon_open.svg";
-                img.alt = (dropdownOptions.style.display === "block") ? "close menu" : "open menu";
-
                 if (filtersWrapper.style.display === 'flex') {
                     filtersWrapper.style.display = 'none';
+                }
+                if (dropdownOptions.style.display === "block") {
+                    menuOpenIcon.style.display = "none";
+                    menuCloseIcon.style.display = "inline-block";
+                } else {
+                    menuOpenIcon.style.display = "inline-block";
+                    menuCloseIcon.style.display = "none";
                 }
             } else if (target === 'filters') {
                 filtersWrapper.style.display = (filtersWrapper.style.display === 'flex') ? "none" : "flex";
 
                 if (dropdownOptions.style.display === "block") {
                     dropdownOptions.style.display = "none";
-                    img.src = "/img/menu_icon_open.svg";
-                    img.alt = "open menu";
+                    menuOpenIcon.style.display = "inline-block";
+                    menuCloseIcon.style.display = "none";
                 }
             }
 
@@ -432,8 +480,8 @@
                     popOverActive = false;
                     dropdownOptions.style.display = "none";
                     filtersWrapper.style.display = 'none';
-                    img.src = "/img/menu_icon_open.svg";
-                    img.alt = "open menu";
+                    menuOpenIcon.style.display = "inline-block";
+                    menuCloseIcon.style.display = "none";
                 }
             }
         }

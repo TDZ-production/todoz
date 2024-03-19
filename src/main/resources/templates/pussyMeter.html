@@ -18,13 +18,17 @@
 
         <form th:action="@{/changeMeter}" method="post" th:object="${user}">
             <div class="pussySliderIcons">
-                <img src="/img/prio4_pm_0.svg" id="starIcon">
-                <img src="/img/prio4_pm_1.svg" id="fireIcon">
-                <img src="/img/prio4_pm_2.svg" id="skullIcon">
+                <svg id="currentIcon" th:insert="svgFragments::|prio4_pm_*{pussyMeter}|" style="display:inline-block;"/>
+                <svg th:insert="svgFragments::prio4_pm_0" id="starIcon" style="display:none;"/>
+                <svg th:insert="svgFragments::prio4_pm_1" id="fireIcon" style="display:none;"/>
+                <svg th:insert="svgFragments::prio4_pm_2" id="skullIcon" style="display:none;"/>
             </div>
             <label class="slideContainer">
-                <span id="pussyLabel"></span>
-                <input type="range" step="1" max="2" class="slider" id="pussySlider" name="pussyMeter" th:field="*{pussyMeter}">
+                <span th:if="*{pussyMeter == 0}">Friendly</span>
+                <span th:if="*{pussyMeter == 1}">Neutral</span>
+                <span th:if="*{pussyMeter == 2}">Aggressive</span>
+                <input type="range" step="1" max="2" class="slider" name="pussyMeter"
+                       th:field="*{pussyMeter}" oninput="updateText()">
             </label>
             <button class="cta" type="submit">&gt;&gt;</button>
         </form>
@@ -32,33 +36,55 @@
 </section>
 </body>
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const rootElement = document.documentElement;
+        const theme = localStorage.getItem("theme");
+
+        theme && rootElement.classList.add(theme);
+
+        const isDarkMode = rootElement.classList.contains("dark");
+
+        if (!isDarkMode && theme === "dark") {
+            rootElement.classList.add("dark");
+        }
+
+        if (isDarkMode) {
+            localStorage.setItem("theme", "dark");
+        } else {
+            localStorage.removeItem("theme");
+        }
+    });
+
     const slider = document.getElementById("pussySlider");
     const output = document.getElementById("pussyLabel");
     const starIcon = document.getElementById("starIcon");
     const fireIcon = document.getElementById("fireIcon");
     const skullIcon = document.getElementById("skullIcon");
+    const currentIcon = document.getElementById("currentIcon");
+    function updateText() {
+        const slider = document.querySelector(".slider");
+        const text = document.querySelector(".slideContainer span");
+        const icon = document.querySelector(".pussySliderIcon");
 
-    output.innerHTML = slider.innerHTML;
-
-    slider.oninput = function() {
-        if (this.value <= 0) {
-            output.innerText = "Friendly";
-            starIcon.style.display = "inline";
-            fireIcon.style.display = "none";
-            skullIcon.style.display = "none";
-        } else if (this.value == 1) {
-            output.innerText = "Neutral";
-            fireIcon.style.display = "inline";
-            starIcon.style.display = "none";
-            skullIcon.style.display = "none";
+        if (slider.value == 0) {
+            text.innerText = "Friendly"
+            starIcon.style.display="inline-block";
+            fireIcon.style.display="none";
+            skullIcon.style.display="none";
+            currentIcon.style.display="none";
+        } else if (slider.value == 1) {
+            text.innerText = "Neutral"
+            starIcon.style.display="none";
+            fireIcon.style.display="inline-block";
+            skullIcon.style.display="none";
+            currentIcon.style.display="none";
         } else {
-            output.innerText = "Aggressive";
-            skullIcon.style.display = "inline";
-            starIcon.style.display = "none";
-            fireIcon.style.display = "none";
+            text.innerText = "Aggressive"
+            starIcon.style.display="none";
+            fireIcon.style.display="none";
+            skullIcon.style.display="inline-block";
+            currentIcon.style.display="none";
         }
     }
-
-    slider.oninput();
 </script>
 </html>
