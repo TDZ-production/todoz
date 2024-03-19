@@ -10,6 +10,7 @@ import com.example.todoz.week.Week;
 import com.example.todoz.week.WeekService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,9 @@ public class MainController {
     private final TaskService taskService;
     private final WeekService weekService;
     private final NotificationService notificationService;
-    private final QuoteGetter quoteGetter;
+
+    @Value("${app.umami.id}")
+    private String umamiId;
 
     @GetMapping
     public String showIndex(Model model, Principal principal) {
@@ -124,5 +127,14 @@ public class MainController {
 
     private User getUser(Principal principal) {
         return userService.findByUsername(principal.getName()).orElseThrow(EntityNotFoundException::new);
+    }
+
+    @ModelAttribute
+    public void setUmamiId(Model model) {
+        String id = umamiId;
+        if (id == null || id.isBlank()) {
+            id = "0076ce35-dec8-4042-ba76-0dc4b52922b0";
+        }
+        model.addAttribute("umamiId", id);
     }
 }

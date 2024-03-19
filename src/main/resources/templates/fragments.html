@@ -7,7 +7,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <script async src="https://umami.petabyte.farm/script.js"
-                data-website-id="0076ce35-dec8-4042-ba76-0dc4b52922b0"></script>
+                th:data-website-id="${umamiId}"></script>
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <link rel="icon" type="image/png" sizes="32x32" href="/icons/iconx32.png">
         <link rel="apple-touch-icon" sizes="180x180" href="/icons/touch-icon.png">
@@ -53,21 +53,21 @@
     <!--Buttons priority-->
     <th:block th:fragment="buttons-priority">
         <div class="stars">
-            <button onclick="setPriority(4)" type="submit" name="priority" value="4" data-umami-event="setPriority"
+            <button onclick="setPriority(4)" type="submit" name="priority" value="4" title="priority 4" data-umami-event="setPriority"
                     data-umami-event-priority="4">
-                <svg th:insert="svgFragments::|prio4_pm_${user.pussyMeter}|" alt="priority 4"/>
+                <svg th:insert="svgFragments::|prio4_pm_${user.pussyMeter}|"/>
             </button>
-            <button onclick="setPriority(3)" type="submit" name="priority" value="3" data-umami-event="setPriority"
+            <button onclick="setPriority(3)" type="submit" name="priority" value="3" title="priority 3" data-umami-event="setPriority"
                     data-umami-event-priority="3">
-                <svg th:insert="svgFragments::|prio3_pm_${user.pussyMeter}|" alt="priority 4"/>
+                <svg th:insert="svgFragments::|prio3_pm_${user.pussyMeter}|"/>
             </button>
-            <button onclick="setPriority(2)" type="submit" name="priority" value="2" data-umami-event="setPriority"
+            <button onclick="setPriority(2)" type="submit" name="priority" value="2" title="priority 2" data-umami-event="setPriority"
                     data-umami-event-priority="2">
-                <svg th:insert="svgFragments::|prio2_pm_${user.pussyMeter}|" alt="priority 4"/>
+                <svg th:insert="svgFragments::|prio2_pm_${user.pussyMeter}|"/>
             </button>
-            <button onclick="setPriority(1)" type="submit" name="priority" value="1" data-umami-event="setPriority"
+            <button onclick="setPriority(1)" type="submit" name="priority" value="1" title="priority 1" data-umami-event="setPriority"
                     data-umami-event-priority="1">
-                <svg th:insert="svgFragments::|prio1_pm_${user.pussyMeter}|" alt="priority 4"/>
+                <svg th:insert="svgFragments::|prio1_pm_${user.pussyMeter}|"/>
             </button>
         </div>
     </th:block>
@@ -80,4 +80,5 @@
 <!--        <p class="fadeoutMessage" th:text="${message}" th:if="${isEmpty} == true" id="redFeedback"></p>-->
 <!--    </th:block>-->
 </footer>
+</body>
 </html>
