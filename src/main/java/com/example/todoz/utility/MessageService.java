@@ -52,6 +52,10 @@ public class MessageService {
 
         String[] labels = textDataBase.get(lang).get(key);
 
+        if (labels == null) {
+            return String.format("##%s##", key);
+        }
+
         return labels[pussyMeter % labels.length];
     }
 
