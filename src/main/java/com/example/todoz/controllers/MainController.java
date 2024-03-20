@@ -42,7 +42,6 @@ public class MainController {
             List<Task> upcomingTasks = taskService
                     .findUpcomingTasks(user, previousWeek.getWeekNumber(), DateManager.formattedCurrentWeek());
 
-            model.addAttribute("user", user);
             model.addAttribute("previousWeek", previousWeek);
             model.addAttribute("upcomingTasks", upcomingTasks);
             model.addAttribute("currentWeekNumber", DateManager.getWeekNumber());
@@ -58,7 +57,6 @@ public class MainController {
             model.addAttribute("currentWeek", currentWeek.get());
         }
 
-        model.addAttribute("user", user);
         model.addAttribute("publicKey", notificationService.getPublicKey());
         model.addAttribute("message", user.getText("index_body"));
         model.addAttribute("quote", "\"" + QuoteGetter.quote.quote() + "\"");
@@ -99,7 +97,7 @@ public class MainController {
 
     @GetMapping("/pussyMeter")
     public String showPussyMeter(Model model, Principal principal) {
-        model.addAttribute("user", getUser(principal));
+        model.addAttribute("message", getUser(principal).getText("pussy_meter_subtitle"));
         return "pussyMeter";
     }
 
@@ -117,7 +115,6 @@ public class MainController {
 
         model.addAttribute("planned",
                 taskService.mapTasksByYearAndWeek(taskService.findPlannedTasks(user)));
-        model.addAttribute("user", user);
         model.addAttribute("message", user.getText("planned"));
         return "planned";
     }
@@ -128,7 +125,6 @@ public class MainController {
         List<Task> leftBehind = taskService.findLeftBehind(user);
 
         model.addAttribute("leftBehind", leftBehind);
-        model.addAttribute("user", user);
         model.addAttribute("message", user.getText("left_behind"));
         return "leftBehind";
     }
@@ -136,6 +132,11 @@ public class MainController {
     private User getUser(Principal principal) {
         return userService.findByUsername(principal.getName())
                 .orElseThrow(EntityNotFoundException::new);
+    }
+
+    @ModelAttribute
+    private void setUser(Principal principal, Model model) {
+        model.addAttribute("user", getUser(principal));
     }
 
     @ModelAttribute
