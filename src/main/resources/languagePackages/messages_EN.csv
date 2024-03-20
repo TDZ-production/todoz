@@ -1,7 +1,11 @@
-Column1,Column2,Column3,Column4
+KEY,FRIENDLY,NEUTRAL,AGGRESSIVE
 left_behind_no_tasks_placeholder,All your left behind tasks at your display...<br>...it's empty...let's keep it that way,All your left behind tasks at your display...,All your left behind tasks at your display...<br>...perhaps you should be left behind
 planned_no_tasks_placeholder,Here will be all your planned tasks...<br>...this is where your future successes take shape,Here will be all your planned tasks...,"Here will be all your planned tasks...<br>...no plans, no bitches"
 index_no_tasks_placeholder,"Ready to create your first task?<br>Save the task by picking a priority, to keep things organised!",Ready to create your first task?<br>Write down your task and submit it by picking priority. Due date is optional,"Are you finally going to do something?<br>This is just todo app, no science diploma required!"
 task_moved_to_planned,Feeling productive huh? Let's go!!!,"Task added to ""Planned""","Wow, you have plans?"
-index_left_behind_popup,Happens. You'll finish it later,"Task added to ""Left Behind""",BOO! SHAME! *DING DING
+index_left_behind_popup,Happens. You'll finish it later,"Task added to ""Left Behind""",BOO! SHAME! *DING DING*
 pussy_meter_subtitle,Changing the PM? Sorry for not being helpful,Choose how big of a pussy you are!,*spit* WEAKNESS DISGUSTS ME!
+
+
+#ALES
+filter_all,All

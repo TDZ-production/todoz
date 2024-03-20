@@ -37,7 +37,7 @@
     </header>
 
     <div class="filters" style="display: none;">
-        <button onclick="filterTasks('all')">All</button>
+        <button onclick="filterTasks('all')" th:text="${user.getText('filter_all')}" />
         <button onclick="filterTasks('not done')">Not done</button>
         <button onclick="filterTasks('current')">Current</button>
         <button onclick="filterTasks('tomorrow')">Tomorrow</button>
