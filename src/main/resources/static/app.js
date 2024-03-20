@@ -1,5 +1,7 @@
+const DISCORD_URL = 'https://discord.gg/cP9Xa5TcuX';
+
 const rootElement = document.documentElement;
-const theme = setDarkMode();
+setDarkMode();
 
 document.addEventListener("DOMContentLoaded", function () {
     const el = document.querySelector(".fadeoutMessage");
@@ -7,18 +9,16 @@ document.addEventListener("DOMContentLoaded", function () {
         setTimeout(() => fadeout(el), 3000);
     }
 
-    initDarkModeButtons(theme);
+    initDarkModeButtons();
 });
 
 function setDarkMode() {
     const theme = localStorage.getItem("theme");
 
     theme && rootElement.classList.add(theme);
-
-    return theme;
 }
 
-function initDarkModeButtons(theme) {
+function initDarkModeButtons() {
     const toggleButton = document.getElementById("toggleTheme");
 
     toggleButton?.addEventListener("click", function() {
@@ -275,7 +275,6 @@ function toggleDropdown(target) {
 
     const dropdownOptions = document.querySelector(".dropdown-content");
     const filtersWrapper = document.querySelector(".filters");
-    const textSpan = document.querySelector("#filter-text");
     const menuOpenIcon = document.querySelector("#menu_open");
     const menuCloseIcon = document.querySelector("#menu_close");
     const main = document.querySelector("main");
@@ -384,8 +383,7 @@ function urlB64ToUint8Array(base64String) {
 }
 
 function redirectToDiscord() {
-    let discordUrl = 'https://discord.gg/cP9Xa5TcuX';
-    window.open(discordUrl, '_blank');
+    window.open(DISCORD_URL, '_blank');
 }
 
 function togglePasswordVisibility() {
