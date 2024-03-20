@@ -21,6 +21,13 @@ task_moved_to_left_behind,"Task moved to ""Left Behind"""
 task_restored,Task restored
 task_deleted,Task was deleted
 
+pussy_meter_friendly,Friendly
+pussy_meter_friendly_subtitle,"Changing the PM? Sorry for not being helpful"
+pussy_meter_neutral,Neutral
+pussy_meter_neutral_subtitle,"Choose how big of a pussy you are!"
+pussy_meter_aggressive,Aggressive
+pussy_meter_aggressive_subtitle,"*spit* WEAKNESS DISGUSTS ME!"
+
 filter_all,All
 filter_not_done,Not done
 filter_current,Current

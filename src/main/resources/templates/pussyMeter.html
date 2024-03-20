@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ToDoZ-pussyMeter</title>
+    <title th:text="${user.getText('section_pussy_meter')}" />
     <link rel="stylesheet" href="/new.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta th:replace="fragments.html :: head-metadata">
@@ -13,7 +13,7 @@
         <a class="pussyBack" th:href="@{/}"><</a>
     </header>
     <main>
-        <h1 class="pussyHeader">Pussy meter</h1>
+        <h1 class="pussyHeader" th:text="${user.getText('section_pussy_meter')}" />
         <p th:utext="${user.getText('pussy_meter_subtitle')}"></p>
 
         <form th:action="@{/changeMeter}" method="post" th:object="${user}">
@@ -24,9 +24,9 @@
                 <svg th:insert="svgFragments::prio4_pm_2" id="skullIcon" style="display:none;"/>
             </div>
             <label class="slideContainer">
-                <span th:if="*{pussyMeter == 0}">Friendly</span>
-                <span th:if="*{pussyMeter == 1}">Neutral</span>
-                <span th:if="*{pussyMeter == 2}">Aggressive</span>
+                <span th:if="*{pussyMeter == 0}" th:text="${user.getText('pussy_meter_friendly')}" />
+                <span th:if="*{pussyMeter == 1}" th:text="${user.getText('pussy_meter_neutral')}" />
+                <span th:if="*{pussyMeter == 2}" th:text="${user.getText('pussy_meter_aggressive')}" />
                 <input type="range" step="1" max="2" class="slider" name="pussyMeter"
                        th:field="*{pussyMeter}" oninput="updateText()">
             </label>
@@ -35,7 +35,7 @@
     </main>
 </section>
 </body>
-<script>
+<script th:inline="javascript">
     const starIcon = document.getElementById("starIcon");
     const fireIcon = document.getElementById("fireIcon");
     const skullIcon = document.getElementById("skullIcon");
@@ -50,16 +50,16 @@
         icons.forEach(icon => icon.style.display = "none")
 
         if (slider.value == 0) {
-            text.innerText = "Friendly"
-            subtitle.innerText = "Changing the PM? Sorry for not being helpful";
+            text.innerText = /*[[@{${user.getText('pussy_meter_friendly')}}]]*/
+            subtitle.innerText = /*[[@{${user.getText('pussy_meter_friendly_subtitle')}}]]*/
             starIcon.style.display="";
         } else if (slider.value == 1) {
-            text.innerText = "Neutral"
-            subtitle.innerText = "Choose how big of a pussy you are!";
+            text.innerText = /*[[@{${user.getText('pussy_meter_neutral')}}]]*/
+            subtitle.innerText = /*[[@{${user.getText('pussy_meter_neutral_subtitle')}}]]*/
             fireIcon.style.display="";
         } else {
-            text.innerText = "Aggressive"
-            subtitle.innerText = "*spit* WEAKNESS DISGUSTS ME!";
+            text.innerText = /*[[@{${user.getText('pussy_meter_aggressive')}}]]*/
+            subtitle.innerText = /*[[@{${user.getText('pussy_meter_aggressive_subtitle')}}]]*/
             skullIcon.style.display="";
         }
     }
