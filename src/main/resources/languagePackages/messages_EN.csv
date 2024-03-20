@@ -17,6 +17,10 @@ section_feedback,Feedback
 
 task_new_placeholder,What needs to be done?
 
+task_moved_to_left_behind,"Task moved to ""Left Behind"""
+task_restored,Task restored
+task_deleted,Task was deleted
+
 filter_all,All
 filter_not_done,Not done
 filter_current,Current
@@ -27,4 +31,3 @@ due_this_week,this week
 due_tomorrow,tomorrow
 
 first_task_in_current_week_created,First task for this week!
-task_moved_to_left_behind,"Task moved to ""Left Behind"""
