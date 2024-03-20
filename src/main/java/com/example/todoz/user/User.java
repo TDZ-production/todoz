@@ -38,11 +38,11 @@ public class User {
     @OneToMany(mappedBy= "user")
     private List<UserSubscription> userSubscription;
     @Enumerated
-    private Language language = Language.ENG;
+    private Language language = Language.EN;
     public static final int MINIMAL_PASSWORD_LENGTH = 5;
 
     public String getText(String key) {
-        return MessageService.getInAppText(key, language, pussyMeter);
+        return MessageService.getInAppText(key, Language.EN, pussyMeter);
     }
 
     public User(String username, String password, Integer pussyMeter) {
