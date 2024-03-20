@@ -38,7 +38,7 @@ public class TaskController {
             task.setUser(user);
             taskService.save(task);
             if (task.getDueDate() != null && DateManager.getPrefixedWeek(task.getDueDate()) > DateManager.formattedCurrentWeek()) {
-                ra.addFlashAttribute("plannedTask", user.getText("index_planned_popup"));
+                ra.addFlashAttribute("plannedTask", true);
             }
             if(optWeek.get().getTasks().size() == 1){
                 ra.addFlashAttribute("firstTask", true);

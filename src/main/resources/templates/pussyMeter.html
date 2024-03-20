@@ -14,7 +14,7 @@
     </header>
     <main>
         <h1 class="pussyHeader">Pussy meter</h1>
-        <p th:utext="${message}"></p>
+        <p th:utext="${user.getText('pussy_meter_subtitle')}"></p>
 
         <form th:action="@{/changeMeter}" method="post" th:object="${user}">
             <div class="pussySliderIcons">

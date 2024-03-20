@@ -39,7 +39,7 @@
         </div>
 
         <div th:if="${leftBehind.isEmpty()}" class="NoTaskPlaceholder">
-            <p th:utext="${message}"></p>
+            <p th:utext="${user.getText('left_behind_no_tasks_placeholder')}"></p>
             <svg th:insert="svgFragments::|cat_pm_${user.pussyMeter}|"></svg>
         </div>
     </main>

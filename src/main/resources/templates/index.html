@@ -75,7 +75,7 @@
         </div>
 
         <div th:if="${currentWeek.getSortedTasks().isEmpty()}" class="NoTaskPlaceholder">
-            <p th:utext="${message}"></p>
+            <p th:utext="${user.getText('index_no_tasks_placeholder')}"></p>
             <svg th:insert="svgFragments::|cat_pm_${user.pussyMeter}|"></svg>
         </div>
         <p class="quote" th:text="${quote}"></p>
@@ -83,7 +83,7 @@
     </main>
 
     <footer>
-        <p th:if="${plannedTask} == true" class="fadeoutMessage">Task added to "Planned"</p>
+        <p th:if="${plannedTask} == true" class="fadeoutMessage" th:utext="${user.getText('task_moved_to_planned')}"></p>
         <p class="hidden" id="redFeedback">Task added to "Left Behind"</p>
         <p th:if="${firstTask} == true"  class="fadeoutMessage">First task added to this week</p>
         <form method="post" th:action="@{/tasks/add}">

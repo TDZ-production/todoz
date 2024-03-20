@@ -58,7 +58,6 @@ public class MainController {
         }
 
         model.addAttribute("publicKey", notificationService.getPublicKey());
-        model.addAttribute("message", user.getText("index_body"));
         model.addAttribute("quote", "\"" + QuoteGetter.quote.quote() + "\"");
         model.addAttribute("author", "–" + QuoteGetter.quote.author());
 
@@ -96,8 +95,7 @@ public class MainController {
     }
 
     @GetMapping("/pussyMeter")
-    public String showPussyMeter(Model model, Principal principal) {
-        model.addAttribute("message", getUser(principal).getText("pussy_meter_subtitle"));
+    public String showPussyMeter() {
         return "pussyMeter";
     }
 
@@ -115,7 +113,6 @@ public class MainController {
 
         model.addAttribute("planned",
                 taskService.mapTasksByYearAndWeek(taskService.findPlannedTasks(user)));
-        model.addAttribute("message", user.getText("planned"));
         return "planned";
     }
 
@@ -125,7 +122,6 @@ public class MainController {
         List<Task> leftBehind = taskService.findLeftBehind(user);
 
         model.addAttribute("leftBehind", leftBehind);
-        model.addAttribute("message", user.getText("left_behind"));
         return "leftBehind";
     }
 
