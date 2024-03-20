@@ -5,15 +5,7 @@
     <title>Left Behind</title>
     <link rel="stylesheet" href="/new.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <script async src="https://umami.petabyte.farm/script.js"
-            data-website-id="0076ce35-dec8-4042-ba76-0dc4b52922b0"></script>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/iconx32.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/touch-icon.png">
-    <link rel="manifest" href="/manifest.json">
+    <meta th:replace="fragments :: head-metadata">
 </head>
 <body>
 <section class="app left-behind">
@@ -24,58 +16,37 @@
 
     <main>
         <div class="taskContainer" th:unless="${leftBehind.isEmpty()}" th:each="task : ${leftBehind}" >
-            <div class="task" th:object="${task}"
+            <div class="task"
+                 th:object="${task}"
                  th:data-priority="*{priority}"
-                 th:data-id="*{id}" th:data-done="*{done}">
+                 th:data-id="*{id}"
+                 th:data-done="*{done}">
                 <span th:classappend="|prio${task.getPriority()}|"></span>
                 <p th:text="*{description}"></p>
                 <form method="post" th:action="|/tasks/re-add/${task.id}|">
-                    <button class="img"><img class="icon-unchecked" src="/img/week_review_icon_add.svg" alt="re-add">
+                    <button class="img">
+                        <svg class="icon-unchecked" th:insert="svgFragments::week_review_icon_add"/>
                     </button>
                 </form>
             </div>
 
             <form class="delete" onsubmit="handleDelete(event)" th:method="post" th:action="|/tasks/delete/${task.id}|">
                 <input type="hidden" name="id" th:value="${task.id}">
-                <button class="deleteImg"><img src="/img/delete_icon.svg" alt="delete icon"></button>
+                <button class="deleteImg">
+                    <svg th:insert="svgFragments::delete_icon"></svg>
+                </button>
             </form>
         </div>
 
         <div th:if="${leftBehind.isEmpty()}" class="NoTaskPlaceholder">
             <p th:utext="${message}"></p>
-            <img th:src="|/img/cat_pm_${user.pussyMeter}.svg|" alt="cat">
+            <svg th:insert="svgFragments::|cat_pm_${user.pussyMeter}|"></svg>
         </div>
     </main>
     <footer>
         <p class="hidden" id="redFeedback">Task was completely deleted</p>
-        <p th:if="${reAddedTask} == true"  class="fadeoutMessage">Task re-added</p>
+        <p th:if="${reAddedTask} == true"  class="fadeoutMessage">Task restored</p>
     </footer>
 </section>
-<script>
-    function handleDelete(event) {
-        event.preventDefault();
-        const form = event.target;
-        const data = new FormData(form);
-        const url = form.action;
-        const popupMessage = document.querySelector("#redFeedback");
-
-        fetch(url, {
-            method: 'POST',
-            body: data
-        }).then(resp => {
-            if (resp.redirected && resp.url.indexOf("login") > -1) { // session expired
-                window.location.reload();
-            }
-
-            form.parentNode.remove();
-        });
-
-        popupMessage.className = "fadeoutMessage";
-        setTimeout(() => {
-            popupMessage.className = "hidden";
-        }, 3000);
-    }
-</script>
-<script src="/js/fadeout.js"></script>
 </body>
 </html>

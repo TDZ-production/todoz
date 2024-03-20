@@ -4,23 +4,112 @@
 }
 
 :root {
+    --feedback-text-area-color: #fcfcf6;
+    --feedback-text-area-border-color:#b78300;
+    --feedback-submit-color: rgb(77, 122, 65);
+    --feedback-submit-backgroud-color: rgb(164, 201, 153);
+    --feedback-submit-backgroud-hover-color: rgba(164, 201, 153, 0.73);
+    --feedback-discord-color:#7678d2;
+    --feedback-discord-background-color: rgba(137, 137, 192, 0.82);
     --body-bg-color: #ededed;
     --main-bg-color: #FCFAEE;
+    --task-input-color: #fcf9e5;
     --font-color: #333;
     --light-font-color: #919191;
     --main-color: #fff0c1;
     --pussy-color: #FFF0F6;
+    --pussy-font-color: #333;
+    --pussy-slider-color: #F9C0D3;
+    --pussy-submit-border-color: 2px solid #333;
+    --pussy-submit-background-color: #F9C0D3;
     --link-color: #b78300;
     --input-color: #fcfcf6;
+    --filter-border-color:2px solid #b75676;
+    --filter-background-color: #FFC9C9;
+    --filter-button_border-color:2px solid #b75676;
     --pink-stickit-color: #FFC9C9;
-    --pink-stickit-hover: #ffb4b4;
-    --pink-stickit-shadow: #996A6A;
+    --pink-stickit-hover: rgba(255, 180, 180, 0.57);
+    --dateTime-active_button-color: #dcc23f;
+    --dateTime-active_button-border-color: 2px solid #b78300;
+    --dateTime-border-color: #b78300;
+    --button-hover-backgroud-color: #f3e494;
+    --button-hover-border-color: 2px solid #b78300;
+    --star-border-color:2px solid #dcc798;
     --border-color: #e9dbaf;
     --prio1-color: #c7e9fb;
     --prio2-color: #c3eab5;
     --prio3-color: #f5e48d;
     --prio4-color: #ffb692;
+    --prio1-hover-color: #c7e9fb;
+    --prio2-hover-color: #c3eab5;
+    --prio3-hover-color: #f5e48d;
+    --prio4-hover-color: #ffb692;
     --add-task-color: #ebffe7;
+    --add-task-color-hover: #D1D1D1;
+    --positive-output-background-color: rgb(175, 239, 155);
+    --positive-output-color: rgb(93, 152, 77);
+    --negative-output-background-color: #f5afc5;
+    --negative-output-color: #b75676;
+    --weekreview-date-color: rgb(97, 155, 79);
+    --weekreview-button-background-color: rgb(179, 236, 161);
+    --weekreview-button-color:rgb(97, 155, 79);
+    --weekreview-note-background-color:#f5e48d59;
+    --cta-font-color: #333;
+    --register-message-color: #ab4768;
+}
+
+:root.dark {
+    --feedback-text-area-color: #434343;
+    --feedback-text-area-border-color:#cbcbcb;
+    --feedback-submit-color: #434343;
+    --feedback-submit-backgroud-color: rgb(164, 201, 153);
+    --feedback-discord-color:#6466af;
+    --feedback-discord-background-color:#6466af;
+    --body-bg-color: #373737;
+    --main-bg-color: #3c3c3c;
+    --task-input-color: #434343;
+    --font-color: #cbcbcb;
+    --light-font-color: #D1D1D1;
+    --main-color: #373737;
+    --pussy-color: #373737;
+    --pussy-font-color: #F9C0D3;
+    --pussy-slider-color: #F9C0D3;
+    --pussy-submit-border-color: 2px solid #F9C0D3;;
+    --pussy-submit-background-color: rgba(249, 192, 211, 0.9);
+    --link-color: #D1D1D1;
+    --input-color: #373737;
+    --filter-border-color:2px solid #F9C0D3;
+    --filter-background-color:#373737;
+    --filter-button_border-color:2px solid #F9C0D3;
+    --pink-stickit-color: rgba(249, 192, 211, 0.89);
+    --pink-stickit-hover: rgba(249, 192, 211, 0.7);
+    --dateTime-active_button-color: rgba(213, 186, 104, 0.8);
+    --dateTime-active_button-border-color: 2px solid #e0c46e;
+    --dateTime-border-color: #d5ba68;
+    --button-hover-backgroud-color: rgba(209, 209, 209, 0.3);
+    --button-hover-border-color: 2px solid #D1D1D1;
+    --star-border-color:2px solid #262626;
+    --border-color: #a2a2a2;
+    --prio1-color: rgba(169, 209, 229);
+    --prio2-color: rgba(158, 187, 149);
+    --prio3-color: rgba(204, 193, 159);
+    --prio4-color: rgba(200, 158, 172);
+    --prio1-hover-color: rgba(169, 209, 229, 0.6);
+    --prio2-hover-color: rgba(158, 187, 149, 0.6);
+    --prio3-hover-color: rgba(204, 193, 159, 0.6);
+    --prio4-hover-color: rgba(200, 158, 172, 0.6);
+    --add-task-color: rgba(158, 187, 149, 0.6);
+    --add-task-color-hover: #D1D1D1;
+    --positive-output-background-color: rgb(129, 155, 121);
+    --positive-output-color: #e1f8de;
+    --negative-output-background-color: rgba(200, 158, 172, 0.85);
+    --negative-output-color: rgb(200, 158, 172);
+    --weekreview-date-color: #9bd895;
+    --weekreview-button-background-color:rgb(164, 201, 153);
+    --weekreview-button-color: #373737;
+    --weekreview-note-background-color:#ffffff17;
+    --cta-font-color: #373737;
+    --register-message-color: rgba(200, 158, 172);
 }
 
 * {
@@ -56,6 +145,22 @@ body {
     background: var(--pussy-color);
 }
 
+.app.pussyMeter{
+    color: var(--pussy-font-color);
+}
+
+.app.pussyMeter .cta{
+    background-color: var(--pussy-submit-background-color);
+    border: var(--pussy-submit-border-color);
+    color: var(--cta-font-color);
+}
+
+.app.pussyMeter .cta:hover{
+    background-color: var(--button-hover-backgroud-color);
+    border: var(--button-hover-border-color);
+    color: var(--font-color);
+}
+
 .app main {
     flex-grow: 1;
     overflow: auto;
@@ -64,6 +169,10 @@ body {
 a {
     text-decoration: none;
     color: var(--link-color);
+}
+
+.right {
+    text-align: right;
 }
 
 p, h1, h2, h3, h4, h5 {
@@ -100,10 +209,20 @@ input {
     width: 100%;
 }
 
-.pussySliderIcon {
+.pussySliderIcons svg {
     margin-top: 2rem;
     width: 100px;
     height: 80px;
+}
+
+.pussySliderIcons {
+    margin-top: 5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.slideContainer input {
+    padding: 0;
 }
 
 input, button {
@@ -122,8 +241,8 @@ input, button {
 }
 
 .filters {
-    border-bottom: 2px solid black;
-    background: var(--pink-stickit-color);
+    border-bottom: var(--filter-border-color);
+    background: var(--filter-background-color);
     display: flex;
     gap: .5rem;
     padding: .5rem;
@@ -137,6 +256,8 @@ input, button {
 
 .filters button:hover {
     background: var(--pink-stickit-hover);
+    border: var(--filter-button_border-color);
+    color: var(--cta-font-color);
 }
 
 button, label {
@@ -154,8 +275,22 @@ button {
     color: inherit;
 }
 
+.dateTime input:hover{
+    background-color: var(--button-hover-backgroud-color);
+    border: var(--button-hover-border-color);
+    color: var(--font-color);
+}
+
 button.cta {
-    background: var(--pink-stickit-color);
+    background-color: var(--pussy-submit-background-color);
+    border: var(--pussy-submit-border-color);
+    color: var(--cta-font-color);
+    min-width: 6rem;
+}
+button.cta:hover {
+    background-color: var(--button-hover-backgroud-color);
+    border: var(--button-hover-border-color);
+    color: var(--font-color);
     min-width: 6rem;
 }
 
@@ -171,7 +306,7 @@ button.cta {
 }
 
 .stars button + button {
-    border-right: 2px solid var(--border-color);
+    border-right: var(--star-border-color);
 }
 
 h1 {
@@ -203,6 +338,10 @@ header a, header div {
 
 header a {
     padding: 1rem;
+}
+.registerMessage{
+    color: var(--register-message-color);
+    margin-bottom: 1.4rem;
 }
 
 h1.pussyHeader {
@@ -261,11 +400,11 @@ main > form button {
     min-width: 100%;
 }
 
-.task[data-done=true] img.notdone {
+.task[data-done=true] svg.notdone {
     display: none;
 }
 
-.task[data-done=false] img.isdone {
+.task[data-done=false] svg.isdone {
     display: none;
 }
 
@@ -282,7 +421,7 @@ main > form button {
 
 .dateTime {
     display: flex;
-    border-bottom: .1rem solid var(--border-color);
+    border-bottom: .1rem solid var(--dateTime-border-color);
     background-color: var(--main-color);
     gap: .5rem;
     padding: .5rem;
@@ -296,7 +435,9 @@ main > form button {
 }
 
 .dateTime .active {
-    background: var(--pink-stickit-color);
+    background: var(--dateTime-active_button-color);
+    border: var(--dateTime-active_button-border-color);
+    color: var(--main-bg-color);
 }
 
 .task .due {
@@ -350,7 +491,7 @@ main > form button {
 
 .week {
     justify-content: center;
-    color: var(--pink-stickit-shadow);
+    color: var(--pink-stickit-color);
 }
 
 :first-child > .year {
@@ -359,11 +500,16 @@ main > form button {
 
 .year {
     justify-content: flex-start;
-    background-color: var(--pink-stickit-color);
-    color: var(--pink-stickit-shadow);
+    background-color: var(--pink-stickit-hover);
+    color: var(--pink-stickit-color);
 }
 
-img {
+svg {
+    height: 1.7rem;
+    aspect-ratio: 1 / 1;
+}
+
+.task button svg {
     height: 1.7rem;
 }
 
@@ -381,7 +527,7 @@ footer {
     position: relative;
 }
 
-footer img {
+footer svg {
     height: 3rem;
 }
 
@@ -390,7 +536,7 @@ footer label {
     padding: .5rem;
 }
 
-footer input + img {
+footer input + svg {
     margin-left: 0.5rem;
 }
 
@@ -398,24 +544,28 @@ footer input, .stars button {
     padding: .5rem .5rem;
 }
 
+#plannedFooter {
+    display: none;
+}
+
 .stars button {
     padding-bottom: 0;
 }
 
 .stars > :nth-child(1):hover, .stars > :nth-child(1).active {
-    background: var(--prio4-color)
+    background: var(--prio4-hover-color)
 }
 
 .stars > :nth-child(2):hover, .stars > :nth-child(2).active {
-    background: var(--prio3-color)
+    background: var(--prio3-hover-color)
 }
 
 .stars > :nth-child(3):hover, .stars > :nth-child(3).active {
-    background: var(--prio2-color)
+    background: var(--prio2-hover-color)
 }
 
 .stars > :nth-child(4):hover, .stars > :nth-child(4).active {
-    background: var(--prio1-color)
+    background: var(--prio1-hover-color)
 }
 
 
@@ -440,6 +590,10 @@ footer input, .stars button {
     margin-top: 2rem;
 }
 
+p.weekNote{
+    background-color: var(--weekreview-note-background-color);
+}
+
 .weekSummary .weekNote, .week-review .awesome {
     font-size: 86%;
     padding: 1rem;
@@ -457,9 +611,17 @@ footer input, .stars button {
 }
 
 button.startWeek {
-    background: var(--prio2-color);
+    background: var(--weekreview-button-background-color);
+    color: var(--weekreview-button-color);
+    border: 2px solid var(--weekreview-button-color);
     margin-bottom: 25vh;
     margin-top: 10vh;
+}
+
+button.startWeek:hover {
+    background-color: var(--button-hover-backgroud-color);
+    border: var(--button-hover-border-color);
+    color: var(--font-color);
 }
 
 .stickman {
@@ -480,7 +642,7 @@ button.startWeek {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    border: 1px solid var(--pink-stickit-shadow);
+    border: 1px solid var(--pink-stickit-hover);
     background-color: var(--pink-stickit-color);
 }
 
@@ -504,8 +666,9 @@ button.startWeek {
     height: 3.25rem;
 }
 
-.dropbtn img {
+.dropbtn svg {
     height: 2rem;
+    width: 2rem;
 }
 
 .dropdown {
@@ -519,7 +682,7 @@ button.startWeek {
     background-color: var(--pink-stickit-color);
     min-width: 9rem;
     z-index: 100;
-    box-shadow: 0 .1rem .2rem 0 var(--pink-stickit-shadow);
+    box-shadow: 0 .1rem .2rem 0 var(--pink-stickit-hover);
 }
 
 .dropdown-content a {
@@ -558,19 +721,30 @@ button.startWeek {
 textarea {
     width: 21rem;
     height: 5rem;
-    border: 2px solid #333;
+    border: 2px solid var(--feedback-text-area-border-color);
+    background-color: var(--feedback-text-area-color);
     font: inherit;
     border-radius: .5rem;
 }
-
+textarea:focus {
+    color:var(--feedback-text-area-border-color);
+}
 #received {
     padding: .8rem;
-    color: darkgreen;
+    color: var(--positive-output-color);
 }
 
 #formButton {
     margin-top: 0;
-    background: #C3EDCE;
+    border: 1px solid var(--feedback-submit-color);
+    background: var(--feedback-submit-backgroud-color);
+    color: var(--feedback-submit-color);
+}
+
+#formButton:hover {
+    background-color: var(--button-hover-backgroud-color);
+    border: var(--button-hover-border-color);
+    color: var(--button-hover-border-color);;
 }
 
 .discordFeedback {
@@ -578,13 +752,18 @@ textarea {
     cursor: pointer;
     padding: .625rem;
     text-align: center;
-    border: 2px solid #333;
+    border: 2px solid var(--feedback-discord-color);
     border-radius: .5rem;
     width: 15rem;
-    background: #d9d9ff
+    background: var(--feedback-discord-background-color);
 }
 
-.discordFeedback img {
+.discordFeedback:hover {
+    background-color: var(--button-hover-backgroud-color);
+    border: var(--button-hover-border-color);
+}
+
+.discordFeedback svg {
     margin: 1rem 1rem 0;
 }
 
@@ -601,10 +780,15 @@ textarea {
     background: var(--add-task-color);
 }
 
-.task:has(.cross), .task:has(input[value="true"]) {
-    background: var(--input-color);
+.task[data-done=true] {
+    background: var(--task-input-color);
 }
-
+.weekIcon {
+    color: var(--weekreview-date-color);
+}
+.weekIcon:hover {
+    color: var(--weekreview-date-color);
+}
 span.weekIcon, input.toDelegate {
     display: none;
 }
@@ -622,7 +806,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 }
 
 
-.icon-unchecked {
+.task button .icon-unchecked, .task label .icon-unchecked {
     height: 3rem;
 }
 
@@ -640,7 +824,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     opacity: 0.6;
 }
 
-.NoTaskPlaceholder img {
+.NoTaskPlaceholder svg {
     width: 20.5rem;
     height: auto;
 }
@@ -672,16 +856,15 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     border-radius: .3rem;
     padding: .666rem;
     transition: opacity 1s ease-out;
-    color: green;
-    border: 1px solid green;
-    background-color: var(--prio2-color);
+    color: var(--positive-output-color);
+    border: 1px solid var(--positive-output-color);
+    background-color: var(--positive-output-background-color);
 }
 
-
-#redFeedback {
-    color: #d7703d;
-    border: 1px solid #d7703d;
-    background-color: var(--pink-stickit-color);
+#leftBehind, #redFeedback {
+    color: var(--negative-output-color);
+    border: 1px solid var(--negative-output-color);
+    background-color: var(--negative-output-background-color);
 }
 
 .fadeoutMessage.fade-out {
@@ -716,15 +899,48 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     padding: 0 .5rem;
 }
 
-.deleteImg img {
+.deleteImg svg {
+    width: 8rem;
     height: 3.5rem;
+}
+
+.hidePassword,.showPassword{
+    position: absolute;
+    right: 0.1rem;
+    top: 24%;
+}
+.light_off,
+.light_on{
+    width: 5rem;
+    height: 3rem;
+}
+html.dark .light_on {
+    display: none;
+}
+
+html:not(.dark) .light_off {
+    display: none;
+}
+
+.login #toggleTheme {
+    margin-top: 1rem;
+}
+
+#toggleTheme {
+    border: none;
+    background: none;
+    padding: 0;
 }
 
 .date-input {
     position: relative;
 }
 
-.date-input img {
+.loginTitle{
+    margin-top: 1rem;
+}
+
+.date-input svg {
     position: absolute;
     right: 12px;
     top: 50%;
@@ -734,6 +950,11 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 }
 
 /*area chart for week review*/
+.catWeekReview{
+    height: 8rem;
+    margin-left: -1.5rem;
+    width: 24rem;
+}
 .area-chart {
     margin: auto;
     padding: 0;
@@ -789,7 +1010,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     --fillcolor: var(--prio4-color);
 }
 
-.weeekdays {
+.weekdays {
     width: 83%;
     margin: auto;
     display: flex;

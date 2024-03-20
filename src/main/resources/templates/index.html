@@ -6,22 +6,15 @@
     <link rel="stylesheet" href="/new.css?1">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <script async src="https://umami.petabyte.farm/script.js"
-            data-website-id="0076ce35-dec8-4042-ba76-0dc4b52922b0"></script>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/iconx32.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/touch-icon.png">
-    <link rel="manifest" href="/manifest.json">
+    <meta th:replace="fragments :: head-metadata">
 </head>
 <body>
 <section class="app home">
     <header>
         <div class="dropdown">
             <button class="dropbtn" onclick="toggleDropdown('dropdownOptions')">
-                <img src="/img/menu_icon_open.svg" alt="open menu">
+                <svg id="menu_open" th:insert="svgFragments::menu_icon_open"></svg>
+                <svg id="menu_close" th:insert="svgFragments::menu_icon_close" style="display:none;"></svg>
             </button>
             <div class="dropdown-content">
                 <a href="/planned">Planned</a>
@@ -33,8 +26,14 @@
                 </form>
             </div>
         </div>
-        <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|" id="filter-text" onclick="toggleDropdown('filters')"></h2>
+        <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|" id="filter-text"
+            onclick="toggleDropdown('filters')"></h2>
         <div class="week-progressbar"></div>
+
+        <button id="toggleTheme">
+            <svg class="light_on" th:insert="svgFragments::light_on"></svg>
+            <svg class="light_off" th:insert="svgFragments::light_off"></svg>
+        </button>
     </header>
 
     <div class="filters" style="display: none;">
@@ -43,12 +42,17 @@
         <button onclick="filterTasks('current')">Current</button>
         <button onclick="filterTasks('tomorrow')">Tomorrow</button>
     </div>
+
     <main>
         <div class="taskContainer" th:unless="${currentWeek.getSortedTasks().isEmpty()}"
              th:each="task : ${currentWeek.getSortedTasks()}">
-            <div class="task" th:object="${task}" th:data-priority="*{priority}" th:data-id="*{id}"
-                 th:data-done="*{done}" th:data-maturity="*{getMaturity()}" th:data-duedate="*{dueDateDate}">
-
+            <div class="task"
+                 th:object="${task}"
+                 th:data-priority="*{priority}"
+                 th:data-id="*{id}"
+                 th:data-done="*{done}"
+                 th:data-maturity="*{getMaturity()}"
+                 th:data-duedate="*{dueDateDate}">
                 <span th:classappend="|prio${task.getPriority()}|"></span>
                 <p th:text="*{description}"></p>
                 <span class="due" th:text="*{getRemainingDays()}" th:data-duedate="*{dueDateDate}"></span>
@@ -56,26 +60,26 @@
                 <form onsubmit="handleSubmit(event)" th:action="|/tasks/check/*{id}|" th:method="POST">
                     <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
                     <button class="img" th:type="submit">
-                        <img class="isdone" src="/img/checkbox_checked.svg" alt="mark as not done"/>
-                        <img class="notdone" src="/img/checkbox_unchecked.svg" alt="mark as done"/>
+                        <svg class="isdone" th:insert="svgFragments::checkbox_checked"></svg>
+                        <svg class="notdone" th:insert="svgFragments::checkbox_unchecked"></svg>
                     </button>
                 </form>
             </div>
 
             <form class="delete" onsubmit="handleDelete(event)" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
                 <input type="hidden" name="id" th:value="${task.id}">
-                <button th:class="deleteImg"><img src="/img/leaveBehind_icon.svg" alt="delete task">
+                <button th:class="deleteImg">
+                    <svg th:insert="svgFragments::leaveBehind_icon"></svg>
                 </button>
             </form>
         </div>
 
         <div th:if="${currentWeek.getSortedTasks().isEmpty()}" class="NoTaskPlaceholder">
             <p th:utext="${message}"></p>
-            <img th:src="|/img/cat_pm_${user.pussyMeter}.svg|" alt="cat">
+            <svg th:insert="svgFragments::|cat_pm_${user.pussyMeter}|"></svg>
         </div>
-
-            <p class="quote" th:text="${quote}"></p>
-            <p class="author" th:text="${author}"></p>
+        <p class="quote" th:text="${quote}"></p>
+        <p class="author" th:text="${author}"></p>
     </main>
 
     <footer>
@@ -99,39 +103,19 @@
             <div class="addTask">
                 <input type="text" placeholder="new task" name="description" id="add" required autofocus
                        autocomplete="off">
-                <img onclick="toggleDueDate()" src="/img/calendar_icon.svg" alt="due date" id="calendar_icon">
+                <svg onclick="toggleDueDate()" th:insert="svgFragments::calendar_icon" id="calendar_icon"></svg>
             </div>
-
-            <div class="stars">
-                <button onclick="setPriority(4)" type="submit" name="priority" value="4" data-umami-event="setPriority"
-                        data-umami-event-priority="4">
-                    <img th:src="|/img/prio4_pm_${user.pussyMeter}.svg|" alt="priority 4">
-                </button>
-                <button onclick="setPriority(3)" type="submit" name="priority" value="3" data-umami-event="setPriority"
-                        data-umami-event-priority="3">
-                    <img th:src="|/img/prio3_pm_${user.pussyMeter}.svg|" alt="priority 3">
-                </button>
-                <button onclick="setPriority(2)" type="submit" name="priority" value="2" data-umami-event="setPriority"
-                        data-umami-event-priority="2">
-                    <img th:src="|/img/prio2_pm_${user.pussyMeter}.svg|" alt="priority 2">
-                </button>
-                <button onclick="setPriority(1)" type="submit" name="priority" value="1" data-umami-event="setPriority"
-                        data-umami-event-priority="1">
-                    <img th:src="|/img/prio1_pm_${user.pussyMeter}.svg|" alt="priority 1">
-                </button>
-            </div>
+            <div th:replace="fragments.html :: buttons-priority"></div>
         </form>
     </footer>
 
     <script th:inline="javascript">
-        /*<![CDATA[*/
-        const publicKeyBase64 =  /*[[@{${publicKey}}]]*/ 0;
-        /*]]>*/
-
         updateWeekProgressbar();
         initTaskEditListener();
         initPhoneHack();
         expandMatureTasks();
+
+        registerNotifications();
 
         setInterval(updateWeekProgressbar, 60 * 60 * 1000);
 
@@ -154,11 +138,6 @@
             }
         }
 
-        const el = document.querySelector(".fadeoutMessage");
-        if (el) {
-            setTimeout(() => fadeout(el), 3000);
-        }
-
         document.querySelector("#date").addEventListener("input", function () {
             const dateEl = document.querySelector("#date");
             const captionEl = document.querySelector(".date-caption");
@@ -178,386 +157,37 @@
             captionEl.value = value;
         });
 
-        function focusAdd() {
-            document.querySelector("#add").focus({preventScroll: true});
-        }
+        function registerNotifications() {
+            /*<![CDATA[*/
+            const publicKeyBase64 =  /*[[@{${publicKey}}]]*/ 0;
+            /*]]>*/
 
-        function updateWeekProgressbar() {
-            const progressbar = document.querySelector(".week-progressbar");
-            const now = new Date();
-            const weekProgress = now.getDay() === 0 ? 100 : ((now.getDay() - 1) / 6 + now.getHours() / 24 / 6) * 100;
+            const serverKey = urlB64ToUint8Array(publicKeyBase64);
 
-            if (weekProgress === 100) {
-                progressbar.classList.add("sunday");
-            }
 
-            progressbar.style.width = weekProgress + "%";
-        }
-
-        function expandMatureTasks() {
-            const TASK_MAX_PRIORITY = 4;
-            const tasks = document.querySelectorAll(".task");
-            tasks.forEach(task => {
-                const size = task.dataset.maturity / 10 / (TASK_MAX_PRIORITY - task.dataset.priority + 1) + "rem";
-                task.style.paddingTop = size;
-                task.style.paddingBottom = size;
-            });
-        }
-
-        function handleSubmit(event) {
-            event.preventDefault();
-
-            const form = event.target;
-            const data = new FormData(form);
-            const url = form.action;
-
-            fetch(url, {
-                method: 'POST',
-                body: data
-            }).then(resp => {
-                if (resp.redirected && resp.url.indexOf("login") > -1) { // session expired
-                    window.location.reload();
-                }
-
-                const done = form.elements["done"];
-                done.value = done.value === "false" ? "true" : "false";
-
-                const task = form.closest(".task");
-                task.dataset.done = task.dataset.done === "true" ? "false" : "true";
-            });
-        }
-
-        function handleDelete(event) {
-            event.preventDefault();
-            const form = event.target;
-            const data = new FormData(form);
-            const url = form.action;
-            const popupMessage = document.querySelector("#redFeedback");
-
-            fetch(url, {
-                method: 'POST',
-                body: data
-            }).then(resp => {
-                if (resp.redirected && resp.url.indexOf("login") > -1) { // session expired
-                    window.location.reload();
-                }
-
-                form.parentNode.remove();
-            });
-
-            popupMessage.className = "fadeoutMessage";
-            setTimeout(() => {
-                popupMessage.className = "hidden";
-            }, 3000);
-        }
-
-        function filterTasks(filter) {
-            const tasks = document.querySelectorAll('.taskContainer');
-            const filterText = document.querySelector("#filter-text");
-
-            localStorage.setItem('filter', filter);
-
-            if (filter === 'all' ) {
-                localStorage.removeItem('filter');
-                if (filterText.dataset.text !== undefined) {
-                    filterText.innerText = filterText.dataset.text;
-                }
-            } else {
-                if (filterText.dataset.text === undefined) {
-                    filterText.dataset.text = filterText.innerText;
-                }
-                filterText.innerText = filter;
-            }
-
-            const date = new Date();
-
-            const today = date.toISOString().slice(0, 10);
-
-            date.setDate(date.getDate() + 1);
-            const tomorrow = date.toISOString().slice(0, 10);
-
-            tasks.forEach((task) => {
-                task.style.display = "";
-                const dataset = task.querySelector(".task").dataset;
-
-                const taskDone = dataset.done === "true";
-                if (filter === 'not done' && taskDone ||
-                    filter === 'current' && (dataset.duedate < today || taskDone) ||
-                    filter === 'tomorrow' && (dataset.duedate !== tomorrow || taskDone)) {
-
-                    task.style.display = "none";
-                }
-            });
-        }
-
-        function showCalendar() {
-            const date = document.querySelector("#date");
-            const dateLabel = document.querySelector("label.dateTime")
-
-            dateLabel.dispatchEvent(new Event("click"));
-            if (document.activeElement !== date) {
-                date.focus();
-                date.showPicker();
-            }
-        }
-
-        function toggleDueDate(forceShow) {
-            const CLASS = "hidden";
-            const dateWrapper = document.querySelector("div.dateTime")
-            const classList = dateWrapper.classList;
-
-            focusAdd();
-
-            if (forceShow === undefined) {
-                classList.toggle(CLASS);
-                due(null);
-            } else if (forceShow === true) {
-                classList.remove(CLASS);
-            } else {
-                classList.add(CLASS);
-                due(null);
-            }
-        }
-
-        function initTaskEditListener() {
-            document.querySelector("main").addEventListener("click", function (event) {
-                if (event.target.tagName !== "P") return;
-
-                let task = event.target.closest(".task");
-
-                if (!task) return;
-
-                edit(task);
-            });
-        }
-
-        function edit(task) {
-            if (popOverActive) return;
-
-            document.querySelector("#add").focus();
-
-            const main = document.querySelector("main");
-            registerCancel(main);
-
-            const description = task.querySelector("p").innerText;
-            const dueDate = task.querySelector(".due").dataset.duedate;
-            const priority = task.dataset.priority;
-
-            const form = document.querySelector("footer form");
-            setPriority(priority);
-
-            form.action = "/tasks/" + task.dataset.id;
-            form.querySelector("input[name='description']").value = description;
-
-            if (dueDate) {
-                toggleDueDate(true);
-                dueAt(dueDate);
-            } else {
-                toggleDueDate(false);
-            }
-
-            function registerCancel(el) {
-                el.classList.add("fade");
-
-                el.addEventListener("click", function () {
-                    cancelEdit();
-                }, {once: true});
-
-                window.onkeydown = function (event) {
-                    if (event.key === "Escape") {
-                        cancelEdit();
-                    }
-                }
-
-                function cancelEdit() {
-                    location.reload();
-                }
-            }
-        }
-
-        function setPriority(priority) {
-            document.querySelector("button[name='priority']").value = priority;
-
-            const buttons = document.querySelectorAll("footer .stars button");
-            buttons.forEach(button => {
-                if (button.value == priority) {
-                    button.classList.add("active");
-                } else {
-                    button.classList.remove("active");
-                }
-            });
-        }
-
-        function initPhoneHack() {
-            window.visualViewport.addEventListener('resize', handleKeyboard);
-            document.addEventListener('focusin', handleKeyboard);
-            document.addEventListener('focusout', handleKeyboard);
-
-            function handleKeyboard() {
-                requestAnimationFrame(() => {
-                    window.scrollY > 0 ? adjustSafeAreaInset(0) : adjustSafeAreaInset();
-
-                    [4, 40, 400].forEach((ms) => {
-                        setTimeout(() => {
-                            scrollToBottom();
-                        }, ms);
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(function (registration) {
+                        return registration;
                     })
-                });
+                    .then(function (registration) {
+
+                        return registration.pushManager.subscribe({
+                            userVisibleOnly: true,
+                            applicationServerKey: serverKey,
+                        });
+                    })
+                    .then(function (subscription) {
+
+                        fetch('/subscribe', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(subscription),
+                        });
+                    })
             }
-
-            function adjustSafeAreaInset(value = 'calc(env(safe-area-inset-bottom)/2)') {
-                document.querySelector("footer").style.paddingBottom = value;
-            }
-        }
-
-        function scrollToBottom() {
-            document.querySelector(".stars").scrollIntoView({behavior: "instant"});
-        }
-
-        function fadeout(el) {
-            if (el !== null) {
-                el.classList.add("fade-out");
-                setTimeout(() => {
-                    el.remove();
-                }, 1000);
-            }
-        }
-
-        function toggleDropdown(target) {
-
-            popOverActive = !popOverActive;
-
-            let dropdownOptions = document.querySelector(".dropdown-content");
-            const filtersWrapper = document.querySelector(".filters");
-            const textSpan = document.querySelector("#filter-text");
-            const img = document.querySelector(".dropbtn img");
-
-            const main = document.querySelector("main");
-            const footer = document.querySelector("footer");
-
-
-            registerCancel(main);
-            registerCancel(footer);
-
-            if (target === 'dropdownOptions') {
-                dropdownOptions.style.display = (dropdownOptions.style.display === "block") ? "none" : "block";
-                img.src = (dropdownOptions.style.display === "block") ? "/img/menu_icon_close.svg" : "/img/menu_icon_open.svg";
-                img.alt = (dropdownOptions.style.display === "block") ? "close menu" : "open menu";
-
-                if (filtersWrapper.style.display === 'flex') {
-                    filtersWrapper.style.display = 'none';
-                }
-            } else if (target === 'filters') {
-                filtersWrapper.style.display = (filtersWrapper.style.display === 'flex') ? "none" : "flex";
-
-                if (dropdownOptions.style.display === "block") {
-                    dropdownOptions.style.display = "none";
-                    img.src = "/img/menu_icon_open.svg";
-                    img.alt = "open menu";
-                }
-            }
-
-            function registerCancel(element) {
-                element.addEventListener("click", function () {
-                    cancelMenu();
-                }, {once: true});
-
-                window.onkeydown = function (event) {
-                    if (event.key === "Escape") {
-                        cancelMenu();
-                    }
-                }
-
-                function cancelMenu() {
-                    popOverActive = false;
-                    dropdownOptions.style.display = "none";
-                    filtersWrapper.style.display = 'none';
-                    img.src = "/img/menu_icon_open.svg";
-                    img.alt = "open menu";
-                }
-            }
-        }
-
-
-        function logout() {
-            document.querySelector('#logoutForm').submit();
-        }
-
-        function dueNextWeek() {
-            due(7);
-        }
-
-        function dueThisWeek() {
-            const days = [3, 3, 2, 2, 2, 1, 0][new Date().getDay()];
-            due(days);
-        }
-
-        function dueTomorrow() {
-            due(1);
-        }
-
-        function dueAt(date) {
-            const days = Math.ceil((new Date(date) - new Date()) / (1000 * 60 * 60 * 24));
-            due(days);
-        }
-
-        function due(days) {
-            const dateEl = document.querySelector("#date");
-
-            focusAdd();
-
-            if (days === null) {
-                dateEl.value = "";
-            } else {
-                const date = new Date();
-                date.setDate(date.getDate() + days);
-                dateEl.valueAsDate = date;
-            }
-
-            dateEl.dispatchEvent(new Event("input"));
-        }
-
-        function urlB64ToUint8Array(base64String) {
-            const padding = '='.repeat((4 - base64String.length % 4) % 4);
-            const base64 = (base64String + padding)
-                .replace(/\-/g, '+')
-                .replace(/_/g, '/');
-
-            const rawData = window.atob(base64);
-            const outputArray = new Uint8Array(rawData.length);
-
-            for (let i = 0; i < rawData.length; ++i) {
-                outputArray[i] = rawData.charCodeAt(i);
-            }
-
-            return outputArray;
-        }
-
-        const serverKey = urlB64ToUint8Array(publicKeyBase64);
-
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/service-worker.js')
-                .then(function (registration) {
-                    return registration;
-                })
-                .then(function (registration) {
-
-                    return registration.pushManager.subscribe({
-                        userVisibleOnly: true,
-                        applicationServerKey: serverKey,
-                    });
-                })
-                .then(function (subscription) {
-
-                    fetch('/subscribe', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(subscription),
-                    });
-                })
         }
     </script>
 </section>

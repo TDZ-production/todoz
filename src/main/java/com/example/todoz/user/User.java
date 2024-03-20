@@ -26,7 +26,7 @@ public class User {
     private Long id;
     private String username;
     private String password;
-    private Integer pussyMeter = 1;
+    private Integer pussyMeter;
     private LocalDateTime createdAt;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @OrderBy("id DESC")

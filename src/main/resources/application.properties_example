@@ -28,4 +28,4 @@ server.servlet.session.persistent=true
 server.servlet.session.cookie.http-only=true
 server.servlet.session.cookie.max-age=31536000
 
-discord.webhook=
+app.umami.id=
