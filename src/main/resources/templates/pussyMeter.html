@@ -14,7 +14,7 @@
     </header>
     <main>
         <h1 class="pussyHeader">Pussy meter</h1>
-        <p>Choose how big of a pussy you are!</p>
+        <p th:utext="${message}"></p>
 
         <form th:action="@{/changeMeter}" method="post" th:object="${user}">
             <div class="pussySliderIcons">
