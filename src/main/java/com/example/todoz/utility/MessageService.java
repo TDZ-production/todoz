@@ -24,29 +24,17 @@ public class MessageService {
         if (optWeek.isPresent()) {
             Week week = optWeek.get();
 
-            List<Task> tasks = week.getTasksForNotification();
+            List<Task> tasksToday = week.getTasksForNotification()
+                    .stream()
+                    .filter(t -> t.getDueDate() != null)
+                    .toList();
 
-            if (!tasks.isEmpty()) {
-
-                List<Task> tasksToday = tasks.stream()
-                        .filter(t -> t.getDueDate() != null)
-                        .toList();
-
-                String title = "Wassup mf!";
-                String body = getString(tasksToday, tasks);
+            if (!tasksToday.isEmpty()) {
+                String title = tasksToday.size() + " tasks are due today";
+                String body = tasksToday.get(0).getDescription() + "\\nis your first task on the list";
                 return String.format("{ \"title\": \"%s\", \"body\": \"%s\" }", title, body);
             }
         }
         return null;
-    }
-
-    private static String getString(List<Task> tasksToday, List<Task> tasks) {
-        String body = "First task is: \\n";
-        if (!tasksToday.isEmpty()) {
-            body += tasks.get(0).getDescription() + "\\n" + tasksToday.size() + (tasksToday.size() == 1 ? " task is " : " tasks are ") + "due today";
-        } else {
-            body += tasks.get(0).getDescription();
-        }
-        return body;
     }
 }

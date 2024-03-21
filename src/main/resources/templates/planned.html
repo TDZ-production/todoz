@@ -5,15 +5,7 @@
     <title>Planned tasks</title>
     <link rel="stylesheet" href="/new.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <script async src="https://umami.petabyte.farm/script.js"
-            data-website-id="0076ce35-dec8-4042-ba76-0dc4b52922b0"></script>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/iconx32.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/touch-icon.png">
-    <link rel="manifest" href="/manifest.json">
+    <meta th:replace="fragments.html :: head-metadata">
 </head>
 <body>
 <section class="app">
@@ -37,75 +29,52 @@
                               th:data-duedate="*{dueDateDate}"></span>
                     </div>
 
-                    <form class="delete" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
+                    <form class="delete" onsubmit="handleDelete(event)" th:method="post"
+                          th:action="|/tasks/leaveBehind/${task.id}|">
                         <input type="hidden" name="id" th:value="${task.id}">
-                        <button class="deleteImg"><img src="/img/leaveBehind_icon.svg" alt="delete"></button>
+                        <button class="deleteImg">
+                            <svg th:insert="svgFragments::leaveBehind_icon"></svg>
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
 
+        <div th:if="${planned.isEmpty()}" class="NoTaskPlaceholder">
+            <p>Here will be all your planned tasks... <br> in the meantime enjoy this ball...</p>
+            <svg th:insert="svgFragments::|cat_pm_${user.pussyMeter}|"></svg>
+        </div>
+
         <div th:unless="${planned.isEmpty()}" class="plannedPlaceholder">
             <p>The future is only<br> in your hands...</p>
         </div>
-
-        <div th:if="${planned.isEmpty()}" class="NoTaskPlaceholder">
-            <p>Here will be all your planned tasks... <br> in the meantime enjoy this ball...</p>
-            <img th:src="|/img/cat_pm_${user.pussyMeter}.svg|" alt="cat">
-        </div>
     </main>
 
-    <footer id="plannedFooter">
-        <form method="post" th:action="@{/tasks/add}">
-            <button type="submit" name="priority" value="4" class="hidden"></button>
+    <footer>
+        <p class="hidden" id="redFeedback">Task added to "Left Behind"</p>
+        <div class="hidden">
+            <form method="post" th:action="@{/tasks/add}">
+                <button type="submit" name="priority" value="4" class="hidden"></button>
 
-            <label>
-                <input type="date" name="maybeDueDate" id="date">
-            </label>
+                <label class="date-input">
+                    <svg th:insert="svgFragments::calendar_icon"></svg>
+                    <input type="date" name="maybeDueDate" id="date">
+                </label>
 
-            <div class="addTask">
-                <input type="text" placeholder="new task" name="description" id="add" required autofocus
-                       autocomplete="off">
-            </div>
-
-            <div class="stars">
-                <button onclick="setPriority(4)" type="submit" name="priority" value="4" data-umami-event="setPriority"
-                        data-umami-event-priority="4">
-                    <img th:src="|/img/prio4_pm_${user.pussyMeter}.svg|" alt="priority 4">
-                </button>
-                <button onclick="setPriority(3)" type="submit" name="priority" value="3" data-umami-event="setPriority"
-                        data-umami-event-priority="3">
-                    <img th:src="|/img/prio3_pm_${user.pussyMeter}.svg|" alt="priority 3">
-                </button>
-                <button onclick="setPriority(2)" type="submit" name="priority" value="2" data-umami-event="setPriority"
-                        data-umami-event-priority="2">
-                    <img th:src="|/img/prio2_pm_${user.pussyMeter}.svg|" alt="priority 2">
-                </button>
-                <button onclick="setPriority(1)" type="submit" name="priority" value="1" data-umami-event="setPriority"
-                        data-umami-event-priority="1">
-                    <img th:src="|/img/prio1_pm_${user.pussyMeter}.svg|" alt="priority 1">
-                </button>
-            </div>
-        </form>
+                <div class="addTask">
+                    <input type="text" placeholder="new task" name="description" id="add" required autofocus
+                           autocomplete="off">
+                </div>
+                <meta th:replace="fragments.html :: buttons-priority">
+            </form>
+        </div>
     </footer>
 </section>
 <script>
     initTaskEditListener();
 
-    function initTaskEditListener() {
-        document.querySelector("main").addEventListener("click", function (event) {
-            if (event.target.tagName !== "P") return;
-
-            let task = event.target.closest(".task");
-
-            if (!task) return;
-
-            edit(task);
-        });
-    }
-
     function edit(task) {
-        document.querySelector("#plannedFooter").style.display = "block";
+        document.querySelector("div.hidden").classList.remove("hidden");
         document.querySelector("#add").focus();
 
         const main = document.querySelector("main");
@@ -139,19 +108,6 @@
                 location.reload();
             }
         }
-    }
-
-    function setPriority(priority) {
-        document.querySelector("button[name='priority']").value = priority;
-
-        const buttons = document.querySelectorAll("footer .stars button");
-        buttons.forEach(button => {
-            if (button.value == priority) {
-                button.classList.add("active");
-            } else {
-                button.classList.remove("active");
-            }
-        });
     }
 </script>
 </body>

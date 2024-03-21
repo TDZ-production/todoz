@@ -73,9 +73,9 @@ public class Week {
         WeekQuality quality = this.getWeekQuality();
 
         return switch (quality) {
-            case ACTIVE -> "/img/cat_pm_1.svg";
-            case LAZY -> "/img/cat_pm_2.svg";
-            default -> "/img/cat_pm_0.svg";
+            case ACTIVE -> "cat_pm_1";
+            case LAZY -> "cat_pm_2";
+            default -> "cat_pm_0";
         };
     }
 

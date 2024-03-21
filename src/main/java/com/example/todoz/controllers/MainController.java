@@ -10,6 +10,7 @@ import com.example.todoz.week.Week;
 import com.example.todoz.week.WeekService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,9 @@ public class MainController {
     private final WeekService weekService;
     private final NotificationService notificationService;
 
+    @Value("${app.umami.id}")
+    private String umamiId;
+
     @GetMapping
     public String showIndex(Model model, Principal principal) {
         Optional<Week> currentWeek = weekService.findCurrentWeek(getUser(principal));
@@ -36,6 +40,7 @@ public class MainController {
             Week previousWeek = optPreviousWeek.get();
             List<Task> upcomingTasks = taskService
                     .findUpcomingTasks(getUser(principal), previousWeek.getWeekNumber(), DateManager.formattedCurrentWeek());
+
 
             model.addAttribute("user", getUser(principal));
             model.addAttribute("previousWeek", previousWeek);
@@ -55,6 +60,8 @@ public class MainController {
 
         model.addAttribute("user", getUser(principal));
         model.addAttribute("publicKey", notificationService.getPublicKey());
+        model.addAttribute("quote", "\"" + QuoteGetter.quote.quote() + "\"");
+        model.addAttribute("author", "–" + QuoteGetter.quote.author());
 
         return "index";
     }
@@ -120,5 +127,14 @@ public class MainController {
 
     private User getUser(Principal principal) {
         return userService.findByUsername(principal.getName()).orElseThrow(EntityNotFoundException::new);
+    }
+
+    @ModelAttribute
+    public void setUmamiId(Model model) {
+        String id = umamiId;
+        if (id == null || id.isBlank()) {
+            id = "0076ce35-dec8-4042-ba76-0dc4b52922b0";
+        }
+        model.addAttribute("umamiId", id);
     }
 }
