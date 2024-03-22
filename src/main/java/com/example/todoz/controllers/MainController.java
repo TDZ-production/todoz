@@ -8,7 +8,6 @@ import com.example.todoz.user.User;
 import com.example.todoz.user.UserService;
 import com.example.todoz.week.Week;
 import com.example.todoz.week.WeekService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -126,8 +125,7 @@ public class MainController {
     }
 
     private User getUser(Principal principal) {
-        return userService.findByUsername(principal.getName())
-                .orElseThrow(EntityNotFoundException::new);
+        return userService.getUser(principal);
     }
 
     @ModelAttribute
