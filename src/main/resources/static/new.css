@@ -906,8 +906,8 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 
 .imgReview {
     position: relative;
-    top: 10px;
-    height: 1.9rem;
+    top: 11px;
+    height: 2.2rem;
 }
 
 .hidePassword,.showPassword{
