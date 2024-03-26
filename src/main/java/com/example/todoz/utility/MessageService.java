@@ -11,11 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
 public class MessageService {
 
+    public MessageService(WeekService weekService, CustomMessageResource messageResource) {
+        this.weekService = weekService;
+        this.messageResource = messageResource;
+    }
+
     private final WeekService weekService;
+    private final CustomMessageResource messageResource;
 
     public String getNotification(User user) {
 
@@ -36,5 +41,9 @@ public class MessageService {
             }
         }
         return null;
+    }
+
+    public String getMessageForUser(User user, String code, Locale locale) {
+        return messageResource.getMessageResource(user, code, locale);
     }
 }

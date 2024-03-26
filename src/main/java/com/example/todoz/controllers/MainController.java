@@ -27,6 +27,7 @@ public class MainController {
     private final TaskService taskService;
     private final WeekService weekService;
     private final NotificationService notificationService;
+    private final MessageService messageService;
 
     @Value("${app.umami.id}")
     private String umamiId;
@@ -127,6 +128,11 @@ public class MainController {
 
     private User getUser(Principal principal) {
         return userService.findByUsername(principal.getName()).orElseThrow(EntityNotFoundException::new);
+    }
+
+    @ModelAttribute
+    public void setMessageService(Model model) {
+        model.addAttribute("messageService",messageService);
     }
 
     @ModelAttribute
