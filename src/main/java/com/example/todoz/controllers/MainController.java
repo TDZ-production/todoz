@@ -131,16 +131,12 @@ public class MainController {
     }
 
     @ModelAttribute
-    public void setMessageService(Model model) {
-        model.addAttribute("messageService",messageService);
-    }
-
-    @ModelAttribute
     public void setUmamiId(Model model) {
         String id = umamiId;
         if (id == null || id.isBlank()) {
             id = "0076ce35-dec8-4042-ba76-0dc4b52922b0";
         }
         model.addAttribute("umamiId", id);
+        model.addAttribute("messageService",messageService);
     }
 }

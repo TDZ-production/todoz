@@ -17,7 +17,7 @@
                 <svg id="menu_close" th:insert="svgFragments::menu_icon_close" style="display:none;"></svg>
             </button>
             <div class="dropdown-content">
-                <a href="/planned" th:utext="${messageService.getMessageForUser(user,'planned',#locale)}"></a>
+                <a href="/planned" th:utext="${messageService.getMessage('planned',#locale, user)}"></a>
                 <a href="/leftBehind">Left behind</a>
                 <a href="/pussyMeter">Pussy meter</a>
                 <a href="/feedback">Feedback</a>
