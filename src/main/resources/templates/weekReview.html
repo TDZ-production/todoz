@@ -28,10 +28,14 @@
                 <span>Fr</span>
                 <span>Sa</span>
             </div>
-
-            <p th:text="|Well, you managed to survive through last week with ${previousWeek.getDonePercentage()}% of finished tasks... Not great, not terrible!|"></p>
-            <p style="margin-top:0.5rem">
-                <svg class="catWeekReview" th:insert="svgFragments::|${previousWeek.getCatImage()}|"/>
+            <p style=" text-align: justify">Here's a breakdown of your completed tasks from last week:<br>
+                <strong>Total Completed Tasks: <span th:text="|${previousWeek.getDoneCount()}|"/>.<br/></strong>
+            </p>
+            <p th:if="|${previousWeek.getDoneCount()}|" style="font-size: 13px; padding-top: 0;">
+                <svg class="imgReview" th:insert="svgFragments::|prio1_pm_${user.pussyMeter}|"/>: <span th:text="|${previousWeek.getDoneTasksByPriority(1)}|"/> &frasl; <span th:text="|${previousWeek.getTasksByPriority(1).size()}|" />
+                <svg class="imgReview" th:insert="svgFragments::|prio2_pm_${user.pussyMeter}|"/>: <span th:text="|${previousWeek.getDoneTasksByPriority(2)}|"/> &frasl; <span th:text="|${previousWeek.getTasksByPriority(2).size()}|" />
+                <svg class="imgReview" th:insert="svgFragments::|prio3_pm_${user.pussyMeter}|"/>: <span th:text="|${previousWeek.getDoneTasksByPriority(3)}|"/> &frasl; <span th:text="|${previousWeek.getTasksByPriority(3).size()}|" />
+                <svg class="imgReview" th:insert="svgFragments::|prio4_pm_${user.pussyMeter}|"/>: <span th:text="|${previousWeek.getDoneTasksByPriority(4)}|"/> &frasl; <span th:text="|${previousWeek.getTasksByPriority(4).size()}|" />
             </p>
             <p class="weekNote">Select tasks you want in week <span th:text="|${currentWeekNumber}|"/>.<br/>You
                 can look back on&nbsp;your&nbsp;week and&nbsp;retrospect. Keep your&nbsp;week clean and&nbsp;focused!

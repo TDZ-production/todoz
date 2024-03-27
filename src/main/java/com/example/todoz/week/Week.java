@@ -98,6 +98,19 @@ public class Week {
         return Math.round((double) count / this.getTasks().size() * 100);
     }
 
+    public long getDoneTasksByPriority(Integer priority) {
+        return getTasksByPriority(priority).stream()
+                .filter(Task::isDone)
+                .count();
+    }
+
+    public List<Task> getTasksByPriority(Integer priority) {
+        return this.getTasks()
+                .stream()
+                .filter(t -> t.getPriority().equals(priority))
+                .toList();
+    }
+
     public long getDoneCount() {
         return this.getTasks()
                 .stream()
