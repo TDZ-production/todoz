@@ -1,7 +1,5 @@
 package com.example.todoz.feedback;
 
-import com.example.todoz.feedback.Feedback;
-import com.example.todoz.feedback.FeedbackRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

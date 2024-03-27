@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Left Behind</title>
+    <title th:text="${user.getText('section_left_behind')}" />
     <link rel="stylesheet" href="/new.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta th:replace="fragments :: head-metadata">
@@ -11,7 +11,7 @@
 <section class="app left-behind">
     <header>
         <a th:href="@{/}"><</a>
-        <h2>Left behind tasks</h2>
+        <h2 th:text="${user.getText('section_left_behind')}" />
     </header>
 
     <main>
@@ -39,13 +39,13 @@
         </div>
 
         <div th:if="${leftBehind.isEmpty()}" class="NoTaskPlaceholder">
-            <p>All your left behind tasks at your display... <br> Oops you don´t have any...</p>
+            <p th:utext="${user.getText('left_behind_no_tasks_placeholder')}"></p>
             <svg th:insert="svgFragments::|cat_pm_${user.pussyMeter}|"></svg>
         </div>
     </main>
     <footer>
-        <p class="hidden" id="redFeedback">Task was completely deleted</p>
-        <p th:if="${reAddedTask} == true"  class="fadeoutMessage">Task restored</p>
+        <p class="hidden" id="redFeedback" th:text="${user.getText('task_deleted')}" />
+        <p th:if="${reAddedTask} == true" class="fadeoutMessage" th:text="${user.getText('task_restored')}" />
     </footer>
 </section>
 </body>

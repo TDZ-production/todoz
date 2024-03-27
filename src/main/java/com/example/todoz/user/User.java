@@ -2,6 +2,8 @@ package com.example.todoz.user;
 
 import com.example.todoz.task.Task;
 import com.example.todoz.userSub.UserSubscription;
+import com.example.todoz.utility.Language;
+import com.example.todoz.utility.MessageService;
 import com.example.todoz.week.Week;
 import com.example.todoz.prtoken.PasswordResetToken;
 import com.example.todoz.utility.DateManager;
@@ -35,7 +37,17 @@ public class User {
     List<PasswordResetToken> pRTokens;
     @OneToMany(mappedBy= "user")
     private List<UserSubscription> userSubscription;
+    @Enumerated
+    private Language language = Language.EN;
     public static final int MINIMAL_PASSWORD_LENGTH = 5;
+
+    public String getText(String key) {
+        return MessageService.getInAppText(key, Language.EN, pussyMeter);
+    }
+
+    public String getText(String key, Object param) {
+        return MessageService.getInAppText(key, Language.EN, pussyMeter, param.toString());
+    }
 
     public User(String username, String password, Integer pussyMeter) {
         this();
