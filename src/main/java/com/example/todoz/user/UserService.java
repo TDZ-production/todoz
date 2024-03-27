@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.Optional;
 import java.util.Set;
 
@@ -18,6 +19,10 @@ public class UserService implements UserDetailsService {
 
     public UserService(UserRepo userRepo) {
         this.userRepo = userRepo;
+    }
+
+    public User getUser(Principal principal) {
+        return findByUsername(principal.getName()).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override

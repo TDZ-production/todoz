@@ -6,7 +6,9 @@ import com.example.todoz.utility.DateManager;
 import com.example.todoz.user.User;
 import com.example.todoz.week.Week;
 import jakarta.transaction.Transactional;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -19,8 +21,11 @@ public class TaskService {
         this.taskRepo = taskRepo;
     }
 
-    public void save(Task task) {
-        taskRepo.save(task);
+    public Task save(Task task) {
+        if (task.getPriority() == null || task.getDescription() == null || task.getDescription().isBlank()) {
+            throw new HttpClientErrorException(HttpStatusCode.valueOf(400));
+        }
+       return taskRepo.save(task);
     }
 
     public List<Task> findUpcomingTasks(User user, Integer previousWeekNumber, Integer currentWeekNumber) {
