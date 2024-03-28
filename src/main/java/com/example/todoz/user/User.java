@@ -45,6 +45,10 @@ public class User {
         return MessageService.getInAppText(key, Language.EN, pussyMeter);
     }
 
+    public String getText(String key, Object param) {
+        return MessageService.getInAppText(key, Language.EN, pussyMeter, param.toString());
+    }
+
     public User(String username, String password, Integer pussyMeter) {
         this();
         this.username = username;

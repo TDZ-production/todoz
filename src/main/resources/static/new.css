@@ -590,13 +590,13 @@ footer input, .stars button {
     margin-top: 2rem;
 }
 
-p.weekNote{
+.weekNote p{
     background-color: var(--weekreview-note-background-color);
+    padding-block: 0;
 }
 
 .weekSummary .weekNote, .week-review .awesome {
     font-size: 86%;
-    padding: 1rem;
     text-align: left;
     color: var(--font-color);
     line-height: 1.666;

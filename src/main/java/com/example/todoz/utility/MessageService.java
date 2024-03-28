@@ -55,6 +55,13 @@ public class MessageService {
         return labels[pussyMeter % labels.length];
     }
 
+    public static String getInAppText(String key, Language lang, Integer pussyMeter, String param) {
+
+        String[] labels = textDataBase.get(lang).get(key);
+
+        return String.format(labels[pussyMeter % labels.length], param);
+    }
+
     public String getNotification(User user) {
 
         Optional<Week> optWeek = weekService.findCurrentWeek(user);
