@@ -1,5 +1,5 @@
 KEY,FRIENDLY,NEUTRAL,AGGRESSIVE
-left_behind_no_tasks_placeholder,All your left behind tasks at your display...<br>...it's empty...let's keep it that way,All your left behind tasks at your display...,All your left behind tasks at your display...<br>...perhaps you should be left behind
+left_behind_no_tasks_placeholder,All your left behind tasks at your display...<br>...it's empty...let's keep it that way,All your left behind tasks at your display...,All your left behind tasks at your display...<br>...how'd it feel if you'd be left behind?
 planned_no_tasks_placeholder,Here will be all your planned tasks...<br>...this is where your future successes take shape,Here will be all your planned tasks...,"Here will be all your planned tasks...<br>...no plans, no bitches"
 index_no_tasks_placeholder,"Ready to create your first task?<br>Save the task by picking a priority, to keep things organised!",Ready to create your first task?<br>Write down your task and submit it by picking priority. Due date is optional,"Are you finally going to do something?<br>This is just todo app, no science diploma required!"
 task_moved_to_planned,Feeling productive huh? Let's go!!!,"Task added to ""Planned""","Wow, you have plans?"
@@ -15,4 +15,35 @@ week_review_task_due_by, "due by %s"
 week_review_task_added, added
 
 #ALES
+logout,Logout
+
+section_planned,Planned
+section_left_behind,Left Behind
+section_pussy_meter,Pussy Meter
+section_feedback,Feedback
+
+task_new_placeholder,What needs to be done?
+
+task_moved_to_left_behind,"Task moved to ""Left Behind"""
+task_restored,Task restored
+task_deleted,Task was deleted
+
+pussy_meter_friendly,Friendly
+pussy_meter_friendly_subtitle,"Changing the PM? Sorry for not being helpful"
+pussy_meter_neutral,Neutral
+pussy_meter_neutral_subtitle,"Choose how big of a pussy you are!"
+pussy_meter_aggressive,Aggressive
+pussy_meter_aggressive_subtitle,"*spit* WEAKNESS DISGUSTS ME!"
+
 filter_all,All
+filter_not_done,Not done
+filter_current,Current
+filter_tomorrow,Tomorrow
+
+due_next_week,next week
+due_this_week,this week
+due_tomorrow,tomorrow
+
+first_task_in_current_week_created,First task for this week!
+
+planned_quote,"The best way to predict the future is to create it. —Peter Drucker",The future is only<br> in your hands...

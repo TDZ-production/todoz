@@ -17,12 +17,12 @@
                 <svg id="menu_close" th:insert="svgFragments::menu_icon_close" style="display:none;"></svg>
             </button>
             <div class="dropdown-content">
-                <a href="/planned">Planned</a>
-                <a href="/leftBehind">Left behind</a>
-                <a href="/pussyMeter">Pussy meter</a>
-                <a href="/feedback">Feedback</a>
+                <a href="/planned" th:text="${user.getText('section_planned')}" />
+                <a href="/leftBehind" th:text="${user.getText('section_left_behind')}" />
+                <a href="/pussyMeter" th:text="${user.getText('section_pussy_meter')}" />
+                <a href="/feedback" th:text="${user.getText('section_feedback')}" />
                 <form method="post" id="logoutForm" th:action="|/logout|">
-                    <a id="logout" onclick="logout()">Log out</a>
+                    <a id="logout" onclick="logout()" th:text="${user.getText('logout')}" />
                 </form>
             </div>
         </div>
@@ -38,9 +38,9 @@
 
     <div class="filters" style="display: none;">
         <button onclick="filterTasks('all')" th:text="${user.getText('filter_all')}" />
-        <button onclick="filterTasks('not done')">Not done</button>
-        <button onclick="filterTasks('current')">Current</button>
-        <button onclick="filterTasks('tomorrow')">Tomorrow</button>
+        <button onclick="filterTasks('not done')" th:text="${user.getText('filter_not_done')}" />
+        <button onclick="filterTasks('current')" th:text="${user.getText('filter_current')}" />
+        <button onclick="filterTasks('tomorrow')" th:text="${user.getText('filter_tomorrow')}" />
     </div>
 
     <main>
@@ -84,15 +84,15 @@
 
     <footer>
         <p th:if="${plannedTask} == true" class="fadeoutMessage" th:utext="${user.getText('task_moved_to_planned')}"></p>
-        <p class="hidden" id="redFeedback">Task added to "Left Behind"</p>
-        <p th:if="${firstTask} == true"  class="fadeoutMessage">First task added to this week</p>
+        <p class="hidden" id="redFeedback" th:text="${user.getText('task_moved_to_left_behind')}">
+        <p th:if="${firstTask} == true"  class="fadeoutMessage" th:text="${user.getText('first_task_in_current_week_created')}">
         <form method="post" th:action="@{/tasks/add}">
             <button type="submit" name="priority" value="4" class="hidden"></button>
 
             <div class="dateTime hidden">
-                <input type="button" onclick="dueNextWeek()" value="next week"/>
-                <input type="button" onclick="dueThisWeek()" value="this week"/>
-                <input type="button" onclick="dueTomorrow()" value="tomorrow"/>
+                <input type="button" onclick="dueNextWeek()" th:value="${user.getText('due_next_week')}" />
+                <input type="button" onclick="dueThisWeek()" th:value="${user.getText('due_this_week')}" />
+                <input type="button" onclick="dueTomorrow()" th:value="${user.getText('due_tomorrow')}" />
                 <input class="date-caption" type="button" onclick="showCalendar()" value="…"/>
 
                 <label class="dateTime hidden">
@@ -101,7 +101,7 @@
             </div>
 
             <div class="addTask">
-                <input type="text" placeholder="new task" name="description" id="add" required autofocus
+                <input type="text" th:placeholder="${user.getText('task_new_placeholder')}" name="description" id="add" required autofocus
                        autocomplete="off">
                 <svg onclick="toggleDueDate()" th:insert="svgFragments::calendar_icon" id="calendar_icon"></svg>
             </div>
