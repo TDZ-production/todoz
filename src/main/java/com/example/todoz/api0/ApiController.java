@@ -60,7 +60,7 @@ public class ApiController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("{id}")
+    @PutMapping("{id}")
     public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody TaskUpdateDTO taskUpdate, Principal principal) {
         User user = userService.getUser(principal);
         var optWeek = weekService.findCurrentWeek(user);
