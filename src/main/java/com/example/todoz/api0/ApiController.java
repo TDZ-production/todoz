@@ -74,4 +74,10 @@ public class ApiController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id, Principal principal) {
+        taskService.leaveBehind(id, userService.getUser(principal));
+
+        return ResponseEntity.ok().build();
+    }
 }
