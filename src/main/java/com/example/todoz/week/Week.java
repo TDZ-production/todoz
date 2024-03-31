@@ -61,22 +61,8 @@ public class Week {
                 .toList();
     }
 
-    public int nextWeekNumber() {
-        return (getWeekNumberNumber() % WEEKS_IN_YEAR) + 1;
-    }
-
     public int getWeekNumberNumber() {
         return this.weekNumber % 100;
-    }
-
-    public String getCatImage() {
-        WeekQuality quality = this.getWeekQuality();
-
-        return switch (quality) {
-            case ACTIVE -> "cat_pm_1";
-            case LAZY -> "cat_pm_2";
-            default -> "cat_pm_0";
-        };
     }
 
     public WeekQuality getWeekQuality() {
@@ -96,6 +82,19 @@ public class Week {
         long count = this.getDoneCount();
 
         return Math.round((double) count / this.getTasks().size() * 100);
+    }
+
+    public long getDoneTasksByPriority(Integer priority) {
+        return getTasksByPriority(priority).stream()
+                .filter(Task::isDone)
+                .count();
+    }
+
+    public List<Task> getTasksByPriority(Integer priority) {
+        return this.getTasks()
+                .stream()
+                .filter(t -> t.getPriority().equals(priority))
+                .toList();
     }
 
     public long getDoneCount() {
