@@ -751,6 +751,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 }
 .area-chart tr {
     position: relative;
+    display: block;
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 0;
