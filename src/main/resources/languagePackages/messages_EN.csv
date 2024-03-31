@@ -7,7 +7,8 @@ index_left_behind_popup,Happens. You'll finish it later,"Task added to ""Left Be
 pussy_meter_subtitle,Changing the PM? Sorry for not being helpful,Choose how big of a pussy you are!,*spit* WEAKNESS DISGUSTS ME!
 
 week_review_number,"Week %s Review"
-week_review_results,"Well, you managed to survive through last week with %s%% of finished tasks... Not great, not terrible!"
+week_review_results,"Here's a breakdown of your completed tasks from last week:"
+week_review_completed_tasks,"Total Completed Tasks: %s"
 week_review_planning,"Select tasks you want in week %s.<br>You can look back on your week and retrospect. Keep your week clean and focused!"
 week_review_planned_tasks_info,Planned tasks are already selected.
 week_review_did_you_know,"Hey, did you know this app is in pre-alpha?<br>You're such a trend setter!"
