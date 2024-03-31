@@ -19,6 +19,7 @@ import java.util.List;
 @Setter
 @Table(name = "weeks", indexes = @Index(columnList = "weekNumber, user_id", unique = true))
 public class Week {
+    public static final int DAYS_IN_WEEK = 7;
     @Id
     @GeneratedValue
     private Long id;
