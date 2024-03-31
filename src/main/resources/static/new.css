@@ -506,7 +506,7 @@ main > form button {
 
 svg {
     height: 1.7rem;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 1.25 / 1;
 }
 
 .task button svg {
