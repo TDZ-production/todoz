@@ -23,7 +23,7 @@ public interface TaskRepo extends ListCrudRepository<Task, Long> {
             "AND t.doneAt IS NOT NULL " +
             "GROUP BY t.priority, DATE(t.doneAt) " +
             "ORDER BY DATE(t.doneAt)")
-    List<WeekdayReviewDTO> getWeekdayReview(@Param("userId") Long userId);
+    List<WeekdayReviewDTO> getWeekdayReview(Long userId);
 
     void deleteByIdAndUserId(Long taskId, Long userID);
 }
