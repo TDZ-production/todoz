@@ -15,7 +15,6 @@ week_review_did_you_know,"Hey, did you know this app is in pre-alpha?<br>You're 
 week_review_task_due_by, "due by %s"
 week_review_task_added, added
 
-
 logout,Logout
 
 section_planned,Planned
@@ -48,3 +47,54 @@ due_tomorrow,tomorrow
 first_task_in_current_week_created,First task for this week!
 
 planned_quote,"The best way to predict the future is to create it. —Peter Drucker",The future is only<br> in your hands...
+
+# Not used -- no user there
+
+feedback_intro,We'd love to hear from you!<br>All your feedback is processed by our cat.
+feedback_review_label,Anonymous review:
+feedback_received,"Feedback received, thank you!"
+feedback_submit,SUBMIT
+
+login_subtitle0,Do your task or else!
+login_subtitle1,Not great, not terrible
+login_subtitle2,Mediocre app for mediocre people
+login_subtitle3,OMG, sign-up already!
+
+login_error,Invalid username or password.
+login_logout,You have been logged out.
+login_password_reset_success,Password reset successful
+login_forgot_password,Forgot password?
+
+newpassword_subtitle,New password
+newpassword_mismatch,The inputs must match! Try again!
+newpassword_too_short,"Too short! %s characters minimum!"
+newpassword_new_password,New password
+newpassword_confirm_password,Confirm password
+newpassword_submit,Reset password
+
+resetpassword_subtitle,Reset password
+resetpassword_user_not_found,You don't even remember your email?!
+resetpassword_token_not_found,Nice try! Invalid token
+resetpassword_token_expired,Too slow! Token expired
+resetpassword_email,The email you have signed-up with:
+resetpassword_sent,Check your mail for reset link
+resetpassword_submit,Send email
+resetpassword_go_back,@GetMapping("/out")
+
+register_title,ToDoZlatíčko,ToDoZápisník,ToDoZmrd
+register_subtitle,"Let me help you with your tasks","Register your account","Deity, help me with this clown!"
+register_pussy_label,Friendly,Neutral,Aggressive
+register_user_exists,User with this email already exists
+register_invalid_credentials,Invalid credentials!
+
+register_invalid_email,"Oops! Mind checking the email again?","Invalid email address.","Is this an email or did you just vomit?"
+register_password_too_short,"%s characters or more. Try again champ!","Invalid password! %s+ characters.","Too short! That's what she said!
+
+app_title,ToDoZ*
+
+email,Email
+password,Password
+signup,Sign up
+login,Log in
+
+discord_join,Join our Discord Community
