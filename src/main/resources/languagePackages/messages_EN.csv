@@ -56,9 +56,9 @@ feedback_received,"Feedback received, thank you!"
 feedback_submit,SUBMIT
 
 login_subtitle0,Do your task or else!
-login_subtitle1,Not great, not terrible
+login_subtitle1,"Not great, not terrible"
 login_subtitle2,Mediocre app for mediocre people
-login_subtitle3,OMG, sign-up already!
+login_subtitle3,"OMG, sign-up already!"
 
 login_error,Invalid username or password.
 login_logout,You have been logged out.
@@ -88,7 +88,7 @@ register_user_exists,User with this email already exists
 register_invalid_credentials,Invalid credentials!
 
 register_invalid_email,"Oops! Mind checking the email again?","Invalid email address.","Is this an email or did you just vomit?"
-register_password_too_short,"%s characters or more. Try again champ!","Invalid password! %s+ characters.","Too short! That's what she said!
+register_password_too_short,"%s characters or more. Try again champ!","Invalid password! %s+ characters.","Too short! That's what she said!"
 
 app_title,ToDoZ*
 
