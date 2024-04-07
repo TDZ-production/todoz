@@ -487,7 +487,7 @@ main > form button {
 
 .week {
     justify-content: center;
-    color: var(--pink-stickit-shadow);
+    color: var(--pink-stickit-color);
 }
 
 :first-child > .year {
@@ -496,12 +496,16 @@ main > form button {
 
 .year {
     justify-content: flex-start;
-    background-color: var(--pink-stickit-color);
-    color: var(--pink-stickit-shadow);
+    background-color: var(--pink-stickit-hover);
+    color: var(--pink-stickit-color);
 }
 
 svg {
-    width: 4rem;
+    height: 1.7rem;
+    aspect-ratio: 1 / 1;
+}
+
+.task button svg {
     height: 1.7rem;
 }
 
@@ -634,7 +638,7 @@ button.startWeek:hover {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    border: 1px solid var(--pink-stickit-shadow);
+    border: 1px solid var(--pink-stickit-hover);
     background-color: var(--pink-stickit-color);
 }
 
@@ -660,6 +664,7 @@ button.startWeek:hover {
 
 .dropbtn svg {
     height: 2rem;
+    width: 2rem;
 }
 
 .dropdown {
@@ -673,7 +678,7 @@ button.startWeek:hover {
     background-color: var(--pink-stickit-color);
     min-width: 9rem;
     z-index: 100;
-    box-shadow: 0 .1rem .2rem 0 var(--pink-stickit-shadow);
+    box-shadow: 0 .1rem .2rem 0 var(--pink-stickit-hover);
 }
 
 .dropdown-content a {
@@ -778,7 +783,7 @@ textarea:focus {
     color: var(--weekreview-date-color);
 }
 .weekIcon:hover {
-    color: var(--weekreview-date-hover-color);
+    color: var(--weekreview-date-color);
 }
 span.weekIcon, input.toDelegate {
     display: none;
@@ -797,7 +802,7 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
 }
 
 
-.icon-unchecked {
+.task button .icon-unchecked, .task label .icon-unchecked {
     height: 3rem;
 }
 
@@ -847,16 +852,12 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     border-radius: .3rem;
     padding: .666rem;
     transition: opacity 1s ease-out;
-}
-
-#planned {
     color: var(--positive-output-color);
-    border: 1px var(--positive-output-color);
+    border: 1px solid var(--positive-output-color);
     background-color: var(--positive-output-background-color);
-    left: 20%;
 }
 
-#leftBehind,#redFeedback {
+#leftBehind, #redFeedback {
     color: var(--negative-output-color);
     border: 1px solid var(--negative-output-color);
     background-color: var(--negative-output-background-color);

@@ -39,14 +39,48 @@
         </div>
 
         <form th:action="@{/startNewWeek}" th:method="post">
-            <div th:replace="fragments :: task-week-review(object=${upcomingTasks})"></div>
-            <div th:replace="fragments :: task-week-review(object=${previousWeek.getSortedTasks()})"></div>
+            <div class="task" th:each="task : ${upcomingTasks}" th:data-done="${task.done}">
+                <span th:classappend="|prio${task.getPriority()}|"></span>
+                <span class="taskStatus">
+                    <svg th:insert="svgFragments::week_review_clock"/>
+                </span>
+                <p class="taskText" th:text="${task.getDescription()}"></p>
+                <label class="checkboxContainer">
+                    <input type="checkbox" class="toDelegate" onclick="updateButton()" name="taskIds"
+                           th:value="${task.id}" checked>
+                    <span class="weekIcon">
+                        <svg class="icon-unchecked" th:insert="svgFragments::week_review_icon_add"/>
+                    </span>
+                    <span class="weekIcon" th:text="|due by ${task.getDueDateDayOfWeek()}|"></span>
+                </label>
+            </div>
+
+            <div class="task" th:each="task : ${previousWeek.getSortedTasks()}" th:data-done="${task.done}">
+                <span th:classappend="|prio${task.getPriority()}|">
+
+                </span>
+                <span class="taskStatus" th:if="${task.isDone()}">
+                    <svg th:insert="svgFragments::week_review_check"/>
+                </span>
+                <span class="taskStatus" th:if="${!task.isDone()}">
+                    <svg th:insert="svgFragments::week_review_cross" class="cross"/>
+                </span>
+                <p class="taskText" th:text="${task.getDescription()}"></p>
+                <label class="checkboxContainer">
+                    <input type="checkbox" class="toDelegate" onclick="updateButton()" name="taskIds"
+                           th:value="${task.id}">
+                    <span class="weekIcon">
+                        <svg class="icon-unchecked" th:insert="svgFragments::week_review_icon_add"/>
+                    </span>
+                    <span class="weekIcon">added</span>
+                </label>
+            </div>
 
             <p class="awesome">Hey, did you know this app is in pre-alpha?<br/>You're such a&nbsp;trend setter!</p>
             <input type="hidden" id="leftBehindInput" name="leftBehinds">
             <button class="startWeek" type="submit" data-umami-event="startNewWeek">Start your week</button>
         </form>
-        <svg th:insert="svgFragments::stickman1" class="stickman" alt=""/>
+        <svg th:insert="svgFragments::stickman1" class="stickman"/>
     </main>
 
     <script>
