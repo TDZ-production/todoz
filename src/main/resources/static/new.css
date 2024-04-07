@@ -100,8 +100,8 @@
     --prio4-hover-color: rgba(200, 158, 172, 0.6);
     --add-task-color: rgba(158, 187, 149, 0.6);
     --add-task-color-hover: #D1D1D1;
-    --positive-output-background-color: rgba(158, 187, 149, 0.85);
-    --positive-output-color: rgba(158, 187, 149);
+    --positive-output-background-color: rgb(129, 155, 121);
+    --positive-output-color: #e1f8de;
     --negative-output-background-color: rgba(200, 158, 172, 0.85);
     --negative-output-color: rgb(200, 158, 172);
     --weekreview-date-color: #9bd895;
@@ -910,6 +910,14 @@ input.toDelegate:checked + span.weekIcon + span.weekIcon {
     width: 5rem;
     height: 3rem;
 }
+html.dark .light_on {
+    display: none;
+}
+
+html:not(.dark) .light_off {
+    display: none;
+}
+
 button#toggleButton,
 button#darkModeButtonLogin{
     border: none;

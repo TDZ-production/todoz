@@ -141,44 +141,6 @@
             }
         }
     }
-
-    function setPriority(priority) {
-        document.querySelector("button[name='priority']").value = priority;
-
-        const buttons = document.querySelectorAll("footer .stars button");
-        buttons.forEach(button => {
-            if (button.value == priority) {
-                button.classList.add("active");
-            } else {
-                button.classList.remove("active");
-            }
-        });
-    }
-
-    function handleDelete(event) {
-        event.preventDefault();
-        const form = event.target;
-        const data = new FormData(form);
-        const url = form.action;
-        const popupMessage = document.querySelector("#redFeedback");
-
-        fetch(url, {
-            method: 'POST',
-            body: data
-        }).then(resp => {
-            if (resp.redirected && resp.url.indexOf("login") > -1) { // session expired
-                window.location.reload();
-            }
-
-            form.parentNode.remove();
-        });
-
-        popupMessage.className = "fadeoutMessage";
-        setTimeout(() => {
-            popupMessage.className = "hidden";
-        }, 3000);
-    }
 </script>
-<script src="/js/fadeout.js"></script>
 </body>
 </html>
