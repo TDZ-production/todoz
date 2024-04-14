@@ -19,9 +19,9 @@ function setDarkMode() {
 }
 
 function initDarkModeButtons(theme) {
-    const toggleButton = document.getElementById("toggleButton");
+    const toggleButton = document.getElementById("toggleTheme");
 
-    toggleButton.addEventListener("click", function() {
+    toggleButton?.addEventListener("click", function() {
         rootElement.classList.toggle("dark");
 
         if (rootElement.classList.contains("dark")) {
@@ -195,8 +195,7 @@ function initTaskEditListener() {
 }
 
 function edit(task) {
-    if (popOverActive) return;
-
+    document.querySelector("div.hidden").classList.remove("hidden");
     document.querySelector("#add").focus();
 
     const main = document.querySelector("main");
@@ -211,13 +210,7 @@ function edit(task) {
 
     form.action = "/tasks/" + task.dataset.id;
     form.querySelector("input[name='description']").value = description;
-
-    if (dueDate) {
-        toggleDueDate(true);
-        dueAt(dueDate);
-    } else {
-        toggleDueDate(false);
-    }
+    form.querySelector("input[name='maybeDueDate']").value = dueDate;
 
     function registerCancel(el) {
         el.classList.add("fade");
@@ -388,4 +381,26 @@ function urlB64ToUint8Array(base64String) {
     }
 
     return outputArray;
+}
+
+function redirectToDiscord() {
+    let discordUrl = 'https://discord.gg/cP9Xa5TcuX';
+    window.open(discordUrl, '_blank');
+}
+
+function togglePasswordVisibility() {
+    const password = document.querySelector("#password");
+    const closeEye = document.querySelector(".showPassword");
+    const openEye = document.querySelector(".hidePassword");
+
+    if (password.type === "password") {
+        password.type = "text";
+        closeEye.style.display = "none";
+        openEye.style.display = "inline-block";
+    }
+    else {
+        password.type = "password";
+        closeEye.style.display = "inline-block";
+        openEye.style.display = "none";
+    }
 }

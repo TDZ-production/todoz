@@ -71,39 +71,7 @@
     </footer>
 </section>
 <script>
-<!--// FIXME: from some reason when I load the page the script is not loaded..-->
-    document.addEventListener("DOMContentLoaded", function () {
-        const rootElement = document.documentElement;
-        const theme = localStorage.getItem("theme");
-
-        theme && rootElement.classList.add(theme);
-
-        const isDarkMode = rootElement.classList.contains("dark");
-
-        if (!isDarkMode && theme === "dark") {
-            rootElement.classList.add("dark");
-        }
-
-        if (isDarkMode) {
-            localStorage.setItem("theme", "dark");
-        } else {
-            localStorage.removeItem("theme");
-        }
-    });
-
     initTaskEditListener();
-
-    function initTaskEditListener() {
-        document.querySelector("main").addEventListener("click", function (event) {
-            if (event.target.tagName !== "P") return;
-
-            let task = event.target.closest(".task");
-
-            if (!task) return;
-
-            edit(task);
-        });
-    }
 
     function edit(task) {
         document.querySelector("div.hidden").classList.remove("hidden");

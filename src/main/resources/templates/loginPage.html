@@ -10,10 +10,12 @@
 <body>
 <section class="app login">
     <main>
-        <button id="darkModeButtonLogin">
-            <svg class="light_on" th:insert="svgFragments::light_on"></svg>
-            <svg class="light_off" th:insert="svgFragments::light_off" style="display:none;"></svg>
-        </button>
+        <p class="right">
+            <button id="toggleTheme">
+                <svg class="light_on" th:insert="svgFragments::light_on"></svg>
+                <svg class="light_off" th:insert="svgFragments::light_off"></svg>
+            </button>
+        </p>
         <h1 class="loginTitle">ToDoZ*</h1>
         <p class="note">Do your task or else!</p>
 
@@ -43,38 +45,6 @@
     </main>
 </section>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const toggleButton = document.getElementById("darkModeButtonLogin");
-        const rootElement = document.documentElement;
-        const theme = localStorage.getItem("theme");
-        const lightOnIcon = document.querySelector(".light_on");
-        const lightOffIcon = document.querySelector(".light_off");
-
-        theme && rootElement.classList.add(theme);
-
-        if (theme === "dark") {
-            lightOnIcon.style.display = "none";
-            lightOffIcon.style.display = "inline-block";
-        } else {
-            lightOnIcon.style.display = "inline-block";
-            lightOffIcon.style.display = "none";
-        }
-
-        toggleButton.addEventListener("click", function() {
-            rootElement.classList.toggle("dark");
-
-            if (rootElement.classList.contains("dark")) {
-                localStorage.setItem("theme", "dark");
-                lightOnIcon.style.display = "none";
-                lightOffIcon.style.display = "inline-block";
-            } else {
-                localStorage.removeItem("theme");
-                lightOnIcon.style.display = "inline-block";
-                lightOffIcon.style.display = "none";
-            }
-        });
-    });
-
     setInterval(changeComment, 4666);
     let counter = 0;
 
@@ -93,23 +63,6 @@
         }
         else if (counter % 4 === 3) {
             note.innerText = "OMG, sign-up already!"
-        }
-    }
-
-    function togglePasswordVisibility() {
-        const password = document.querySelector("#password");
-        const closeEye = document.querySelector(".showPassword");
-        const openEye = document.querySelector(".hidePassword");
-
-        if (password.type === "password") {
-            password.type = "text";
-            closeEye.style.display = "none";
-            openEye.style.display = "inline-block";
-        }
-        else {
-            password.type = "password";
-            closeEye.style.display = "inline-block";
-            openEye.style.display = "none";
         }
     }
 </script>

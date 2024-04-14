@@ -171,6 +171,10 @@ a {
     color: var(--link-color);
 }
 
+.right {
+    text-align: right;
+}
+
 p, h1, h2, h3, h4, h5 {
     margin: 0;
 }
@@ -776,7 +780,7 @@ textarea:focus {
     background: var(--add-task-color);
 }
 
-.task:has(.cross), .task:has(input[value="true"]) {
+.task[data-done=true] {
     background: var(--task-input-color);
 }
 .weekIcon {
@@ -918,15 +922,14 @@ html:not(.dark) .light_off {
     display: none;
 }
 
-button#toggleButton,
-button#darkModeButtonLogin{
+.login #toggleTheme {
+    margin-top: 1rem;
+}
+
+#toggleTheme {
     border: none;
     background: none;
     padding: 0;
-}
-#darkModeButtonLogin svg{
-    margin-left: 19.5rem;
-    margin-top: 1rem;
 }
 
 .date-input {

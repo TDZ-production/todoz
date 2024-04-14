@@ -29,7 +29,8 @@
         <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|" id="filter-text"
             onclick="toggleDropdown('filters')"></h2>
         <div class="week-progressbar"></div>
-        <button id="toggleButton">
+
+        <button id="toggleTheme">
             <svg class="light_on" th:insert="svgFragments::light_on"></svg>
             <svg class="light_off" th:insert="svgFragments::light_off"></svg>
         </button>
