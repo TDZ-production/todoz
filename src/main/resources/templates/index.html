@@ -27,7 +27,7 @@
             </div>
         </div>
         <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|" id="filter-text"
-            onclick="toggleDropdown('filters')"></h2>
+            onclick="registerNotifications();toggleDropdown('filters')"></h2>
         <div class="week-progressbar"></div>
 
         <button id="toggleTheme">

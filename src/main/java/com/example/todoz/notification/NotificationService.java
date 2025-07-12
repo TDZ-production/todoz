@@ -54,9 +54,10 @@ public class NotificationService {
 
     public void sendNotification(UserSubscription userSubscription, String messageJson) {
         try {
-            System.out.println("\n\nsending notification!!\n\n");
+            System.out.println("\nsending notification!!");
             Subscription subscription = new Subscription(userSubscription.getEndpoint(), new Subscription.Keys(userSubscription.getP256dhKey(), userSubscription.getAuthKey()));
-            pushService.send(new Notification(subscription, messageJson));
+            HttpResponse resp = pushService.send(new Notification(subscription, messageJson));
+            System.out.println(resp.getStatusLine().getStatusCode());
         } catch (GeneralSecurityException | IOException | JoseException | ExecutionException
                  | InterruptedException e) {
             e.printStackTrace();
