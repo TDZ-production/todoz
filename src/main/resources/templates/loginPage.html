@@ -12,8 +12,8 @@
     <main>
         <p class="right">
             <button id="toggleTheme">
-                <svg class="light_on" th:insert="svgFragments::light_on"></svg>
-                <svg class="light_off" th:insert="svgFragments::light_off"></svg>
+                <svg class="light_on" th:insert="~{svgFragments::light_on}"></svg>
+                <svg class="light_off" th:insert="~{svgFragments::light_off}"></svg>
             </button>
         </p>
         <h1 class="loginTitle">ToDoZ*</h1>
@@ -30,8 +30,8 @@
 
             <label class="password">
                 <input type="password" name="password" id="password" placeholder="password" required>
-                <svg th:insert="svgFragments::eye_icon_open" class="hidePassword" style="display:none;" onclick="togglePasswordVisibility()"/>
-                <svg th:insert="svgFragments::eye_icon_closed" class="showPassword" onclick="togglePasswordVisibility()"/>
+                <svg th:insert="~{svgFragments::eye_icon_open}" class="hidePassword" style="display:none;" onclick="togglePasswordVisibility()"/>
+                <svg th:insert="~{svgFragments::eye_icon_closed}" class="showPassword" onclick="togglePasswordVisibility()"/>
             </label>
 
             <p class="alignRight"><a th:href="@{/resetPassword}">Forgot password?</a></p>
@@ -40,7 +40,7 @@
         <p><a th:href="@{/register}">Sign-up</a></p>
         <a class="discordLogin" href="https://discord.gg/cP9Xa5TcuX" target="_blank">
             Join our community
-            <svg th:insert="svgFragments::discord_icon"/>
+            <svg th:insert="~{svgFragments::discord_icon}"/>
         </a>
     </main>
 </section>

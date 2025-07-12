@@ -55,19 +55,20 @@
         <div class="stars">
             <button onclick="setPriority(4)" type="submit" name="priority" value="4" title="priority 4" data-umami-event="setPriority"
                     data-umami-event-priority="4">
-                <svg th:insert="svgFragments::|prio4_pm_${user.pussyMeter}|"/>
+                <svg th:insert="~{svgFragments::|prio4_pm_${user.pussyMeter}|}"/>
             </button>
             <button onclick="setPriority(3)" type="submit" name="priority" value="3" title="priority 3" data-umami-event="setPriority"
                     data-umami-event-priority="3">
-                <svg th:insert="svgFragments::|prio3_pm_${user.pussyMeter}|"/>
+                <svg th:insert="~{svgFragments::|prio3_pm_${user.pussyMeter}|}"/>
             </button>
             <button onclick="setPriority(2)" type="submit" name="priority" value="2" title="priority 2" data-umami-event="setPriority"
                     data-umami-event-priority="2">
-                <svg th:insert="svgFragments::|prio2_pm_${user.pussyMeter}|"/>
+                <svg th:insert="~{svgFragments::|prio2_pm_${user.pussyMeter}|}"/>
             </button>
             <button onclick="setPriority(1)" type="submit" name="priority" value="1" title="priority 1" data-umami-event="setPriority"
                     data-umami-event-priority="1">
-                <svg th:insert="svgFragments::|prio1_pm_${user.pussyMeter}|"/>
+                <svg th:insert="~{svgFragments::|prio1_pm_${user.pussyMeter}|}"/>
+                th:replace="~{svgFragments::|prio1_pm_${user.pussyMeter}|}"
             </button>
         </div>
     </th:block>

@@ -25,7 +25,7 @@
                 <p th:text="*{description}"></p>
                 <form method="post" th:action="|/tasks/re-add/${task.id}|">
                     <button class="img">
-                        <svg class="icon-unchecked" th:insert="svgFragments::week_review_icon_add"/>
+                        <svg class="icon-unchecked" th:insert="~{svgFragments::week_review_icon_add}"/>
                     </button>
                 </form>
             </div>
@@ -33,14 +33,14 @@
             <form class="delete" onsubmit="handleDelete(event)" th:method="post" th:action="|/tasks/delete/${task.id}|">
                 <input type="hidden" name="id" th:value="${task.id}">
                 <button class="deleteImg">
-                    <svg th:insert="svgFragments::delete_icon"></svg>
+                    <svg th:insert="~{svgFragments::delete_icon}"></svg>
                 </button>
             </form>
         </div>
 
         <div th:if="${leftBehind.isEmpty()}" class="NoTaskPlaceholder">
             <p th:utext="${user.getText('left_behind_no_tasks_placeholder')}"></p>
-            <svg th:insert="svgFragments::|cat_pm_${user.pussyMeter}|"></svg>
+            <svg th:insert="~{svgFragments::|cat_pm_${user.pussyMeter}|}"></svg>
         </div>
     </main>
     <footer>

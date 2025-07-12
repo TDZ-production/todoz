@@ -13,8 +13,8 @@
     <header>
         <div class="dropdown">
             <button class="dropbtn" onclick="toggleDropdown('dropdownOptions')">
-                <svg id="menu_open" th:insert="svgFragments::menu_icon_open"></svg>
-                <svg id="menu_close" th:insert="svgFragments::menu_icon_close" style="display:none;"></svg>
+                <svg id="menu_open" th:insert="~{svgFragments::menu_icon_open}"></svg>
+                <svg id="menu_close" th:insert="~{svgFragments::menu_icon_close}" style="display:none;"></svg>
             </button>
             <div class="dropdown-content">
                 <a href="/planned" th:text="${user.getText('section_planned')}" />
@@ -31,8 +31,8 @@
         <div class="week-progressbar"></div>
 
         <button id="toggleTheme">
-            <svg class="light_on" th:insert="svgFragments::light_on"></svg>
-            <svg class="light_off" th:insert="svgFragments::light_off"></svg>
+            <svg class="light_on" th:insert="~{svgFragments::light_on}"></svg>
+            <svg class="light_off" th:insert="~{svgFragments::light_off}"></svg>
         </button>
     </header>
 
@@ -60,8 +60,8 @@
                 <form onsubmit="handleSubmit(event)" th:action="|/tasks/check/*{id}|" th:method="POST">
                     <input type="hidden" th:name="done" th:value="${!task.isDone()}"/>
                     <button class="img" th:type="submit">
-                        <svg class="isdone" th:insert="svgFragments::checkbox_checked"></svg>
-                        <svg class="notdone" th:insert="svgFragments::checkbox_unchecked"></svg>
+                        <svg class="isdone" th:insert="~{svgFragments::checkbox_checked}"></svg>
+                        <svg class="notdone" th:insert="~{svgFragments::checkbox_unchecked}"></svg>
                     </button>
                 </form>
             </div>
@@ -69,14 +69,14 @@
             <form class="delete" onsubmit="handleDelete(event)" th:method="post" th:action="|/tasks/leaveBehind/${task.id}|">
                 <input type="hidden" name="id" th:value="${task.id}">
                 <button th:class="deleteImg">
-                    <svg th:insert="svgFragments::leaveBehind_icon"></svg>
+                    <svg th:insert="~{svgFragments::leaveBehind_icon}"></svg>
                 </button>
             </form>
         </div>
 
         <div th:if="${currentWeek.getSortedTasks().isEmpty()}" class="NoTaskPlaceholder">
             <p th:utext="${user.getText('index_no_tasks_placeholder')}"></p>
-            <svg th:insert="svgFragments::|cat_pm_${user.pussyMeter}|"></svg>
+            <svg th:insert="~{svgFragments::|cat_pm_${user.pussyMeter}|}"></svg>
         </div>
         <p class="quote" th:text="${quote}"></p>
         <p class="author" th:text="${author}"></p>
@@ -103,7 +103,7 @@
             <div class="addTask">
                 <input type="text" th:placeholder="${user.getText('task_new_placeholder')}" name="description" id="add" required autofocus
                        autocomplete="off">
-                <svg onclick="toggleDueDate()" th:insert="svgFragments::calendar_icon" id="calendar_icon"></svg>
+                <svg onclick="toggleDueDate()" th:insert="~{svgFragments::calendar_icon}" id="calendar_icon"></svg>
             </div>
             <div th:replace="fragments.html :: buttons-priority"></div>
         </form>

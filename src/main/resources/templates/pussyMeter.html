@@ -18,10 +18,10 @@
 
         <form th:action="@{/changeMeter}" method="post" th:object="${user}">
             <div class="pussySliderIcons">
-                <svg id="currentIcon" th:insert="svgFragments::|prio4_pm_*{pussyMeter}|" style="display:inline-block;"/>
-                <svg th:insert="svgFragments::prio4_pm_0" id="starIcon" style="display:none;"/>
-                <svg th:insert="svgFragments::prio4_pm_1" id="fireIcon" style="display:none;"/>
-                <svg th:insert="svgFragments::prio4_pm_2" id="skullIcon" style="display:none;"/>
+                <svg id="currentIcon" th:insert="~{svgFragments::|prio4_pm_*{pussyMeter}|}" style="display:inline-block;"/>
+                <svg th:insert="~{svgFragments::prio4_pm_0}" id="starIcon" style="display:none;"/>
+                <svg th:insert="~{svgFragments::prio4_pm_1}" id="fireIcon" style="display:none;"/>
+                <svg th:insert="~{svgFragments::prio4_pm_2}" id="skullIcon" style="display:none;"/>
             </div>
             <label class="slideContainer">
                 <span th:if="*{pussyMeter == 0}" th:text="${user.getText('pussy_meter_friendly')}" />

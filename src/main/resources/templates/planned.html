@@ -33,7 +33,7 @@
                           th:action="|/tasks/leaveBehind/${task.id}|">
                         <input type="hidden" name="id" th:value="${task.id}">
                         <button class="deleteImg">
-                            <svg th:insert="svgFragments::leaveBehind_icon"></svg>
+                            <svg th:insert="~{svgFragments::leaveBehind_icon}"></svg>
                         </button>
                     </form>
                 </div>
@@ -42,7 +42,7 @@
 
         <div th:if="${planned.isEmpty()}" class="NoTaskPlaceholder">
             <p th:utext="${user.getText('planned_no_tasks_placeholder')}"></p>
-            <svg th:insert="svgFragments::|cat_pm_${user.pussyMeter}|"></svg>
+            <svg th:insert="~{svgFragments::|cat_pm_${user.pussyMeter}|}"></svg>
         </div>
 
         <div th:unless="${planned.isEmpty()}" class="plannedPlaceholder">
@@ -57,7 +57,7 @@
                 <button type="submit" name="priority" value="4" class="hidden"></button>
 
                 <label class="date-input">
-                    <svg th:insert="svgFragments::calendar_icon"></svg>
+                    <svg th:insert="~{svgFragments::calendar_icon}"></svg>
                     <input type="date" name="maybeDueDate" id="date">
                 </label>
 

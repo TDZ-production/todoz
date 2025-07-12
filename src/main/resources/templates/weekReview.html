@@ -31,10 +31,10 @@
             <p th:text="${user.getText('week_review_results')}" style="margin-top: 1.5rem"></p>
                 <strong th:text="${user.getText('week_review_completed_tasks', previousWeek.getDoneCount())}"><br/></strong>
             <p th:if="|${previousWeek.getDoneCount() > -1}|" style="font-size: 13px; padding-top: 0;">
-                <svg class="imgReview" th:insert="svgFragments::|prio1_pm_${user.pussyMeter}|"/>: <span th:text="|${previousWeek.getDoneTasksByPriority(1)}|"/> &frasl; <span th:text="|${previousWeek.getTasksByPriority(1).size()}|" />
-                <svg class="imgReview" th:insert="svgFragments::|prio2_pm_${user.pussyMeter}|"/>: <span th:text="|${previousWeek.getDoneTasksByPriority(2)}|"/> &frasl; <span th:text="|${previousWeek.getTasksByPriority(2).size()}|" />
-                <svg class="imgReview" th:insert="svgFragments::|prio3_pm_${user.pussyMeter}|"/>: <span th:text="|${previousWeek.getDoneTasksByPriority(3)}|"/> &frasl; <span th:text="|${previousWeek.getTasksByPriority(3).size()}|" />
-                <svg class="imgReview" th:insert="svgFragments::|prio4_pm_${user.pussyMeter}|"/>: <span th:text="|${previousWeek.getDoneTasksByPriority(4)}|"/> &frasl; <span th:text="|${previousWeek.getTasksByPriority(4).size()}|" />
+                <svg class="imgReview" th:insert="~{svgFragments::|prio1_pm_${user.pussyMeter}|}"/>: <span th:text="|${previousWeek.getDoneTasksByPriority(1)}|"/> &frasl; <span th:text="|${previousWeek.getTasksByPriority(1).size()}|" />
+                <svg class="imgReview" th:insert="~{svgFragments::|prio2_pm_${user.pussyMeter}|}"/>: <span th:text="|${previousWeek.getDoneTasksByPriority(2)}|"/> &frasl; <span th:text="|${previousWeek.getTasksByPriority(2).size()}|" />
+                <svg class="imgReview" th:insert="~{svgFragments::|prio3_pm_${user.pussyMeter}|}"/>: <span th:text="|${previousWeek.getDoneTasksByPriority(3)}|"/> &frasl; <span th:text="|${previousWeek.getTasksByPriority(3).size()}|" />
+                <svg class="imgReview" th:insert="~{svgFragments::|prio4_pm_${user.pussyMeter}|}"/>: <span th:text="|${previousWeek.getDoneTasksByPriority(4)}|"/> &frasl; <span th:text="|${previousWeek.getTasksByPriority(4).size()}|" />
             </p>
             <div class="weekNote" >
                 <p th:utext="${user.getText('week_review_planning', currentWeekNumber)}"></p>
@@ -46,14 +46,14 @@
             <div class="task" th:each="task : ${upcomingTasks}" th:data-done="${task.done}">
                 <span th:classappend="|prio${task.getPriority()}|"></span>
                 <span class="taskStatus">
-                    <svg th:insert="svgFragments::week_review_clock"/>
+                    <svg th:insert="~{svgFragments::week_review_clock}"/>
                 </span>
                 <p class="taskText" th:text="${task.getDescription()}"></p>
                 <label class="checkboxContainer">
                     <input type="checkbox" class="toDelegate" onclick="updateButton()" name="taskIds"
                            th:value="${task.id}" checked>
                     <span class="weekIcon">
-                        <svg class="icon-unchecked" th:insert="svgFragments::week_review_icon_add"/>
+                        <svg class="icon-unchecked" th:insert="~{svgFragments::week_review_icon_add}"/>
                     </span>
                     <span class="weekIcon" th:utext="${user.getText('week_review_task_due_by', task.getDueDateDayOfWeek())}"></span>
                 </label>
@@ -64,17 +64,17 @@
 
                 </span>
                 <span class="taskStatus" th:if="${task.isDone()}">
-                    <svg th:insert="svgFragments::week_review_check"/>
+                    <svg th:insert="~{svgFragments::week_review_check}"/>
                 </span>
                 <span class="taskStatus" th:if="${!task.isDone()}">
-                    <svg th:insert="svgFragments::week_review_cross" class="cross"/>
+                    <svg th:insert="~{svgFragments::week_review_cross}" class="cross"/>
                 </span>
                 <p class="taskText" th:text="${task.getDescription()}"></p>
                 <label class="checkboxContainer">
                     <input type="checkbox" class="toDelegate" onclick="updateButton()" name="taskIds"
                            th:value="${task.id}">
                     <span class="weekIcon">
-                        <svg class="icon-unchecked" th:insert="svgFragments::week_review_icon_add"/>
+                        <svg class="icon-unchecked" th:insert="~{svgFragments::week_review_icon_add}"/>
                     </span>
                     <span class="weekIcon" th:utext="${user.getText('week_review_task_added')}"></span>
                 </label>
@@ -84,7 +84,7 @@
             <input type="hidden" id="leftBehindInput" name="leftBehinds">
             <button class="startWeek" type="submit" data-umami-event="startNewWeek">Start your week</button>
         </form>
-        <svg th:insert="svgFragments::stickman1" class="stickman"/>
+        <svg th:insert="~{svgFragments::stickman1}" class="stickman"/>
     </main>
 
     <script>

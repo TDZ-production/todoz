@@ -17,9 +17,9 @@
 
             <div class="aboveSlider" style="display: flex; justify-content: center; line-height: 1.7;}">
                 <span>Aggressive</span>
-                <svg class="pm_2_Register" th:insert="svgFragments::prio4_pm_2" style="display:inline-block;"/>
-                <svg class="pm_1_Register" th:insert="svgFragments::prio4_pm_1" style="display:none;"/>
-                <svg class="pm_0_Register" th:insert="svgFragments::prio4_pm_0" style="display:none;"/>
+                <svg class="pm_2_Register" th:insert="~{svgFragments::prio4_pm_2}" style="display:inline-block;"/>
+                <svg class="pm_1_Register" th:insert="~{svgFragments::prio4_pm_1}" style="display:none;"/>
+                <svg class="pm_0_Register" th:insert="~{svgFragments::prio4_pm_0}" style="display:none;"/>
             </div>
             <label style="margin-top: 0.5rem">
                 <input type="range" name="pussyMeter" step="1" max="2" class="slider" value="2"
@@ -32,8 +32,8 @@
 
             <label class="password">
                 <input name="password" type="password" id="password" placeholder="password">
-                <svg th:insert="svgFragments::eye_icon_open" class="hidePassword" style="display:none;" onclick="togglePasswordVisibility()"/>
-                <svg th:insert="svgFragments::eye_icon_closed" class="showPassword" onclick="togglePasswordVisibility()"/>
+                <svg th:insert="~{svgFragments::eye_icon_open}" class="hidePassword" style="display:none;" onclick="togglePasswordVisibility()"/>
+                <svg th:insert="~{svgFragments::eye_icon_closed}" class="showPassword" onclick="togglePasswordVisibility()"/>
             </label>
 
             <p class="registerMessage" th:if="${userExists} == true">User with this email exists</p>
