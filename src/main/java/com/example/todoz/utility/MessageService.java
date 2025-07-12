@@ -66,6 +66,36 @@ public class MessageService {
         return String.format(labels[pussyMeter % labels.length], param);
     }
 
+    public String getSpamNotification(User user) {
+
+        Optional<Week> optWeek = weekService.findCurrentWeek(user);
+
+        if (optWeek.isPresent()) {
+            Week week = optWeek.get();
+
+            List<Task> tasksToday = week.getTasksForNotification()
+                    .stream()
+                    .filter(t -> t.getPriority() > 3)
+                    .toList();
+
+            if (!tasksToday.isEmpty()) {
+                String[] bodyMessages = {
+                        "What are you doing with your life?!",
+                        "Just do it!",
+                        "Get your act together!",
+                        "You can do better than this!",
+                        "I love you"
+                };
+                String body = "\\n" + bodyMessages[new Random().nextInt(bodyMessages.length)];
+
+                String title = (tasksToday.size() == 1 ? "task is" : "tasks are") + " on fire 🔥";
+
+                return String.format("{ \"title\": \"%s\", \"body\": \"%s\" }", title, body);
+            }
+        }
+        return null;
+    }
+
     public String getNotification(User user) {
 
         Optional<Week> optWeek = weekService.findCurrentWeek(user);
