@@ -84,7 +84,7 @@ public class MessageService {
                         "What are you doing with your life?!",
                         "Just do it!",
                         "Get your act together!",
-                        "You can do better than this!",
+                        "Is it done yet?",
                         "I love you"
                 };
                 String body = bodyMessages[new Random().nextInt(bodyMessages.length)];
@@ -95,7 +95,7 @@ public class MessageService {
                     (tasksToday.size() == 1 ? "task is" : "tasks are") +
                     " on fire 🔥";
 
-                return String.format("{ \"title\": \"%s\", \"body\": \"%s—%s\" }", title, firstTaskTitle, body);
+                return String.format("{ \"title\": \"%s\", \"body\": \"%s\\n%s\" }", title, firstTaskTitle, body);
             }
         }
         return null;
