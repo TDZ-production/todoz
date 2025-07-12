@@ -27,7 +27,7 @@
             </div>
         </div>
         <h2 th:text="|Week ${currentWeek.getWeekNumberNumber()}|" id="filter-text"
-            onclick="registerNotifications();toggleDropdown('filters')"></h2>
+            onclick="toggleDropdown('filters')"></h2>
         <div class="week-progressbar"></div>
 
         <button id="toggleTheme">
@@ -41,6 +41,7 @@
         <button onclick="filterTasks('not done')" th:text="${user.getText('filter_not_done')}" />
         <button onclick="filterTasks('current')" th:text="${user.getText('filter_current')}" />
         <button onclick="filterTasks('tomorrow')" th:text="${user.getText('filter_tomorrow')}" />
+        <button onclick="registerNotifications()">notif</button>
     </div>
 
     <main>
