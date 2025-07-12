@@ -54,11 +54,20 @@ public class NotificationService {
 
     public void sendNotification(UserSubscription userSubscription, String messageJson) {
         try {
+            System.out.println("\n\nsending notification!!\n\n");
             Subscription subscription = new Subscription(userSubscription.getEndpoint(), new Subscription.Keys(userSubscription.getP256dhKey(), userSubscription.getAuthKey()));
             pushService.send(new Notification(subscription, messageJson));
         } catch (GeneralSecurityException | IOException | JoseException | ExecutionException
                  | InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void testNotification(User user) {
+        userSubscriptionService.getAll().forEach(userSub -> {
+            if (userSub.getUser().getUsername().equals(user.getUsername())) {
+                sendNotification(userSub, "test!!");
+            }
+        });
     }
 }
