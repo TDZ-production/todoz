@@ -76,7 +76,7 @@ public class MessageService {
 
             List<Task> tasksToday = week.getTasksForNotification()
                     .stream()
-                    .filter(t -> t.getPriority() > 3 && t.getCreatedAt().isAfter(LocalDateTime.now().minusMinutes(10)))
+                    .filter(t -> t.getPriority() > 3 && t.getCreatedAt().isBefore(LocalDateTime.now().minusMinutes(10)))
                     .toList();
 
             if (!tasksToday.isEmpty()) {
