@@ -64,9 +64,11 @@ public class NotificationService {
     }
 
     public void testNotification(User user) {
+        String out =  String.format("{ \"title\": \"%s\", \"body\": \"%s\" }", "TEST", "MESSAGE");
+
         userSubscriptionService.getAll().forEach(userSub -> {
             if (userSub.getUser().getUsername().equals(user.getUsername())) {
-                sendNotification(userSub, "test!!");
+                sendNotification(userSub, out);
             }
         });
     }
