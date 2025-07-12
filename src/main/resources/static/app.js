@@ -85,7 +85,8 @@ function expandMatureTasks() {
     const TASK_MAX_PRIORITY = 4;
     const tasks = document.querySelectorAll(".task");
     tasks.forEach(task => {
-        const size = task.dataset.maturity / 10 / (TASK_MAX_PRIORITY - task.dataset.priority + 1) + "rem";
+        const coef = task.dataset.maturity / 10 / (TASK_MAX_PRIORITY - task.dataset.priority + 1);
+        const size = Math.min(coef, 3) + "rem";
         task.style.paddingTop = size;
         task.style.paddingBottom = size;
     });
