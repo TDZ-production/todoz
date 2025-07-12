@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -75,7 +76,7 @@ public class MessageService {
 
             List<Task> tasksToday = week.getTasksForNotification()
                     .stream()
-                    .filter(t -> t.getPriority() > 3)
+                    .filter(t -> t.getPriority() > 3 && t.getCreatedAt().isAfter(LocalDateTime.now().minusMinutes(10)))
                     .toList();
 
             if (!tasksToday.isEmpty()) {
@@ -88,9 +89,13 @@ public class MessageService {
                 };
                 String body = "\\n" + bodyMessages[new Random().nextInt(bodyMessages.length)];
 
-                String title = (tasksToday.size() == 1 ? "task is" : "tasks are") + " on fire 🔥";
+                String firstTaskTitle = tasksToday.get(0).getDescription().replaceAll("\"", "\'");
 
-                return String.format("{ \"title\": \"%s\", \"body\": \"%s\" }", title, body);
+                String title = String.format("%d ", tasksToday.size()) +
+                    (tasksToday.size() == 1 ? "task is" : "tasks are") +
+                    " on fire 🔥";
+
+                return String.format("{ \"title\": \"%s\", \"body\": \"%s—%s\" }", title, firstTaskTitle, body);
             }
         }
         return null;
