@@ -8,6 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.ResponseEntity;
+import com.example.todoz.dtos.StatusDTO;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.Principal;
 
@@ -23,9 +26,10 @@ public class NotificationController {
     }
 
     @PostMapping("/subscribe")
-    public String subscribe(@RequestBody Subscription subscription, Principal principal) {
+    @ResponseBody
+    public ResponseEntity<StatusDTO> subscribe(@RequestBody Subscription subscription, Principal principal) {
         String status = notificationService.subscribe(subscription, getUser(principal));
-        return status;
+        return ResponseEntity.ok(new StatusDTO(status));
     }
 
     private User getUser(Principal principal) {
