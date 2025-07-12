@@ -43,12 +43,15 @@ public class NotificationService {
         pushService = new PushService(publicKey, privateKey);
     }
 
-    public void subscribe(Subscription subscription, User user) {
+    public String subscribe(Subscription subscription, User user) {
         Optional<UserSubscription> maybeUserSub = userSubscriptionService.findByAuth(subscription.keys.auth);
 
         if (maybeUserSub.isEmpty()) {
             UserSubscription userSubscription = new UserSubscription(subscription, user);
             userSubscriptionService.save(userSubscription);
+            return "Subscription saved successfully.";
+        } else {
+            return "This subscription already exists.";
         }
     }
 
