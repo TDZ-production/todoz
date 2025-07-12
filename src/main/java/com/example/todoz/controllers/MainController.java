@@ -63,6 +63,27 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("/weekreview")
+    public String showWeekReview(Model model, Principal principal) {
+        User user = getUser(principal);
+        Optional<Week> currentWeek = weekService.findCurrentWeek(user);
+        
+        if (currentWeek.isPresent()) {
+            Week previousWeek = currentWeek.get();
+            List<Task> upcomingTasks = taskService
+                    .findUpcomingTasks(user, previousWeek.getWeekNumber(), DateManager.formattedCurrentWeek()+1);
+
+            model.addAttribute("previousWeek", previousWeek);
+            model.addAttribute("upcomingTasks", upcomingTasks);
+            model.addAttribute("currentWeekNumber", DateManager.getWeekNumber());
+            model.addAttribute("graphData", taskService.getGraphData(user));
+
+            return "weekReview";
+        }
+
+        return "index";
+    }
+
     @PostMapping("/startNewWeek")
     public String startNewWeek(Principal principal, @RequestParam(value = "taskIds", required = false) List<Long> taskIds, @RequestParam(value = "leftBehinds", required = false) List<Long> leftBehinds) {
         User user = getUser(principal);
