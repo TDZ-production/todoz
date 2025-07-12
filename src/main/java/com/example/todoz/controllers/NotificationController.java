@@ -6,6 +6,7 @@ import com.example.todoz.user.UserService;
 import nl.martijndwars.webpush.Subscription;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.security.Principal;
@@ -31,4 +32,9 @@ public class NotificationController {
         return userService.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
     }
 
+    @GetMapping("/test")
+    public String test(Principal principal) {
+        notificationService.testNotification(userService.getUser(principal));
+        return "redirect:/";
+    }
 }
