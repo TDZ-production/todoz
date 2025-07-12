@@ -87,7 +87,7 @@ public class MessageService {
                         "You can do better than this!",
                         "I love you"
                 };
-                String body = "\\n" + bodyMessages[new Random().nextInt(bodyMessages.length)];
+                String body = bodyMessages[new Random().nextInt(bodyMessages.length)];
 
                 String firstTaskTitle = tasksToday.get(0).getDescription().replaceAll("\"", "\'");
 
