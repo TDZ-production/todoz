@@ -78,7 +78,7 @@ public class MessageService {
                     .stream()
                     .filter(t -> t.getPriority() > 3 && t.getCreatedAt().isBefore(LocalDateTime.now().minusMinutes(10)))
                     .sorted(Comparator.comparing(t -> new Random().nextInt()))
-                    .toList()
+                    .toList();
 
             if (!tasksToday.isEmpty()) {
                 String[] bodyMessages = {
