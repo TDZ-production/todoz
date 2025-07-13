@@ -30,10 +30,6 @@ public class ApiController {
     private String frontendUrl;
     private String frontendHtml = "refresh to load!";
 
-    public ApiController() {
-        fetchCurrentFrontendHtml();
-    }
-
     @GetMapping("app.html")
     public String appHtml() {
         return frontendHtml;
