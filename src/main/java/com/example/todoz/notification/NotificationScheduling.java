@@ -25,8 +25,12 @@ public class NotificationScheduling {
         });
     }
 
-    @Scheduled(cron = "0 */15 9-23 * * *")
+    @Scheduled(cron = "0 */15 8-23 * * *")
     public void sendSpamNotifications() {
+        // If it's 8:00, skip because morning notifications are already sent
+        if (DateManager.now().getHour() == 8 && DateManager.now().getMinute() < 5) {
+            return;
+        }
 
         userSubscriptionService.getAll().forEach(userSub -> {
             String notification = messageService.getSpamNotification(userSub.getUser());
