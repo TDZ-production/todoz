@@ -77,7 +77,8 @@ public class MessageService {
             List<Task> tasksToday = week.getTasksForNotification()
                     .stream()
                     .filter(t -> t.getPriority() > 3 && t.getCreatedAt().isBefore(LocalDateTime.now().minusMinutes(10)))
-                    .toList();
+                    .sorted(Comparator.comparing(t -> new Random().nextInt()))
+                    .toList()
 
             if (!tasksToday.isEmpty()) {
                 String[] bodyMessages = {
@@ -89,13 +90,15 @@ public class MessageService {
                 };
                 String body = bodyMessages[new Random().nextInt(bodyMessages.length)];
 
-                String firstTaskTitle = tasksToday.get(0).getDescription().replaceAll("\"", "\'");
+                String tasks = tasksToday.stream()
+                        .map(t -> "🔥 " + t.getDescription().replaceAll("\"", "\'"))
+                        .collect(Collectors.joining("\\n"));
 
                 String title = String.format("%d ", tasksToday.size()) +
                     (tasksToday.size() == 1 ? "task is" : "tasks are") +
-                    " on fire 🔥";
+                    " on fire";
 
-                return String.format("{ \"title\": \"%s\", \"body\": \"%s\\n%s\" }", title, firstTaskTitle, body);
+                return String.format("{ \"title\": \"%s\", \"body\": \"%s\\n%s\" }", title, tasks, body);
             }
         }
         return null;
