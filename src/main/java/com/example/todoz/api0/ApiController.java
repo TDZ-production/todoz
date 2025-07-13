@@ -10,6 +10,7 @@ import com.example.todoz.week.WeekService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -24,6 +25,20 @@ public class ApiController {
     private final UserService userService;
     private final WeekService weekService;
     private final TaskService taskService;
+
+    @Value("${app.frontend.url}")
+    private String frontendUrl;
+    private String frontendHtml = "refresh to load!";
+
+    public ApiController() {
+        fetchCurrentFrontendHtml();
+    }
+
+    @GetMapping("app.html")
+    public String appHtml() {
+        return frontendHtml;
+    }
+
 
     @GetMapping
     public ResponseEntity<WeekDTO> list(Principal principal) {
@@ -79,5 +94,23 @@ public class ApiController {
         taskService.leaveBehind(id, userService.getUser(principal));
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("refresh")
+    public ResponseEntity<String> fetchFrontendHtml() {
+        fetchCurrentFrontendHtml();
+        return ResponseEntity.ok(frontendHtml);
+    }
+
+    public void fetchCurrentFrontendHtml() {
+        try {
+            frontendHtml = new String(java.net.http.HttpClient.newHttpClient()
+                    .send(java.net.http.HttpRequest.newBuilder()
+                            .uri(java.net.URI.create(frontendUrl))
+                            .build(), java.net.http.HttpResponse.BodyHandlers.ofString())
+                    .body());
+        } catch (Exception e) {
+
+        }
     }
 }
