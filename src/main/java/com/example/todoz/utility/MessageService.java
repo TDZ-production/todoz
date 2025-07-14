@@ -96,6 +96,12 @@ public class MessageService {
                         .map(t -> "🔥 " + t.getDescription().replaceAll("\"", "\'"))
                         .collect(Collectors.joining("\\n"));
 
+                // limit tasks txt to 100 characters
+                if (tasks.length() > 100) {
+                    tasks = tasks.substring(0, 80) + "…";
+                }
+                        
+
                 String title = String.format("%d ", tasksToday.size()) +
                     (tasksToday.size() == 1 ? "task is" : "tasks are") +
                     " on fire";
