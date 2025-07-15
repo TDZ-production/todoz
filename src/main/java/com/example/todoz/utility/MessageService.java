@@ -25,6 +25,8 @@ public class MessageService {
     private final WeekService weekService;
     private final static Map<Language, Map<String, String[]>> textDataBase = new HashMap<>();
 
+    private final Integer messageLimit = 80;
+
     static {
 //        for (Language language : Language.values()) {
 //            try (Scanner scanner = new Scanner(new File(String.format("src/main/resources/languagePackages/messages_%s.csv", language)))) {
@@ -96,9 +98,10 @@ public class MessageService {
                         .map(t -> "🔥 " + t.getDescription().replaceAll("\"", "\'"))
                         .collect(Collectors.joining("\\n"));
 
-                // limit tasks txt to 100 characters
-                if (tasks.length() > 100) {
-                    tasks = tasks.substring(0, 80) + "…";
+                Integer remainingLimit = messageLimit - body.length();
+
+                if (tasks.length() > remainingLimit) {
+                    tasks = tasks.substring(0, remainingLimit) + "…";
                 }
                         
 
