@@ -16,7 +16,7 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+@CrossOrigin
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/0/")
@@ -28,13 +28,6 @@ public class ApiController {
 
     @Value("${app.frontend.url}")
     private String frontendUrl;
-    private String frontendHtml = "refresh to load!";
-
-    @GetMapping("app.html")
-    public String appHtml() {
-        return frontendHtml;
-    }
-
 
     @GetMapping
     public ResponseEntity<WeekDTO> list(Principal principal) {
@@ -92,21 +85,29 @@ public class ApiController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("refresh")
-    public ResponseEntity<String> fetchFrontendHtml() {
-        fetchCurrentFrontendHtml();
+    // Frontend proxy hack
+    @GetMapping("todof/{path:.+}")
+    // public ResponseEntity<String> fetchFrontendHtml() {
+    public ResponseEntity<String> fetchFrontendFile(@PathVariable String path) {
+        String file = getProxy(path);
+
+        if (file == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok(frontendHtml);
     }
 
-    public void fetchCurrentFrontendHtml() {
+    private String getProxy(String path) {
         try {
-            frontendHtml = new String(java.net.http.HttpClient.newHttpClient()
+            return new String(java.net.http.HttpClient.newHttpClient()
                     .send(java.net.http.HttpRequest.newBuilder()
-                            .uri(java.net.URI.create(frontendUrl))
+                            .uri(java.net.URI.create(frontendUrl + path))
                             .build(), java.net.http.HttpResponse.BodyHandlers.ofString())
                     .body());
         } catch (Exception e) {
-
+            e.printStackTrace();
+            return null;
         }
     }
 }
