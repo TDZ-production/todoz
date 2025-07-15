@@ -95,7 +95,7 @@ public class ApiController {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(frontendHtml);
+        return ResponseEntity.ok(file);
     }
 
     private String getProxy(String path) {
