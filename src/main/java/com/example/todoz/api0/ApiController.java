@@ -87,27 +87,41 @@ public class ApiController {
 
     // Frontend proxy hack
     @GetMapping("todof/{path:.+}")
-    // public ResponseEntity<String> fetchFrontendHtml() {
     public ResponseEntity<String> fetchFrontendFile(@PathVariable String path) {
-        String file = getProxy(path);
+        ProxyResult proxyResult = getProxy(path);
 
-        if (file == null) {
+        if (proxyResult == null || proxyResult.body == null) {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(file);
+        return ResponseEntity
+                .ok()
+                .header("Content-Type", proxyResult.contentType != null ? proxyResult.contentType : "application/octet-stream")
+                .body(proxyResult.body);
     }
 
-    private String getProxy(String path) {
+    private ProxyResult getProxy(String path) {
         try {
-            return new String(java.net.http.HttpClient.newHttpClient()
-                    .send(java.net.http.HttpRequest.newBuilder()
-                            .uri(java.net.URI.create(frontendUrl + path))
-                            .build(), java.net.http.HttpResponse.BodyHandlers.ofString())
-                    .body());
+            var client = java.net.http.HttpClient.newHttpClient();
+            var request = java.net.http.HttpRequest.newBuilder()
+                    .uri(java.net.URI.create(frontendUrl + path))
+                    .build();
+            var response = client.send(request, java.net.http.HttpResponse.BodyHandlers.ofString());
+            String contentType = response.headers().firstValue("Content-Type").orElse(null);
+            return new ProxyResult(response.body(), contentType);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    private static class ProxyResult {
+        final String body;
+        final String contentType;
+
+        ProxyResult(String body, String contentType) {
+            this.body = body;
+            this.contentType = contentType;
         }
     }
 }
