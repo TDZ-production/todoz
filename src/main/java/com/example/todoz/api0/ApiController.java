@@ -87,7 +87,7 @@ public class ApiController {
 
     // Frontend proxy hack
     @GetMapping("todof/{path:.+}")
-    public ResponseEntity<String> fetchFrontendFile(@PathVariable String path) {
+    public ResponseEntity<byte[]> fetchFrontendFile(@PathVariable String path) {
         ProxyResult proxyResult = getProxy(path);
 
         if (proxyResult == null || proxyResult.body == null) {
@@ -106,7 +106,7 @@ public class ApiController {
             var request = java.net.http.HttpRequest.newBuilder()
                     .uri(java.net.URI.create(frontendUrl + path))
                     .build();
-            var response = client.send(request, java.net.http.HttpResponse.BodyHandlers.ofString());
+            var response = client.send(request, java.net.http.HttpResponse.BodyHandlers.ofByteArray());
             String contentType = response.headers().firstValue("Content-Type").orElse(null);
             return new ProxyResult(response.body(), contentType);
         } catch (Exception e) {
@@ -116,10 +116,10 @@ public class ApiController {
     }
 
     private static class ProxyResult {
-        final String body;
+        final byte[] body;
         final String contentType;
 
-        ProxyResult(String body, String contentType) {
+        ProxyResult(byte[] body, String contentType) {
             this.body = body;
             this.contentType = contentType;
         }
