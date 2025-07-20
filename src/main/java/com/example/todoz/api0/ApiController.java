@@ -42,12 +42,12 @@ public class ApiController {
     }
 
     @PostMapping
-    public ResponseEntity<Long> add(@RequestBody Task task, LocalDate maybeDueDate, Principal principal) {
+    public ResponseEntity<Long> add(@RequestBody Task task, Principal principal) {
         User user = userService.getUser(principal);
         Optional<Week> optWeek = weekService.findCurrentWeek(user);
 
         if (optWeek.isPresent()) {
-            task.digestDueDate(maybeDueDate, optWeek.get());
+            task.digestDueDate(task.getDueDateDate(), optWeek.get());
             task.setUser(user);
             taskService.save(task);
 
@@ -65,9 +65,10 @@ public class ApiController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody TaskUpdateDTO taskUpdate, Principal principal) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Task task, Principal principal) {
         User user = userService.getUser(principal);
         var optWeek = weekService.findCurrentWeek(user);
+        TaskUpdateDTO taskUpdate = new TaskUpdateDTO(task.getDescription(), task.getPriority(), task.getDueDateDate());
 
         if (optWeek.isEmpty()) {
             return ResponseEntity.unprocessableEntity().build();
