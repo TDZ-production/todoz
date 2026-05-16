@@ -57,7 +57,7 @@ public class Week {
     public List<Task> getTasksForNotification() {
         return getSortedTasks().stream()
                 .filter(t -> !t.isDone())
-                .filter(t -> t.getDueDate() == null || t.getDueDate().toLocalDate().equals(LocalDate.now()))
+                .filter(t -> t.getDueDate() == null || !t.getDueDate().toLocalDate().))
                 .toList();
     }
 
