@@ -20,7 +20,7 @@ public class WeekService {
     }
 
     public Optional<Week> findPreviousWeek(User user){
-        return weekRepo.findByWeekNumberAndUserId(DateManager.formattedPrevioustWeek(), user.getId());
+        return weekRepo.findByWeekNumberAndUserId(DateManager.formattedPreviousWeek(), user.getId());
     }
 
     public Week findOrCreateCurrentWeek(User user) {
