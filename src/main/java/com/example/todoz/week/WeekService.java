@@ -19,6 +19,10 @@ public class WeekService {
         return weekRepo.findByWeekNumberAndUserId(DateManager.formattedCurrentWeek(), user.getId());
     }
 
+    public Optional<Week> findPreviousWeek(User user){
+        return weekRepo.findByWeekNumberAndUserId(DateManager.formattedPrevioustWeek(), user.getId());
+    }
+
     public Week findOrCreateCurrentWeek(User user) {
         var optWeek = findCurrentWeek(user);
 

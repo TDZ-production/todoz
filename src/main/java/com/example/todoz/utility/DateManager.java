@@ -36,6 +36,10 @@ public class DateManager {
         return getPrefixedWeek(now());
     }
 
+    public static Integer formattedPreviousWeek() {
+        return getPrefixedWeek(now().minusWeeks(1));
+    }
+
     /**
      * Gets year of the nearest Saturday
      *

@@ -135,4 +135,35 @@ public class MessageService {
         }
         return null;
     }
+
+    public String getSundayNotification(User user) {
+        Optional<Week> optCurrentWeek = weekService.findCurrentWeek(user);
+        if (optCurrentWeek.isPresent()) {
+            return null;
+        }
+
+        Optional<Week> optPreviousWeek = weekService.findPreviousWeek(user);
+        if (optPreviousWeek.isEmpty()) {
+            return null;
+        }
+
+        Week previousWeek = optPreviousWeek.get();
+        List<Task> tasks = previousWeek.getTasks();
+
+        if (tasks.isEmpty()) {
+            return null;
+        }
+
+        long donePercentage = previousWeek.getDonePercentage();
+
+        if (donePercentage > 70) {
+            return "You crushed last week! 🫦 Let's review";
+        }
+
+        if (donePercentage == 0) {
+            return "Yo, let's do week review and crush the next one! 🫰";
+        }
+
+        return String.format("You've crushed %d tasks last week. Let's do week review 🫶", previousWeek.getDoneCount());
+    }
 }

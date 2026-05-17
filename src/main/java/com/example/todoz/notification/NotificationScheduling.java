@@ -36,4 +36,15 @@ public class NotificationScheduling {
             }
         });
     }
+
+    @Scheduled(cron = "0 20 12 * * 0")
+    public void sendSundayNotifications() {
+
+        userSubscriptionService.getAll().forEach(userSub -> {
+            String notification = messageService.getSundayNotification(userSub.getUser());
+            if (notification != null) {
+                notificationService.sendNotification(userSub, notification);
+            }
+        });
+    }
 }
