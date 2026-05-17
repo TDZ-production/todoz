@@ -57,7 +57,7 @@ public class NotificationService {
 
     public void sendNotification(UserSubscription userSubscription, String messageJson) {
         try {
-            System.out.println("\nsending notification!!");
+            System.out.println(String.format("Sending notification for %s:\n%s", userSubscription.getUser().getUsername(), messageJson));
 
             Subscription subscription = new Subscription(userSubscription.getEndpoint(), new Subscription.Keys(userSubscription.getP256dhKey(), userSubscription.getAuthKey()));
             var resp = pushService.send(new Notification(subscription, messageJson));
