@@ -66,7 +66,7 @@ public class WeekReviewTesting {
 
         when(taskService.findUpcomingTasks(any(User.class), anyInt(), anyInt()))
                 .thenReturn(List.of(plannedTask));
-        when(weekService.findPreviousWeek(any(User.class)))
+        when(weekService.findLastWeek(any(User.class)))
                 .thenReturn(Optional.of(previuosWeek));
         when(weekService.findCurrentWeek(any(User.class)))
                 .thenReturn(Optional.empty());

@@ -34,7 +34,7 @@ public class MainController {
     public String showIndex(Model model, Principal principal) {
         User user = getUser(principal);
         Optional<Week> currentWeek = weekService.findCurrentWeek(user);
-        Optional<Week> optPreviousWeek = weekService.findPreviousWeek(user);
+        Optional<Week> optPreviousWeek = weekService.findLastWeek(user);
 
         if (currentWeek.isEmpty() && optPreviousWeek.isPresent()) {
             Week previousWeek = optPreviousWeek.get();
