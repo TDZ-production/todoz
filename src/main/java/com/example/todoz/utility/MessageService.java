@@ -128,8 +128,8 @@ public class MessageService {
                     .toList();
 
             if (!tasksToday.isEmpty()) {
-                String title = tasksToday.size() + " tasks are due today";
-                String body = tasksToday.get(0).getDescription() + "\\nis your first task on the list";
+                String title = "Good morning 🌞 " + tasksToday.size() + " tasks are due today";
+                String body = tasksToday.get(0).getDescription() + "\\nis first 👀";
                 return String.format("{ \"title\": \"%s\", \"body\": \"%s\" }", title, body);
             }
         }

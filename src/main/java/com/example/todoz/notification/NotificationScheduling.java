@@ -37,7 +37,7 @@ public class NotificationScheduling {
         });
     }
 
-    @Scheduled(cron = "0 25 12 * * 0")
+    @Scheduled(cron = "0 0 10,18 * * 0")
     public void sendSundayNotifications() {
 
         userSubscriptionService.getAll().forEach(userSub -> {
