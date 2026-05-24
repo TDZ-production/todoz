@@ -64,7 +64,9 @@ public class NotificationService {
 
             System.out.println(resp.getStatusLine().getStatusCode());
 
-            if ([410, 404].contains(resp.getStatusLine().getStatusCode())) {
+            boolean noLongerValid = resp.getStatusLine().getStatusCode() == 410 || resp.getStatusLine().getStatusCode() == 404;
+
+            if (noLongerValid) {
                 userSubscriptionService.remove(userSubscription);
                 System.out.println("Subscription deleted due to 404 or 410 response.");
             }
