@@ -63,6 +63,11 @@ public class NotificationService {
             var resp = pushService.send(new Notification(subscription, messageJson));
 
             System.out.println(resp.getStatusLine().getStatusCode());
+
+            if ([410, 404].contains(resp.getStatusLine().getStatusCode())) {
+                userSubscriptionService.remove(userSubscription);
+                System.out.println("Subscription deleted due to 404 or 410 response.");
+            }
             
         } catch (GeneralSecurityException | IOException | JoseException | ExecutionException
                  | InterruptedException e) {
