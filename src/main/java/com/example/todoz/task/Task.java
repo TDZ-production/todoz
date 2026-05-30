@@ -86,27 +86,35 @@ public class Task {
         return this.dueDate.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault());
     }
 
+    public long getDaysLeft() {
+        if (this.dueDate == null) {
+            return -1;
+        }
+
+        return Duration.between(LocalDateTime.now().toLocalDate().atTime(23, 59, 59), this.getDueDate()).toDays();
+    }
+
     public String getRemainingDays() {
         if (this.getDueDate() == null) {
             return null;
-        } else {
-            Duration duration = Duration.between(LocalDateTime.now().toLocalDate().atTime(23, 59, 59), this.getDueDate());
-            if (duration.toDays() == 1) {
-                return "Tomorrow";
-            }
-            else if (duration.toDays() == -1) {
-                return "Yesterday";
-            }
-            else if (duration.toDays() == 0) {
-                return "Today";
-            }
-            else if (duration.toDays() < -1) {
-                return Math.abs(duration.toDays()) + " days ago";
-            }
-            else{
-                return duration.toDays() + " days";
-            }
         }
+
+        long daysLeft = this.getDaysLeft();
+
+        if (daysLeft == 1) {
+            return "Tomorrow";
+        }
+        else if (daysLeft == -1) {
+            return "Yesterday";
+        }
+        else if (daysLeft == 0) {
+            return "Today";
+        }
+        else if (daysLeft < -1) {
+            return Math.abs(daysLeft) + " days ago";
+        }
+        
+        return daysLeft + " days";
     }
 
     public Task merge(TaskUpdateDTO taskUpdate, Week currentWeek) {
