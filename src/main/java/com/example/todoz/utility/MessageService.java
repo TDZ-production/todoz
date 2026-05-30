@@ -77,10 +77,12 @@ public class MessageService {
 
         if (optWeek.isPresent()) {
             Week week = optWeek.get();
+            Integer currentHour = LocalDateTime.now().getHour();
 
             List<Task> tasksToday = week.getTasksForNotification()
                     .stream()
                     .filter(t -> t.getPriority() > 3 && t.getCreatedAt().isBefore(LocalDateTime.now().minusMinutes(10)))
+                    .filter(t -> t.getHour() == null || t.getHour() <= currentHour)
                     .sorted(Comparator.comparing(t -> new Random().nextInt()))
                     .toList();
 

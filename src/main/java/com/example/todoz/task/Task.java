@@ -43,6 +43,13 @@ public class Task {
         this.createdAt = LocalDateTime.now();
     }
 
+    public Integer getHour() {
+        if (this.description != null && this.description.matches("^\\d{2}:\\d{2}.*")) {
+            return Integer.parseInt(this.description.substring(0, 2));
+        }
+        return null;
+    }
+
     public long getMaturity() {
         return ChronoUnit.DAYS.between(this.createdAt, DateManager.now());
     }
