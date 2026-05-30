@@ -25,7 +25,7 @@ public class MessageService {
     private final WeekService weekService;
     private final static Map<Language, Map<String, String[]>> textDataBase = new HashMap<>();
 
-    private final Integer messageLimit = 80;
+    private final Integer messageLimit = 120;
 
     static {
 //        for (Language language : Language.values()) {
