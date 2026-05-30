@@ -158,14 +158,17 @@ public class MessageService {
 
         long donePercentage = previousWeek.getDonePercentage();
 
+        String title = "Week review 🤩";
+        String body = String.format("You've crushed %d tasks last week. Let's do week review 🫶", previousWeek.getDoneCount());
+
         if (donePercentage > 70) {
-            return "You crushed last week! 🫦 Let's review";
+            body = "You crushed last week! 🫦 Let's review";
         }
 
         if (donePercentage == 0) {
-            return "Yo, let's do week review and crush the next one! 🫰";
+            body = "Yo, let's do week review and crush the next one! 🫰";
         }
 
-        return String.format("You've crushed %d tasks last week. Let's do week review 🫶", previousWeek.getDoneCount());
+        return String.format("{ \"title\": \"%s\", \"body\": \"%s\" }", title, body);
     }
 }
