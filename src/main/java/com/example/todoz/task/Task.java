@@ -88,7 +88,7 @@ public class Task {
 
     public long getDaysLeft() {
         if (this.dueDate == null) {
-            return -1;
+            return Duration.between(LocalDateTime.now(), this.getCreatedAt()).toDays();
         }
 
         return Duration.between(LocalDateTime.now().toLocalDate().atTime(23, 59, 59), this.getDueDate()).toDays();
