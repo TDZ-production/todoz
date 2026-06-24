@@ -1,6 +1,7 @@
 package com.example.todoz.prtoken;
 
 import com.example.todoz.user.User;
+import com.example.todoz.utility.DateManager;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +21,7 @@ public class PasswordResetToken {
     @ManyToOne
     private User user;
     private LocalDateTime expirationTime;
+    private LocalDateTime createdAt;
     private static final int EXPIRATION_TIME = 5;
 
     public PasswordResetToken(User user) {
@@ -30,5 +32,6 @@ public class PasswordResetToken {
     public PasswordResetToken() {
         this.token = UUID.randomUUID().toString();
         this.expirationTime = LocalDateTime.now().plusMinutes(EXPIRATION_TIME);
+        this.createdAt = DateManager.now();
     }
 }
